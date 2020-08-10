@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SongManager : MonoBehaviour
 {
-    public float songBpm;
+    [NonSerialized] public float SongBpm;
     
     private AudioSource _audioSource;
 
@@ -21,15 +21,21 @@ public class SongManager : MonoBehaviour
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+    }
 
-        _secPerBeat = 60f / songBpm;
-        _songDspTimeStart = (float)AudioSettings.dspTime;
+    public void LoadSong(AudioClip clip, float bpm)
+    {
+        SongBpm = bpm;
+        _secPerBeat = 60f / SongBpm;
+        _audioSource.clip = clip;
         
+        _songDspTimeStart = (float)AudioSettings.dspTime;
         _audioSource.Play();
     }
 
     private void Update()
     {
-        SongPosSec = (float)(AudioSettings.dspTime - _songDspTimeStart);
+        if (_audioSource.isPlaying)
+            SongPosSec = (float)(AudioSettings.dspTime - _songDspTimeStart);
     }
 }

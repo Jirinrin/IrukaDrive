@@ -21,7 +21,7 @@ public class SongManagerTest : MonoBehaviour
     {
         outputTextBox.text = String.Join(
             Environment.NewLine,
-            $"{_songman.songBpm} BPM",
+            $"{_songman.SongBpm} BPM",
             $"{_songman.SongPosSec} seconds in",
             $"{_songman.SongPosBeats} beats in",
             $"{_lastTiming} is last timing"
@@ -30,7 +30,6 @@ public class SongManagerTest : MonoBehaviour
 
     private void UpdateTiming()
     {
-        Debug.Log("update timing");
         _lastTiming = _songman.Timing;
     }
     

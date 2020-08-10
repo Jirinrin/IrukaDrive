@@ -23,7 +23,6 @@ public class PlayerInputManager : MonoBehaviour
     
     public void OnConfirm()
     {
-        Debug.Log("confimr!!!");
         OnTick?.Invoke();
     }
 }
