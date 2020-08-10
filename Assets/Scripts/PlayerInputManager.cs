@@ -13,7 +13,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public delegate void InputEventDelegate();
 
-    public static event InputEventDelegate OnTick;
+    public static event InputEventDelegate OnTap;
 
     private void Start()
     {
@@ -23,6 +23,6 @@ public class PlayerInputManager : MonoBehaviour
     
     public void OnConfirm()
     {
-        OnTick?.Invoke();
+        OnTap?.Invoke();
     }
 }

@@ -35,6 +35,6 @@ public class SongManagerTest : MonoBehaviour
     
     private void OnEnable()
     {
-        PlayerInputManager.OnTick += UpdateTiming;
+        PlayerInputManager.OnTap += UpdateTiming;
     }
 }
