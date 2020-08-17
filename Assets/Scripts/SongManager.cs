@@ -6,16 +6,16 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SongManager : MonoBehaviour
 {
-    [NonSerialized] public Beatmap Beatmap;
+    [NonSerialized] private Beatmap CurrentBeatmap;
     
     private AudioSource _audioSource;
 
     private float _secPerBeat;
 
     [NonSerialized] public float SongPosSec;
-    public float SongPosBeats => SongPosSec - Beatmap.beatOffset / _secPerBeat;
-    public float SongPosBeatsMod => Mathf.FloorToInt(SongPosBeats % Beatmap.beatsPerBar);
-    public float SongPosBars => Mathf.FloorToInt((SongPosBeats - Beatmap.barOffset) / Beatmap.beatsPerBar);
+    public float SongPosBeats => SongPosSec - CurrentBeatmap.beatOffset / _secPerBeat;
+    public float SongPosBeatsMod => Mathf.FloorToInt(SongPosBeats % CurrentBeatmap.beatsPerBar);
+    public float SongPosBars => Mathf.FloorToInt((SongPosBeats - CurrentBeatmap.barOffset) / CurrentBeatmap.beatsPerBar);
     public float Timing => SongPosBeats % 1;
 
     private float _songDspTimeStart;
@@ -27,9 +27,9 @@ public class SongManager : MonoBehaviour
 
     public void LoadSong(Beatmap beatmap)
     {
-        Beatmap = beatmap;
-        _secPerBeat = 60f / Beatmap.bpm;
-        _audioSource.clip = Beatmap.song;
+        CurrentBeatmap = beatmap;
+        _secPerBeat = 60f / CurrentBeatmap.bpm;
+        _audioSource.clip = CurrentBeatmap.song;
         
         _songDspTimeStart = (float)AudioSettings.dspTime;
         _audioSource.Play();

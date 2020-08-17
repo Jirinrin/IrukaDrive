@@ -8,30 +8,32 @@ public class SongManagerTest : MonoBehaviour
 {
     public Text outputTextBox;
         
-    private SongManager _songman;
+    private SongManager _songManager;
+    private BeatmapManager _beatmapManager;
 
     [NonSerialized] private float _lastTiming;
     
     private void Start()
     {
-        _songman = GetComponent<SongManager>();
+        _songManager = GetComponent<SongManager>();
+        _beatmapManager = GetComponent<BeatmapManager>();
     }
 
     private void Update()
     {
         outputTextBox.text = String.Join(
             Environment.NewLine,
-            $"{_songman.Beatmap.bpm} BPM",
-            $"{_songman.SongPosSec} seconds in",
-            $"{_songman.SongPosBeatsMod} beats in",
-            $"{_songman.SongPosBars} bars in",
+            $"{_beatmapManager.currentBeatmap.bpm} BPM",
+            $"{_songManager.SongPosSec} seconds in",
+            $"{_songManager.SongPosBeatsMod} beats in",
+            $"{_songManager.SongPosBars} bars in",
             $"{_lastTiming} is last timing"
         );
     }
 
     private void UpdateTiming()
     {
-        _lastTiming = _songman.Timing;
+        _lastTiming = _songManager.Timing;
     }
     
     private void OnEnable()
