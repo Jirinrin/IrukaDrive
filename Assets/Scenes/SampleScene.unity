@@ -378,8 +378,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentBeatmap:
-    bpm: 135
     song: {fileID: 8300000, guid: 161a0856ea9e20b48bb8d39797c946c6, type: 3}
+    bpm: 135
+    beatOffset: 0
+    beatsPerBar: 4
+    barOffset: 0
+    notes:
+    - bar: 0
+      beat: 0
+      subBeat: 0
+    - bar: 0
+      beat: 0
+      subBeat: 0
+    - bar: 0
+      beat: 0
+      subBeat: 0
+    - bar: 0
+      beat: 0
+      subBeat: 0
+    - bar: 0
+      beat: 0
+      subBeat: 0
+    - bar: 0
+      beat: 0
+      subBeat: 0
 --- !u!114 &665349315
 MonoBehaviour:
   m_ObjectHideFlags: 0

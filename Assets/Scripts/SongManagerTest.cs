@@ -21,9 +21,10 @@ public class SongManagerTest : MonoBehaviour
     {
         outputTextBox.text = String.Join(
             Environment.NewLine,
-            $"{_songman.SongBpm} BPM",
+            $"{_songman.Beatmap.bpm} BPM",
             $"{_songman.SongPosSec} seconds in",
-            $"{_songman.SongPosBeats} beats in",
+            $"{_songman.SongPosBeatsMod} beats in",
+            $"{_songman.SongPosBars} bars in",
             $"{_lastTiming} is last timing"
         );
     }
