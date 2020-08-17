@@ -29,6 +29,7 @@ public class BeatmapManager : MonoBehaviour
     /* [NonSerialized] public static */ public Beatmap currentBeatmap;
 
     private List<Note>.Enumerator _noteCollection;
+    private float _prevNoteBeat;
     private float _nextNoteBeat;
 
     private bool _beatmapFinished;
@@ -53,11 +54,8 @@ public class BeatmapManager : MonoBehaviour
             return;
         }
 
-        Debug.Log(note.bar);
-        Debug.Log(note.beat);
-        
+        _prevNoteBeat = _nextNoteBeat;
         _nextNoteBeat = note.bar * currentBeatmap.beatsPerBar + note.beat;
-        Debug.Log(_nextNoteBeat);
     }
 
     private void CheckNextNote()
@@ -65,8 +63,6 @@ public class BeatmapManager : MonoBehaviour
         if (_beatmapFinished || _songManager.SongPosBeats < _nextNoteBeat)
             return;
         
-        Debug.Log("check next note");
-    
         while (!_beatmapFinished && _songManager.SongPosBeats >= _nextNoteBeat)
             AdvanceNote();
         
@@ -78,12 +74,21 @@ public class BeatmapManager : MonoBehaviour
         CheckNextNote();
     }
     
-    public delegate void SimpleEventDelegate();
-
-    public static event SimpleEventDelegate OnNote;
-
-    public void Tap()
+    private void Tap()
     {
+        if (_beatmapFinished)
+            return;
         
+        var snapshot = _songManager.SongPosBeats;
+        var timingLate = snapshot - _prevNoteBeat;
+        var timingEarly = _nextNoteBeat - snapshot;
+        var timing = timingLate < timingEarly ? timingLate : -timingEarly;
+        // todo: scale this by the bpm
+        OnTapped?.Invoke(timing);
     }
+
+    private void OnEnable() => PlayerInputManager.OnTap += Tap;
+
+    public static event EventDelegate OnNote;
+    public static event EventDelegateFloatIn OnTapped;
 }

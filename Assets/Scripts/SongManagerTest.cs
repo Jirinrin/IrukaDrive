@@ -31,13 +31,13 @@ public class SongManagerTest : MonoBehaviour
         );
     }
 
-    private void UpdateTiming()
+    private void UpdateTiming(float timing)
     {
-        _lastTiming = _songManager.Timing;
+        _lastTiming = timing;
     }
     
     private void OnEnable()
     {
-        PlayerInputManager.OnTap += UpdateTiming;
+        BeatmapManager.OnTapped += UpdateTiming;
     }
 }

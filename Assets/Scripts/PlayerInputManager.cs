@@ -11,9 +11,7 @@ public class PlayerInputManager : MonoBehaviour
     private SongManager _songManager;
     private GameManager _gameManager;
 
-    public delegate void InputEventDelegate();
-
-    public static event InputEventDelegate OnTap;
+    public static event EventDelegate OnTap;
 
     private void Start()
     {
