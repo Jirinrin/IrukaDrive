@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+// todo: effect when player hits / misses / nears char, and make that persist in the char as it moves beyond the hantei 
 public class TrackManager : MonoBehaviour
 {
     [SerializeField] private GameObject judgementTransform;

@@ -43,7 +43,8 @@ public class BeatmapManager : MonoBehaviour
     
     /* [NonSerialized] public static */ public Beatmap currentBeatmap;
 
-    private List<RuntimeNote> _runtimeNotes;
+    private List<List<RuntimeNote>> _runtimeNotes;
+    private List<RuntimeNote> _runtimeNotesFlat;
     private List<RuntimeNote>.Enumerator _noteIterator;
     private RuntimeNote _prevNote;
     private RuntimeNote _nextNote;
@@ -62,18 +63,19 @@ public class BeatmapManager : MonoBehaviour
 
     private void LoadBeatmap()
     {
-        _runtimeNotes = currentBeatmap.notes.SelectMany(note =>
+        _runtimeNotes = currentBeatmap.notes.Select(note =>
             note.text.ToCharArray().Select((c, i) =>
                 new RuntimeNote
                 {
                     Beat = note.bar * currentBeatmap.beatsPerBar + note.beat + i * note.beatInterval,
                     Char = c
                 }
-            )
+            ).ToList()
         ).ToList();
+        _runtimeNotesFlat = _runtimeNotes.SelectMany(noteGroup => noteGroup).ToList();
         
         _songManager.LoadSong(currentBeatmap);
-        _noteIterator = _runtimeNotes.GetEnumerator();
+        _noteIterator = _runtimeNotesFlat.GetEnumerator();
         _noteResults = new List<float>();
         _trackManager.InitTrack();
         AdvanceNote();
@@ -125,7 +127,7 @@ public class BeatmapManager : MonoBehaviour
             return;
         
         CheckNextNote();
-        _trackManager.DrawTrackNotes(_songManager.SongPosBeats, _runtimeNotes);
+        _trackManager.DrawTrackNotes(_songManager.SongPosBeats, _runtimeNotesFlat);
     }
     
     private void Tap() { }
