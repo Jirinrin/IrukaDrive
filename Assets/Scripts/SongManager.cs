@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +13,7 @@ public class SongManager : MonoBehaviour
     private float _secPerBeat;
 
     [NonSerialized] public float SongPosSec;
-    public float SongPosBeats => SongPosSec - CurrentBeatmap.beatOffset / _secPerBeat;
+    public float SongPosBeats => (SongPosSec - CurrentBeatmap.beatOffset) / _secPerBeat;
     public float SongPosBeatsMod => Mathf.FloorToInt(SongPosBeats % CurrentBeatmap.beatsPerBar);
     public float SongPosBars => Mathf.FloorToInt((SongPosBeats - CurrentBeatmap.barOffset) / CurrentBeatmap.beatsPerBar);
     public float Timing => SongPosBeats % 1;
