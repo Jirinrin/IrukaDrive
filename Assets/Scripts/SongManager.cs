@@ -49,5 +49,5 @@ public class SongManager : MonoBehaviour
         }
     }
     
-    public static event EventDelegate OnSongFinished;
+    public static event Action OnSongFinished;
 }

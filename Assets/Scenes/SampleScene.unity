@@ -418,16 +418,28 @@ MonoBehaviour:
     notes:
     - bar: 0
       beat: 1
-    - bar: 0
+      text: abc
+      beatInterval: 0.5
+    - bar: 3
       beat: 2
-    - bar: 0
+      text: abcd
+      beatInterval: 1
+    - bar: 5
       beat: 3
-    - bar: 2
+      text: qwert
+      beatInterval: 0.25
+    - bar: 8
       beat: 2
-    - bar: 2
+      text: hjkl
+      beatInterval: 2
+    - bar: 12
       beat: 3
-    - bar: 2
+      text: 2345
+      beatInterval: 1
+    - bar: 14
       beat: 4
+      text: goedndag
+      beatInterval: 0.33333334
 --- !u!114 &665349315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,7 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   judgementTransform: {fileID: 251385651}
-  circlePrefab: {fileID: 1433120759016908676, guid: e408c966cf660da47a48d00e9620fe01,
+  characterPrefab: {fileID: 6614414440177731341, guid: 57c43542130f8bd4e8a368569c83ceb3,
     type: 3}
 --- !u!1 &700069023
 GameObject:

@@ -45,14 +45,14 @@ public class SongManagerTest : MonoBehaviour
         _beatmapResult = _beatmapManager.GetResult();
     }
 
-    private void UpdateTiming(float timing)
+    private void UpdateTiming(char character, float timing)
     {
         _lastTiming = timing;
     }
     
     private void OnEnable()
     {
-        BeatmapManager.OnTapped += UpdateTiming;
+        BeatmapManager.OnInput += UpdateTiming;
         BeatmapManager.OnBeatmapSongFinished += ShowResult;
     }
 }

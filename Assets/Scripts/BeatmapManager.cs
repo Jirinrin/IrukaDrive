@@ -9,16 +9,14 @@ public struct Note
 {
     public int bar;
     public float beat;
+    public string text; // will be split up into chars
+    public float beatInterval;
 }
 
 public struct RuntimeNote
 {
     public float Beat;
-}
-
-public struct BeatmapResult
-{
-    public List<float> NoteTimings;
+    public char Char;
 }
 
 [Serializable]
@@ -33,6 +31,11 @@ public class Beatmap
     public List<Note> notes;
 }
 
+public struct BeatmapResult
+{
+    public List<float> NoteTimings;
+}
+
 public class BeatmapManager : MonoBehaviour
 {
     private SongManager _songManager;
@@ -41,7 +44,7 @@ public class BeatmapManager : MonoBehaviour
     /* [NonSerialized] public static */ public Beatmap currentBeatmap;
 
     private List<RuntimeNote> _runtimeNotes;
-    private List<RuntimeNote>.Enumerator _noteCollection;
+    private List<RuntimeNote>.Enumerator _noteIterator;
     private RuntimeNote _prevNote;
     private RuntimeNote _nextNote;
 
@@ -59,11 +62,18 @@ public class BeatmapManager : MonoBehaviour
 
     private void LoadBeatmap()
     {
+        _runtimeNotes = currentBeatmap.notes.SelectMany(note =>
+            note.text.ToCharArray().Select((c, i) =>
+                new RuntimeNote
+                {
+                    Beat = note.bar * currentBeatmap.beatsPerBar + note.beat + i * note.beatInterval,
+                    Char = c
+                }
+            )
+        ).ToList();
+        
         _songManager.LoadSong(currentBeatmap);
-        _runtimeNotes = currentBeatmap.notes.Select(note => new RuntimeNote {
-            Beat = note.bar * currentBeatmap.beatsPerBar + note.beat
-        }).ToList();
-        _noteCollection = _runtimeNotes.GetEnumerator();
+        _noteIterator = _runtimeNotes.GetEnumerator();
         _noteResults = new List<float>();
         _trackManager.InitTrack();
         AdvanceNote();
@@ -84,14 +94,14 @@ public class BeatmapManager : MonoBehaviour
 
     private void AdvanceNote()
     {
-        if (!_noteCollection.MoveNext())
+        if (!_noteIterator.MoveNext())
         {
             _beatmapFinished = true;
             return;
         }
         
         _prevNote = _nextNote;
-        _nextNote = _noteCollection.Current;
+        _nextNote = _noteIterator.Current;
     }
 
     private void CheckNextNote()
@@ -118,7 +128,9 @@ public class BeatmapManager : MonoBehaviour
         _trackManager.DrawTrackNotes(_songManager.SongPosBeats, _runtimeNotes);
     }
     
-    private void Tap()
+    private void Tap() { }
+
+    private void OnChar(char character)
     {
         if (_beatmapFinished)
             return;
@@ -126,10 +138,12 @@ public class BeatmapManager : MonoBehaviour
         var snapshot = _songManager.SongPosBeats;
         var timingLate = snapshot - _prevNote.Beat;
         var timingEarly = _nextNote.Beat - snapshot;
+        // var snapToNote = 
         var timing = timingLate < timingEarly ? timingLate : -timingEarly;
         // todo: scale this by the bpm
         _noteResults.Add(timing);
-        OnTapped?.Invoke(timing);
+        OnInput?.Invoke(character, timing);
+        
     }
 
     private void SongFinished() => OnBeatmapSongFinished?.Invoke();
@@ -139,7 +153,7 @@ public class BeatmapManager : MonoBehaviour
         SongManager.OnSongFinished += SongFinished;
     }
     
-    public static event EventDelegate OnNote;
-    public static event EventDelegateFloatIn OnTapped; // pass in timing
-    public static event EventDelegate OnBeatmapSongFinished;
+    public static event Action OnNote;
+    public static event Action<char, float> OnInput; // pass in char and timing
+    public static event Action OnBeatmapSongFinished;
 }
