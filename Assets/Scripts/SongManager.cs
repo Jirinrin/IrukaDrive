@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +19,8 @@ public class SongManager : MonoBehaviour
     public float Timing => SongPosBeats % 1;
 
     private float _songDspTimeStart;
+
+    private bool _songFinished;
     
     private void Start()
     {
@@ -39,5 +41,13 @@ public class SongManager : MonoBehaviour
     {
         if (_audioSource.isPlaying)
             SongPosSec = (float)(AudioSettings.dspTime - _songDspTimeStart);
+        
+        if (SongPosSec > CurrentBeatmap.song.length & !_songFinished)
+        {
+            _songFinished = true;
+            OnSongFinished?.Invoke();
+        }
     }
+    
+    public static event EventDelegate OnSongFinished;
 }
