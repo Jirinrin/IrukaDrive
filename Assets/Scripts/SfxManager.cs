@@ -15,13 +15,13 @@ public class SfxManager : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
     }
 
-    private void Tap()
+    private void Tap(char character)
     {
         _audioSource.PlayOneShot(tickSample);
     }
 
     private void OnEnable()
     {
-        PlayerInputManager.OnTap += Tap;
+        PlayerInputManager.OnChar += Tap;
     }
 }

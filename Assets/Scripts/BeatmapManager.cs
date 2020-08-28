@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 [Serializable]
@@ -13,10 +14,70 @@ public struct Note
     public float beatInterval;
 }
 
+public enum NoteResult
+{
+    Hit,
+    WrongChar,
+    Miss, // Not sure whether this one will exist
+}
+
 public struct RuntimeNote
 {
     public float Beat;
     public char Char;
+    public NoteResult? Result;
+    public float? ResultTiming;
+}
+
+public class RuntimeWord
+{
+    public readonly float Beat;
+    public readonly float LastBeat;
+    public readonly List<RuntimeNote> CharNotes;
+    private List<RuntimeNote>.Enumerator _inputIterator;
+    public RuntimeNote CurrentInputNote => _inputIterator.Current;
+    private int _currentInputCharIndex;
+    private List<RuntimeNote>.Enumerator _noteIterator;
+    public bool Finished;
+    private bool _passed;
+
+    public RuntimeWord(List<RuntimeNote> charNotes)
+    {
+        CharNotes = charNotes;
+        Beat = CharNotes.First().Beat;
+        LastBeat = CharNotes.Last().Beat;
+        _inputIterator = CharNotes.GetEnumerator();
+        _noteIterator = CharNotes.GetEnumerator();
+        _currentInputCharIndex = 0;
+        if (!_inputIterator.MoveNext())
+            throw new Exception("Empty word: " + this);
+        _noteIterator.MoveNext();
+    }
+
+    public int? AdvanceInputNote()
+    {
+        if (Finished)
+            return null;
+        
+        if (!_inputIterator.MoveNext())
+            Finished = true;
+        _currentInputCharIndex++;
+        return _currentInputCharIndex;
+        // todo: test
+    }
+
+    public bool CheckPassedNote(float beatTime)
+    {
+        if (_passed || !(_noteIterator.Current.Beat < beatTime))
+            return false;
+        
+        // Passed new note!
+        if (!_noteIterator.MoveNext())
+            _passed = true;
+        
+        Debug.Log("Passed!");
+        return true;
+    }
 }
 
 [Serializable]
@@ -33,7 +94,7 @@ public class Beatmap
 
 public struct BeatmapResult
 {
-    public List<float> NoteTimings;
+    public List<RuntimeNote> NoteTimings;
 }
 
 public class BeatmapManager : MonoBehaviour
@@ -43,16 +104,19 @@ public class BeatmapManager : MonoBehaviour
     
     /* [NonSerialized] public static */ public Beatmap currentBeatmap;
 
-    private List<List<RuntimeNote>> _runtimeNotes;
-    private List<RuntimeNote> _runtimeNotesFlat;
-    private List<RuntimeNote>.Enumerator _noteIterator;
-    private RuntimeNote _prevNote;
-    private RuntimeNote _nextNote;
+    private const float SecondsBeforeNextWord = 1f;
+    private const float MinimumSecondsAfterWord = .5f;
 
-    private List<float> _noteResults = new List<float>();
+    private List<RuntimeWord> _runtimeNotes;
+    
+    private List<RuntimeWord>.Enumerator _wordsIterator;
+    private RuntimeWord _currentWord;
+    private RuntimeWord _nextWord;
+    private float _switchNextWordThreshold;
 
     private bool _beatmapStarted;
-    private bool _beatmapFinished;
+    private bool _lastWordReached;
+    private bool BeatmapFinished => _lastWordReached && _currentWord.Finished;
 
     private void Start()
     {
@@ -64,98 +128,126 @@ public class BeatmapManager : MonoBehaviour
     private void LoadBeatmap()
     {
         _runtimeNotes = currentBeatmap.notes.Select(note =>
-            note.text.ToCharArray().Select((c, i) =>
+            new RuntimeWord(note.text.ToCharArray().Select((c, i) =>
                 new RuntimeNote
                 {
                     Beat = note.bar * currentBeatmap.beatsPerBar + note.beat + i * note.beatInterval,
                     Char = c
                 }
-            ).ToList()
+            ).ToList())
         ).ToList();
-        _runtimeNotesFlat = _runtimeNotes.SelectMany(noteGroup => noteGroup).ToList();
         
         _songManager.LoadSong(currentBeatmap);
-        _noteIterator = _runtimeNotesFlat.GetEnumerator();
-        _noteResults = new List<float>();
-        _trackManager.InitTrack();
-        AdvanceNote();
-        _beatmapFinished = false;
+        
+        _trackManager.InitTrack(_runtimeNotes);
+        
+        _wordsIterator = _runtimeNotes.GetEnumerator();
+        AdvanceWord(true);
+        
+        _lastWordReached = false;
         _beatmapStarted = true;
     }
 
     public BeatmapResult? GetResult()
     {
-        if (!_beatmapFinished)
+        // May comment out for testing purposes
+        if (!BeatmapFinished)
             return null;
 
         return new BeatmapResult
         {
-            NoteTimings = _noteResults,
+            NoteTimings = _runtimeNotes.SelectMany(word => word.CharNotes).ToList(),
         };
     }
 
-    private void AdvanceNote()
+    // todo: add exclamation points when c# 8.0 
+    private void AdvanceWord(bool init = false)
     {
-        if (!_noteIterator.MoveNext())
+        if (init)
         {
-            _beatmapFinished = true;
-            return;
+            if (!_wordsIterator.MoveNext())
+                throw new Exception("Empty beatmap");
+            _nextWord = _wordsIterator.Current;
         }
         
-        _prevNote = _nextNote;
-        _nextNote = _noteIterator.Current;
+        // todo: also make currentWord inactive after some time after the last beat
+        _currentWord = _nextWord;
+        OnChangeCurrentWord?.Invoke(_currentWord.Beat);
+        OnChangeCurrentChar?.Invoke(0);
+        
+        if (!_wordsIterator.MoveNext())
+        {
+            _lastWordReached = true;
+            _nextWord = null;
+            return;
+        }
+
+        _nextWord = _wordsIterator.Current;
+        // Put switch to next current word to x seconds before that word, or in-between the current and next
+        _switchNextWordThreshold = _nextWord.Beat - SecondsBeforeNextWord;
+        if (_switchNextWordThreshold <= _currentWord.LastBeat + MinimumSecondsAfterWord)
+            _switchNextWordThreshold = (_currentWord.LastBeat + _nextWord.Beat) / 2;
     }
 
-    private void CheckNextNote()
+    private void CheckNextWord()
     {
-        if (_beatmapFinished || _songManager.SongPosBeats < _nextNote.Beat)
+        if (_lastWordReached || _songManager.SongPosBeats < _switchNextWordThreshold)
             return;
         
-        // Next note passed!
-        
-        // todo: some check to see if the player registered this note at all
-
-        do AdvanceNote();
-        while (!_beatmapFinished && _songManager.SongPosBeats >= _nextNote.Beat);
-        
-        OnNote?.Invoke();
+        Debug.Log("Next word~!");
+        // Next word threshold passed!
+        AdvanceWord();
     }
-    
+
     private void Update()
     {
         if (!_beatmapStarted)
             return;
         
-        CheckNextNote();
-        _trackManager.DrawTrackNotes(_songManager.SongPosBeats, _runtimeNotesFlat);
+        CheckNextWord();
+        if (_currentWord.CheckPassedNote(_songManager.SongPosBeats))
+            OnNote?.Invoke();
+        
+        _trackManager.DrawTrackNotes(_songManager.SongPosBeats);
     }
     
     private void Tap() { }
 
     private void OnChar(char character)
     {
-        if (_beatmapFinished)
+        if (_currentWord.Finished)
             return;
-        
-        var snapshot = _songManager.SongPosBeats;
-        var timingLate = snapshot - _prevNote.Beat;
-        var timingEarly = _nextNote.Beat - snapshot;
-        // var snapToNote = 
-        var timing = timingLate < timingEarly ? timingLate : -timingEarly;
-        // todo: scale this by the bpm
-        _noteResults.Add(timing);
-        OnInput?.Invoke(character, timing);
-        
+
+        var currentCharNote = _currentWord.CurrentInputNote;
+
+        if (character != currentCharNote.Char)
+            currentCharNote.Result = NoteResult.WrongChar;
+        else
+        {
+            currentCharNote.Result = NoteResult.Hit;
+            var beatSnapshot = _songManager.SongPosBeats;
+            currentCharNote.ResultTiming = beatSnapshot - currentCharNote.Beat;
+            // todo: scale this by the bpm (maybe somewhere else than here)
+        }
+
+        OnInput?.Invoke(character, currentCharNote);
+
+        var newIndex = _currentWord.AdvanceInputNote();
+        if (newIndex != null)
+            OnChangeCurrentChar?.Invoke((int) newIndex);
     }
 
     private void SongFinished() => OnBeatmapSongFinished?.Invoke();
 
     private void OnEnable() {
         PlayerInputManager.OnTap += Tap;
+        PlayerInputManager.OnChar += OnChar;
         SongManager.OnSongFinished += SongFinished;
     }
     
     public static event Action OnNote;
-    public static event Action<char, float> OnInput; // pass in char and timing
+    public static event Action<char, RuntimeNote> OnInput;
     public static event Action OnBeatmapSongFinished;
+    public static event Action<float> OnChangeCurrentWord; // Pass in beat
+    public static event Action<int> OnChangeCurrentChar; // Pass in index
 }

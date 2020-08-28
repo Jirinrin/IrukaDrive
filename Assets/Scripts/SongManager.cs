@@ -6,16 +6,16 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SongManager : MonoBehaviour
 {
-    [NonSerialized] private Beatmap CurrentBeatmap;
+    [NonSerialized] private Beatmap _currentBeatmap;
     
     private AudioSource _audioSource;
 
     private float _secPerBeat;
 
     [NonSerialized] public float SongPosSec;
-    public float SongPosBeats => (SongPosSec - CurrentBeatmap.beatOffset) / _secPerBeat;
-    public float SongPosBeatsMod => Mathf.FloorToInt(SongPosBeats % CurrentBeatmap.beatsPerBar);
-    public float SongPosBars => Mathf.FloorToInt((SongPosBeats - CurrentBeatmap.barOffset) / CurrentBeatmap.beatsPerBar);
+    public float SongPosBeats => (SongPosSec - _currentBeatmap.beatOffset) / _secPerBeat;
+    public float SongPosBeatsMod => Mathf.FloorToInt(SongPosBeats % _currentBeatmap.beatsPerBar);
+    public float SongPosBars => Mathf.FloorToInt((SongPosBeats - _currentBeatmap.barOffset) / _currentBeatmap.beatsPerBar);
     public float Timing => SongPosBeats % 1;
 
     private float _songDspTimeStart;
@@ -29,11 +29,12 @@ public class SongManager : MonoBehaviour
 
     public void LoadSong(Beatmap beatmap)
     {
-        CurrentBeatmap = beatmap;
-        _secPerBeat = 60f / CurrentBeatmap.bpm;
-        _audioSource.clip = CurrentBeatmap.song;
-        
+        _currentBeatmap = beatmap;
+        _secPerBeat = 60f / _currentBeatmap.bpm;
+        _audioSource.clip = _currentBeatmap.song;
+
         _songDspTimeStart = (float)AudioSettings.dspTime;
+        _songFinished = false;
         _audioSource.Play();
     }
 
@@ -42,7 +43,7 @@ public class SongManager : MonoBehaviour
         if (_audioSource.isPlaying)
             SongPosSec = (float)(AudioSettings.dspTime - _songDspTimeStart);
         
-        if (SongPosSec > CurrentBeatmap.song.length & !_songFinished)
+        if (SongPosSec > _currentBeatmap.song.length & !_songFinished)
         {
             _songFinished = true;
             OnSongFinished?.Invoke();

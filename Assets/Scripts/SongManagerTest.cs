@@ -12,7 +12,7 @@ public class SongManagerTest : MonoBehaviour
     private SongManager _songManager;
     private BeatmapManager _beatmapManager;
 
-    [NonSerialized] private float _lastTiming;
+    [NonSerialized] private float? _lastTiming;
 
     private BeatmapResult? _beatmapResult;
     
@@ -20,7 +20,7 @@ public class SongManagerTest : MonoBehaviour
     {
         _songManager = GetComponent<SongManager>();
         _beatmapManager = GetComponent<BeatmapManager>();
-        // Invoke(nameof(ShowResult), 3f);
+        Invoke(nameof(ShowResult), 3f);
     }
 
     private void Update()
@@ -45,9 +45,9 @@ public class SongManagerTest : MonoBehaviour
         _beatmapResult = _beatmapManager.GetResult();
     }
 
-    private void UpdateTiming(char character, float timing)
+    private void UpdateTiming(char character, RuntimeNote note)
     {
-        _lastTiming = timing;
+        _lastTiming = note.ResultTiming;
     }
     
     private void OnEnable()
