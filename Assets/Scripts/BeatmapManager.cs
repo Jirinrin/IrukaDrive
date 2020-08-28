@@ -18,7 +18,7 @@ public enum NoteResult
 {
     Hit,
     WrongChar,
-    Miss, // Not sure whether this one will exist
+    // Miss = null,
 }
 
 public struct RuntimeNote
@@ -121,7 +121,7 @@ public class Beatmap
 
 public struct BeatmapResult
 {
-    public List<RuntimeNote> NoteTimings;
+    public List<RuntimeNote> NoteResults;
 }
 
 public class BeatmapManager : MonoBehaviour
@@ -133,6 +133,7 @@ public class BeatmapManager : MonoBehaviour
 
     private const float SecondsBeforeNextWord = 1f;
     private const float MinimumSecondsAfterWord = .5f;
+    private const float MaxJudgementBeatTimeWindow = 2f;
 
     private List<RuntimeWord> _runtimeNotes;
     
@@ -178,12 +179,12 @@ public class BeatmapManager : MonoBehaviour
     public BeatmapResult? GetResult()
     {
         // May comment out for testing purposes
-        if (!BeatmapFinished)
-            return null;
+        // if (!BeatmapFinished)
+        //     return null;
 
         return new BeatmapResult
         {
-            NoteTimings = _runtimeNotes.SelectMany(word => word.CharNotes).ToList(),
+            NoteResults = _runtimeNotes.SelectMany(word => word.CharNotes).ToList(),
         };
     }
 
@@ -197,7 +198,6 @@ public class BeatmapManager : MonoBehaviour
             _nextWord = _wordsIterator.Current;
         }
         
-        // todo: also make currentWord inactive after some time after the last beat
         _currentWord = _nextWord;
         OnChangeCurrentWord?.Invoke(_currentWord.Beat);
         OnChangeCurrentChar?.Invoke(0);
@@ -236,7 +236,7 @@ public class BeatmapManager : MonoBehaviour
         
         _trackManager.DrawTrackNotes(_songManager.SongPosBeats);
     }
-    
+
     private void Tap() { }
 
     private void OnChar(char character)
@@ -245,16 +245,24 @@ public class BeatmapManager : MonoBehaviour
             return;
         
         var currentCharNote = (RuntimeNote) _currentWord.CurrentInputNote; // c# 8
-        OnInput?.Invoke(character, currentCharNote);
 
         if (character != currentCharNote.Char)
             currentCharNote.Result = NoteResult.WrongChar;
         else
         {
-            currentCharNote.Result = NoteResult.Hit;
             var beatSnapshot = _songManager.SongPosBeats;
-            currentCharNote.ResultTiming = beatSnapshot - currentCharNote.Beat;
-            // todo: scale this by the bpm (maybe somewhere else than here)
+            var timing = beatSnapshot - currentCharNote.Beat;
+            Debug.Log("TIMING");
+            Debug.Log(timing);
+            if (Math.Abs(timing) < MaxJudgementBeatTimeWindow)
+            {
+                Debug.Log("gotem");
+                currentCharNote.ResultTiming = timing;
+                currentCharNote.Result = NoteResult.Hit;
+                // todo: scale this by the bpm (maybe somewhere else than here)
+            }
+            else
+                currentCharNote.Result = null;
         }
 
         _currentWord.AdvanceInputNote();
@@ -269,7 +277,6 @@ public class BeatmapManager : MonoBehaviour
     }
     
     public static event Action OnNote;
-    public static event Action<char, RuntimeNote> OnInput; // Pass in inputted char and expected note
     public static event Action OnBeatmapSongFinished;
     public static event Action<float> OnChangeCurrentWord; // Pass in beat
     public static event Action<int?> OnChangeCurrentChar; // Pass in index

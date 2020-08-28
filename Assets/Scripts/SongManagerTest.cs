@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +13,7 @@ public class SongManagerTest : MonoBehaviour
     private SongManager _songManager;
     private BeatmapManager _beatmapManager;
 
-    [NonSerialized] private float? _lastTiming;
-
-    private BeatmapResult? _beatmapResult;
+    private BeatmapResult? _beatmapResult; // krijg ik niet geupdate ofzo...
     
     private void Start()
     {
@@ -30,13 +29,15 @@ public class SongManagerTest : MonoBehaviour
             $"{_beatmapManager.currentBeatmap.bpm} BPM",
             $"{_songManager.SongPosSec} seconds in",
             $"{_songManager.SongPosBeatsMod} beats in",
-            $"{_songManager.SongPosBars} bars in",
-            $"{_lastTiming} is last timing"
+            $"{_songManager.SongPosBars} bars in"
         );
+        ShowResult();
         if (_beatmapResult != null)
             resultsTextBox.text = string.Join(Environment.NewLine,
                 "Results:",
-                string.Join(", ", _beatmapResult?.NoteTimings)
+                string.Join(", ", _beatmapResult?.NoteResults.Select(note => 
+                    $"[{note.Result} - {note.ResultTiming}]"
+                ))
             );
     }
 
@@ -45,14 +46,8 @@ public class SongManagerTest : MonoBehaviour
         _beatmapResult = _beatmapManager.GetResult();
     }
 
-    private void UpdateTiming(char character, RuntimeNote note)
-    {
-        _lastTiming = note.ResultTiming;
-    }
-    
     private void OnEnable()
     {
-        BeatmapManager.OnInput += UpdateTiming;
         BeatmapManager.OnBeatmapSongFinished += ShowResult;
     }
 }

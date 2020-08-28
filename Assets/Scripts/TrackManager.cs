@@ -5,7 +5,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-// todo: effect when player hits / misses / nears char, and make that persist in the char as it moves beyond the hantei 
+// todo: effect when player hits / misses / nears char, and make that persist in the char as it moves beyond the hantei
 public class TrackManager : MonoBehaviour
 {
     [SerializeField] private GameObject judgementTransform;
@@ -27,6 +27,7 @@ public class TrackManager : MonoBehaviour
         }
     }
 
+    // todo: have basically just the whole track move instead of each object individually
     public void DrawTrackNotes(float timeBeats)
     {
         foreach (var word in _words)
@@ -52,6 +53,7 @@ public class TrackManager : MonoBehaviour
     
     private void ChangeCurrentWord(float beat)
     {
+        Debug.Log("new current word!");
         _currentWordObjects = _noteObjectLookup[beat].Values.ToList();
         // If they're transparent by default:
         // foreach (var obj in _currentWordObjects)
@@ -62,13 +64,16 @@ public class TrackManager : MonoBehaviour
     
     private void ChangeCurrentChar(int? charIndex)
     {
+        Debug.Log("new current char!");
+        Debug.Log(charIndex);
+        Debug.Log(_currentWordObjects.Count); // is 0 bij de eerste...
         if (charIndex == null)
         {
             _currentWordObjects.Last().color = Color.white;
             return;
         }
 
-        var index = charIndex.GetValueOrDefault();
+        var index = (int) charIndex;
             
         if (index >= _currentWordObjects.Count)
             return;
