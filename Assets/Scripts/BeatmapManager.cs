@@ -34,48 +34,75 @@ public class RuntimeWord
     public readonly float Beat;
     public readonly float LastBeat;
     public readonly List<RuntimeNote> CharNotes;
-    private List<RuntimeNote>.Enumerator _inputIterator;
-    public RuntimeNote CurrentInputNote => _inputIterator.Current;
-    private int _currentInputCharIndex;
-    private List<RuntimeNote>.Enumerator _noteIterator;
+    private readonly Action<int?> _onChangeInputNoteIndex;
+    
+    private int _inputNoteIndex;
+    private int _noteIndex;
+    public RuntimeNote? CurrentInputNote;
+    public RuntimeNote? CurrentNote;
     public bool Finished;
     private bool _passed;
 
-    public RuntimeWord(List<RuntimeNote> charNotes)
+    public RuntimeWord(List<RuntimeNote> charNotes, Action<int?> onChangeInputNoteIndex)
     {
         CharNotes = charNotes;
+        if (!CharNotes.Any())
+            throw new Exception("Empty word: " + this);
+        
         Beat = CharNotes.First().Beat;
         LastBeat = CharNotes.Last().Beat;
-        _inputIterator = CharNotes.GetEnumerator();
-        _noteIterator = CharNotes.GetEnumerator();
-        _currentInputCharIndex = 0;
-        if (!_inputIterator.MoveNext())
-            throw new Exception("Empty word: " + this);
-        _noteIterator.MoveNext();
+        CurrentInputNote = CharNotes[0];
+        CurrentNote = CharNotes[0];
+        _onChangeInputNoteIndex = onChangeInputNoteIndex;
+    }
+    
+    public void SetCurrentInputNote(int? index)
+    {
+        _onChangeInputNoteIndex.Invoke(index);
+        if (index == null)
+            CurrentInputNote = null;
+        else
+            CurrentInputNote = CharNotes[(int) index]; // c# 8
     }
 
-    public int? AdvanceInputNote()
+    public void AdvanceInputNote()
     {
         if (Finished)
-            return null;
+            return;
         
-        if (!_inputIterator.MoveNext())
+        _inputNoteIndex++;
+        if (_inputNoteIndex >= CharNotes.Count)
+        {
             Finished = true;
-        _currentInputCharIndex++;
-        return _currentInputCharIndex;
-        // todo: test
+            SetCurrentInputNote(null);
+            return;
+        }
+
+        SetCurrentInputNote(_inputNoteIndex);
     }
 
     public bool CheckPassedNote(float beatTime)
     {
-        if (_passed || !(_noteIterator.Current.Beat < beatTime))
+        if (_passed || !(CurrentNote?.Beat < beatTime))
             return false;
-        
+
         // Passed new note!
-        if (!_noteIterator.MoveNext())
+        _noteIndex++;
+        if (_noteIndex >= CharNotes.Count)
+        {
             _passed = true;
-        
-        Debug.Log("Passed!");
+            CurrentNote = null;
+        }
+        else
+            CurrentNote = CharNotes[_noteIndex];
+
+        // todo: maybe make this flip in-between notes or sth
+        // if (_inputNoteIndex < _noteIndex && CurrentInputNote?.Result == null)
+        // {
+        //     _inputNoteIndex = _noteIndex;
+        //     SetCurrentInputNote(_passed ? (int?) null : _inputNoteIndex);
+        // }
+
         return true;
     }
 }
@@ -134,7 +161,7 @@ public class BeatmapManager : MonoBehaviour
                     Beat = note.bar * currentBeatmap.beatsPerBar + note.beat + i * note.beatInterval,
                     Char = c
                 }
-            ).ToList())
+            ).ToList(), OnChangeCurrentChar)
         ).ToList();
         
         _songManager.LoadSong(currentBeatmap);
@@ -194,7 +221,6 @@ public class BeatmapManager : MonoBehaviour
         if (_lastWordReached || _songManager.SongPosBeats < _switchNextWordThreshold)
             return;
         
-        Debug.Log("Next word~!");
         // Next word threshold passed!
         AdvanceWord();
     }
@@ -217,8 +243,9 @@ public class BeatmapManager : MonoBehaviour
     {
         if (_currentWord.Finished)
             return;
-
-        var currentCharNote = _currentWord.CurrentInputNote;
+        
+        var currentCharNote = (RuntimeNote) _currentWord.CurrentInputNote; // c# 8
+        OnInput?.Invoke(character, currentCharNote);
 
         if (character != currentCharNote.Char)
             currentCharNote.Result = NoteResult.WrongChar;
@@ -230,11 +257,7 @@ public class BeatmapManager : MonoBehaviour
             // todo: scale this by the bpm (maybe somewhere else than here)
         }
 
-        OnInput?.Invoke(character, currentCharNote);
-
-        var newIndex = _currentWord.AdvanceInputNote();
-        if (newIndex != null)
-            OnChangeCurrentChar?.Invoke((int) newIndex);
+        _currentWord.AdvanceInputNote();
     }
 
     private void SongFinished() => OnBeatmapSongFinished?.Invoke();
@@ -246,8 +269,8 @@ public class BeatmapManager : MonoBehaviour
     }
     
     public static event Action OnNote;
-    public static event Action<char, RuntimeNote> OnInput;
+    public static event Action<char, RuntimeNote> OnInput; // Pass in inputted char and expected note
     public static event Action OnBeatmapSongFinished;
     public static event Action<float> OnChangeCurrentWord; // Pass in beat
-    public static event Action<int> OnChangeCurrentChar; // Pass in index
+    public static event Action<int?> OnChangeCurrentChar; // Pass in index
 }

@@ -60,8 +60,16 @@ public class TrackManager : MonoBehaviour
         // }
     }
     
-    private void ChangeCurrentChar(int index)
+    private void ChangeCurrentChar(int? charIndex)
     {
+        if (charIndex == null)
+        {
+            _currentWordObjects.Last().color = Color.white;
+            return;
+        }
+
+        var index = charIndex.GetValueOrDefault();
+            
         if (index >= _currentWordObjects.Count)
             return;
         
