@@ -3,10 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
-using UnityEngine.InputSystem.LowLevel;
 
-[RequireComponent(typeof(PlayerInputManager))]
+[RequireComponent(typeof(PlayerInput))]
 public class PlayerInputManager : MonoBehaviour
 {
     [SerializeField] private GameObject game;
