@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 
 namespace BeatmapEditor
@@ -50,6 +51,12 @@ namespace BeatmapEditor
                     noteObject.transform.localPosition = new Vector3(pos, 0, 0);
                 }
             }
+        }
+
+        private void DrawLines()
+        {
+            var path = new PathProperties();
+            // Line.Instantiate()
         }
 
         private const float DefaultSpacing = 20f;
