@@ -4,128 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[Serializable]
-public struct BeatmapWord
-{
-    public int bar;
-    public float beat;
-    public string text; // will be split up into chars
-    public float beatInterval;
-}
-
-public enum NoteResult
-{
-    Hit,
-    WrongChar,
-    // Miss = null,
-}
-
-public class RuntimeNote : ParsedNote
-{
-    public RuntimeNote(ParsedNote baseNote)
-    {
-        Beat = baseNote.Beat;
-        Char = baseNote.Char;
-    }
-    public NoteResult? Result;
-    public float? ResultTiming;
-}
-
-public class RuntimeWord
-{
-    public readonly float Beat;
-    public readonly float LastBeat;
-    public readonly List<RuntimeNote> CharNotes;
-    private readonly Action<int?> _onChangeInputNoteIndex;
-    
-    private int _inputNoteIndex;
-    private int _noteIndex;
-    public RuntimeNote CurrentInputNote; // c# 8: add nullable question mark
-    public RuntimeNote CurrentNote; // c# 8: add nullable question mark
-    public bool Finished;
-    private bool _passed;
-
-    public RuntimeWord(List<ParsedNote> charNotes, Action<int?> onChangeInputNoteIndex)
-    {
-        CharNotes = charNotes.Select(note => new RuntimeNote(note)).ToList();
-        if (!CharNotes.Any())
-            throw new Exception("Empty word: " + this);
-        
-        Beat = CharNotes.First().Beat;
-        LastBeat = CharNotes.Last().Beat;
-        CurrentInputNote = CharNotes[0];
-        CurrentNote = CharNotes[0];
-        _onChangeInputNoteIndex = onChangeInputNoteIndex;
-    }
-    
-    public void SetCurrentInputNote(int? index)
-    {
-        _onChangeInputNoteIndex.Invoke(index);
-        if (index == null)
-            CurrentInputNote = null;
-        else
-            CurrentInputNote = CharNotes[(int) index]; // c# 8
-    }
-
-    public void AdvanceInputNote()
-    {
-        if (Finished)
-            return;
-        
-        _inputNoteIndex++;
-        if (_inputNoteIndex >= CharNotes.Count)
-        {
-            Finished = true;
-            SetCurrentInputNote(null);
-            return;
-        }
-
-        SetCurrentInputNote(_inputNoteIndex);
-    }
-
-    public bool CheckPassedNote(float beatTime)
-    {
-        if (_passed || !(CurrentNote?.Beat < beatTime))
-            return false;
-
-        // Passed new note!
-        _noteIndex++;
-        if (_noteIndex >= CharNotes.Count)
-        {
-            _passed = true;
-            CurrentNote = null;
-        }
-        else
-            CurrentNote = CharNotes[_noteIndex];
-
-        // todo: maybe make this flip in-between notes or sth
-        // if (_inputNoteIndex < _noteIndex && CurrentInputNote?.Result == null)
-        // {
-        //     _inputNoteIndex = _noteIndex;
-        //     SetCurrentInputNote(_passed ? (int?) null : _inputNoteIndex);
-        // }
-
-        return true;
-    }
-}
-
-[Serializable]
-public class Beatmap
-{
-    public AudioClip song;
-    public float bpm;
-    public float beatOffset;
-    [Range(2,4)] public int beatsPerBar = 4;
-    public int barOffset;
-    // Expected to already be sorted
-    [FormerlySerializedAs("notes")] public List<BeatmapWord> words;
-}
-
-public struct BeatmapResult
-{
-    public List<RuntimeNote> NoteResults;
-}
-
 public class BeatmapManager : MonoBehaviour
 {
     /* [NonSerialized] public static */ public Beatmap currentBeatmap;
@@ -158,7 +36,7 @@ public class BeatmapManager : MonoBehaviour
     private void LoadBeatmap()
     {
         _runtimeNotes = currentBeatmap.words.Select(word =>
-            new RuntimeWord(word.ParseNotes(currentBeatmap.beatsPerBar), OnChangeCurrentChar)
+            new RuntimeWord(word.ParseNotes(), OnChangeCurrentChar)
         ).ToList();
         
         _songManager.LoadSong(currentBeatmap);
@@ -277,4 +155,125 @@ public class BeatmapManager : MonoBehaviour
     public static event Action OnBeatmapSongFinished;
     public static event Action<float> OnChangeCurrentWord; // Pass in beat
     public static event Action<int?> OnChangeCurrentChar; // Pass in index
+}
+
+[Serializable]
+public struct BeatmapWord
+{
+    public float beat;
+    public string text; // will be split up into chars
+    public float beatInterval;
+}
+
+public enum NoteResult
+{
+    Hit,
+    WrongChar,
+    // Miss = null,
+}
+
+public class RuntimeNote : ParsedNote
+{
+    public RuntimeNote(ParsedNote baseNote)
+    {
+        Beat = baseNote.Beat;
+        Char = baseNote.Char;
+    }
+    public NoteResult? Result;
+    public float? ResultTiming;
+}
+
+public class RuntimeWord
+{
+    public readonly float Beat;
+    public readonly float LastBeat;
+    public readonly List<RuntimeNote> CharNotes;
+    private readonly Action<int?> _onChangeInputNoteIndex;
+    
+    private int _inputNoteIndex;
+    private int _noteIndex;
+    public RuntimeNote CurrentInputNote; // c# 8: add nullable question mark
+    public RuntimeNote CurrentNote; // c# 8: add nullable question mark
+    public bool Finished;
+    private bool _passed;
+
+    public RuntimeWord(List<ParsedNote> charNotes, Action<int?> onChangeInputNoteIndex)
+    {
+        CharNotes = charNotes.Select(note => new RuntimeNote(note)).ToList();
+        if (!CharNotes.Any())
+            throw new Exception("Empty word: " + this);
+        
+        Beat = CharNotes.First().Beat;
+        LastBeat = CharNotes.Last().Beat;
+        CurrentInputNote = CharNotes[0];
+        CurrentNote = CharNotes[0];
+        _onChangeInputNoteIndex = onChangeInputNoteIndex;
+    }
+    
+    public void SetCurrentInputNote(int? index)
+    {
+        _onChangeInputNoteIndex.Invoke(index);
+        if (index == null)
+            CurrentInputNote = null;
+        else
+            CurrentInputNote = CharNotes[(int) index]; // c# 8
+    }
+
+    public void AdvanceInputNote()
+    {
+        if (Finished)
+            return;
+        
+        _inputNoteIndex++;
+        if (_inputNoteIndex >= CharNotes.Count)
+        {
+            Finished = true;
+            SetCurrentInputNote(null);
+            return;
+        }
+
+        SetCurrentInputNote(_inputNoteIndex);
+    }
+
+    public bool CheckPassedNote(float beatTime)
+    {
+        if (_passed || !(CurrentNote?.Beat < beatTime))
+            return false;
+
+        // Passed new note!
+        _noteIndex++;
+        if (_noteIndex >= CharNotes.Count)
+        {
+            _passed = true;
+            CurrentNote = null;
+        }
+        else
+            CurrentNote = CharNotes[_noteIndex];
+
+        // todo: maybe make this flip in-between notes or sth
+        // if (_inputNoteIndex < _noteIndex && CurrentInputNote?.Result == null)
+        // {
+        //     _inputNoteIndex = _noteIndex;
+        //     SetCurrentInputNote(_passed ? (int?) null : _inputNoteIndex);
+        // }
+
+        return true;
+    }
+}
+
+[Serializable]
+public class Beatmap
+{
+    public AudioClip song;
+    public float bpm;
+    public float beatOffset;
+    [Range(2,4)] public int beatsPerBar = 4;
+    public int barOffset;
+    // Expected to already be sorted
+    [FormerlySerializedAs("notes")] public List<BeatmapWord> words;
+}
+
+public struct BeatmapResult
+{
+    public List<RuntimeNote> NoteResults;
 }
