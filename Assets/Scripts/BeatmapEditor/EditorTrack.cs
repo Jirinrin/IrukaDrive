@@ -53,24 +53,26 @@ namespace BeatmapEditor
         }
 
         private const float DefaultSpacing = 20f;
+        private const float MaxZoomScale = 5f;
         private float _scaleX = 1f;
-        public void Zoom(float delta, float screenPivot)
+        public void Zoom(float delta, float screenPivotX)
         {
             var oldScale = _scaleX;
-            _scaleX = Mathf.Max(_scaleX + delta, 1f);
+            _scaleX = Mathf.Clamp(_scaleX + delta, 1f, MaxZoomScale);
             var scaleDiff = _scaleX / oldScale;
             
 
-            var pivotX = _panX + screenPivot;
+            var pivotX = _panX + screenPivotX;
             Pan(-pivotX * (scaleDiff-1f));
             DrawTrackNotes();
         }
 
         // panX gets inversed to make 'the pan amount' more intuitive to deal with
-        private float _panX = 0f;
+        private const float MinimumPan = 20f;
+        private float _panX = MinimumPan;
         public void Pan(float deltaX)
         {
-            _panX -= deltaX; // todo: clamp at track fitting in screen
+            _panX = Mathf.Max(_panX - deltaX, MinimumPan); // todo: clamp at track fitting in screen
             transform.localPosition = new Vector3(-_panX, 0, 0);
         }
     }

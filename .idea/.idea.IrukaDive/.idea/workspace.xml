@@ -21,10 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0e9d1359-b315-42cc-b350-b86ccf235c38" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.IrukaDive/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IrukaDive/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/BeatmapEditor.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/BeatmapEditor.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapBaseTypes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapBaseTypes.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/BeatmapEditorManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/BeatmapEditorManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackGestures.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackGestures.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,15 +43,15 @@
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapTransformations.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackPanner.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/TrackManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackScrubber.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Singleton.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackGestures.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/ScreenToCanvas.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapBaseTypes.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TrackManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/BeatmapEditorManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackGestures.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" />
       </list>
     </option>
   </component>

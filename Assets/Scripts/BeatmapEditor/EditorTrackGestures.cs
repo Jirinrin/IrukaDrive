@@ -11,7 +11,7 @@ namespace BeatmapEditor
         
         public void OnDrag(PointerEventData eventData)
         {
-            EditorTrack.Instance.Pan(eventData.delta.x);
+            EditorTrack.Instance.Pan(eventData.delta.x * ScreenToCanvas.Factor);
             EditorTrack.Instance.Zoom(eventData.delta.y / 60f, eventData.position.x * ScreenToCanvas.Factor);
         }
 
