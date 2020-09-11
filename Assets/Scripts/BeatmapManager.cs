@@ -21,7 +21,7 @@ public enum NoteResult
     // Miss = null,
 }
 
-public struct RuntimeNote
+public class RuntimeNote
 {
     public float Beat;
     public char Char;
@@ -38,8 +38,8 @@ public class RuntimeWord
     
     private int _inputNoteIndex;
     private int _noteIndex;
-    public RuntimeNote? CurrentInputNote;
-    public RuntimeNote? CurrentNote;
+    public RuntimeNote CurrentInputNote; // c# 8: add nullable question mark
+    public RuntimeNote CurrentNote; // c# 8: add nullable question mark
     public bool Finished;
     private bool _passed;
 
@@ -270,7 +270,8 @@ public class BeatmapManager : MonoBehaviour
 
     private void SongFinished() => OnBeatmapSongFinished?.Invoke();
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         PlayerInputManager.OnTap += Tap;
         PlayerInputManager.OnChar += OnChar;
         SongManager.OnSongFinished += SongFinished;
