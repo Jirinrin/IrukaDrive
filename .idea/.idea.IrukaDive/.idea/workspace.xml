@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0e9d1359-b315-42cc-b350-b86ccf235c38" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapBaseTypes.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapBaseTypes.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackScrubber.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackScrubber.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.IrukaDive/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IrukaDive/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Character.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Character.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/BeatmapEditor.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/BeatmapEditor.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/TestPanel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/TestPanel.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackManager.cs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/BeatmapEditorManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4CC8EC07-5538-4164-96E5-DB5D391208AC/25/abe1bb1c/Object.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapTransformations.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapBaseTypes.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/BeatmapEditorManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackPanner.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TrackManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackScrubber.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Singleton.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackGestures.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="943" y="325" width="672" height="678" key="search.everywhere.popup" timestamp="1599839988196">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="943" y="325" width="672" height="678" key="search.everywhere.popup/0.0.2560.1440@0.0.2560.1440" timestamp="1599839988196" />
+  </component>
+</project>

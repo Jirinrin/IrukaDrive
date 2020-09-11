@@ -37,8 +37,12 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="BeatmapBaseTypes.cs" t="Include" />
           <e p="BeatmapEditor" t="Include">
-            <e p="TestPanel.cs" t="Include" />
+            <e p="BeatmapEditorManager.cs" t="Include" />
+            <e p="EditorTrack.cs" t="Include" />
+            <e p="EditorTrackGestures.cs" t="Include" />
+            <e p="EditorTrackScrubber.cs" t="Include" />
           </e>
           <e p="BeatmapManager.cs" t="Include" />
           <e p="C.cs" t="Include" />
@@ -46,6 +50,7 @@
           <e p="NoteFx.cs" t="Include" />
           <e p="PlayerInputManager.cs" t="Include" />
           <e p="SfxManager.cs" t="Include" />
+          <e p="Singleton.cs" t="Include" />
           <e p="SongManager.cs" t="Include" />
           <e p="SongManagerTest.cs" t="Include" />
           <e p="TapFx.cs" t="Include" />

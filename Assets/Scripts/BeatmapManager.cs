@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
-public struct Note
+public struct BeatmapWord
 {
     public int bar;
     public float beat;
@@ -21,10 +20,13 @@ public enum NoteResult
     // Miss = null,
 }
 
-public class RuntimeNote
+public class RuntimeNote : ParsedNote
 {
-    public float Beat;
-    public char Char;
+    public RuntimeNote(ParsedNote baseNote)
+    {
+        Beat = baseNote.Beat;
+        Char = baseNote.Char;
+    }
     public NoteResult? Result;
     public float? ResultTiming;
 }
@@ -43,9 +45,9 @@ public class RuntimeWord
     public bool Finished;
     private bool _passed;
 
-    public RuntimeWord(List<RuntimeNote> charNotes, Action<int?> onChangeInputNoteIndex)
+    public RuntimeWord(List<ParsedNote> charNotes, Action<int?> onChangeInputNoteIndex)
     {
-        CharNotes = charNotes;
+        CharNotes = charNotes.Select(note => new RuntimeNote(note)).ToList();
         if (!CharNotes.Any())
             throw new Exception("Empty word: " + this);
         
@@ -116,7 +118,7 @@ public class Beatmap
     [Range(2,4)] public int beatsPerBar = 4;
     public int barOffset;
     // Expected to already be sorted
-    public List<Note> notes;
+    [FormerlySerializedAs("notes")] public List<BeatmapWord> words;
 }
 
 public struct BeatmapResult
@@ -126,10 +128,10 @@ public struct BeatmapResult
 
 public class BeatmapManager : MonoBehaviour
 {
+    /* [NonSerialized] public static */ public Beatmap currentBeatmap;
+    
     private SongManager _songManager;
     private TrackManager _trackManager;
-    
-    /* [NonSerialized] public static */ public Beatmap currentBeatmap;
 
     private const float SecondsBeforeNextWord = 1f;
     private const float MinimumSecondsAfterWord = .5f;
@@ -155,14 +157,8 @@ public class BeatmapManager : MonoBehaviour
 
     private void LoadBeatmap()
     {
-        _runtimeNotes = currentBeatmap.notes.Select(note =>
-            new RuntimeWord(note.text.ToCharArray().Select((c, i) =>
-                new RuntimeNote
-                {
-                    Beat = note.bar * currentBeatmap.beatsPerBar + note.beat + i * note.beatInterval,
-                    Char = c
-                }
-            ).ToList(), OnChangeCurrentChar)
+        _runtimeNotes = currentBeatmap.words.Select(word =>
+            new RuntimeWord(word.ParseNotes(currentBeatmap.beatsPerBar), OnChangeCurrentChar)
         ).ToList();
         
         _songManager.LoadSong(currentBeatmap);

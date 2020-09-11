@@ -20,10 +20,9 @@ public class TrackManager : MonoBehaviour
     {
         _words = words;
         _noteObjectLookup = new Dictionary<float, Dictionary<float, TextMeshPro>>();
-        foreach (var word in words)
-        {
+        foreach (var word in _words)
             _noteObjectLookup[word.Beat] = new Dictionary<float, TextMeshPro>();
-        }
+        
         // To instantiate the necessary game objects -- this will be made more elegant in the future
         DrawTrackNotes(0f);
     }
