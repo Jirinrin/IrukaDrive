@@ -14,17 +14,18 @@ public class TrackManager : MonoBehaviour
     private List<RuntimeWord> _words;
     // todo: check if float as dictionary key works / doesn't result in weird memory leaks
     private Dictionary<float, Dictionary<float, TextMeshPro>> _noteObjectLookup;
-    private List<TextMeshPro> _currentWordObjects;
+    private List<TextMeshPro> _currentWordCharObjects;
 
     public void InitTrack(List<RuntimeWord> words)
     {
-        Debug.Log("init track");
         _words = words;
         _noteObjectLookup = new Dictionary<float, Dictionary<float, TextMeshPro>>();
         foreach (var word in words)
         {
             _noteObjectLookup[word.Beat] = new Dictionary<float, TextMeshPro>();
         }
+        // To instantiate the necessary game objects -- this will be made more elegant in the future
+        DrawTrackNotes(0f);
     }
 
     // todo: have basically just the whole track move instead of each object individually
@@ -34,15 +35,15 @@ public class TrackManager : MonoBehaviour
         {
             // todo: group characters by word (with a parent) or something
             
-            var wordObjectsLookup = _noteObjectLookup[word.Beat];
+            var wordCharObjectsLookup = _noteObjectLookup[word.Beat];
             
             foreach (var charNote in word.CharNotes)
             {
                 // todo: recycle stuff
-                if (!wordObjectsLookup.ContainsKey(charNote.Beat))
-                    wordObjectsLookup[charNote.Beat] = Instantiate(characterPrefab, judgementTransform.transform).GetComponent<TextMeshPro>();
+                if (!wordCharObjectsLookup.ContainsKey(charNote.Beat))
+                    wordCharObjectsLookup[charNote.Beat] = Instantiate(characterPrefab, judgementTransform.transform).GetComponent<TextMeshPro>();
 
-                var noteObject = wordObjectsLookup[charNote.Beat];
+                var noteObject = wordCharObjectsLookup[charNote.Beat];
                 var pos = charNote.Beat - timeBeats;
                 
                 noteObject.text = charNote.Char.ToString();
@@ -53,8 +54,7 @@ public class TrackManager : MonoBehaviour
     
     private void ChangeCurrentWord(float beat)
     {
-        Debug.Log("new current word!");
-        _currentWordObjects = _noteObjectLookup[beat].Values.ToList();
+        _currentWordCharObjects = _noteObjectLookup[beat].Values.ToList();
         // If they're transparent by default:
         // foreach (var obj in _currentWordObjects)
         // {
@@ -64,23 +64,20 @@ public class TrackManager : MonoBehaviour
     
     private void ChangeCurrentChar(int? charIndex)
     {
-        Debug.Log("new current char!");
-        Debug.Log(charIndex);
-        Debug.Log(_currentWordObjects.Count); // is 0 bij de eerste...
         if (charIndex == null)
         {
-            _currentWordObjects.Last().color = Color.white;
+            _currentWordCharObjects.Last().color = Color.white;
             return;
         }
 
         var index = (int) charIndex;
             
-        if (index >= _currentWordObjects.Count)
+        if (index >= _currentWordCharObjects.Count)
             return;
         
-        _currentWordObjects[index].color = Color.red;
+        _currentWordCharObjects[index].color = Color.red;
         if (index > 0)
-            _currentWordObjects[index-1].color = Color.white;
+            _currentWordCharObjects[index-1].color = Color.white;
     }
 
     private void OnEnable()
