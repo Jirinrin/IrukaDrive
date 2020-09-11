@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VectorGraphics;
 using UnityEngine;
 
 namespace BeatmapEditor
@@ -55,7 +54,6 @@ namespace BeatmapEditor
 
         private void DrawLines()
         {
-            var path = new PathProperties();
             // Line.Instantiate()
         }
 

@@ -4,7 +4,6 @@
     <e p="C:\Users\侍鈴\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
     <e p="C:\Users\侍鈴\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_IrukaDive.1236043165.00" t="ExcludeRecursive" />
     <e p="C:\Users\侍鈴\Documents\Unity\IrukaDive" t="IncludeRecursive">
-      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="_Import" t="Include">
@@ -35,91 +34,6 @@
             <e p="Sprites" t="Include">
               <e p="EmojiOne Attribution.txt" t="Include" />
             </e>
-          </e>
-          <e p="ui-shapes-kit" t="Include">
-            <e p="Assets" t="Include">
-              <e p="TestShaders" t="Include">
-                <e p="lineUvTest.shader" t="Include" />
-                <e p="uiUvTest.shader" t="Include" />
-              </e>
-              <e p="ThisOtherThing" t="Include">
-                <e p="UI Shapes Kit" t="Include">
-                  <e p="Geometry" t="Include">
-                    <e p="Editor" t="Include">
-                      <e p="CustomDrawers" t="Include">
-                        <e p="EllipsePropertiesDrawer.cs" t="Include" />
-                        <e p="LinePropertiesDrawer.cs" t="Include" />
-                        <e p="OutlineShapePropertiesDrawer.cs" t="Include" />
-                        <e p="PointListDrawer.cs" t="Include" />
-                        <e p="PointListPropertiesDrawer.cs" t="Include" />
-                        <e p="PolygonPropertiesDrawer.cs" t="Include" />
-                        <e p="RoundedPropertiesDrawer.cs" t="Include" />
-                        <e p="RoundingPropertiesDrawer.cs" t="Include" />
-                        <e p="ShadowsPropertiesDrawer.cs" t="Include" />
-                        <e p="ShapePropertiesDrawer.cs" t="Include" />
-                      </e>
-                      <e p="Editors" t="Include">
-                        <e p="ArcEditor.cs" t="Include" />
-                        <e p="EdgeGradientEditor.cs" t="Include" />
-                        <e p="EllipseEditor.cs" t="Include" />
-                        <e p="EmptyFillRectEditor.cs" t="Include" />
-                        <e p="LineEditor.cs" t="Include" />
-                        <e p="PixelLineEditor.cs" t="Include" />
-                        <e p="PolygonEditor.cs" t="Include" />
-                        <e p="RectangleEditor.cs" t="Include" />
-                        <e p="SectorEditor.cs" t="Include" />
-                      </e>
-                      <e p="MenuItems.cs" t="Include" />
-                    </e>
-                    <e p="IShape.cs" t="Include" />
-                    <e p="Shapes" t="Include">
-                      <e p="Arc.cs" t="Include" />
-                      <e p="EdgeGradient.cs" t="Include" />
-                      <e p="Ellipse.cs" t="Include" />
-                      <e p="EmptyFillRect.cs" t="Include" />
-                      <e p="Line.cs" t="Include" />
-                      <e p="PixelLine.cs" t="Include" />
-                      <e p="Polygon.cs" t="Include" />
-                      <e p="Rectangle.cs" t="Include" />
-                      <e p="Sector.cs" t="Include" />
-                    </e>
-                    <e p="ShapeUtils" t="Include">
-                      <e p="Arcs.cs" t="Include" />
-                      <e p="Ellipses.cs" t="Include" />
-                      <e p="Lines.cs" t="Include" />
-                      <e p="PointsGenerators" t="Include">
-                        <e p="PointsGenerators.cs" t="Include" />
-                      </e>
-                      <e p="PointsList.cs" t="Include" />
-                      <e p="Polygons.cs" t="Include" />
-                      <e p="Rects.cs" t="Include" />
-                      <e p="RoundedRects.cs" t="Include" />
-                    </e>
-                    <e p="UIGeoUtils.cs" t="Include" />
-                  </e>
-                </e>
-                <e p="Utils" t="Include">
-                  <e p="Animation" t="Include">
-                    <e p="Editor" t="Include">
-                      <e p="ValueSetterEditor.cs" t="Include" />
-                      <e p="ValueSetterEditor2.cs" t="Include" />
-                    </e>
-                    <e p="ValueSetter.cs" t="Include" />
-                    <e p="ValueSetter2.cs" t="Include" />
-                  </e>
-                  <e p="Attributes" t="Include">
-                    <e p="Editor" t="Include">
-                      <e p="MinAttributeDrawer.cs" t="Include" />
-                    </e>
-                    <e p="MinAttribute.cs" t="Include" />
-                  </e>
-                </e>
-              </e>
-            </e>
-            <e p="ProjectSettings" t="Include">
-              <e p="ProjectVersion.txt" t="Include" />
-            </e>
-            <e p="todo.txt" t="Include" />
           </e>
         </e>
         <e p="Scripts" t="Include">

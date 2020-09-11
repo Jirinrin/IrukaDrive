@@ -19,15 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e9d1359-b315-42cc-b350-b86ccf235c38" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.IrukaDive/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IrukaDive/.idea/indexLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.IrukaDive/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IrukaDive/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Import/ui-shapes-kit/Assets/ThisOtherThing/Utils/Attributes/Editor/MinAttributeDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Import/ui-shapes-kit/Assets/ThisOtherThing/Utils/Attributes/Editor/MinAttributeDrawer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Import/ui-shapes-kit/Assets/ThisOtherThing/Utils/Attributes/MinAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Import/ui-shapes-kit/Assets/ThisOtherThing/Utils/Attributes/MinAttribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-    </list>
+    <list default="true" id="0e9d1359-b315-42cc-b350-b86ccf235c38" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,16 +29,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.12/Runtime/VectorUtils.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.12/Runtime/VectorClip.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/26B90159-625A-4447-9ED0-F94D5C96A841/b5/676c2d15/PathCorner.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/BeatmapEditorManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4CC8EC07-5538-4164-96E5-DB5D391208AC/b0/60b1f1bf/Cursor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.12/Runtime/VectorScene.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4CC8EC07-5538-4164-96E5-DB5D391208AC/25/abe1bb1c/Object.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.12/Runtime/SVGParser.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4CC8EC07-5538-4164-96E5-DB5D391208AC/53/1676db2e/CursorMode.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.vectorgraphics@2.0.0-preview.12/Runtime/VectorTessellation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/IL/A69E2F0E-D174-4A8D-A6C1-87A2D925B994/9f/fbba0947/02000022pdb.il" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -63,10 +51,16 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackGestures.cs" />
         <option value="$PROJECT_DIR$/Assets/_Import/ui-shapes-kit/Assets/ThisOtherThing/Utils/Attributes/Editor/MinAttributeDrawer.cs" />
         <option value="$PROJECT_DIR$/Assets/_Import/ui-shapes-kit/Assets/ThisOtherThing/Utils/Attributes/MinAttribute.cs" />
-        <option value="$PROJECT_DIR$/Packages/manifest.json" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" />
+        <option value="$PROJECT_DIR$/Packages/manifest.json" />
       </list>
     </option>
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
