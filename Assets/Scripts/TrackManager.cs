@@ -53,6 +53,7 @@ public class TrackManager : MonoBehaviour
     
     private void ChangeCurrentWord(float beat)
     {
+        // todo: de-mark previous current word if there was still some current
         _currentWordCharObjects = _noteObjectLookup[beat].Values.ToList();
         // If they're transparent by default:
         // foreach (var obj in _currentWordObjects)

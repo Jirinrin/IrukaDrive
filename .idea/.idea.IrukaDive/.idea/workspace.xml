@@ -20,14 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e9d1359-b315-42cc-b350-b86ccf235c38" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.IrukaDive/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IrukaDive/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.IrukaDive/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.IrukaDive/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/BeatmapEditor.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/BeatmapEditor.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapBaseTypes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapBaseTypes.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/BeatmapEditorManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/BeatmapEditorManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackGestures.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackGestures.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackScrubber.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackScrubber.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,16 +44,16 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapTransformations.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapBaseTypes.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackPanner.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TrackManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackScrubber.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Singleton.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/BeatmapEditorManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackGestures.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/ScreenToCanvas.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapBaseTypes.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/BeatmapEditorManager.cs" />
       </list>
     </option>
   </component>
@@ -84,13 +81,17 @@
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="92" y="92" width="2376" height="1256" key="VCS.FileHistoryDialog/0.0.2560.1440@0.0.2560.1440" timestamp="1599846397344" />
-    <state x="936" y="340" key="run.anything.popup" timestamp="1599847078628">
+    <state x="962" y="453" width="636" height="534" key="find.popup" timestamp="1599852204351">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="936" y="340" key="run.anything.popup/0.0.2560.1440@0.0.2560.1440" timestamp="1599847078628" />
-    <state x="943" y="325" width="672" height="678" key="search.everywhere.popup" timestamp="1599846653325">
+    <state x="962" y="453" width="636" height="534" key="find.popup/0.0.2560.1440@0.0.2560.1440" timestamp="1599852204351" />
+    <state x="936" y="340" key="run.anything.popup" timestamp="1599851973874">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="943" y="325" width="672" height="678" key="search.everywhere.popup/0.0.2560.1440@0.0.2560.1440" timestamp="1599846653325" />
+    <state x="936" y="340" key="run.anything.popup/0.0.2560.1440@0.0.2560.1440" timestamp="1599851973874" />
+    <state x="943" y="325" width="672" height="678" key="search.everywhere.popup" timestamp="1599849425552">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="943" y="325" width="672" height="678" key="search.everywhere.popup/0.0.2560.1440@0.0.2560.1440" timestamp="1599849425552" />
   </component>
 </project>

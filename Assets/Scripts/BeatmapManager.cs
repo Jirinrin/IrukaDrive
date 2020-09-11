@@ -35,9 +35,7 @@ public class BeatmapManager : MonoBehaviour
 
     private void LoadBeatmap()
     {
-        _runtimeNotes = currentBeatmap.words.Select(word =>
-            new RuntimeWord(word.ParseNotes(), OnChangeCurrentChar)
-        ).ToList();
+        _runtimeNotes = currentBeatmap.words.Select(word => new RuntimeWord(word, OnChangeCurrentChar)).ToList();
         
         _songManager.LoadSong(currentBeatmap);
         
@@ -197,13 +195,13 @@ public class RuntimeWord
     public bool Finished;
     private bool _passed;
 
-    public RuntimeWord(List<ParsedNote> charNotes, Action<int?> onChangeInputNoteIndex)
+    public RuntimeWord(BeatmapWord word, Action<int?> onChangeInputNoteIndex)
     {
-        CharNotes = charNotes.Select(note => new RuntimeNote(note)).ToList();
+        CharNotes = word.ParseNotes().Select(note => new RuntimeNote(note)).ToList();
         if (!CharNotes.Any())
             throw new Exception("Empty word: " + this);
         
-        Beat = CharNotes.First().Beat;
+        Beat = word.beat;
         LastBeat = CharNotes.Last().Beat;
         CurrentInputNote = CharNotes[0];
         CurrentNote = CharNotes[0];

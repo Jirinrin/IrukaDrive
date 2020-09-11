@@ -9,14 +9,17 @@ public class ParsedNote
 
 public static class BeatmapTransformations
 {
-    public static List<ParsedNote> ParseNotes(this BeatmapWord word, int beatsPerBar)
+    public static List<ParsedNote> ParseNotes(this BeatmapWord word)
     {
         return word.text.ToCharArray().Select((c, i) =>
             new ParsedNote
             {
-                Beat = word.bar * beatsPerBar + word.beat + i * word.beatInterval,
-                Char = c
+                Beat = word.beat + i * word.beatInterval,
+                Char = c,
             }
         ).ToList();
     }
+
+    public static float LastBeat(this BeatmapWord word) => 
+        word.beat + word.text.Length * word.beatInterval;
 }

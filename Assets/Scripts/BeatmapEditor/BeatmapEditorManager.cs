@@ -11,33 +11,50 @@ namespace BeatmapEditor
 
         private void Start()
         {
-            EditorTrack.Instance.InitTrack(currentBeatmap.words.Select(word => 
-                new EditorWord(word.ParseNotes(currentBeatmap.beatsPerBar))
-            ).ToList());
+            var editorWords = currentBeatmap.words.Select(word => new EditorWord(word)).ToList();
+            EditorTrack.Instance.InitTrack(editorWords);
         }
-
-    }
-    
-    public class EditorNote : ParsedNote
-    {
-        public EditorNote(ParsedNote baseNote)
-        {
-            Beat = baseNote.Beat; 
-            Char = baseNote.Char;
-        }
-        public NoteResult? Result;
-        public float? ResultTiming;
     }
     
     public class EditorWord
     {
-        public float Beat;
-        public List<EditorNote> CharNotes;
+        private BeatmapWord _word;
         
-        public EditorWord(List<ParsedNote> charNotes)
+        public List<ParsedNote> CharNotes;
+
+        public string Text
+        { 
+            get => _word.text;
+            set
+            {
+                _word.text = value;
+                CharNotes = _word.ParseNotes();
+            }
+        }
+        public float Beat
+        { 
+            get => _word.beat;
+            set
+            {
+                _word.beat = value;
+                CharNotes = _word.ParseNotes();
+            }
+        }
+        public float LastBeat => _word.LastBeat();
+        public float BeatInterval
+        { 
+            get => _word.beatInterval;
+            set
+            {
+                _word.beatInterval = value;
+                CharNotes = _word.ParseNotes();
+            }
+        }
+
+        public EditorWord(BeatmapWord word)
         {
-            CharNotes = charNotes.Select(note => new EditorNote(note)).ToList();
-            Beat = CharNotes.First().Beat;
+            _word = word;
+            CharNotes = word.ParseNotes();
         }
     }
 }
