@@ -7,12 +7,11 @@ namespace BeatmapEditor
 {
     public class BeatmapEditorManager : MonoBehaviour
     {
-        [SerializeField] private EditorTrack track;
         /* [NonSerialized] public static */ public Beatmap currentBeatmap;
 
         private void Start()
         {
-            track.InitTrack(currentBeatmap.words.Select(word => 
+            EditorTrack.Instance.InitTrack(currentBeatmap.words.Select(word => 
                 new EditorWord(word.ParseNotes(currentBeatmap.beatsPerBar))
             ).ToList());
         }

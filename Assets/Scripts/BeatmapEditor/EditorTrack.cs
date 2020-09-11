@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace BeatmapEditor
 {
@@ -16,7 +15,7 @@ namespace BeatmapEditor
         public void InitTrack(List<EditorWord> words)
         {
             _words = words;
-            Debug.Log("init");
+            Debug.Log("init track");
             
             _noteObjectLookup = new Dictionary<float, Dictionary<float, TextMeshProUGUI>>();
             foreach (var word in _words)
@@ -36,13 +35,12 @@ namespace BeatmapEditor
             
                 foreach (var charNote in word.CharNotes)
                 {
-                    Debug.Log(charNote.Beat);
                     // todo: recycle stuff
                     if (!wordCharObjectsLookup.ContainsKey(charNote.Beat))
                         wordCharObjectsLookup[charNote.Beat] = Instantiate(characterPrefab, transform).GetComponent<TextMeshProUGUI>();
 
                     var noteObject = wordCharObjectsLookup[charNote.Beat];
-                    var pos = charNote.Beat * _spacing;
+                    var pos = charNote.Beat * DefaultSpacing * _scaleX;
 
                     // Debug.Log("crash place");
                     // Debug.Log(charNote);
@@ -54,17 +52,26 @@ namespace BeatmapEditor
             }
         }
 
-        private float _spacing = 20f;
-        public void Zoom(float delta)
+        private const float DefaultSpacing = 20f;
+        private float _scaleX = 1f;
+        public void Zoom(float delta, float screenPivot)
         {
-            _spacing += delta;
+            var oldScale = _scaleX;
+            _scaleX = Mathf.Max(_scaleX + delta, 1f);
+            var scaleDiff = _scaleX / oldScale;
+            
+
+            var pivotX = _panX + screenPivot;
+            Pan(-pivotX * (scaleDiff-1f));
             DrawTrackNotes();
         }
 
+        // panX gets inversed to make 'the pan amount' more intuitive to deal with
+        private float _panX = 0f;
         public void Pan(float deltaX)
         {
-            var currentTransform = transform;
-            currentTransform.localPosition = new Vector3(currentTransform.localPosition.x + deltaX, 0, 0);
+            _panX -= deltaX; // todo: clamp at track fitting in screen
+            transform.localPosition = new Vector3(-_panX, 0, 0);
         }
     }
 }

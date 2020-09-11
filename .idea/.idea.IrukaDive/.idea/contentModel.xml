@@ -42,7 +42,7 @@
             <e p="BeatmapEditorManager.cs" t="Include" />
             <e p="EditorTrack.cs" t="Include" />
             <e p="EditorTrackGestures.cs" t="Include" />
-            <e p="EditorTrackScrubber.cs" t="Include" />
+            <e p="ScreenToCanvas.cs" t="Include" />
           </e>
           <e p="BeatmapManager.cs" t="Include" />
           <e p="C.cs" t="Include" />
