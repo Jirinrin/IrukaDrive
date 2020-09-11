@@ -134,13 +134,14 @@ GameObject:
   - component: {fileID: 188220184}
   - component: {fileID: 188220186}
   - component: {fileID: 188220185}
+  - component: {fileID: 188220187}
   m_Layer: 5
-  m_Name: TrackScrub
+  m_Name: TrackScrubber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &188220184
 RectTransform:
   m_ObjectHideFlags: 0
@@ -198,6 +199,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 188220183}
   m_CullTransparentMesh: 0
+--- !u!114 &188220187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188220183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978bc1ede5f74d44a82fc1daa6762959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &511033233
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,6 +288,7 @@ GameObject:
   - component: {fileID: 594867329}
   - component: {fileID: 594867331}
   - component: {fileID: 594867330}
+  - component: {fileID: 594867332}
   m_Layer: 5
   m_Name: TrackContainer
   m_TagString: Untagged
@@ -341,6 +355,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 594867328}
   m_CullTransparentMesh: 0
+--- !u!114 &594867332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594867328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df3c55f689914d2ba707f682aa76f6a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &708420285
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,7 +378,7 @@ GameObject:
   - component: {fileID: 708420286}
   - component: {fileID: 708420287}
   m_Layer: 5
-  m_Name: EditorTrack
+  m_Name: EditorTrackOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -372,8 +398,8 @@ RectTransform:
   m_Father: {fileID: 594867329}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.9425235}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
