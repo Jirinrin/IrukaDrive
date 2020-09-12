@@ -19,7 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e9d1359-b315-42cc-b350-b86ccf235c38" name="Default Changelist" comment="" />
+    <list default="true" id="0e9d1359-b315-42cc-b350-b86ccf235c38" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,8 +53,8 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrackGestures.cs" />
         <option value="$PROJECT_DIR$/Assets/_Import/ui-shapes-kit/Assets/ThisOtherThing/Utils/Attributes/Editor/MinAttributeDrawer.cs" />
         <option value="$PROJECT_DIR$/Assets/_Import/ui-shapes-kit/Assets/ThisOtherThing/Utils/Attributes/MinAttribute.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" />
         <option value="$PROJECT_DIR$/Packages/manifest.json" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BeatmapEditor/EditorTrack.cs" />
       </list>
     </option>
   </component>
@@ -64,6 +66,26 @@
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="selectedOptions">
+        <set />
+      </option>
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="selectedOptions">
+        <set />
+      </option>
+      <method v="2" />
+    </configuration>
   </component>
   <component name="TaskManager">
     <servers />
