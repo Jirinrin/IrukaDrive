@@ -11,8 +11,7 @@ namespace BeatmapEditor
 
         private void Start()
         {
-            var editorWords = currentBeatmap.words.Select(word => new EditorWord(word)).ToList();
-            EditorTrack.Instance.InitTrack(editorWords);
+            EditorTrack.Instance.InitTrack(currentBeatmap);
         }
     }
     
