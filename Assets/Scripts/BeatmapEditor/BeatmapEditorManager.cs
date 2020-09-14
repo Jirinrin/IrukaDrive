@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace BeatmapEditor
 {
-    public class BeatmapEditorManager : MonoBehaviour
+    public class BeatmapEditorManager : Singleton<BeatmapEditorManager>
     {
         /* [NonSerialized] public static */ public Beatmap currentBeatmap;
 

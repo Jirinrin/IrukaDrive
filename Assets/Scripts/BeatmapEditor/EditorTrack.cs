@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Shapes;
 using TMPro;
 using UnityEngine;
 
@@ -13,7 +12,7 @@ namespace BeatmapEditor
         [SerializeField] private GameObject characterPrefab;
         
         [SerializeField] private RectTransform containerRectTransform;
-        private Rect _containerRect;
+        [NonSerialized] public Rect containerRect;
 
         private EditorTrackSheetBg _sheet;
 
@@ -21,7 +20,7 @@ namespace BeatmapEditor
         private List<EditorWord> _words;
         private Dictionary<float, Dictionary<float, TextMeshProUGUI>> _noteObjectLookup;
 
-        private Beatmap _beatmap;
+        public Beatmap _beatmap;
 
         private bool _shouldDraw;
         
@@ -31,7 +30,7 @@ namespace BeatmapEditor
             _words = beatmap.words.Select(word => new EditorWord(word)).ToList();
             Debug.Log("init track");
 
-            _containerRect = containerRectTransform.rect;
+            containerRect = containerRectTransform.rect;
             
             _notesParent = GameObject.Find("EditorTrackNotes");
             
@@ -39,13 +38,19 @@ namespace BeatmapEditor
             foreach (var word in _words)
                 _noteObjectLookup[word.Beat] = new Dictionary<float, TextMeshProUGUI>();
 
+            OnPan?.Invoke(_panX);
+            OnZoom?.Invoke(_beatSpacing);
+            
             _sheet = EditorTrackSheetBg.Instance;
-            _sheet.InitSheet(_containerRect, beatmap);
+            _sheet.InitSheet();
+            // todo: handle doing this in a more elegant place
+            SheetLineRecyclerList.Instance.Init(_beatmap);
             
             DrawTrackNotes();
-            _sheet.DrawSheet(_panX, _beatSpacing);
+            _sheet.DrawSheet();
             
             Pan(0f);
+            Zoom(0f, 0f);
         }
 
         private void Update()
@@ -54,7 +59,7 @@ namespace BeatmapEditor
             {
                 _shouldDraw = false;
                 DrawTrackNotes();
-                _sheet.DrawSheet(_panX, _beatSpacing);
+                _sheet.DrawSheet();
             }
         }
         
@@ -95,6 +100,7 @@ namespace BeatmapEditor
             var pivotX = _panX + screenPivotX;
             Pan(-pivotX * (scaleDiff-1f));
             _shouldDraw = true;
+            OnZoom?.Invoke(_beatSpacing);
         }
 
         // panX gets inversed to make 'the pan amount' more intuitive to deal with
@@ -104,7 +110,10 @@ namespace BeatmapEditor
         {
             _panX = Mathf.Max(_panX - deltaX, MinimumPan);
             transform.localPosition = new Vector3(-_panX, 0, 0);
-            _shouldDraw = true;
+            OnPan?.Invoke(_panX);
         }
+
+        public static event Action<float> OnPan;
+        public static event Action<float> OnZoom;
     }
 }
