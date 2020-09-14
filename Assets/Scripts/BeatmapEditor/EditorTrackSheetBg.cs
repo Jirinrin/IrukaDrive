@@ -11,8 +11,9 @@ namespace BeatmapEditor
         private float _panX;
         private float _beatSpacing;
 
-        public void InitSheet()
+        public void InitSheet(Beatmap beatmap)
         {
+            SheetLineRecyclerList.Instance.Init(beatmap);
         }
 
         public void DrawSheet()

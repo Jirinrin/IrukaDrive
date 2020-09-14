@@ -1,53 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using TMPro;
 using UnityEngine;
 
 namespace BeatmapEditor
 {
-    // todo: maybe extract Sheet and have it subscribe to pan/zoom events
+    // todo: better 'shared container / coordinate' system to sync to EditorTrack
     public class EditorTrack : Singleton<EditorTrack>
     {
-        [SerializeField] private GameObject characterPrefab;
-        
         [SerializeField] private RectTransform containerRectTransform;
         [NonSerialized] public Rect containerRect;
 
+        private EditorTrackNotesRecycler _notesRecycler;
         private EditorTrackSheetBg _sheet;
 
-        private GameObject _notesParent;
-        private List<EditorWord> _words;
-        private Dictionary<float, Dictionary<float, TextMeshProUGUI>> _noteObjectLookup;
-
-        public Beatmap _beatmap;
-
         private bool _shouldDraw;
-        
+
         public void InitTrack(Beatmap beatmap)
         {
-            _beatmap = beatmap;
-            _words = beatmap.words.Select(word => new EditorWord(word)).ToList();
-            Debug.Log("init track");
-
             containerRect = containerRectTransform.rect;
             
-            _notesParent = GameObject.Find("EditorTrackNotes");
-            
-            _noteObjectLookup = new Dictionary<float, Dictionary<float, TextMeshProUGUI>>();
-            foreach (var word in _words)
-                _noteObjectLookup[word.Beat] = new Dictionary<float, TextMeshProUGUI>();
+            Debug.Log("init track");
 
             OnPan?.Invoke(_panX);
             OnZoom?.Invoke(_beatSpacing);
+
+            _notesRecycler = EditorTrackNotesRecycler.Instance;
+            _notesRecycler.Init(beatmap);
+            // todo: also refresh window?
             
             _sheet = EditorTrackSheetBg.Instance;
-            _sheet.InitSheet();
-            // todo: handle doing this in a more elegant place
-            SheetLineRecyclerList.Instance.Init(_beatmap);
+            _sheet.InitSheet(beatmap);
             
-            DrawTrackNotes();
-            _sheet.DrawSheet();
+            _sheet.DrawSheet(); // necessary?
             
             Pan(0f);
             Zoom(0f, 0f);
@@ -58,33 +41,12 @@ namespace BeatmapEditor
             if (_shouldDraw)
             {
                 _shouldDraw = false;
-                DrawTrackNotes();
+                _notesRecycler.RefreshWindow();
                 _sheet.DrawSheet();
             }
         }
         
-        private void DrawTrackNotes()
-        {
-            foreach (var word in _words)
-            {
-                // todo: group characters by word (with a parent) or something
-            
-                var wordCharObjectsLookup = _noteObjectLookup[word.Beat];
-            
-                foreach (var charNote in word.CharNotes)
-                {
-                    // todo: recycle stuff
-                    if (!wordCharObjectsLookup.ContainsKey(charNote.Beat))
-                        wordCharObjectsLookup[charNote.Beat] = Instantiate(characterPrefab, _notesParent.transform).GetComponent<TextMeshProUGUI>();
-
-                    var noteObject = wordCharObjectsLookup[charNote.Beat];
-                    var pos = charNote.Beat * _beatSpacing;
-
-                    noteObject.text = charNote.Char.ToString();
-                    noteObject.transform.localPosition = new Vector3(pos, 0, 0);
-                }
-            }
-        }
+        // Stuff responding to gestures
 
         private const float DefaultBeatSpacing = 20f;
         private const float MaxZoomScale = 5f;

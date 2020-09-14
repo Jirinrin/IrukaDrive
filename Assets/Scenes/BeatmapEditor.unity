@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 205928885}
+  - component: {fileID: 205928886}
   m_Layer: 5
   m_Name: EditorTrackNotes
   m_TagString: Untagged
@@ -158,6 +159,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &205928886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205928884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0827119477e346eca4872dfa6ffcb0da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterPrefab: {fileID: 6178423728831725295, guid: 5b53c37acfe49744a8a15c3d35a69345,
+    type: 3}
 --- !u!1 &401264241
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,6 +482,12 @@ MonoBehaviour:
     - beat: 45
       text: qwert
       beatInterval: 0.5
+    - beat: 60
+      text: asdfe
+      beatInterval: 1
+    - beat: 70
+      text: ol\';7
+      beatInterval: 0.5
 --- !u!1 &1113194651
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,6 +497,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1113194652}
+  - component: {fileID: 1113194653}
+  - component: {fileID: 1113194654}
   m_Layer: 5
   m_Name: EditorTrackSheet
   m_TagString: Untagged
@@ -502,6 +525,34 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1113194653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113194651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1744cf578a3743cc9332503ba5d30955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1113194654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113194651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ad32df1578486a88febd612ae07829, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barLinePrefab: {fileID: 270888843974027579, guid: 11a88c069afded0448e28caa817f4c29,
+    type: 3}
+  beatLinePrefab: {fileID: 270888843974027579, guid: 03744eeb777bf9c48a214bd4e78df0fc,
+    type: 3}
 --- !u!1 &1428741862
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,12 +603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4f6a0e115524efa8253b03305a5e188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterPrefab: {fileID: 4845882329943979585, guid: 5b53c37acfe49744a8a15c3d35a69345,
-    type: 3}
-  barLinePrefab: {fileID: 270888843974027579, guid: 11a88c069afded0448e28caa817f4c29,
-    type: 3}
-  beatLinePrefab: {fileID: 270888843974027579, guid: 03744eeb777bf9c48a214bd4e78df0fc,
-    type: 3}
   containerRectTransform: {fileID: 594867329}
 --- !u!1 &2073380149
 GameObject:

@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using JetBrains.Annotations;
+using TMPro;
 
 namespace BeatmapEditor
 {
@@ -11,12 +14,27 @@ namespace BeatmapEditor
             EditorTrack.Instance.InitTrack(currentBeatmap);
         }
     }
+
+    public class EditorNote : ParsedNote
+    {
+        // Purely performance optimization
+        [CanBeNull] public TextMeshProUGUI CharObjRef;
+
+        public EditorNote(ParsedNote baseNote)
+        {
+            Beat = baseNote.Beat;
+            Char = baseNote.Char;
+        }
+    }
     
     public class EditorWord
     {
         private BeatmapWord _word;
-        
-        public List<ParsedNote> CharNotes;
+
+        public List<EditorNote> CharNotes;
+
+        private List<EditorNote> GetNotes() => 
+            _word.ParseNotes().Select(note => new EditorNote(note)).ToList();
 
         public string Text
         { 
@@ -24,7 +42,7 @@ namespace BeatmapEditor
             set
             {
                 _word.text = value;
-                CharNotes = _word.ParseNotes();
+                CharNotes = GetNotes();
             }
         }
         public float Beat
@@ -33,7 +51,7 @@ namespace BeatmapEditor
             set
             {
                 _word.beat = value;
-                CharNotes = _word.ParseNotes();
+                CharNotes = GetNotes();
             }
         }
         public float LastBeat => _word.LastBeat();
@@ -43,14 +61,14 @@ namespace BeatmapEditor
             set
             {
                 _word.beatInterval = value;
-                CharNotes = _word.ParseNotes();
+                CharNotes = GetNotes();
             }
         }
 
         public EditorWord(BeatmapWord word)
         {
             _word = word;
-            CharNotes = word.ParseNotes();
+            CharNotes = GetNotes();
         }
     }
 }

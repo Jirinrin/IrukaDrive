@@ -14,7 +14,7 @@ public static class BeatmapTransformations
         return word.text.ToCharArray().Select((c, i) =>
             new ParsedNote
             {
-                Beat = word.beat + i * word.beatInterval,
+                Beat = i * word.beatInterval,
                 Char = c,
             }
         ).ToList();

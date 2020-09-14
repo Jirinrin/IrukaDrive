@@ -6,6 +6,7 @@ namespace BeatmapEditor
 {
     // todo: make sure the recycler thing gets updated not every frame
     // todo: better system than *1000 and /1000?
+    // todo: better 'shared container / coordinate' system to sync to EditorTrack
     public class SheetLineRecyclerList : Singleton<SheetLineRecyclerList>
     {
         [SerializeField] private Line barLinePrefab;
@@ -15,9 +16,6 @@ namespace BeatmapEditor
         private RecyclerList<Line> _recyclerList2;
 
         private Beatmap _currentBeatmap;
-        
-        private float _panX;
-        private float _beatSpacing;
 
         private Line CreateBarLine() => Instantiate(barLinePrefab, transform);
         private Line CreateBeatLine() => Instantiate(beatLinePrefab, transform);
@@ -79,6 +77,10 @@ namespace BeatmapEditor
             UpdateLinesSpacing(_recyclerList2);
         }
 
+        // Coming from EditorTrack
+        
+        private float _panX;
+        private float _beatSpacing;
         private void OnPan(float panX) => _panX = panX;
         private void OnZoom(float beatSpacing) => _beatSpacing = beatSpacing;
         private void OnEnable()

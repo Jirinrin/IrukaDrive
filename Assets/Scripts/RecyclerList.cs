@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class RecyclerList<T> where T : MonoBehaviour
@@ -20,10 +21,16 @@ public class RecyclerList<T> where T : MonoBehaviour
     
     // (item, index) => void
     private readonly Action<T, int> _initItem;
+    
+    // (item, index) => void
+    [CanBeNull] private readonly Action<T, int> _cleanupItem;
 
-    public RecyclerList(Func<T> createItem, Action<T, int> initItem, Func<int, int, List<int>> getNewItemIndicesInWindow, int[] startWindow)
+    public RecyclerList(
+        Func<T> createItem, Action<T, int> initItem, Func<int, int, List<int>> getNewItemIndicesInWindow, int[] startWindow,
+        [CanBeNull] Action<T, int> cleanupItem = null)
     {
         _initItem = initItem;
+        _cleanupItem = cleanupItem;
         _recyclerPool = new RecyclerPool<T>(createItem);
         _getNewItemIndicesInWindow = getNewItemIndicesInWindow;
         _window = startWindow;
@@ -32,14 +39,15 @@ public class RecyclerList<T> where T : MonoBehaviour
 
     private void RemoveFromWindow(int from, int to)
     {
+        // todo: check that GetViewBetween uses the right inclusive/exclusive thresholds
         var itemsToRemove = _visibleItemIndices.GetViewBetween(from, to).ToArray();
         // todo: iterate over sortedset without enumerating (? i.e. using the Count and for loop, is that quicker?)
         foreach (var itemIndex in itemsToRemove)
         {
-            Debug.Log($"remove item: {itemIndex}");
             // todo: make more efficient?
             var item = visibleItemsLookup[itemIndex];
             item.enabled = false;
+            _cleanupItem?.Invoke(item, itemIndex);
             visibleItemsLookup.Remove(itemIndex);
             _visibleItemIndices.Remove(itemIndex);
             _recyclerPool.Add(item);

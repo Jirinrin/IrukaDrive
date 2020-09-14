@@ -232,7 +232,9 @@
             <e p="BeatmapEditorManager.cs" t="Include" />
             <e p="EditorTrack.cs" t="Include" />
             <e p="EditorTrackGestures.cs" t="Include" />
+            <e p="EditorTrackNotesRecycler.cs" t="Include" />
             <e p="EditorTrackSheetBg.cs" t="Include" />
+            <e p="EditorWordObject.cs" t="Include" />
             <e p="ScreenToCanvas.cs" t="Include" />
             <e p="SheetLineRecyclerList.cs" t="Include" />
           </e>
