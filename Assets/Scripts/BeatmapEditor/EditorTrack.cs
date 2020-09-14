@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Shapes;
@@ -39,10 +39,11 @@ namespace BeatmapEditor
             foreach (var word in _words)
                 _noteObjectLookup[word.Beat] = new Dictionary<float, TextMeshProUGUI>();
             
-            Pan(0f);
             DrawTrackNotes();
             
             InitSheet();
+            
+            Pan(0f);
         }
 
         private void InitSheet()
