@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Shapes;
@@ -11,19 +11,19 @@ namespace BeatmapEditor
     public class EditorTrack : Singleton<EditorTrack>
     {
         [SerializeField] private GameObject characterPrefab;
-        [SerializeField] private Line barLinePrefab;
-        [SerializeField] private Line beatLinePrefab;
         
         [SerializeField] private RectTransform containerRectTransform;
         private Rect _containerRect;
 
-        private GameObject _sheetParent;
+        private EditorTrackSheetBg _sheet;
+
         private GameObject _notesParent;
         private List<EditorWord> _words;
         private Dictionary<float, Dictionary<float, TextMeshProUGUI>> _noteObjectLookup;
-        private Dictionary<int, Line> _sheetLineObjectLookup;
 
         private Beatmap _beatmap;
+
+        private bool _shouldDraw;
         
         public void InitTrack(Beatmap beatmap)
         {
@@ -38,28 +38,26 @@ namespace BeatmapEditor
             _noteObjectLookup = new Dictionary<float, Dictionary<float, TextMeshProUGUI>>();
             foreach (var word in _words)
                 _noteObjectLookup[word.Beat] = new Dictionary<float, TextMeshProUGUI>();
+
+            _sheet = EditorTrackSheetBg.Instance;
+            _sheet.InitSheet(_containerRect, beatmap);
             
             DrawTrackNotes();
-            
-            InitSheet();
+            _sheet.DrawSheet(_panX, _beatSpacing);
             
             Pan(0f);
         }
 
-        private void InitSheet()
+        private void Update()
         {
-            _sheetParent = GameObject.Find("EditorTrackSheet");
-            _sheetLineObjectLookup = new Dictionary<int, Line>();
-            
-            var lineStartEndY = _containerRect.height / 2f - 10f;
-            barLinePrefab.Start = new Vector3(0, lineStartEndY, 0);
-            barLinePrefab.End = new Vector3(0, -lineStartEndY, 0);
-            beatLinePrefab.Start = new Vector3(0, lineStartEndY, 0);
-            beatLinePrefab.End = new Vector3(0, -lineStartEndY, 0);
-            
-            DrawSheetLines();
+            if (_shouldDraw)
+            {
+                _shouldDraw = false;
+                DrawTrackNotes();
+                _sheet.DrawSheet(_panX, _beatSpacing);
+            }
         }
-
+        
         private void DrawTrackNotes()
         {
             foreach (var word in _words)
@@ -77,32 +75,9 @@ namespace BeatmapEditor
                     var noteObject = wordCharObjectsLookup[charNote.Beat];
                     var pos = charNote.Beat * _beatSpacing;
 
-                    // Debug.Log("crash place");
-                    // Debug.Log(charNote);
-                    // Debug.Log(noteObject);
-
                     noteObject.text = charNote.Char.ToString();
                     noteObject.transform.localPosition = new Vector3(pos, 0, 0);
                 }
-            }
-        }
-
-        private void DrawSheetLines()
-        {
-            var minBeat = Mathf.Max(_panX / _beatSpacing, 0f);
-            var maxBeat = minBeat + _containerRect.width / _beatSpacing;
-            
-            for (var i = Mathf.FloorToInt(minBeat); i < Mathf.CeilToInt(maxBeat); i++)
-            {
-                // todo: recycle stuff
-                if (!_sheetLineObjectLookup.ContainsKey(i))
-                {
-                    var linePrefab = i % _beatmap.beatsPerBar == _beatmap.barOffset ? barLinePrefab : beatLinePrefab;
-                    _sheetLineObjectLookup[i] = Instantiate(linePrefab, _sheetParent.transform);
-                }
-
-                var line = _sheetLineObjectLookup[i];
-                line.transform.localPosition = new Vector3(_beatSpacing * i, 0, 0);
             }
         }
 
@@ -119,8 +94,7 @@ namespace BeatmapEditor
             
             var pivotX = _panX + screenPivotX;
             Pan(-pivotX * (scaleDiff-1f));
-            DrawTrackNotes();
-            DrawSheetLines();
+            _shouldDraw = true;
         }
 
         // panX gets inversed to make 'the pan amount' more intuitive to deal with
@@ -130,7 +104,7 @@ namespace BeatmapEditor
         {
             _panX = Mathf.Max(_panX - deltaX, MinimumPan);
             transform.localPosition = new Vector3(-_panX, 0, 0);
-            DrawSheetLines();
+            _shouldDraw = true;
         }
     }
 }
