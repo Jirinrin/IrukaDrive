@@ -77,7 +77,8 @@ namespace BeatmapEditor
 
         private List<int> GetNewLineIndicesInWindow(int from, int to)
         {
-            // todo: better, with accounting for last index / width spacing and stuff
+            // todo: better, with accounting for last index / width spacing and stuff.
+            // But for now a slightly larger window will do
             return _wordIndices.GetViewBetween(from, to).ToList();
         }
 
