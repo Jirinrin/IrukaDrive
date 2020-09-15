@@ -9,10 +9,11 @@ namespace BeatmapEditor
     public class EditorTrackNotesRecycler : Singleton<EditorTrackNotesRecycler>
     {
         [SerializeField] private TextMeshProUGUI characterPrefab;
+        private EditorCharObject _editorCharObjectPrefab;
         private EditorWordObject _emptyWordObject;
         private GameObject _rubbishBin;
 
-        private RecyclerPool<TextMeshProUGUI> _charRecyclerPool;
+        private RecyclerPool<EditorCharObject> _charRecyclerPool;
         private RecyclerList<EditorWordObject> _wordRecyclerList;
 
         private Beatmap _currentBeatmap;
@@ -29,37 +30,42 @@ namespace BeatmapEditor
             wordObjPrefab.AddComponent<EditorWordObject>();
             wordObjPrefab.transform.SetParent(transform, false);
             _emptyWordObject = wordObjPrefab.GetComponent<EditorWordObject>();
+
+            characterPrefab.gameObject.AddComponent<EditorCharObject>();
+            _editorCharObjectPrefab = characterPrefab.GetComponent<EditorCharObject>();
         }
 
-        private TextMeshProUGUI CreateChar() => Instantiate(characterPrefab, transform);
+        private EditorCharObject CreateChar() => Instantiate(_editorCharObjectPrefab, transform);
         private EditorWordObject CreateWord() => Instantiate(_emptyWordObject, transform);
         private void InitWord(EditorWordObject item, int index)
         {
             var itemTransform = item.transform;
             itemTransform.localPosition = new Vector3(_beatSpacing * index / 1000, 0, 0);
-            var word = _wordLookup[index];
+            item.Word = _wordLookup[index];
+            if (item.CharObjRefs == null || item.CharObjRefs.Count > 0)
+                item.CharObjRefs = new List<EditorCharObject>();
 
-            foreach (var note in word.CharNotes)
+            foreach (var note in item.Word.CharNotes)
             {
                 var charObj = _charRecyclerPool.Request();
-                charObj.transform.SetParent(itemTransform);
-                charObj.text = note.Char.ToString();
-                charObj.transform.localPosition = new Vector3(_beatSpacing * note.Beat, 0, 0);
-                charObj.enabled = true;
-                note.CharObjRef = charObj;
+                charObj.Init(note);
+                var charObjTransform = charObj.transform;
+                charObjTransform.SetParent(itemTransform);
+                charObjTransform.localPosition = new Vector3(_beatSpacing * note.Beat, 0, 0);
+                charObj.gameObject.SetActive(true);
+                item.CharObjRefs.Add(charObj);
             }
-            // Debug.Log($"init word starting with char '{c0.Char}'");
         }
         private void CleanupWord(EditorWordObject item, int index)
         {
-            foreach (var note in _wordLookup[index].CharNotes)
+            foreach (var charObject in item.CharObjRefs)
             {
-                var charObject = note.CharObjRef;
-                charObject.enabled = false;
+                charObject.gameObject.SetActive(false);
                 charObject.transform.SetParent(_rubbishBin.transform);
+                charObject.Cleanup();
                 _charRecyclerPool.Add(charObject);
-                note.CharObjRef = null;
             }
+            item.CharObjRefs = null;
         }
 
         private void UpdateSpacing()
@@ -67,18 +73,14 @@ namespace BeatmapEditor
             var lookup = _wordRecyclerList.visibleItemsLookup;
             foreach (var index in lookup.Keys)
             {
-                foreach (var note in _wordLookup[index].CharNotes)
-                {
-                    note.CharObjRef.transform.localPosition = new Vector3(_beatSpacing * note.Beat, 0, 0);
-                }
                 lookup[index].transform.localPosition = new Vector3(_beatSpacing * index/1000, 0, 0);
+                lookup[index].UpdateSpacing(_beatSpacing);
             }
         }
 
         private List<int> GetNewLineIndicesInWindow(int from, int to)
         {
-            // todo: better, with accounting for last index / width spacing and stuff.
-            // But for now a slightly larger window will do
+            // todo: better, with accounting for last index / width spacing and stuff. But for now a slightly larger window will do
             return _wordIndices.GetViewBetween(from, to).ToList();
         }
 
@@ -88,25 +90,42 @@ namespace BeatmapEditor
             var containerWidthExtension = containerWidth * .5f;
             var minBeat = Mathf.Max((_panX - containerWidthExtension) / _beatSpacing, 0f);
             var maxBeat = minBeat + (containerWidth + containerWidthExtension*2f) / _beatSpacing;
-            Debug.Log($"bla, {maxBeat - minBeat}");
             return new[] {Mathf.RoundToInt(minBeat*1000f), Mathf.RoundToInt(maxBeat*1000f)};
         }
-        
-        public void Init(Beatmap beatmap)
+
+        public void LoadCurrentBeatmap()
         {
-            _currentBeatmap = beatmap;
             _wordLookup = new Dictionary<int, EditorWord>();
             _wordIndices = new SortedSet<int>();
-            foreach (var word in beatmap.words)
+            foreach (var word in _currentBeatmap.words)
             {
                 var index = Mathf.RoundToInt(word.beat * 1000);
                 _wordIndices.Add(index);
                 _wordLookup[index] = new EditorWord(word);
             }
+        }
 
-            _charRecyclerPool = new RecyclerPool<TextMeshProUGUI>(CreateChar);
+        public void Init(Beatmap beatmap)
+        {
+            _currentBeatmap = beatmap;
+            LoadCurrentBeatmap();
+
+            _charRecyclerPool = new RecyclerPool<EditorCharObject>(CreateChar);
             _wordRecyclerList = new RecyclerList<EditorWordObject>(
                 CreateWord, InitWord, GetNewLineIndicesInWindow, GetCurrentWindow(), CleanupWord);
+        }
+
+        public void RefreshBeatmap()
+        {
+            LoadCurrentBeatmap();
+            _wordRecyclerList.Refresh();
+        }
+
+        public void Destroy()
+        {
+            _wordRecyclerList.Destroy();
+            _charRecyclerPool.Destroy();
+            Object.Destroy(gameObject);
         }
 
         public void RefreshWindow()

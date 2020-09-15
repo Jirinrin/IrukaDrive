@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class RecyclerPool<T> where T : MonoBehaviour
 {
@@ -23,5 +24,11 @@ public class RecyclerPool<T> where T : MonoBehaviour
         return _items.Count > 0
             ? _items.Pop()
             : _createItem();
+    }
+
+    public void Destroy()
+    {
+        foreach (var item in _items)
+            Object.Destroy(item.gameObject);
     }
 }

@@ -156,7 +156,7 @@ public class BeatmapManager : MonoBehaviour
 }
 
 [Serializable]
-public struct BeatmapWord
+public class BeatmapWord
 {
     public float beat;
     public string text; // will be split up into chars

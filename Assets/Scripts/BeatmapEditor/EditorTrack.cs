@@ -14,6 +14,12 @@ namespace BeatmapEditor
 
         private bool _shouldDraw;
 
+        public void RefreshBeatmap()
+        {
+            _notesRecycler.RefreshBeatmap();
+            _shouldDraw = true;
+        }
+
         public void InitTrack(Beatmap beatmap)
         {
             containerRect = containerRectTransform.rect;

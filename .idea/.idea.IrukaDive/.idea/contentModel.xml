@@ -230,6 +230,7 @@
           <e p="BeatmapBaseTypes.cs" t="Include" />
           <e p="BeatmapEditor" t="Include">
             <e p="BeatmapEditorManager.cs" t="Include" />
+            <e p="EditorCharObject.cs" t="Include" />
             <e p="EditorTrack.cs" t="Include" />
             <e p="EditorTrackGestures.cs" t="Include" />
             <e p="EditorTrackNotesRecycler.cs" t="Include" />
@@ -243,6 +244,7 @@
           <e p="GameManager.cs" t="Include" />
           <e p="NoteFx.cs" t="Include" />
           <e p="PlayerInputManager.cs" t="Include" />
+          <e p="PrimitiveExtensions.cs" t="Include" />
           <e p="RecyclerList.cs" t="Include" />
           <e p="RecyclerPool.cs" t="Include" />
           <e p="SfxManager.cs" t="Include" />

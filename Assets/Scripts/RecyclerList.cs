@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -88,5 +88,19 @@ public class RecyclerList<T> where T : MonoBehaviour
             RemoveFromWindow(newWindow[1], _window[1]);
         
         _window = newWindow;
+    }
+
+    public void Refresh()
+    {
+        RecycleAll();
+        AddToWindow(_window[0], _window[1]);
+    }
+
+    private void RecycleAll() => RemoveFromWindow(_window[0], _window[1]);
+
+    public void Destroy()
+    {
+        RecycleAll();
+        _recyclerPool.Destroy();
     }
 }
