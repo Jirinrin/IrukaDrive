@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -46,8 +46,8 @@ public class RecyclerList<T> where T : MonoBehaviour
         {
             // todo: make more efficient?
             var item = visibleItemsLookup[itemIndex];
-            item.enabled = false;
-            _cleanupItem?.Invoke(item, itemIndex);
+            item.gameObject.SetActive(false);
+            _cleanupItem?.Invoke(item, itemIndex); // expensive?
             visibleItemsLookup.Remove(itemIndex);
             _visibleItemIndices.Remove(itemIndex);
             _recyclerPool.Add(item);
@@ -61,7 +61,7 @@ public class RecyclerList<T> where T : MonoBehaviour
         {
             // todo: make more efficient
             var item = _recyclerPool.Request();
-            item.enabled = true;
+            item.gameObject.SetActive(true);
             _initItem(item, itemIndex);
             visibleItemsLookup[itemIndex] = item;
             _visibleItemIndices.Add(itemIndex);
