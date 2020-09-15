@@ -79,6 +79,7 @@ namespace BeatmapEditor
             _panX = Mathf.Max(_panX - deltaX, MinimumPan);
             transform.localPosition = new Vector3(-_panX, 0, 0);
             OnPan?.Invoke(_panX);
+            _shouldDraw = true;
         }
 
         public static event Action<float> OnPan;
