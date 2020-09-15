@@ -31,6 +31,7 @@ namespace BeatmapEditor
         {
             if (_dragging)
                 return;
+            
         }
 
         public void OnDrag(PointerEventData eventData)
