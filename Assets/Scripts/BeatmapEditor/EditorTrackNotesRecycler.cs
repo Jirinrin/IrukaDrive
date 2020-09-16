@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -135,6 +135,9 @@ namespace BeatmapEditor
             _wordRecyclerList.SetVisibleWindow(GetCurrentWindow());
             UpdateSpacing();
         }
+
+        public void EditWord(int index) =>
+            _wordRecyclerList.visibleItemsLookup[index].Edit();
 
         // Coming from EditorTrack
         

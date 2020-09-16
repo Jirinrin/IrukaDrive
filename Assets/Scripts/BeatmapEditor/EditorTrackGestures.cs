@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 
 namespace BeatmapEditor
 {
-    public class EditorTrackGestures : Singleton<EditorTrackGestures>, IDragHandler, IBeginDragHandler, IScrollHandler
+    // todo: use double-click for certain things
+    public class EditorTrackGestures : Singleton<EditorTrackGestures>, IDragHandler, IBeginDragHandler, IScrollHandler, IPointerClickHandler
     {
         private Vector2 _beginDragPoint;
         
@@ -32,6 +33,12 @@ namespace BeatmapEditor
         public void OnScroll(PointerEventData eventData)
         {
             EditorTrack.Instance.Zoom(eventData.scrollDelta.y * 0.15f, eventData.position.x * ScreenToCanvas.Factor);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (Keyboard.current.ctrlKey.isPressed)
+                EditorTrack.Instance.CreateWord(eventData.position.x * ScreenToCanvas.Factor);
         }
     }
 }

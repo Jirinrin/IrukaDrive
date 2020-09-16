@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using TMPro;
@@ -52,14 +52,9 @@ namespace BeatmapEditor
             Word.BeatInterval = newInterval;
             RefreshWord();
         }
-        
-        // Handlers
-        
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (_dragging || _inputting)
-                return;
 
+        public void Edit()
+        {
             _activeInputField = Instantiate(InputFieldPrefab, transform);
             _activeInputField.transform.localPosition = new Vector3(Word.BeatWidth/2f * _beatSpacing,-30f,0);
             _activeInputField.onSubmit.AddListener(OnSubmitWordType);
@@ -68,6 +63,16 @@ namespace BeatmapEditor
             
             _inputting = true;
             EditorTrackGestures.Instance.enabled = false;
+        }
+
+        // Handlers
+        
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (_dragging || _inputting)
+                return;
+            
+            Edit();
         }
 
         public void OnSubmitWordType(string result)

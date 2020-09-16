@@ -54,6 +54,15 @@ namespace BeatmapEditor
         
         // Stuff responding to gestures
 
+        public void CreateWord(float screenX)
+        {
+            var newWordBeat = ((_panX + screenX) / _beatSpacing).RoundToNearest(C.EditorBeatSnap);
+            var newWord = new BeatmapWord(newWordBeat);
+            BeatmapEditorManager.Instance.currentBeatmap.words.Add(newWord);
+            RefreshBeatmap();
+            _notesRecycler.EditWord(newWordBeat.BeatToIndex());
+        }
+
         private const float DefaultBeatSpacing = 20f;
         private const float MaxZoomScale = 5f;
         private float _scaleX = 1f;
