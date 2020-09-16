@@ -65,6 +65,7 @@ namespace BeatmapEditor
             _activeInputField = Instantiate(InputFieldPrefab, transform);
             _activeInputField.transform.localPosition = new Vector3(Word.BeatWidth/2f * _beatSpacing,-30f,0);
             _activeInputField.onSubmit.AddListener(OnSubmitWordType);
+            _activeInputField.SetTextWithoutNotify(Word.Text);
             _activeInputField.ActivateInputField();
             
             _inputting = true;
