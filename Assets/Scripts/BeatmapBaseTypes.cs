@@ -21,5 +21,8 @@ public static class BeatmapTransformations
     }
 
     public static float LastBeat(this BeatmapWord word) => 
-        word.beat + word.text.Length * word.beatInterval;
+        word.beat + word.BeatWidth();
+    
+    public static float BeatWidth(this BeatmapWord word) => 
+        word.text.Length * word.beatInterval;
 }

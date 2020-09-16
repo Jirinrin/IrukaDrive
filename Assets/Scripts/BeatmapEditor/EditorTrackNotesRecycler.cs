@@ -9,6 +9,7 @@ namespace BeatmapEditor
     public class EditorTrackNotesRecycler : Singleton<EditorTrackNotesRecycler>
     {
         [SerializeField] private TextMeshProUGUI characterPrefab;
+        [SerializeField] private TMP_InputField inputFieldPrefab;
         private EditorCharObject _editorCharObjectPrefab;
         private EditorWordObject _emptyWordObject;
         private GameObject _rubbishBin;
@@ -39,9 +40,10 @@ namespace BeatmapEditor
         private EditorWordObject CreateWord() => Instantiate(_emptyWordObject, transform);
         private void InitWord(EditorWordObject item, int index)
         {
+            item.Word = _wordLookup[index];
+            item.InputFieldPrefab = inputFieldPrefab;
             var itemTransform = item.transform;
             itemTransform.localPosition = new Vector3(_beatSpacing * index / 1000, 0, 0);
-            item.Word = _wordLookup[index];
             if (item.CharObjRefs == null || item.CharObjRefs.Count > 0)
                 item.CharObjRefs = new List<EditorCharObject>();
 

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,10 +12,15 @@ namespace BeatmapEditor
         public EditorWord Word;
 
         [CanBeNull] public List<EditorCharObject> CharObjRefs;
+
+        [NonSerialized] public TMP_InputField InputFieldPrefab;
         
         private float xBeforeDrag;
         private float _dragDelta;
         private bool _dragging;
+
+        private TMP_InputField _activeInputField;
+        private static bool _inputting;
 
         private const float SnapModulus = .5f;
 
@@ -29,9 +36,26 @@ namespace BeatmapEditor
         
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (_dragging)
+            if (_dragging || _inputting)
                 return;
+
+            _activeInputField = Instantiate(InputFieldPrefab, transform);
+            _activeInputField.transform.localPosition = new Vector3(Word.BeatWidth/2f * _beatSpacing,-30f,0);
+            _activeInputField.onSubmit.AddListener(OnSubmitWordType);
+            _activeInputField.ActivateInputField();
             
+            _inputting = true;
+            EditorTrackGestures.Instance.enabled = false;
+        }
+
+        public void OnSubmitWordType(string result)
+        {
+            Word.Text = result;
+            EditorTrack.Instance.RefreshBeatmap();
+            Destroy(_activeInputField.gameObject);
+            
+            _inputting = false;
+            EditorTrackGestures.Instance.enabled = true;
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -55,6 +79,9 @@ namespace BeatmapEditor
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            if (_inputting)
+                return;
+            
             // todo: figure out a way to make this event go through to parents (i.e. EditorTrack)
             if (eventData.button != PointerEventData.InputButton.Left)
                 return;

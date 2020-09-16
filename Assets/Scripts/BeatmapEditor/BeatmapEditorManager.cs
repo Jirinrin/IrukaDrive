@@ -39,6 +39,7 @@ namespace BeatmapEditor
             }
         }
         public float LastBeat => _word.LastBeat();
+        public float BeatWidth => _word.BeatWidth();
         public float BeatInterval
         { 
             get => _word.beatInterval;

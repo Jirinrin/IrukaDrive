@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace BeatmapEditor
 {
-    public class EditorTrackGestures : MonoBehaviour, IDragHandler, IBeginDragHandler, IScrollHandler
+    public class EditorTrackGestures : Singleton<EditorTrackGestures>, IDragHandler, IBeginDragHandler, IScrollHandler
     {
         private Vector2 _beginDragPoint;
         
