@@ -15,7 +15,7 @@ namespace BeatmapEditor
 
     public class EditorWord
     {
-        private BeatmapWord _word;
+        private readonly BeatmapWord _word;
 
         public List<ParsedNote> CharNotes;
 
@@ -56,5 +56,7 @@ namespace BeatmapEditor
             _word = word;
             CharNotes = _word.ParseNotes();
         }
+
+        public void Delete() => BeatmapEditorManager.Instance.currentBeatmap.words.Remove(_word);
     }
 }

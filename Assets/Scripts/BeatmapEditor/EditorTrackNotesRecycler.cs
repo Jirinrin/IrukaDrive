@@ -95,11 +95,11 @@ namespace BeatmapEditor
             return new[] {Mathf.RoundToInt(minBeat*1000f), Mathf.RoundToInt(maxBeat*1000f)};
         }
 
-        public void LoadCurrentBeatmap()
+        public void LoadBeatmap(Beatmap beatmap)
         {
             _wordLookup = new Dictionary<int, EditorWord>();
             _wordIndices = new SortedSet<int>();
-            foreach (var word in _currentBeatmap.words)
+            foreach (var word in beatmap.words)
             {
                 var index = Mathf.RoundToInt(word.beat * 1000);
                 _wordIndices.Add(index);
@@ -110,7 +110,7 @@ namespace BeatmapEditor
         public void Init(Beatmap beatmap)
         {
             _currentBeatmap = beatmap;
-            LoadCurrentBeatmap();
+            LoadBeatmap(_currentBeatmap);
 
             _charRecyclerPool = new RecyclerPool<EditorCharObject>(CreateChar);
             _wordRecyclerList = new RecyclerList<EditorWordObject>(
@@ -119,7 +119,7 @@ namespace BeatmapEditor
 
         public void RefreshBeatmap()
         {
-            LoadCurrentBeatmap();
+            LoadBeatmap(_currentBeatmap);
             _wordRecyclerList.Refresh();
         }
 

@@ -73,7 +73,11 @@ namespace BeatmapEditor
 
         public void OnSubmitWordType(string result)
         {
-            Word.Text = result;
+            if (result.Length == 0)
+                Word.Delete();
+            else
+                Word.Text = result;
+            
             EditorTrack.Instance.RefreshBeatmap();
             Destroy(_activeInputField.gameObject);
             
