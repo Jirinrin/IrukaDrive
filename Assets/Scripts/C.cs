@@ -1,4 +1,4 @@
 ﻿public static class C
 {
-    public const float Tolerance = 0.001f;
+    public const float FloatTolerance = 0.001f;
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace BeatmapEditor
 {
@@ -18,42 +19,42 @@ namespace BeatmapEditor
 
         public List<ParsedNote> CharNotes;
 
-        private void UpdateNotes() => CharNotes = _word.ParseNotes();
-
+        // For this the original CharNotes cannot be kept
         public string Text
         { 
             get => _word.text;
             set
             {
                 _word.text = value;
-                UpdateNotes();
+                CharNotes = _word.ParseNotes();
             }
         }
         public float Beat
         { 
             get => _word.beat;
-            set
-            {
-                _word.beat = value;
-                UpdateNotes();
-            }
+            set =>_word.beat = value;
         }
-        public float LastBeat => _word.LastBeat();
-        public float BeatWidth => _word.BeatWidth();
         public float BeatInterval
         { 
             get => _word.beatInterval;
             set
             {
                 _word.beatInterval = value;
-                UpdateNotes();
+                var newCharNotes = _word.ParseNotes();
+                CharNotes = CharNotes.Select((note, i) =>
+                {
+                    note.Beat = newCharNotes[i].Beat;
+                    return note;
+                }).ToList();
             }
         }
+        public float LastBeat => _word.LastBeat();
+        public float BeatWidth => _word.BeatWidth();
 
         public EditorWord(BeatmapWord word)
         {
             _word = word;
-            UpdateNotes();
+            CharNotes = _word.ParseNotes();
         }
     }
 }
