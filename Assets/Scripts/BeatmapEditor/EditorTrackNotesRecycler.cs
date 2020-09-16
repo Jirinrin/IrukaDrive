@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -43,7 +43,7 @@ namespace BeatmapEditor
             item.Word = _wordLookup[index];
             item.InputFieldPrefab = inputFieldPrefab;
             var itemTransform = item.transform;
-            itemTransform.localPosition = new Vector3(_beatSpacing * index / 1000, 0, 0);
+            itemTransform.localPosition = new Vector3(_beatSpacing * index.IndexToBeat(), 0, 0);
             if (item.CharObjRefs == null || item.CharObjRefs.Count > 0)
                 item.CharObjRefs = new List<EditorCharObject>();
 
@@ -75,7 +75,7 @@ namespace BeatmapEditor
             var lookup = _wordRecyclerList.visibleItemsLookup;
             foreach (var index in lookup.Keys)
             {
-                lookup[index].transform.localPosition = new Vector3(_beatSpacing * index/1000, 0, 0);
+                lookup[index].transform.localPosition = new Vector3(_beatSpacing * index.IndexToBeat(), 0, 0);
                 lookup[index].UpdateSpacing(_beatSpacing);
             }
         }
@@ -92,7 +92,7 @@ namespace BeatmapEditor
             var containerWidthExtension = containerWidth * .5f;
             var minBeat = Mathf.Max((_panX - containerWidthExtension) / _beatSpacing, 0f);
             var maxBeat = minBeat + (containerWidth + containerWidthExtension*2f) / _beatSpacing;
-            return new[] {Mathf.RoundToInt(minBeat*1000f), Mathf.RoundToInt(maxBeat*1000f)};
+            return new[] {minBeat.BeatToIndex(), maxBeat.BeatToIndex()};
         }
 
         public void LoadBeatmap(Beatmap beatmap)
@@ -101,7 +101,7 @@ namespace BeatmapEditor
             _wordIndices = new SortedSet<int>();
             foreach (var word in beatmap.words)
             {
-                var index = Mathf.RoundToInt(word.beat * 1000);
+                var index = word.beat.BeatToIndex();
                 _wordIndices.Add(index);
                 _wordLookup[index] = new EditorWord(word);
             }

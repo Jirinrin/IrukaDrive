@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using TMPro;
@@ -26,8 +26,6 @@ namespace BeatmapEditor
 
         // Constants and stuff
         
-        private const float SnapModulus = .5f;
-        private static readonly List<float> BeatIntervalValues = new List<float>{.25f, .3333f, .5f, 1f, 2f, 4f};
         private const float DragXToIndexShift = .1f;
 
         private enum DragType
@@ -36,7 +34,7 @@ namespace BeatmapEditor
             ChangeBeatInterval,
         }
 
-        public void RefreshWord()
+        private void RefreshWord()
         {
             foreach (var charObj in CharObjRefs)
                 charObj.transform.localPosition = new Vector3(_beatSpacing * charObj.Note.Beat, 0, 0);
@@ -49,7 +47,7 @@ namespace BeatmapEditor
             RefreshWord();
         }
 
-        public void UpdateBeatInterval(float newInterval)
+        private void UpdateBeatInterval(float newInterval)
         {
             Word.BeatInterval = newInterval;
             RefreshWord();
@@ -89,8 +87,8 @@ namespace BeatmapEditor
         private float DragXToBeatInterval(float dragDelta)
         {
             var index = Mathf.RoundToInt(Mathf.Clamp(_beatIntervalIndexBeforeDrag + dragDelta * DragXToIndexShift,
-                0, BeatIntervalValues.Count-1));
-            return BeatIntervalValues[index];
+                0, C.BeatIntervalValues.Count-1));
+            return C.BeatIntervalValues[index];
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -100,7 +98,7 @@ namespace BeatmapEditor
             
             _dragDelta += eventData.delta.x * ScreenToCanvas.Factor;
             if (_dragType == DragType.MoveWord)
-                transform.localPosition = new Vector3(_xBeforeDrag + _dragDelta.RoundToNearest(_beatSpacing*SnapModulus), 0, 0);
+                transform.localPosition = new Vector3(_xBeforeDrag + _dragDelta.RoundToNearest(_beatSpacing*C.EditorBeatSnap), 0, 0);
             else
                 UpdateBeatInterval(DragXToBeatInterval(_dragDelta));
                 
@@ -111,7 +109,7 @@ namespace BeatmapEditor
             if (!_dragging)
                 return;
             
-            Word.Beat = (transform.localPosition.x / _beatSpacing).RoundToNearest(SnapModulus);
+            Word.Beat = (transform.localPosition.x / _beatSpacing).RoundToNearest(C.EditorBeatSnap);
             EditorTrack.Instance.RefreshBeatmap();
             _dragging = false;
         }
@@ -129,7 +127,7 @@ namespace BeatmapEditor
             else if (eventData.button == PointerEventData.InputButton.Right)
             {
                 _dragType = DragType.ChangeBeatInterval;
-                _beatIntervalIndexBeforeDrag = BeatIntervalValues.FindIndex(val => val.Equals(Word.BeatInterval));
+                _beatIntervalIndexBeforeDrag = C.BeatIntervalValues.FindIndex(val => val.Equals(Word.BeatInterval));
                 if (_beatIntervalIndexBeforeDrag == -1)
                     _beatIntervalIndexBeforeDrag = 3;
             }

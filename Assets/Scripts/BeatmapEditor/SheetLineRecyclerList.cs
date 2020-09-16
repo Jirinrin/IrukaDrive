@@ -5,7 +5,6 @@ using UnityEngine;
 namespace BeatmapEditor
 {
     // todo: make sure the recycler thing gets updated not every frame
-    // todo: better system than *1000 and /1000?
     // todo: better 'shared container / coordinate' system to sync to EditorTrack
     public class SheetLineRecyclerList : Singleton<SheetLineRecyclerList>
     {
@@ -21,24 +20,24 @@ namespace BeatmapEditor
         private Line CreateBeatLine() => Instantiate(beatLinePrefab, transform);
 
         private void InitLine(Line item, int index) =>
-            item.transform.localPosition = new Vector3(_beatSpacing * index/1000, 0, 0);
+            item.transform.localPosition = new Vector3(_beatSpacing * index.IndexToBeat(), 0, 0);
 
         private void UpdateLinesSpacing(RecyclerList<Line> list)
         {
             foreach (var index in list.visibleItemsLookup.Keys)
             {
-                // todo: somehow make the accuracy smoother than 1/1000 again here
-                list.visibleItemsLookup[index].transform.localPosition = new Vector3(_beatSpacing * index/1000, 0, 0);
+                // todo: somehow make the accuracy smoother than 1/BeatIndexFactor again here
+                list.visibleItemsLookup[index].transform.localPosition = new Vector3(_beatSpacing * index.IndexToBeat(), 0, 0);
             }
         }
 
         private List<int> GetNewLineIndicesInWindow(int from, int to, bool isBar)
         {
             var output = new List<int>();
-            var startIndex = Mathf.CeilToInt(from / 1000f) * 1000;
-            for (var i = startIndex; i < to; i += 1000)
+            var startIndex = Mathf.CeilToInt(from / C.BeatIndexFactor) * C.BeatIndexFactorInt;
+            for (var i = startIndex; i < to; i += C.BeatIndexFactorInt)
             {
-                var onBar = i % (_currentBeatmap.beatsPerBar * 1000) == _currentBeatmap.barOffset * 1000; 
+                var onBar = i % (_currentBeatmap.beatsPerBar * C.BeatIndexFactorInt) == _currentBeatmap.barOffset * C.BeatIndexFactorInt;
                 if (isBar && onBar || !isBar && !onBar)
                     output.Add(i);
             }
@@ -52,7 +51,7 @@ namespace BeatmapEditor
         {
             var minBeat = Mathf.Max(_panX / _beatSpacing, 0f);
             var maxBeat = minBeat + EditorTrack.Instance.containerRect.width / _beatSpacing;
-            return new[] {Mathf.RoundToInt(minBeat*1000), Mathf.RoundToInt(maxBeat*1000)};
+            return new[] {minBeat.BeatToIndex(), maxBeat.BeatToIndex()};
         }
         
         public void Init(Beatmap beatmap)
