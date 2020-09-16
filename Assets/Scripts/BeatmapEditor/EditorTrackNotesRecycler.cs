@@ -8,8 +8,8 @@ namespace BeatmapEditor
     // todo: better 'shared container / coordinate' system to sync to EditorTrack
     public class EditorTrackNotesRecycler : Singleton<EditorTrackNotesRecycler>
     {
-        [SerializeField] private TextMeshProUGUI characterPrefab;
-        [SerializeField] private TMP_InputField inputFieldPrefab;
+        [SerializeField] private TextMeshProUGUI characterPrefab = null;
+        [SerializeField] private TMP_InputField inputFieldPrefab = null;
         private EditorCharObject _editorCharObjectPrefab;
         private EditorWordObject _emptyWordObject;
         private GameObject _rubbishBin;

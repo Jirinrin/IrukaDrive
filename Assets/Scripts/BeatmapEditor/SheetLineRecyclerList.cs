@@ -8,8 +8,8 @@ namespace BeatmapEditor
     // todo: better 'shared container / coordinate' system to sync to EditorTrack
     public class SheetLineRecyclerList : Singleton<SheetLineRecyclerList>
     {
-        [SerializeField] private Line barLinePrefab;
-        [SerializeField] private Line beatLinePrefab;
+        [SerializeField] private Line barLinePrefab = null;
+        [SerializeField] private Line beatLinePrefab = null;
 
         private RecyclerList<Line> _recyclerList1;
         private RecyclerList<Line> _recyclerList2;

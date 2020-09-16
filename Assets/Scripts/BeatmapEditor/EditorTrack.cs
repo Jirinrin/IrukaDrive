@@ -6,7 +6,7 @@ namespace BeatmapEditor
     // todo: better 'shared container / coordinate' system to sync to EditorTrack
     public class EditorTrack : Singleton<EditorTrack>
     {
-        [SerializeField] private RectTransform containerRectTransform;
+        [SerializeField] private RectTransform containerRectTransform = null;
         [NonSerialized] public Rect containerRect;
 
         private EditorTrackNotesRecycler _notesRecycler;

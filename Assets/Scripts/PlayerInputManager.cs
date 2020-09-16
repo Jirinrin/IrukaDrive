@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerInputManager : MonoBehaviour
 {
-    [SerializeField] private GameObject game;
+    [SerializeField] private GameObject game = null;
     private SongManager _songManager;
     private GameManager _gameManager;
 

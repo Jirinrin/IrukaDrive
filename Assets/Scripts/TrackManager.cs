@@ -8,8 +8,8 @@ using UnityEngine;
 // todo: effect when player hits / misses / nears char, and make that persist in the char as it moves beyond the hantei
 public class TrackManager : MonoBehaviour
 {
-    [SerializeField] private GameObject judgementTransform;
-    [SerializeField] private GameObject characterPrefab;
+    [SerializeField] private GameObject judgementTransform = null;
+    [SerializeField] private GameObject characterPrefab = null;
 
     private List<RuntimeWord> _words;
     // todo: check if float as dictionary key works / doesn't result in weird memory leaks

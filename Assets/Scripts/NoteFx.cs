@@ -7,7 +7,7 @@ using UnityEngine;
 public class NoteFx : MonoBehaviour
 {
     private GameObject _sprite;
-    [SerializeField] private GameObject circlePrefab;
+    [SerializeField] private GameObject circlePrefab = null;
 
     private const float DefaultScale = 1f;
     private const float MaxScale = 2f;

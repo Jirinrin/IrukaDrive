@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SfxManager : MonoBehaviour
 {
-    [SerializeField] private AudioClip tickSample;
+    [SerializeField] private AudioClip tickSample = null;
     
     private AudioSource _audioSource;
     
