@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class BeatmapManager : MonoBehaviour
 {
-    /* [NonSerialized] public static */ public Beatmap currentBeatmap;
+    public Beatmap currentBeatmap;
     
     private SongManager _songManager;
     private TrackManager _trackManager;
@@ -35,6 +36,7 @@ public class BeatmapManager : MonoBehaviour
 
     private void LoadBeatmap()
     {
+        // currentBeatmap = SerializationHelpers.LoadBeatmap(@"C:\Users\侍鈴\Documents\Unity\IrukaDive\Build\bla.blarr");
         _runtimeNotes = currentBeatmap.words.Select(word => new RuntimeWord(word, OnChangeCurrentChar)).ToList();
         
         _songManager.LoadSong(currentBeatmap);
@@ -159,13 +161,13 @@ public class BeatmapManager : MonoBehaviour
 public class BeatmapWord
 {
     public float beat;
-    public string text; // will be split up into chars
-    public float beatInterval;
+    public string text = ""; // will be split up into chars
+    public float beatInterval = C.DefaultBeatInterval;
+
+    public BeatmapWord() { }
     public BeatmapWord(float beat)
     {
         this.beat = beat;
-        text = "";
-        beatInterval = C.DefaultBeatInterval;
     }
 }
 
@@ -268,7 +270,9 @@ public class RuntimeWord
 [Serializable]
 public class Beatmap
 {
-    public AudioClip song;
+    public string songFile;
+    [NonSerialized][XmlIgnore] public AudioClip song;
+    [NonSerialized][XmlIgnore] public string filePath;
     public float bpm;
     public float beatOffset;
     [Range(2,4)] public int beatsPerBar = 4;
