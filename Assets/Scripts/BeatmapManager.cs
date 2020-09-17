@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 public class BeatmapManager : MonoBehaviour
 {
-    public Beatmap currentBeatmap;
+    [NonSerialized] public Beatmap currentBeatmap;
     
     private SongManager _songManager;
     private TrackManager _trackManager;
@@ -36,7 +36,8 @@ public class BeatmapManager : MonoBehaviour
 
     private void LoadBeatmap()
     {
-        // currentBeatmap = SerializationHelpers.LoadBeatmap(@"C:\Users\侍鈴\Documents\Unity\IrukaDive\Build\bla.blarr");
+        currentBeatmap = SerializationHelpers.LoadBeatmap(@"C:\Users\侍鈴\Documents\Unity\IrukaDive\Build\bla.blarr");
+
         _runtimeNotes = currentBeatmap.words.Select(word => new RuntimeWord(word, OnChangeCurrentChar)).ToList();
         
         _songManager.LoadSong(currentBeatmap);
@@ -205,7 +206,8 @@ public class RuntimeWord
 
     public RuntimeWord(BeatmapWord word, Action<int?> onChangeInputNoteIndex)
     {
-        CharNotes = word.ParseNotes().Select(note => new RuntimeNote(note)).ToList();
+        // todo: remove dirty 'Beat =' hack
+        CharNotes = word.ParseNotes().Select(note => new RuntimeNote(note){Beat = word.beat+note.Beat}).ToList();
         if (!CharNotes.Any())
             throw new Exception("Empty word: " + this);
         

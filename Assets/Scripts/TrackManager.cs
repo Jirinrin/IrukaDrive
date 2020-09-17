@@ -34,6 +34,8 @@ public class TrackManager : MonoBehaviour
         {
             // todo: group characters by word (with a parent) or something
             
+            // todo: make recycler list
+            
             var wordCharObjectsLookup = _noteObjectLookup[word.Beat];
             
             foreach (var charNote in word.CharNotes)
