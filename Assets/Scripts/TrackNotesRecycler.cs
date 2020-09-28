@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 // todo: shared base with editor notes recycler
 public class TrackNotesRecycler : Singleton<TrackNotesRecycler>
@@ -47,7 +49,15 @@ public class TrackNotesRecycler : Singleton<TrackNotesRecycler>
             charObjTransform.SetParent(itemTransform);
             charObjTransform.localPosition = new Vector3(_beatSpacing * note.Beat, 0, 0);
             charObj.gameObject.SetActive(true);
+            charObj.color = Color.white;
             item.CharObjRefs.Add(charObj);
+        }
+        
+        if (_wordAppearActionQueue.ContainsKey(index))
+        {
+            while (_wordAppearActionQueue[index].Any())
+                _wordAppearActionQueue[index].Dequeue().Invoke();
+            _wordAppearActionQueue.Remove(index);
         }
     }
     private void CleanupWord(RuntimeWordObject item, int index)
@@ -82,6 +92,7 @@ public class TrackNotesRecycler : Singleton<TrackNotesRecycler>
         _wordLookup = new Dictionary<int, RuntimeWord>();
         _wordIndices = new SortedSet<int>();
         _beatSpacing = startBeatSpacing;
+        _wordAppearActionQueue = new Dictionary<int, Queue<Action>>();
         
         foreach (var word in words)
         {
@@ -109,6 +120,15 @@ public class TrackNotesRecycler : Singleton<TrackNotesRecycler>
 
     public void RefreshWindow() =>
         _wordRecyclerList.SetVisibleWindow(GetCurrentWindow());
+
+    // This is for when you want to do something once a certain word appears
+    private Dictionary<int, Queue<Action>> _wordAppearActionQueue;
+    public void EnqueueForWordAppear(int index, Action action)
+    {
+        if (_wordAppearActionQueue[index] == null)
+            _wordAppearActionQueue[index] = new Queue<Action>();
+        _wordAppearActionQueue[index].Enqueue(action);
+    }
 
     // Coming from TrackManager
 

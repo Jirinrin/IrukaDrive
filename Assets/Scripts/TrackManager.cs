@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +59,11 @@ public class TrackManager : Singleton<TrackManager>
     private void ChangeCurrentWord(float beat)
     {
         // todo: de-mark previous current word if there was still some current
-        _currentWordObj = _notesRecycler.VisibleWordObjects[beat.BeatToIndex()];
+        var index = beat.BeatToIndex();
+        if (_notesRecycler.VisibleWordObjects.ContainsKey(index))
+            _currentWordObj = _notesRecycler.VisibleWordObjects[index];
+        else
+            _notesRecycler.EnqueueForWordAppear(index, () => _currentWordObj = _notesRecycler.VisibleWordObjects[index]);
         // If they're transparent by default:
         // foreach (var obj in _currentWordObjects)
         //     obj.color = Color.white;
