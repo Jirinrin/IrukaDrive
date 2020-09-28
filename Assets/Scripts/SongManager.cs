@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class SongManager : MonoBehaviour
+public class SongManager : Singleton<SongManager>
 {
     [NonSerialized] private Beatmap _currentBeatmap;
     

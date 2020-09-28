@@ -5,18 +5,15 @@ using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class BeatmapManager : MonoBehaviour
+public class BeatmapManager : Singleton<BeatmapManager>
 {
     [NonSerialized] public Beatmap currentBeatmap;
     
-    private SongManager _songManager;
-    private TrackManager _trackManager;
-
     private const float SecondsBeforeNextWord = 1f;
     private const float MinimumSecondsAfterWord = .5f;
     private const float MaxJudgementBeatTimeWindow = 2f;
 
-    private List<RuntimeWord> _runtimeNotes;
+    private List<RuntimeWord> _runtimeWords;
     
     private List<RuntimeWord>.Enumerator _wordsIterator;
     private RuntimeWord _currentWord;
@@ -29,8 +26,6 @@ public class BeatmapManager : MonoBehaviour
 
     private void Start()
     {
-        _songManager = GetComponent<SongManager>();
-        _trackManager = GetComponent<TrackManager>();
         LoadBeatmap();
     }
 
@@ -38,13 +33,13 @@ public class BeatmapManager : MonoBehaviour
     {
         currentBeatmap = SerializationHelpers.LoadBeatmap(@"C:\Users\侍鈴\Documents\Unity\IrukaDive\Build\bla.blarr");
 
-        _runtimeNotes = currentBeatmap.words.Select(word => new RuntimeWord(word, OnChangeCurrentChar)).ToList();
+        _runtimeWords = currentBeatmap.words.Select(word => new RuntimeWord(word)).ToList();
         
-        _songManager.LoadSong(currentBeatmap);
+        SongManager.Instance.LoadSong(currentBeatmap);
         
-        _trackManager.InitTrack(_runtimeNotes);
+        TrackManager.Instance.InitTrack(currentBeatmap, _runtimeWords);
         
-        _wordsIterator = _runtimeNotes.GetEnumerator();
+        _wordsIterator = _runtimeWords.GetEnumerator();
         AdvanceWord(true);
         
         _lastWordReached = false;
@@ -59,7 +54,7 @@ public class BeatmapManager : MonoBehaviour
 
         return new BeatmapResult
         {
-            NoteResults = _runtimeNotes.SelectMany(word => word.CharNotes).ToList(),
+            NoteResults = _runtimeWords.SelectMany(word => word.CharNotes).ToList(),
         };
     }
 
@@ -93,7 +88,7 @@ public class BeatmapManager : MonoBehaviour
 
     private void CheckNextWord()
     {
-        if (_lastWordReached || _songManager.SongPosBeats < _switchNextWordThreshold)
+        if (_lastWordReached || SongManager.Instance.SongPosBeats < _switchNextWordThreshold)
             return;
         
         // Next word threshold passed!
@@ -106,10 +101,10 @@ public class BeatmapManager : MonoBehaviour
             return;
         
         CheckNextWord();
-        if (_currentWord.CheckPassedNote(_songManager.SongPosBeats))
+        if (_currentWord.CheckPassedNote(SongManager.Instance.SongPosBeats))
             OnNote?.Invoke();
         
-        _trackManager.DrawTrackNotes(_songManager.SongPosBeats);
+        TrackManager.Instance.Pan(SongManager.Instance.SongPosBeats * 20f);
     }
 
     private void Tap() { }
@@ -125,8 +120,8 @@ public class BeatmapManager : MonoBehaviour
             currentCharNote.Result = NoteResult.WrongChar;
         else
         {
-            var beatSnapshot = _songManager.SongPosBeats;
-            var timing = beatSnapshot - currentCharNote.Beat;
+            var beatSnapshot = SongManager.Instance.SongPosBeats;
+            var timing = beatSnapshot - currentCharNote.BeatAbs;
             Debug.Log("TIMING");
             Debug.Log(timing);
             if (Math.Abs(timing) < MaxJudgementBeatTimeWindow)
@@ -151,7 +146,9 @@ public class BeatmapManager : MonoBehaviour
         PlayerInputManager.OnChar += OnChar;
         SongManager.OnSongFinished += SongFinished;
     }
-    
+
+    public static void ChangeCurrentChar(int? val) => OnChangeCurrentChar?.Invoke(val);
+
     public static event Action OnNote;
     public static event Action OnBeatmapSongFinished;
     public static event Action<float> OnChangeCurrentWord; // Pass in beat
@@ -181,13 +178,15 @@ public enum NoteResult
 
 public class RuntimeNote : ParsedNote
 {
-    public RuntimeNote(ParsedNote baseNote)
+    public NoteResult? Result;
+    public float? ResultTiming;
+    public float BeatAbs; // Beat relative to the start of the song instead of the start of the word
+    public RuntimeNote(ParsedNote baseNote, float beatAbs)
     {
         Beat = baseNote.Beat;
         Char = baseNote.Char;
+        BeatAbs = beatAbs;
     }
-    public NoteResult? Result;
-    public float? ResultTiming;
 }
 
 public class RuntimeWord
@@ -195,7 +194,6 @@ public class RuntimeWord
     public readonly float Beat;
     public readonly float LastBeat;
     public readonly List<RuntimeNote> CharNotes;
-    private readonly Action<int?> _onChangeInputNoteIndex;
     
     private int _inputNoteIndex;
     private int _noteIndex;
@@ -204,23 +202,21 @@ public class RuntimeWord
     public bool Finished;
     private bool _passed;
 
-    public RuntimeWord(BeatmapWord word, Action<int?> onChangeInputNoteIndex)
+    public RuntimeWord(BeatmapWord word)
     {
-        // todo: remove dirty 'Beat =' hack
-        CharNotes = word.ParseNotes().Select(note => new RuntimeNote(note){Beat = word.beat+note.Beat}).ToList();
+        CharNotes = word.ParseNotes().Select(note => new RuntimeNote(note, word.beat + note.Beat)).ToList();
         if (!CharNotes.Any())
             throw new Exception("Empty word: " + this);
         
         Beat = word.beat;
-        LastBeat = CharNotes.Last().Beat;
+        LastBeat = word.LastBeat();
         CurrentInputNote = CharNotes[0];
         CurrentNote = CharNotes[0];
-        _onChangeInputNoteIndex = onChangeInputNoteIndex;
     }
-    
-    public void SetCurrentInputNote(int? index)
+
+    private void SetCurrentInputNote(int? index)
     {
-        _onChangeInputNoteIndex.Invoke(index);
+        BeatmapManager.ChangeCurrentChar(index);
         if (index == null)
             CurrentInputNote = null;
         else
@@ -245,7 +241,7 @@ public class RuntimeWord
 
     public bool CheckPassedNote(float beatTime)
     {
-        if (_passed || !(CurrentNote?.Beat < beatTime))
+        if (_passed || !(CurrentNote?.BeatAbs < beatTime))
             return false;
 
         // Passed new note!

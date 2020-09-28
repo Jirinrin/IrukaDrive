@@ -6,6 +6,7 @@ namespace BeatmapEditor
 {
     // todo: make sure the recycler thing gets updated not every frame
     // todo: better 'shared container / coordinate' system to sync to EditorTrack
+    // todo: make shared thing with 'normal' sheetlinerecyclerlist
     public class SheetLineRecyclerList : Singleton<SheetLineRecyclerList>
     {
         [SerializeField] private Line barLinePrefab = null;

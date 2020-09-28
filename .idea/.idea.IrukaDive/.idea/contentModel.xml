@@ -248,6 +248,7 @@
           <e p="PrimitiveExtensions.cs" t="Include" />
           <e p="RecyclerList.cs" t="Include" />
           <e p="RecyclerPool.cs" t="Include" />
+          <e p="RuntimeWordObject.cs" t="Include" />
           <e p="Serialization.cs" t="Include" />
           <e p="SerializationHelpers.cs" t="Include" />
           <e p="SfxManager.cs" t="Include" />
@@ -256,6 +257,7 @@
           <e p="SongManagerTest.cs" t="Include" />
           <e p="TapFx.cs" t="Include" />
           <e p="TrackManager.cs" t="Include" />
+          <e p="TrackNotesRecycler.cs" t="Include" />
         </e>
       </e>
       <e p="IrukaDive.sln" t="IncludeFlat" />
