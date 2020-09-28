@@ -11,7 +11,7 @@ namespace BeatmapEditor
         [SerializeField] private TextMeshProUGUI characterPrefab = null;
         [SerializeField] private TMP_InputField inputFieldPrefab = null;
         private EditorCharObject _editorCharObjectPrefab;
-        private EditorWordObject _emptyWordObject;
+        private EditorWordObject _emptyWordPrefab;
         private GameObject _rubbishBin;
 
         private RecyclerPool<EditorCharObject> _charRecyclerPool;
@@ -27,17 +27,18 @@ namespace BeatmapEditor
             _rubbishBin = new GameObject("Rubbish Bin");
             _rubbishBin.transform.SetParent(transform, false);
             
-            var wordObjPrefab = new GameObject("Word Template");
-            wordObjPrefab.AddComponent<EditorWordObject>();
-            wordObjPrefab.transform.SetParent(transform, false);
-            _emptyWordObject = wordObjPrefab.GetComponent<EditorWordObject>();
+            var wordObjTemplate = new GameObject("Word Template");
+            wordObjTemplate.AddComponent<EditorWordObject>();
+            wordObjTemplate.transform.SetParent(transform, false);
+            _emptyWordPrefab = wordObjTemplate.GetComponent<EditorWordObject>();
 
-            characterPrefab.gameObject.AddComponent<EditorCharObject>();
-            _editorCharObjectPrefab = characterPrefab.GetComponent<EditorCharObject>();
+            var characterTemplate = Instantiate(characterPrefab);
+            characterTemplate.gameObject.AddComponent<EditorCharObject>();
+            _editorCharObjectPrefab = characterTemplate.GetComponent<EditorCharObject>();
         }
 
         private EditorCharObject CreateChar() => Instantiate(_editorCharObjectPrefab, transform);
-        private EditorWordObject CreateWord() => Instantiate(_emptyWordObject, transform);
+        private EditorWordObject CreateWord() => Instantiate(_emptyWordPrefab, transform);
         private void InitWord(EditorWordObject item, int index)
         {
             item.Word = _wordLookup[index];

@@ -255,7 +255,6 @@
           <e p="Singleton.cs" t="Include" />
           <e p="SongManager.cs" t="Include" />
           <e p="SongManagerTest.cs" t="Include" />
-          <e p="TapFx.cs" t="Include" />
           <e p="TrackManager.cs" t="Include" />
           <e p="TrackNotesRecycler.cs" t="Include" />
         </e>

@@ -117,19 +117,20 @@ public class BeatmapManager : Singleton<BeatmapManager>
         var currentCharNote = (RuntimeNote) _currentWord.CurrentInputNote; // c# 8
 
         if (character != currentCharNote.Char)
+        {
             currentCharNote.Result = NoteResult.WrongChar;
+            OnHit?.Invoke(currentCharNote.Char, NoteResult.WrongChar, null);
+        }
         else
         {
             var beatSnapshot = SongManager.Instance.SongPosBeats;
             var timing = beatSnapshot - currentCharNote.BeatAbs;
-            Debug.Log("TIMING");
-            Debug.Log(timing);
             if (Math.Abs(timing) < MaxJudgementBeatTimeWindow)
             {
-                Debug.Log("gotem");
                 currentCharNote.ResultTiming = timing;
                 currentCharNote.Result = NoteResult.Hit;
                 // todo: scale this by the bpm (maybe somewhere else than here)
+                OnHit?.Invoke(currentCharNote.Char, NoteResult.Hit, timing);
             }
             else
                 currentCharNote.Result = null;
@@ -150,6 +151,7 @@ public class BeatmapManager : Singleton<BeatmapManager>
     public static void ChangeCurrentChar(int? val) => OnChangeCurrentChar?.Invoke(val);
 
     public static event Action OnNote;
+    public static event Action<char, NoteResult, float?> OnHit; // Pass in timing, char, noteresult
     public static event Action OnBeatmapSongFinished;
     public static event Action<float> OnChangeCurrentWord; // Pass in beat
     public static event Action<int?> OnChangeCurrentChar; // Pass in index
@@ -180,7 +182,7 @@ public class RuntimeNote : ParsedNote
 {
     public NoteResult? Result;
     public float? ResultTiming;
-    public float BeatAbs; // Beat relative to the start of the song instead of the start of the word
+    public readonly float BeatAbs; // Beat relative to the start of the song instead of the start of the word
     public RuntimeNote(ParsedNote baseNote, float beatAbs)
     {
         Beat = baseNote.Beat;

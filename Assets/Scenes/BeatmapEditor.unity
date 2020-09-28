@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0827119477e346eca4872dfa6ffcb0da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterPrefab: {fileID: 6178423728831725295, guid: 5b53c37acfe49744a8a15c3d35a69345,
+  characterPrefab: {fileID: -5503108021878515895, guid: 6e60490dad78d144b884cd9b13afb015,
     type: 3}
   inputFieldPrefab: {fileID: 6984015469222188949, guid: 3cacf46f6a6f9294a86b17127301a294,
     type: 3}
@@ -981,7 +981,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

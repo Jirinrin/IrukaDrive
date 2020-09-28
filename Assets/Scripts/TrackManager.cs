@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +9,14 @@ public class TrackManager : Singleton<TrackManager>
 {
     [SerializeField] private RectTransform containerRectTransform = null;
     [NonSerialized] public Rect containerRect;
+
+    [SerializeField] public RectTransform judgementPoint;
     
     private TrackNotesRecycler _notesRecycler;
     // todo: add sheet
     // private EditorTrackSheetBg _sheet;
 
-    private const float JudgementOffsetX = 20;
+    private float _judgementOffsetX;
     
     private bool _shouldDraw;
     
@@ -36,6 +38,11 @@ public class TrackManager : Singleton<TrackManager>
         // _sheet.InitSheet(beatmap);
         
         UpdateProgress(0f);
+    }
+
+    private void Start()
+    {
+        _judgementOffsetX = judgementPoint.localPosition.x;
     }
 
     private void Update()
@@ -81,7 +88,7 @@ public class TrackManager : Singleton<TrackManager>
     public void UpdateProgress(float posBeats)
     {
         _panX = posBeats * _beatSpacing;
-        transform.localPosition = new Vector3(JudgementOffsetX -_panX, 0, 0);
+        transform.localPosition = new Vector3(_judgementOffsetX - _panX, 0, 0);
         OnPan?.Invoke(_panX);
         _shouldDraw = true;
     }
