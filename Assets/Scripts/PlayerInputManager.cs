@@ -8,19 +8,10 @@ using UnityEngine.InputSystem;
 public class PlayerInputManager : MonoBehaviour
 {
     [SerializeField] private GameObject game = null;
-    private SongManager _songManager;
-    private GameManager _gameManager;
 
     public static event Action OnTap;
     public static event Action<char> OnChar;
 
-    private void Start()
-    {
-        _songManager = game.GetComponent<SongManager>();
-        _gameManager = game.GetComponent<GameManager>();
-       
-    }
-    
     public void OnConfirm()
     {
         OnTap?.Invoke();
@@ -38,8 +29,6 @@ public class PlayerInputManager : MonoBehaviour
 
     private void OnKeyboardEvent(char character)
     {
-        Debug.Log("keyboard event");
-        Debug.Log(character);
         OnChar?.Invoke(character);
     }
 }

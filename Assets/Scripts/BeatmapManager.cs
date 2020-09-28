@@ -104,7 +104,7 @@ public class BeatmapManager : Singleton<BeatmapManager>
         if (_currentWord.CheckPassedNote(SongManager.Instance.SongPosBeats))
             OnNote?.Invoke();
         
-        TrackManager.Instance.Pan(SongManager.Instance.SongPosBeats * 20f);
+        TrackManager.Instance.UpdateProgress(SongManager.Instance.SongPosBeats);
     }
 
     private void Tap() { }

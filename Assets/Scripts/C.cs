@@ -14,4 +14,7 @@ public static class C
     public const int BeatIndexFactorInt = 1000;
     public static int BeatToIndex(this float value) => Mathf.RoundToInt(value * BeatIndexFactor);
     public static float IndexToBeat(this int value) => value / BeatIndexFactor;
+
+    public const float DefaultScrollSpeed = 40f;
+    public const float BeatmapScrollSpeedMod = 1f;
 }

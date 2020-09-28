@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 // todo: effect when player hits / misses / nears char, and make that persist in the char as it moves beyond the hantei
@@ -15,7 +14,7 @@ public class TrackManager : Singleton<TrackManager>
     // todo: add sheet
     // private EditorTrackSheetBg _sheet;
 
-    private const float _judgementOffsetX = 20;
+    private const float JudgementOffsetX = 20;
     
     private bool _shouldDraw;
     
@@ -27,15 +26,16 @@ public class TrackManager : Singleton<TrackManager>
         
         Debug.Log("init track");
 
+        InitBpm(beatmap.bpm);
         OnPan?.Invoke(_panX);
         
         _notesRecycler = TrackNotesRecycler.Instance;
-        _notesRecycler.Init(words);
+        _notesRecycler.Init(words, _beatSpacing);
         
         // _sheet = EditorTrackSheetBg.Instance;
         // _sheet.InitSheet(beatmap);
         
-        Pan(0f);
+        UpdateProgress(0f);
     }
 
     private void Update()
@@ -48,8 +48,6 @@ public class TrackManager : Singleton<TrackManager>
             // _sheet.DrawSheet();
         }
     }
-    
-    private float _beatSpacing = 20f; // todo: replace by some speed-based thing
     
     private void ChangeCurrentWord(float beat)
     {
@@ -78,16 +76,26 @@ public class TrackManager : Singleton<TrackManager>
             _currentWordObj.CharObjRefs[index-1].color = Color.white;
     }
     
-    // todo: replace by more timing-like system
     private float _panX;
 
-    public void Pan(float newPanX)
+    public void UpdateProgress(float posBeats)
     {
-        _panX = newPanX;
-        transform.localPosition = new Vector3(_judgementOffsetX -_panX, 0, 0);
+        _panX = posBeats * _beatSpacing;
+        transform.localPosition = new Vector3(JudgementOffsetX -_panX, 0, 0);
         OnPan?.Invoke(_panX);
         _shouldDraw = true;
     }
+
+    private float _initBpm;
+    private void InitBpm(float bpm)
+    {
+        _initBpm = bpm;
+        SetBpm(_initBpm);
+    }
+    
+    private float _beatSpacing;
+    public void SetBpm(float bpm) =>
+        _beatSpacing = (bpm / _initBpm) * C.DefaultScrollSpeed * C.BeatmapScrollSpeedMod;
 
     private void OnEnable()
     {

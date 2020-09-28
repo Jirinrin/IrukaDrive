@@ -71,16 +71,18 @@ public class TrackNotesRecycler : Singleton<TrackNotesRecycler>
     private int[] GetCurrentWindow()
     {
         var containerWidth = TrackManager.Instance.containerRect.width;
-        var containerWidthExtension = containerWidth * .5f;
+        var containerWidthExtension = containerWidth * 1f;
         var minBeat = Mathf.Max((_panX - containerWidthExtension) / _beatSpacing, 0f);
         var maxBeat = minBeat + (containerWidth + containerWidthExtension*2f) / _beatSpacing;
         return new[] {minBeat.BeatToIndex(), maxBeat.BeatToIndex()};
     }
 
-    public void LoadBeatmap(List<RuntimeWord> words)
+    private void LoadBeatmap(List<RuntimeWord> words, float startBeatSpacing)
     {
         _wordLookup = new Dictionary<int, RuntimeWord>();
         _wordIndices = new SortedSet<int>();
+        _beatSpacing = startBeatSpacing;
+        
         foreach (var word in words)
         {
             var index = word.Beat.BeatToIndex();
@@ -89,9 +91,9 @@ public class TrackNotesRecycler : Singleton<TrackNotesRecycler>
         }
     }
 
-    public void Init(List<RuntimeWord> words)
+    public void Init(List<RuntimeWord> words, float startBeatSpacing)
     {
-        LoadBeatmap(words);
+        LoadBeatmap(words, startBeatSpacing);
 
         _charRecyclerPool = new RecyclerPool<TextMeshProUGUI>(CreateChar);
         _wordRecyclerList = new RecyclerList<RuntimeWordObject>(
@@ -110,7 +112,8 @@ public class TrackNotesRecycler : Singleton<TrackNotesRecycler>
 
     // Coming from TrackManager
 
-    private float _beatSpacing = 20f; // todo: better system
+    private float _beatSpacing;
+
     private float _panX;
     private void OnPan(float panX) => _panX = panX;
     private void OnEnable()
