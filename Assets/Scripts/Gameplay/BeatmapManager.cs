@@ -14,7 +14,7 @@ namespace Gameplay
         private const float MinimumSecondsAfterWord = .5f;
         private const float MaxJudgementBeatTimeWindow = 2f;
 
-        private List<RuntimeWord> _runtimeWords;
+        private IEnumerable<RuntimeWord> _runtimeWords;
     
         private List<RuntimeWord>.Enumerator _wordsIterator;
         private RuntimeWord _currentWord;
@@ -40,7 +40,7 @@ namespace Gameplay
         
             TrackManager.Instance.InitTrack(currentBeatmap, _runtimeWords);
         
-            _wordsIterator = _runtimeWords.GetEnumerator();
+            _wordsIterator = _runtimeWords.ToList().GetEnumerator();
             AdvanceWord(true);
         
             _lastWordReached = false;

@@ -24,7 +24,7 @@ namespace Gameplay
         private bool _shouldDraw;
         
         private RuntimeWordObject _currentWordObj;
-        public void InitTrack(Beatmap beatmap, List<RuntimeWord> words)
+        public void InitTrack(Beatmap beatmap, IEnumerable<RuntimeWord> words)
         {
             containerRect = containerRectTransform.rect;
         

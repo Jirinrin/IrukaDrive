@@ -29,14 +29,14 @@ namespace Gameplay
             }
         }
 
-        private void LoadBeatmap(List<RuntimeWord> words, float startBeatSpacing)
+        private void LoadBeatmap(IEnumerable<RuntimeWord> words, float startBeatSpacing)
         {
             beatSpacing = startBeatSpacing;
             _wordAppearActionQueue = new Dictionary<int, Queue<Action>>();
             base.LoadBeatmap(words);
         }
 
-        public void Init(List<RuntimeWord> words, float startBeatSpacing)
+        public void Init(IEnumerable<RuntimeWord> words, float startBeatSpacing)
         {
             containerWidth = TrackManager.Instance.containerRect.width;
             LoadBeatmap(words, startBeatSpacing);

@@ -19,7 +19,7 @@ namespace Tools.Commons
         private int[] _window;
 
         // (from, to) => newIndices
-        private readonly Func<int, int, List<int>> _getNewItemIndicesInWindow;
+        private readonly Func<int, int, IEnumerable<int>> _getNewItemIndicesInWindow;
     
         // (item, index) => void
         private readonly Action<T, int> _initItem;
@@ -28,7 +28,7 @@ namespace Tools.Commons
         [CanBeNull] private readonly Action<T, int> _cleanupItem;
 
         public RecyclerList(
-            Func<T> createItem, Action<T, int> initItem, Func<int, int, List<int>> getNewItemIndicesInWindow, int[] startWindow,
+            Func<T> createItem, Action<T, int> initItem, Func<int, int, IEnumerable<int>> getNewItemIndicesInWindow, int[] startWindow,
             [CanBeNull] Action<T, int> cleanupItem = null)
         {
             _initItem = initItem;

@@ -17,7 +17,7 @@ namespace Gameplay
         [Range(2,4)] public int beatsPerBar = 4;
         public int barOffset;
         // Expected to already be sorted
-        [FormerlySerializedAs("notes")] public List<BeatmapWord> words;
+        public List<BeatmapWord> words;
     }
 
     public struct BeatmapResult

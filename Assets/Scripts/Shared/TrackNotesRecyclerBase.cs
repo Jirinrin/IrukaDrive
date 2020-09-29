@@ -86,10 +86,10 @@ namespace Shared
             item.charObjRefs = null;
         }
 
-        private List<int> GetNewLineIndicesInWindow(int from, int to)
+        private IEnumerable<int> GetNewLineIndicesInWindow(int from, int to)
         {
             // todo: better, with accounting for last index / width spacing and stuff. But for now a slightly larger window will do
-            return _wordIndices.GetViewBetween(from, to).ToList();
+            return _wordIndices.GetViewBetween(from, to);
         }
 
         private int[] GetCurrentWindow()
