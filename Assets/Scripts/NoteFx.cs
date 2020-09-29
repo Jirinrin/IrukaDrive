@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class NoteFx : MonoBehaviour
 {
     [SerializeField] private CharacterHitAnim characterPrefab = null;
-    
     private TextMeshProUGUI _characterObj;
+    
     [SerializeField] private Image circleSpriteNote;
     [SerializeField] private Image circleSpriteTap;
+
+    [SerializeField] private Animation circlePulseAnimation;
 
     private const float DefaultCircleScale = 1f;
     private const float MaxCircleScale = 2f;
@@ -41,6 +43,8 @@ public class NoteFx : MonoBehaviour
     private void Awake()
     {
         _characterAnimObjPool = new RecyclerPool<CharacterHitAnim>(() => Instantiate(characterPrefab, transform), 6);
+        circlePulseAnimation.Play("CirclePulse");
+        circlePulseAnimation["CirclePulse"].speed = 0;
     }
 
     private void Update()
@@ -52,6 +56,8 @@ public class NoteFx : MonoBehaviour
         circleSpriteTap.transform.localScale = new Vector3(_tapCircleScale, _tapCircleScale);
         if (_tapCircleScale > DefaultCircleScale)
             _tapCircleScale -= (MaxCircleScale - DefaultCircleScale) / 70;
+
+        circlePulseAnimation["CirclePulse"].time = SongManager.Instance.BeatTiming;
     }
     
     private void OnEnable()

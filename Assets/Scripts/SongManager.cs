@@ -11,10 +11,11 @@ public class SongManager : Singleton<SongManager>
     private float _secPerBeat;
 
     [NonSerialized] public float SongPosSec;
-    public float SongPosBeats => (SongPosSec - _currentBeatmap.beatOffset) / _secPerBeat;
+    [NonSerialized] public float SongPosBeats;
+    
     public float SongPosBeatsMod => Mathf.FloorToInt(SongPosBeats % _currentBeatmap.beatsPerBar);
     public float SongPosBars => Mathf.FloorToInt((SongPosBeats - _currentBeatmap.barOffset) / _currentBeatmap.beatsPerBar);
-    public float Timing => SongPosBeats % 1;
+    public float BeatTiming => SongPosBeats % 1;
 
     private float _songDspTimeStart;
 
@@ -38,8 +39,12 @@ public class SongManager : Singleton<SongManager>
 
     private void Update()
     {
+        
         if (_audioSource.isPlaying)
-            SongPosSec = (float)(AudioSettings.dspTime - _songDspTimeStart);
+        {
+            SongPosSec = (float) (AudioSettings.dspTime - _songDspTimeStart);
+            SongPosBeats = (SongPosSec - _currentBeatmap.beatOffset) / _secPerBeat; 
+        }
         
         if (SongPosSec > _currentBeatmap.song.length & !_songFinished)
         {

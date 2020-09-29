@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 16506340}
+  - component: {fileID: 16506341}
   m_Layer: 5
   m_Name: Circles
   m_TagString: Untagged
@@ -160,6 +161,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!111 &16506341
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16506339}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 82b00223f3dc62342a93eff795beb5d5, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 82b00223f3dc62342a93eff795beb5d5, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!224 &151546024 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
@@ -220,6 +237,7 @@ MonoBehaviour:
     type: 3}
   circleSpriteNote: {fileID: 1974303557}
   circleSpriteTap: {fileID: 1095988664}
+  circlePulseAnimation: {fileID: 16506341}
 --- !u!222 &364299791
 CanvasRenderer:
   m_ObjectHideFlags: 0
