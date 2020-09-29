@@ -30,12 +30,12 @@ namespace Gameplay
 
         private void Start()
         {
-            LoadBeatmap();
+            // LoadBeatmap(@"C:\Users\侍鈴\Documents\Unity\IrukaDive\Build\bla.blarr");
         }
 
-        private void LoadBeatmap()
+        public void LoadBeatmap(string path = "")
         {
-            currentBeatmap = SerializationHelpers.LoadBeatmap(@"C:\Users\侍鈴\Documents\Unity\IrukaDive\Build\bla.blarr");
+            currentBeatmap = path == "" ? SerializationHelpers.LoadBeatmap() : SerializationHelpers.LoadBeatmap(path);
 
             _runtimeWords = currentBeatmap.words.Select(word => new RuntimeWord(word)).ToList();
         
@@ -52,6 +52,9 @@ namespace Gameplay
 
         public BeatmapResult? GetResult()
         {
+            if (!_beatmapStarted)
+                return null;
+            
             // May comment out for testing purposes
             // if (!BeatmapFinished)
             //     return null;

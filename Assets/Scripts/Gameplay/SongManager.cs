@@ -43,7 +43,9 @@ namespace Gameplay
 
         private void Update()
         {
-        
+            if (_currentBeatmap == null)
+                return;
+
             if (_audioSource.isPlaying)
             {
                 SongPosSec = (float) (AudioSettings.dspTime - _songDspTimeStart);

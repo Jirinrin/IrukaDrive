@@ -10,27 +10,25 @@ namespace Gameplay
     {
         public Text outputTextBox;
         public Text resultsTextBox;
-        
-        private SongManager _songManager;
-        private BeatmapManager _beatmapManager;
 
         private BeatmapResult? _beatmapResult;
     
         private void Start()
         {
-            _songManager = GetComponent<SongManager>();
-            _beatmapManager = GetComponent<BeatmapManager>();
             Invoke(nameof(ShowResult), 3f);
         }
 
         private void Update()
         {
+            if (BeatmapManager.Instance.currentBeatmap == null)
+                return;
+            
             outputTextBox.text = string.Join(Environment.NewLine,
                 "Diagnostics:",
-                $"{_beatmapManager.currentBeatmap.bpm} BPM",
-                $"{_songManager.SongPosSec} seconds in",
-                $"{_songManager.SongPosBeatsMod} beats in",
-                $"{_songManager.SongPosBars} bars in"
+                $"{BeatmapManager.Instance.currentBeatmap.bpm} BPM",
+                $"{SongManager.Instance.SongPosSec} seconds in",
+                $"{SongManager.Instance.SongPosBeatsMod} beats in",
+                $"{SongManager.Instance.SongPosBars} bars in"
             );
             ShowResult();
             if (_beatmapResult != null)
@@ -44,7 +42,7 @@ namespace Gameplay
 
         private void ShowResult()
         {
-            _beatmapResult = _beatmapManager.GetResult();
+            _beatmapResult = BeatmapManager.Instance.GetResult();
         }
 
         private void OnEnable()
