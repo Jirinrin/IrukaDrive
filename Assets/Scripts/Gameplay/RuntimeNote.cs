@@ -1,0 +1,24 @@
+﻿using Shared;
+
+namespace Gameplay
+{
+    public class RuntimeNote : ParsedNote
+    {
+        public NoteResult? Result;
+        public float? ResultTiming;
+        public readonly float BeatAbs; // Beat relative to the start of the song instead of the start of the word
+        public RuntimeNote(ParsedNote baseNote, float beatAbs)
+        {
+            Beat = baseNote.Beat;
+            Char = baseNote.Char;
+            BeatAbs = beatAbs;
+        }
+    }
+    
+    public enum NoteResult
+    {
+        Hit,
+        WrongChar,
+        // Miss = null,
+    }
+}

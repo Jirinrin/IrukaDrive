@@ -13,6 +13,7 @@ namespace Shared
         where TCharObj : MonoBehaviour
         where TWordObj : WordObject<TCharObj, TWord, TNote>
     {
+        // todo: rename fields
         [SerializeField] protected TextMeshProUGUI characterPrefab = null;
         protected TCharObj charObjPrefab;
         protected TWordObj _emptyWordObjPrefab;

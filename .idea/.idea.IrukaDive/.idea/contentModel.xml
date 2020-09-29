@@ -234,16 +234,21 @@
             <e p="EditorTrackGestures.cs" t="Include" />
             <e p="EditorTrackNotesRecycler.cs" t="Include" />
             <e p="EditorTrackSheetBg.cs" t="Include" />
+            <e p="EditorWord.cs" t="Include" />
             <e p="EditorWordObject.cs" t="Include" />
             <e p="ScreenToCanvas.cs" t="Include" />
             <e p="SheetLineRecyclerList.cs" t="Include" />
           </e>
           <e p="Gameplay" t="Include">
+            <e p="Beatmap.cs" t="Include" />
             <e p="BeatmapManager.cs" t="Include" />
+            <e p="BeatmapWord.cs" t="Include" />
             <e p="CharacterHitAnim.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />
             <e p="NoteFx.cs" t="Include" />
             <e p="PlayerInputManager.cs" t="Include" />
+            <e p="RuntimeNote.cs" t="Include" />
+            <e p="RuntimeWord.cs" t="Include" />
             <e p="RuntimeWordObject.cs" t="Include" />
             <e p="SfxManager.cs" t="Include" />
             <e p="SongManager.cs" t="Include" />
