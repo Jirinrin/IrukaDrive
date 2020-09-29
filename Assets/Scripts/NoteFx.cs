@@ -8,10 +8,10 @@ public class NoteFx : MonoBehaviour
     [SerializeField] private CharacterHitAnim characterPrefab = null;
     private TextMeshProUGUI _characterObj;
     
-    [SerializeField] private Image circleSpriteNote;
-    [SerializeField] private Image circleSpriteTap;
+    [SerializeField] private Image circleSpriteNote = null;
+    [SerializeField] private Image circleSpriteTap = null;
 
-    [SerializeField] private Animation circlePulseAnimation;
+    [SerializeField] private Animation circlePulseAnimation = null;
 
     private const float DefaultCircleScale = 1f;
     private const float MaxCircleScale = 2f;
