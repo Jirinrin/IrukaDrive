@@ -9,6 +9,7 @@ namespace Gameplay
     public class SongManager : Singleton<SongManager>
     {
         [NonSerialized] private Beatmap _currentBeatmap;
+        private float _songFinishTimestamp;
     
         private AudioSource _audioSource;
 
@@ -33,6 +34,7 @@ namespace Gameplay
         public void LoadSong(Beatmap beatmap)
         {
             _currentBeatmap = beatmap;
+            _songFinishTimestamp = beatmap.finishTimestamp ?? beatmap.song.length;
             _secPerBeat = 60f / _currentBeatmap.bpm;
             _audioSource.clip = _currentBeatmap.song;
 
@@ -52,7 +54,7 @@ namespace Gameplay
                 SongPosBeats = (SongPosSec - _currentBeatmap.beatOffset) / _secPerBeat; 
             }
         
-            if (SongPosSec > _currentBeatmap.song.length & !_songFinished)
+            if (SongPosSec > _songFinishTimestamp & !_songFinished)
             {
                 _songFinished = true;
                 OnSongFinished?.Invoke();
