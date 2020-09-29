@@ -20,6 +20,12 @@ namespace BeatmapEditor.SingletonComponents
         {
             charObj.Init(note);
         }
+        
+        protected override void InitWord(EditorWordObject item, int index)
+        {
+            item.InputFieldPrefab = inputFieldPrefab;
+            base.InitWord(item, index);
+        }
 
         protected override void CleanupWord(EditorWordObject item, int index)
         {
