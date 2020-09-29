@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Components;
 using Gameplay.Domain;
-using Gameplay.SingletonComponents;
 using Shared;
 using Shared.Domain;
 using Tools.Commons;
 using UnityEngine;
 
-namespace Gameplay
+namespace Gameplay.SingletonComponents
 {
     // todo: effect when player hits / misses / nears char, and make that persist in the char as it moves beyond the hantei
-    public class TrackManager : Singleton<TrackManager>
+    public class Track : Singleton<Track>
     {
         [SerializeField] private RectTransform containerRectTransform = null;
         [NonSerialized] public Rect containerRect;

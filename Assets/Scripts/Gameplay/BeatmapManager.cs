@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Domain;
+using Gameplay.SingletonComponents;
 using Shared.Domain;
 using Tools;
 using Tools.Commons;
@@ -40,7 +41,7 @@ namespace Gameplay
         
             SongManager.Instance.LoadSong(currentBeatmap);
         
-            TrackManager.Instance.InitTrack(currentBeatmap, _runtimeWords);
+            Track.Instance.InitTrack(currentBeatmap, _runtimeWords);
         
             _wordsIterator = _runtimeWords.ToList().GetEnumerator();
             AdvanceWord(true);
@@ -107,7 +108,7 @@ namespace Gameplay
             if (_currentWord.CheckPassedNote(SongManager.Instance.SongPosBeats))
                 OnNote?.Invoke();
         
-            TrackManager.Instance.UpdateProgress(SongManager.Instance.SongPosBeats);
+            Track.Instance.UpdateProgress(SongManager.Instance.SongPosBeats);
         }
 
         private void Tap() { }

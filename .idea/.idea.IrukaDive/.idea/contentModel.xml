@@ -259,11 +259,11 @@
             <e p="SfxManager.cs" t="Include" />
             <e p="SingletonComponents" t="Include">
               <e p="NoteFx.cs" t="Include" />
+              <e p="Track.cs" t="Include" />
               <e p="TrackNotesRecycler.cs" t="Include" />
             </e>
             <e p="SongManager.cs" t="Include" />
             <e p="SongManagerTest.cs" t="Include" />
-            <e p="TrackManager.cs" t="Include" />
           </e>
           <e p="Shared" t="Include">
             <e p="C.cs" t="Include" />

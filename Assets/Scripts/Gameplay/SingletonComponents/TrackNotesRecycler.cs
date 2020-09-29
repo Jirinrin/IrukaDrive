@@ -39,7 +39,7 @@ namespace Gameplay.SingletonComponents
 
         public void Init(IEnumerable<RuntimeWord> words, float startBeatSpacing)
         {
-            containerWidth = TrackManager.Instance.containerRect.width;
+            containerWidth = Track.Instance.containerRect.width;
             LoadBeatmap(words, startBeatSpacing);
             base.Init();
         }
@@ -58,11 +58,11 @@ namespace Gameplay.SingletonComponents
 
         private void OnEnable()
         {
-            TrackManager.OnPan += OnPan;
+            Track.OnPan += OnPan;
         }
         private void OnDisable()
         {
-            TrackManager.OnPan -= OnPan;
+            Track.OnPan -= OnPan;
         }
     }
 }
