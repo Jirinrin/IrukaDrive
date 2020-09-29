@@ -31,7 +31,7 @@ namespace Gameplay
 
         private void LoadBeatmap(List<RuntimeWord> words, float startBeatSpacing)
         {
-            _beatSpacing = startBeatSpacing;
+            beatSpacing = startBeatSpacing;
             _wordAppearActionQueue = new Dictionary<int, Queue<Action>>();
             base.LoadBeatmap(words);
         }

@@ -13,22 +13,21 @@ namespace Shared
         where TCharObj : MonoBehaviour
         where TWordObj : WordObject<TCharObj, TWord, TNote>
     {
-        // todo: rename fields
         [SerializeField] protected TextMeshProUGUI characterPrefab = null;
-        protected TCharObj charObjPrefab;
-        protected TWordObj _emptyWordObjPrefab;
-        protected GameObject _rubbishBin;
-        
-        protected RecyclerPool<TCharObj> _charRecyclerPool;
-        protected RecyclerList<TWordObj> _wordRecyclerList;
-        
-        protected SortedSet<int> _wordIndices;
-        protected Dictionary<int, TWord> _wordLookup;
+        private TCharObj _charObjPrefab;
+        private TWordObj _emptyWordObjPrefab;
+        private GameObject _rubbishBin;
+
+        private RecyclerPool<TCharObj> _charRecyclerPool;
+        protected RecyclerList<TWordObj> wordRecyclerList;
+
+        private SortedSet<int> _wordIndices;
+        private Dictionary<int, TWord> _wordLookup;
         
         // Expected to be set from Init before calling base.Init
         protected float containerWidth;
         
-        public Dictionary<int, TWordObj> VisibleWordObjects => _wordRecyclerList.visibleItemsLookup;
+        public Dictionary<int, TWordObj> VisibleWordObjects => wordRecyclerList.visibleItemsLookup;
         
         private void Awake() 
         {
@@ -43,13 +42,13 @@ namespace Shared
             var characterTemplate = Instantiate(characterPrefab);
             if (characterTemplate.GetComponent<TCharObj>() == null)
                 characterTemplate.gameObject.AddComponent<TCharObj>();
-            charObjPrefab = characterTemplate.GetComponent<TCharObj>();
+            _charObjPrefab = characterTemplate.GetComponent<TCharObj>();
         }
         
         // Methods necessary for RecyclerList
-        
-        protected TCharObj CreateChar() => Instantiate(charObjPrefab, transform);
-        protected TWordObj CreateWord() => Instantiate(_emptyWordObjPrefab, transform);
+
+        private TCharObj CreateChar() => Instantiate(_charObjPrefab, transform);
+        private TWordObj CreateWord() => Instantiate(_emptyWordObjPrefab, transform);
 
         protected abstract void InitCharObj(TCharObj charObj, TNote note);
         
@@ -57,7 +56,7 @@ namespace Shared
         {
             item.Word = _wordLookup[index];
             var itemTransform = item.transform;
-            itemTransform.localPosition = new Vector3(_beatSpacing * index.IndexToBeat(), 0, 0);
+            itemTransform.localPosition = new Vector3(beatSpacing * index.IndexToBeat(), 0, 0);
             if (item.charObjRefs == null || item.charObjRefs.Count > 0)
                 item.charObjRefs = new List<TCharObj>();
 
@@ -67,7 +66,7 @@ namespace Shared
                 InitCharObj(charObj, note);
                 var charObjTransform = charObj.transform;
                 charObjTransform.SetParent(itemTransform);
-                charObjTransform.localPosition = new Vector3(_beatSpacing * note.Beat, 0, 0);
+                charObjTransform.localPosition = new Vector3(beatSpacing * note.Beat, 0, 0);
                 charObj.gameObject.SetActive(true);
                 item.charObjRefs.Add(charObj);
             }
@@ -86,25 +85,25 @@ namespace Shared
             }
             item.charObjRefs = null;
         }
-        
-        protected List<int> GetNewLineIndicesInWindow(int from, int to)
+
+        private List<int> GetNewLineIndicesInWindow(int from, int to)
         {
             // todo: better, with accounting for last index / width spacing and stuff. But for now a slightly larger window will do
             return _wordIndices.GetViewBetween(from, to).ToList();
         }
-        
-        protected int[] GetCurrentWindow()
+
+        private int[] GetCurrentWindow()
         {
             var containerWidthExtension = containerWidth * .5f;
-            var minBeat = Mathf.Max((_panX - containerWidthExtension) / _beatSpacing, 0f);
-            var maxBeat = minBeat + (containerWidth + containerWidthExtension*2f) / _beatSpacing;
+            var minBeat = Mathf.Max((panX - containerWidthExtension) / beatSpacing, 0f);
+            var maxBeat = minBeat + (containerWidth + containerWidthExtension*2f) / beatSpacing;
             return new[] {minBeat.BeatToIndex(), maxBeat.BeatToIndex()};
         }
         
         // Public
         
         public virtual void RefreshWindow() =>
-            _wordRecyclerList.SetVisibleWindow(GetCurrentWindow());
+            wordRecyclerList.SetVisibleWindow(GetCurrentWindow());
         
         // Init
 
@@ -112,7 +111,7 @@ namespace Shared
         protected void Init()
         {
             _charRecyclerPool = new RecyclerPool<TCharObj>(CreateChar);
-            _wordRecyclerList = new RecyclerList<TWordObj>(
+            wordRecyclerList = new RecyclerList<TWordObj>(
                 CreateWord, InitWord, GetNewLineIndicesInWindow, GetCurrentWindow(), CleanupWord);
         }
         
@@ -133,16 +132,16 @@ namespace Shared
         
         public void Destroy()
         {
-            _wordRecyclerList.Destroy();
+            wordRecyclerList.Destroy();
             _charRecyclerPool.Destroy();
             Object.Destroy(gameObject);
         }
         
         // Coming from track
         
-        protected float _beatSpacing;
+        protected float beatSpacing;
 
-        protected float _panX;
-        protected void OnPan(float panX) => _panX = panX;
+        protected float panX;
+        protected void OnPan(float newPanX) => panX = newPanX;
     }
 }

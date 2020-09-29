@@ -29,11 +29,11 @@ namespace BeatmapEditor
 
         private void UpdateSpacing()
         {
-            var lookup = _wordRecyclerList.visibleItemsLookup;
+            var lookup = wordRecyclerList.visibleItemsLookup;
             foreach (var index in lookup.Keys)
             {
-                lookup[index].transform.localPosition = new Vector3(_beatSpacing * index.IndexToBeat(), 0, 0);
-                lookup[index].UpdateSpacing(_beatSpacing);
+                lookup[index].transform.localPosition = new Vector3(beatSpacing * index.IndexToBeat(), 0, 0);
+                lookup[index].UpdateSpacing(beatSpacing);
             }
         }
 
@@ -53,7 +53,7 @@ namespace BeatmapEditor
         public void RefreshBeatmap()
         {
             LoadBeatmap(_currentBeatmap.words);
-            _wordRecyclerList.Refresh();
+            wordRecyclerList.Refresh();
         }
 
         public override void RefreshWindow()
@@ -63,11 +63,11 @@ namespace BeatmapEditor
         }
 
         public void EditWord(int index) =>
-            _wordRecyclerList.visibleItemsLookup[index].Edit();
+            wordRecyclerList.visibleItemsLookup[index].Edit();
 
         // Coming from EditorTrack
         
-        private void OnZoom(float beatSpacing) => _beatSpacing = beatSpacing;
+        private void OnZoom(float beatSpacing) => base.beatSpacing = beatSpacing;
         private void OnEnable()
         {
             EditorTrack.OnPan += OnPan;
