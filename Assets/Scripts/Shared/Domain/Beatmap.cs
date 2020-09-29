@@ -9,6 +9,12 @@ namespace Shared.Domain
     [Serializable]
     public class Beatmap
     {
+        // Cosmetic stuff
+        public string title;
+        public string artist;
+        public string jacketFile;
+
+        // Important metadata
         public string songFile;
         [NonSerialized][XmlIgnore] public AudioClip song;
         [NonSerialized][XmlIgnore] public string filePath;
@@ -16,12 +22,9 @@ namespace Shared.Domain
         public float beatOffset;
         [Range(2,4)] public int beatsPerBar = 4;
         public int barOffset;
-        // Expected to already be sorted
-        public List<BeatmapWord> words;
-    }
+        public float? finishTimestamp; // You can specify this to have a beatmap end before the song file ends
 
-    public struct BeatmapResult
-    {
-        public List<RuntimeNote> NoteResults;
+        // Notes, expected to be sorted
+        public List<BeatmapWord> words;
     }
 }
