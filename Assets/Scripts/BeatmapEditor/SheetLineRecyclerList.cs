@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using Gameplay;
 using Shapes;
+using Shared;
+using Tools.Commons;
 using UnityEngine;
 
 namespace BeatmapEditor

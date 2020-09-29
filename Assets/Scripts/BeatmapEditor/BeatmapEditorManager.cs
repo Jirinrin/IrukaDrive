@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Gameplay;
+using Shared;
+using Tools;
+using Tools.Commons;
 
 namespace BeatmapEditor
 {

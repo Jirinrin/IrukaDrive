@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Gameplay;
+using Shared;
 using TMPro;
+using Tools.Commons;
 using UnityEngine;
 
 namespace BeatmapEditor
