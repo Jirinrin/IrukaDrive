@@ -229,36 +229,49 @@
         <e p="Scripts" t="Include">
           <e p="BeatmapEditor" t="Include">
             <e p="BeatmapEditorManager.cs" t="Include" />
-            <e p="EditorCharObject.cs" t="Include" />
-            <e p="EditorTrack.cs" t="Include" />
-            <e p="EditorTrackGestures.cs" t="Include" />
-            <e p="EditorTrackNotesRecycler.cs" t="Include" />
-            <e p="EditorTrackSheetBg.cs" t="Include" />
-            <e p="EditorWord.cs" t="Include" />
-            <e p="EditorWordObject.cs" t="Include" />
-            <e p="ScreenToCanvas.cs" t="Include" />
-            <e p="SheetLineRecyclerList.cs" t="Include" />
+            <e p="Components" t="Include">
+              <e p="EditorCharObject.cs" t="Include" />
+              <e p="EditorWordObject.cs" t="Include" />
+            </e>
+            <e p="Domain" t="Include">
+              <e p="EditorWord.cs" t="Include" />
+            </e>
+            <e p="SingletonComponents" t="Include">
+              <e p="EditorTrack.cs" t="Include" />
+              <e p="EditorTrackGestures.cs" t="Include" />
+              <e p="EditorTrackNotesRecycler.cs" t="Include" />
+              <e p="EditorTrackSheetBg.cs" t="Include" />
+              <e p="SheetLineRecyclerList.cs" t="Include" />
+            </e>
           </e>
           <e p="Gameplay" t="Include">
-            <e p="Beatmap.cs" t="Include" />
             <e p="BeatmapManager.cs" t="Include" />
-            <e p="BeatmapWord.cs" t="Include" />
-            <e p="CharacterHitAnim.cs" t="Include" />
+            <e p="Components" t="Include">
+              <e p="CharacterHitAnim.cs" t="Include" />
+              <e p="RuntimeWordObject.cs" t="Include" />
+            </e>
+            <e p="Domain" t="Include">
+              <e p="RuntimeNote.cs" t="Include" />
+              <e p="RuntimeWord.cs" t="Include" />
+            </e>
             <e p="GameManager.cs" t="Include" />
-            <e p="NoteFx.cs" t="Include" />
             <e p="PlayerInputManager.cs" t="Include" />
-            <e p="RuntimeNote.cs" t="Include" />
-            <e p="RuntimeWord.cs" t="Include" />
-            <e p="RuntimeWordObject.cs" t="Include" />
             <e p="SfxManager.cs" t="Include" />
+            <e p="SingletonComponents" t="Include">
+              <e p="NoteFx.cs" t="Include" />
+              <e p="TrackNotesRecycler.cs" t="Include" />
+            </e>
             <e p="SongManager.cs" t="Include" />
             <e p="SongManagerTest.cs" t="Include" />
             <e p="TrackManager.cs" t="Include" />
-            <e p="TrackNotesRecycler.cs" t="Include" />
           </e>
           <e p="Shared" t="Include">
-            <e p="BeatmapBaseTypes.cs" t="Include" />
             <e p="C.cs" t="Include" />
+            <e p="Domain" t="Include">
+              <e p="Beatmap.cs" t="Include" />
+              <e p="BeatmapBaseTypes.cs" t="Include" />
+              <e p="BeatmapWord.cs" t="Include" />
+            </e>
             <e p="TrackNotesRecyclerBase.cs" t="Include" />
           </e>
           <e p="Tools" t="Include">
@@ -270,6 +283,7 @@
             </e>
             <e p="NAudioPlayer.cs" t="Include" />
             <e p="PrimitiveExtensions.cs" t="Include" />
+            <e p="ScreenToCanvas.cs" t="Include" />
             <e p="Serialization.cs" t="Include" />
             <e p="SerializationHelpers.cs" t="Include" />
           </e>

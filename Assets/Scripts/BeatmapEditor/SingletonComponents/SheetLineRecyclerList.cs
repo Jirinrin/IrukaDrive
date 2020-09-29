@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Gameplay;
 using Shapes;
 using Shared;
+using Shared.Domain;
 using Tools.Commons;
 using UnityEngine;
 
-namespace BeatmapEditor
+namespace BeatmapEditor.SingletonComponents
 {
     // todo: make sure the recycler thing gets updated not every frame
     // todo: better 'shared container / coordinate' system to sync to EditorTrack

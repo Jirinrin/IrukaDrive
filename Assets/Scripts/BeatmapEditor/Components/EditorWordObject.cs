@@ -1,11 +1,14 @@
 ﻿using System;
+using BeatmapEditor.Domain;
+using BeatmapEditor.SingletonComponents;
 using Shared;
+using Shared.Domain;
 using TMPro;
 using Tools;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace BeatmapEditor
+namespace BeatmapEditor.Components
 {
     public class EditorWordObject : WordObject<EditorCharObject, EditorWord, ParsedNote>, IPointerClickHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
     {

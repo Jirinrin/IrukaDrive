@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Gameplay.Components;
+using Gameplay.Domain;
 using Shared;
 using TMPro;
-using Tools.Commons;
 using UnityEngine;
 
 // todo: shared base with editor notes recycler
-namespace Gameplay
+namespace Gameplay.SingletonComponents
 {
     public class TrackNotesRecycler : TrackNotesRecyclerBase<TrackNotesRecycler, RuntimeWord, RuntimeNote, TextMeshProUGUI, RuntimeWordObject>
     {

@@ -2,6 +2,7 @@
 using System.Linq;
 using Gameplay;
 using JetBrains.Annotations;
+using Shared.Domain;
 using UnityEditor;
 using UnityEngine;
 

@@ -1,8 +1,8 @@
-﻿using Gameplay;
+﻿using Shared.Domain;
 using Tools.Commons;
 using UnityEngine;
 
-namespace BeatmapEditor
+namespace BeatmapEditor.SingletonComponents
 {
     // todo: better 'shared container / coordinate' system to sync to EditorTrack
     [RequireComponent(typeof(SheetLineRecyclerList))]

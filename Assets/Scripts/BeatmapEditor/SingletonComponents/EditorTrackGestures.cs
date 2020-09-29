@@ -1,9 +1,10 @@
-﻿using Tools.Commons;
+﻿using Tools;
+using Tools.Commons;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-namespace BeatmapEditor
+namespace BeatmapEditor.SingletonComponents
 {
     // todo: use double-click for certain things
     public class EditorTrackGestures : Singleton<EditorTrackGestures>, IDragHandler, IBeginDragHandler, IScrollHandler, IPointerClickHandler

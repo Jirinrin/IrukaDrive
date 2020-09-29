@@ -1,12 +1,14 @@
-﻿using TMPro;
+﻿using Gameplay.Components;
+using Gameplay.Domain;
+using TMPro;
 using Tools.Commons;
 using UnityEngine;
 using UnityEngine.UI;
 
 // todo: make pulse animation fancy
-namespace Gameplay
+namespace Gameplay.SingletonComponents
 {
-    public class NoteFx : MonoBehaviour
+    public class NoteFx : Singleton<NoteFx>
     {
         [SerializeField] private CharacterHitAnim characterPrefab = null;
         private TextMeshProUGUI _characterObj;

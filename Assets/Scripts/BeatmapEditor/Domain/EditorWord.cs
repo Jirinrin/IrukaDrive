@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using Gameplay;
 using Shared;
+using Shared.Domain;
 using Tools;
 
-namespace BeatmapEditor
+namespace BeatmapEditor.Domain
 {
     public class EditorWord : ParsedWord<ParsedNote>
     {

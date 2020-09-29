@@ -1,7 +1,8 @@
-﻿using Shared;
+﻿using Gameplay.Domain;
+using Shared.Domain;
 using TMPro;
 
-namespace Gameplay
+namespace Gameplay.Components
 {
     public class RuntimeWordObject : WordObject<TextMeshProUGUI, RuntimeWord, RuntimeNote> { }
 }

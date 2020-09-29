@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BeatmapEditor
+namespace Tools
 {
     public class ScreenToCanvas : MonoBehaviour
     {

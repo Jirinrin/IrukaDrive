@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Gameplay; // todo: remove
+using BeatmapEditor.Components;
+using BeatmapEditor.Domain;
 using Shared;
+using Shared.Domain;
 using TMPro;
-using Tools.Commons;
-using UnityEngine;
+using UnityEngine; // todo: remove
 
-namespace BeatmapEditor
+namespace BeatmapEditor.SingletonComponents
 {
     // todo: better 'shared container / coordinate' system to sync to EditorTrack
     public class EditorTrackNotesRecycler : TrackNotesRecyclerBase<EditorTrackNotesRecycler, EditorWord, ParsedNote, EditorCharObject, EditorWordObject>

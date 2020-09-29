@@ -1,6 +1,6 @@
-﻿using Shared;
+﻿using Shared.Domain;
 
-namespace Gameplay
+namespace Gameplay.Domain
 {
     public class RuntimeNote : ParsedNote
     {

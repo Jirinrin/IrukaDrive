@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using Gameplay.Domain;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Gameplay
+namespace Shared.Domain
 {
     [Serializable]
     public class Beatmap

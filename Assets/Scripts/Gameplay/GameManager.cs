@@ -1,18 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace Gameplay
 {
-    // [NonSerialized] public int gameState;
+    public class GameManager : MonoBehaviour
+    {
+        // [NonSerialized] public int gameState;
     
-    private void Start()
-    {
+        private void Start()
+        {
         
-    }
+        }
 
-    private void Update()
-    {
+        private void Update()
+        {
         
+        }
     }
 }

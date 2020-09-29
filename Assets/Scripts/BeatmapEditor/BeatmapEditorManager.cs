@@ -1,4 +1,6 @@
-﻿using Gameplay;
+﻿using BeatmapEditor.SingletonComponents;
+using Gameplay;
+using Shared.Domain;
 using Tools;
 using Tools.Commons;
 

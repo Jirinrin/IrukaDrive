@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Shared.Domain;
 using TMPro;
 using Tools.Commons;
 using UnityEngine;

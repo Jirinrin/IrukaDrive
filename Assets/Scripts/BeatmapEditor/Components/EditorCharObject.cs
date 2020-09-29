@@ -1,9 +1,9 @@
 ﻿using System;
-using Shared;
+using Shared.Domain;
 using TMPro;
 using UnityEngine;
 
-namespace BeatmapEditor
+namespace BeatmapEditor.Components
 {
     public class EditorCharObject : MonoBehaviour
     {

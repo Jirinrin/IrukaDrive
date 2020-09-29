@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
+using Shapes;
 using UnityEngine;
 
-namespace Shapes {
+namespace _Import.Shapes.Samples.Assets.Scripts {
 
 	[Serializable]
 	public class Decayer {

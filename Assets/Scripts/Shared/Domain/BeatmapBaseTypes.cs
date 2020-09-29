@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Shared
+namespace Shared.Domain
 {
     public class ParsedNote
     {

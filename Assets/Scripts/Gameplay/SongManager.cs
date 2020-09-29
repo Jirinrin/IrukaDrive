@@ -1,4 +1,5 @@
 ﻿using System;
+using Shared.Domain;
 using Tools.Commons;
 using UnityEngine;
 

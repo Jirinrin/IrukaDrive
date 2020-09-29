@@ -1,7 +1,6 @@
 ﻿using System;
-using Shared;
 
-namespace Gameplay
+namespace Shared.Domain
 {
     [Serializable]
     public class BeatmapWord

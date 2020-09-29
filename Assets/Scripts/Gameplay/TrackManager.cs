@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Gameplay.Components;
+using Gameplay.Domain;
+using Gameplay.SingletonComponents;
 using Shared;
+using Shared.Domain;
 using Tools.Commons;
 using UnityEngine;
 

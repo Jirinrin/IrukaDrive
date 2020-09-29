@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Gameplay
+namespace Gameplay.Components
 {
     public class CharacterHitAnim : MonoBehaviour
     {

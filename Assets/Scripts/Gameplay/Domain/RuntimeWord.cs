@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using Shared;
+using Shared.Domain;
 using Tools;
 
-namespace Gameplay
+namespace Gameplay.Domain
 {
     public class RuntimeWord : ParsedWord<RuntimeNote>
     {

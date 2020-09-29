@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Shapes;
+using UnityEngine;
 
-namespace Shapes {
+namespace _Import.Shapes.Samples.Assets.Scripts {
 
 	public class ChargeBar : MonoBehaviour {
 
