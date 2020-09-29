@@ -5,7 +5,7 @@ using UnityEngine.UI;
 // todo: make pulse animation fancy
 public class NoteFx : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI characterPrefab = null;
+    [SerializeField] private CharacterHitAnim characterPrefab = null;
     
     private TextMeshProUGUI _characterObj;
     [SerializeField] private Image circleSpriteNote;
@@ -16,11 +16,8 @@ public class NoteFx : MonoBehaviour
     
     private float _noteCircleScale = DefaultCircleScale;
     private float _tapCircleScale = DefaultCircleScale;
-    
-    private void Start()
-    {
-        // _characterObj = Instantiate(characterPrefab.gameObject, transform).GetComponent<TextMeshProUGUI>();
-    }
+
+    private RecyclerPool<CharacterHitAnim> _characterAnimObjPool;
 
     private void Pulse()
     {
@@ -34,7 +31,16 @@ public class NoteFx : MonoBehaviour
 
     private void OnHit(char c, NoteResult result, float? timing)
     {
-        Debug.Log("hit");
+        var obj = _characterAnimObjPool.Request();
+
+        obj.text.text = c.ToString();
+        obj.StartAnim();
+        obj.OnFinish = () => _characterAnimObjPool.Add(obj);
+    }
+
+    private void Awake()
+    {
+        _characterAnimObjPool = new RecyclerPool<CharacterHitAnim>(() => Instantiate(characterPrefab, transform), 6);
     }
 
     private void Update()

@@ -241,6 +241,7 @@
           </e>
           <e p="BeatmapManager.cs" t="Include" />
           <e p="C.cs" t="Include" />
+          <e p="CharacterHitAnim.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
           <e p="NAudioPlayer.cs" t="Include" />
           <e p="NoteFx.cs" t="Include" />
