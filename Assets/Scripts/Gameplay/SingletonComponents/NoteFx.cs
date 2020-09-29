@@ -67,14 +67,14 @@ namespace Gameplay.SingletonComponents
     
         private void OnEnable()
         {
-            BeatmapManager.OnNote += Pulse;
-            BeatmapManager.OnHit += OnHit;
+            GameplayManager.OnNote += Pulse;
+            GameplayManager.OnHit += OnHit;
             PlayerInputManager.OnChar += OnTap;
         }
         private void OnDisable()
         {
-            BeatmapManager.OnNote -= Pulse;
-            BeatmapManager.OnHit -= OnHit;
+            GameplayManager.OnNote -= Pulse;
+            GameplayManager.OnHit -= OnHit;
             PlayerInputManager.OnChar -= OnTap;
         }
     }

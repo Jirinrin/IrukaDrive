@@ -118,8 +118,8 @@ namespace Gameplay.SingletonComponents
 
         private void OnEnable()
         {
-            BeatmapManager.OnChangeCurrentWord += ChangeCurrentWord;
-            BeatmapManager.OnChangeCurrentChar += ChangeCurrentChar;
+            GameplayManager.OnChangeCurrentWord += ChangeCurrentWord;
+            GameplayManager.OnChangeCurrentChar += ChangeCurrentChar;
         }
     
         public static event Action<float> OnPan;

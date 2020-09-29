@@ -30,7 +30,7 @@ namespace Gameplay.Domain
 
         private void SetCurrentInputNote(int? index)
         {
-            BeatmapManager.ChangeCurrentChar(index);
+            GameplayManager.Instance.ChangeCurrentChar(index);
             if (index == null)
                 CurrentInputNote = null;
             else

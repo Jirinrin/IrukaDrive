@@ -3,66 +3,64 @@ using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Domain;
 using Gameplay.SingletonComponents;
+using JetBrains.Annotations;
+using Shared;
 using Shared.Domain;
 using Tools;
 using Tools.Commons;
+using UnityEngine;
 
 namespace Gameplay
 {
-    public class BeatmapManager : Singleton<BeatmapManager>
+    public class GameplayManager : Singleton<GameplayManager>
     {
-        [NonSerialized] public Beatmap currentBeatmap;
-    
+        public static Beatmap CurrentBeatmap { get; private set; }
+        public static float BeatmapStartTime { get; private set; }
+        public static bool EditorPlay { get; private set; }
+        [CanBeNull] public static IEnumerable<RuntimeWord> RuntimeWords { get; private set; }
+        
+        public static void PrepGameplay(Beatmap beatmap, float startTime = 0, bool comingFromEditor = false)
+        {
+            CurrentBeatmap = beatmap;
+            BeatmapStartTime = startTime;
+            EditorPlay = comingFromEditor;
+            RuntimeWords = CurrentBeatmap.words.Select(word => new RuntimeWord(word)).ToList();
+        }
+
         private const float SecondsBeforeNextWord = 1f;
         private const float MinimumSecondsAfterWord = .5f;
         private const float MaxJudgementBeatTimeWindow = 2f;
 
-        private IEnumerable<RuntimeWord> _runtimeWords;
-    
         private List<RuntimeWord>.Enumerator _wordsIterator;
         private RuntimeWord _currentWord;
         private RuntimeWord _nextWord;
         private float _switchNextWordThreshold;
 
-        private bool _beatmapStarted;
+        [NonSerialized] public bool BeatmapStarted;
+        [NonSerialized] public bool BeatmapFinished;
         private bool _lastWordReached;
-        private bool BeatmapFinished => _lastWordReached && _currentWord.Finished;
 
         private void Start()
         {
-            // LoadBeatmap(@"C:\Users\侍鈴\Documents\Unity\IrukaDive\Build\bla.blarr");
+            // For dev
+            if (CurrentBeatmap == null)
+                PrepGameplay(SerializationHelpers.LoadBeatmap(@"C:\Users\侍鈴\Documents\Unity\IrukaDive\Assets\Beatmaps\Tutorial\bla3.blarr"));
+
+            LoadBeatmap();
         }
 
-        public void LoadBeatmap(string path = "")
+        public void LoadBeatmap()
         {
-            currentBeatmap = path == "" ? SerializationHelpers.LoadBeatmap() : SerializationHelpers.LoadBeatmap(path);
-
-            _runtimeWords = currentBeatmap.words.Select(word => new RuntimeWord(word)).ToList();
+            SongManager.Instance.LoadSong(CurrentBeatmap);
         
-            SongManager.Instance.LoadSong(currentBeatmap);
+            Track.Instance.InitTrack(CurrentBeatmap, RuntimeWords);
         
-            Track.Instance.InitTrack(currentBeatmap, _runtimeWords);
-        
-            _wordsIterator = _runtimeWords.ToList().GetEnumerator();
+            _wordsIterator = RuntimeWords.ToList().GetEnumerator();
             AdvanceWord(true);
         
+            BeatmapStarted = true;
+            BeatmapFinished = false;
             _lastWordReached = false;
-            _beatmapStarted = true;
-        }
-
-        public BeatmapResult? GetResult()
-        {
-            if (!_beatmapStarted)
-                return null;
-            
-            // May comment out for testing purposes
-            // if (!BeatmapFinished)
-            //     return null;
-
-            return new BeatmapResult
-            {
-                NoteResults = _runtimeWords.SelectMany(word => word.CharNotes).ToList(),
-            };
         }
 
         // todo: add exclamation points when c# 8.0 
@@ -104,7 +102,7 @@ namespace Gameplay
 
         private void Update()
         {
-            if (!_beatmapStarted)
+            if (!BeatmapStarted)
                 return;
         
             CheckNextWord();
@@ -146,7 +144,11 @@ namespace Gameplay
             _currentWord.AdvanceInputNote();
         }
 
-        private void SongFinished() => OnBeatmapSongFinished?.Invoke();
+        private void SongFinished()
+        {
+            OnBeatmapSongFinished?.Invoke();
+            GameManager.EndGameplay();
+        }
 
         private void OnEnable()
         {
@@ -155,11 +157,18 @@ namespace Gameplay
             SongManager.OnSongFinished += SongFinished;
         }
 
-        public static void ChangeCurrentChar(int? val) => OnChangeCurrentChar?.Invoke(val);
+        public void ChangeCurrentChar(int? val)
+        {
+            if (_lastWordReached && val == null) 
+                BeatmapFinished = true;
+            OnChangeCurrentChar?.Invoke(val);
+        }
+        
+        public void BackToMainMenu() => GameManager.ToMainMenu();
 
         public static event Action OnNote;
         public static event Action<char, NoteResult, float?> OnHit; // Pass in timing, char, noteresult
-        public static event Action OnBeatmapSongFinished;
+        public static event Action OnBeatmapSongFinished; // todo: remove, it's not necessary
         public static event Action<float> OnChangeCurrentWord; // Pass in beat
         public static event Action<int?> OnChangeCurrentChar; // Pass in index
     }

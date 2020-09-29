@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Tools.Commons
 {
@@ -57,11 +58,10 @@ namespace Tools.Commons
         {
             _shuttingDown = true;
         }
- 
- 
+
         private void OnDestroy()
         {
-            _shuttingDown = true;
+            _instance = null;
         }
     }
 }

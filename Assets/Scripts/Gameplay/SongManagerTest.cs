@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Gameplay.Domain;
 using Shared.Domain;
+using Tools;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +14,7 @@ namespace Gameplay
         public Text outputTextBox;
         public Text resultsTextBox;
 
-        private BeatmapResult? _beatmapResult;
+        private IEnumerable<RuntimeNote> _beatmapResult;
     
         private void Start()
         {
@@ -20,12 +23,12 @@ namespace Gameplay
 
         private void Update()
         {
-            if (BeatmapManager.Instance.currentBeatmap == null)
+            if (!GameplayManager.Instance.BeatmapStarted)
                 return;
             
             outputTextBox.text = string.Join(Environment.NewLine,
                 "Diagnostics:",
-                $"{BeatmapManager.Instance.currentBeatmap.bpm} BPM",
+                $"{GameplayManager.CurrentBeatmap.bpm} BPM",
                 $"{SongManager.Instance.SongPosSec} seconds in",
                 $"{SongManager.Instance.SongPosBeatsMod} beats in",
                 $"{SongManager.Instance.SongPosBars} bars in"
@@ -34,7 +37,7 @@ namespace Gameplay
             if (_beatmapResult != null)
                 resultsTextBox.text = string.Join(Environment.NewLine,
                     "Results:",
-                    string.Join(", ", _beatmapResult?.NoteResults.Select(note => 
+                    string.Join(", ", _beatmapResult.Select(note => 
                         $"[{note.Result} - {note.ResultTiming}]"
                     ))
                 );
@@ -42,12 +45,12 @@ namespace Gameplay
 
         private void ShowResult()
         {
-            _beatmapResult = BeatmapManager.Instance.GetResult();
+            _beatmapResult = GameplayManager.RuntimeWords.GetResults();
         }
 
         private void OnEnable()
         {
-            BeatmapManager.OnBeatmapSongFinished += ShowResult;
+            GameplayManager.OnBeatmapSongFinished += ShowResult;
         }
     }
 }
