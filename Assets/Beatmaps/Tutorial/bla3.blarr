@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <title>Tutorial</title>
+  <artist>Sota Fujimori</artist>
+  <jacketFile>jacket.jpg</jacketFile>
+  <songFile>0000 - Tutorial.mp3</songFile>
+  <bpm>135</bpm>
+  <beatOffset>0</beatOffset>
+  <beatsPerBar>4</beatsPerBar>
+  <barOffset>0</barOffset>
+  <finishTimestamp>5</finishTimestamp>
+  <words>
+    <BeatmapWord>
+      <beat>3</beat>
+      <text>xbc</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>9</beat>
+      <text>yadiya</text>
+      <beatInterval>0.3333</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>15</beat>
+      <text>yarn</text>
+      <beatInterval>2</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>25</beat>
+      <text>1234</text>
+      <beatInterval>2</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>45</beat>
+      <text>qwert</text>
+      <beatInterval>0.5</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>60</beat>
+      <text>asdfe</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>70</beat>
+      <text>ol\';7</text>
+      <beatInterval>0.5</beatInterval>
+    </BeatmapWord>
+  </words>
+</Beatmap>
