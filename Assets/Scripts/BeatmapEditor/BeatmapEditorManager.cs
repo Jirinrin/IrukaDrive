@@ -36,15 +36,13 @@ namespace BeatmapEditor
         }
     }
 
-    public class EditorWord
+    public class EditorWord : ParsedWord<ParsedNote>
     {
         private readonly BeatmapWord _word;
 
-        public List<ParsedNote> CharNotes;
-
         // For this the original CharNotes cannot be kept
         public string Text
-        { 
+        {
             get => _word.text;
             set
             {
@@ -52,13 +50,13 @@ namespace BeatmapEditor
                 CharNotes = _word.ParseNotes();
             }
         }
-        public float Beat
-        { 
+        public override float Beat
+        {
             get => _word.beat;
             set =>_word.beat = value;
         }
         public float BeatInterval
-        { 
+        {
             get => _word.beatInterval;
             set
             {

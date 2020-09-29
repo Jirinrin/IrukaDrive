@@ -196,11 +196,9 @@ namespace Gameplay
         }
     }
 
-    public class RuntimeWord
+    public class RuntimeWord : ParsedWord<RuntimeNote>
     {
-        public readonly float Beat;
         public readonly float LastBeat;
-        public readonly List<RuntimeNote> CharNotes;
     
         private int _inputNoteIndex;
         private int _noteIndex;

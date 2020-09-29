@@ -254,6 +254,7 @@
           <e p="Shared" t="Include">
             <e p="BeatmapBaseTypes.cs" t="Include" />
             <e p="C.cs" t="Include" />
+            <e p="TrackNotesRecyclerBase.cs" t="Include" />
           </e>
           <e p="Tools" t="Include">
             <e p="BeatmapTransformations.cs" t="Include" />

@@ -5,9 +5,9 @@ using Shared;
 using Tools.Commons;
 using UnityEngine;
 
-// todo: effect when player hits / misses / nears char, and make that persist in the char as it moves beyond the hantei
 namespace Gameplay
 {
+    // todo: effect when player hits / misses / nears char, and make that persist in the char as it moves beyond the hantei
     public class TrackManager : Singleton<TrackManager>
     {
         [SerializeField] private RectTransform containerRectTransform = null;
@@ -22,9 +22,8 @@ namespace Gameplay
         private float _judgementOffsetX;
     
         private bool _shouldDraw;
-    
+        
         private RuntimeWordObject _currentWordObj;
-
         public void InitTrack(Beatmap beatmap, List<RuntimeWord> words)
         {
             containerRect = containerRectTransform.rect;
@@ -74,20 +73,23 @@ namespace Gameplay
     
         private void ChangeCurrentChar(int? charIndex)
         {
+            if (_currentWordObj.charObjRefs == null)
+                return;
+            
             if (charIndex == null)
             {
-                _currentWordObj.CharObjRefs.Last().color = Color.white;
+                _currentWordObj.charObjRefs.Last().color = Color.white;
                 return;
             }
 
             var index = (int) charIndex;
             
-            if (index >= _currentWordObj.CharObjRefs.Count)
+            if (index >= _currentWordObj.charObjRefs.Count)
                 return;
         
-            _currentWordObj.CharObjRefs[index].color = Color.red;
+            _currentWordObj.charObjRefs[index].color = Color.red;
             if (index > 0)
-                _currentWordObj.CharObjRefs[index-1].color = Color.white;
+                _currentWordObj.charObjRefs[index-1].color = Color.white;
         }
     
         private float _panX;

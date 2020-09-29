@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using JetBrains.Annotations;
 using Shared;
 using TMPro;
 using Tools;
@@ -9,12 +7,8 @@ using UnityEngine.EventSystems;
 
 namespace BeatmapEditor
 {
-    public class EditorWordObject : MonoBehaviour, IPointerClickHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
+    public class EditorWordObject : WordObject<EditorCharObject, EditorWord, ParsedNote>, IPointerClickHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
     {
-        public EditorWord Word;
-
-        [CanBeNull] public List<EditorCharObject> CharObjRefs;
-
         [NonSerialized] public TMP_InputField InputFieldPrefab;
         
         private float _dragDelta;
@@ -38,7 +32,7 @@ namespace BeatmapEditor
 
         private void RefreshWord()
         {
-            foreach (var charObj in CharObjRefs)
+            foreach (var charObj in charObjRefs)
                 charObj.transform.localPosition = new Vector3(_beatSpacing * charObj.Note.Beat, 0, 0);
         }
 
