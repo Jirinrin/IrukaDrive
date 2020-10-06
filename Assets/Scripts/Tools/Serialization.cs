@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 // Source: https://stackoverflow.com/questions/6115721/how-to-save-restore-serializable-object-to-from-file
 namespace Tools
 {
-    public class Serialization
+    public static class Serialization
     {
         /// <summary>
         /// Writes the given object instance to a binary file.

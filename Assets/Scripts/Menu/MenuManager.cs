@@ -39,9 +39,14 @@ namespace Menu
 
         public void ToScreen(string screen)
         {
+            ToScreen((MenuScreen) Enum.Parse(typeof(MenuScreen), screen));
+        }
+
+        public void ToScreen(MenuScreen screen)
+        {
             // todo: fancier animation
             CurrentScreenObj.SetActive(false);
-            CurrentScreen = (MenuScreen) Enum.Parse(typeof(MenuScreen), screen);
+            CurrentScreen = screen;
             CurrentScreenObj.SetActive(true);
         }
         

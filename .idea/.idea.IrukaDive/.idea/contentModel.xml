@@ -268,6 +268,10 @@
             <e p="MenuManager.cs" t="Include" />
             <e p="ScreenControllers" t="Include">
               <e p="ResultsScreen.cs" t="Include" />
+              <e p="SettingControllers" t="Include">
+                <e p="FloatSetting.cs" t="Include" />
+              </e>
+              <e p="SettingsScreen.cs" t="Include" />
             </e>
           </e>
           <e p="Shared" t="Include">
@@ -275,9 +279,12 @@
             <e p="Domain" t="Include">
               <e p="Beatmap.cs" t="Include" />
               <e p="BeatmapBaseTypes.cs" t="Include" />
+              <e p="BeatmapScore.cs" t="Include" />
               <e p="BeatmapWord.cs" t="Include" />
+              <e p="PlayerPrefsTypes.cs" t="Include" />
             </e>
             <e p="GameManager.cs" t="Include" />
+            <e p="Local.cs" t="Include" />
             <e p="TrackNotesRecyclerBase.cs" t="Include" />
           </e>
           <e p="Tools" t="Include">

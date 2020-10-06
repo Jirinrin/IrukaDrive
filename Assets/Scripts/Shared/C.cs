@@ -18,6 +18,5 @@ namespace Shared
         public static float IndexToBeat(this int value) => value / BeatIndexFactor;
 
         public const float DefaultScrollSpeed = 40f;
-        public const float BeatmapScrollSpeedMod = 1f;
     }
 }
