@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using Gameplay;
 using JetBrains.Annotations;
@@ -60,8 +61,11 @@ namespace Tools
         private static void SaveBeatmapToFile(Beatmap beatmap, string path)
         {
             Debug.Log("save to file!!");
-            // First cleanup beatmap words list to be ordered
+            
             beatmap.words = beatmap.words.OrderBy(word => word.beat).ToList();
+            
+            if (beatmap.guid == null)
+                beatmap.guid = Guid.NewGuid();
             
             Serialization.WriteToXmlFile(path, beatmap);
             // currentBeatmap.

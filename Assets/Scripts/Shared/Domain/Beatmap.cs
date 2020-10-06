@@ -23,6 +23,7 @@ namespace Shared.Domain
         [Range(2,4)] public int beatsPerBar = 4;
         public int barOffset;
         public float? finishTimestamp; // You can specify this to have a beatmap end before the song file ends
+        public Guid? guid; // Generated automatically by the beatmap editor
 
         // Notes, expected to be sorted
         public List<BeatmapWord> words;
