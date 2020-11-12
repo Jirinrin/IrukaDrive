@@ -1,10 +1,10 @@
 # Default ignored files	
-/shelf/	
+/shelf/
 /workspace.xml
 # Rider ignored files	
-/projectSettingsUpdater.xml	
-/modules.xml	
-/contentModel.xml	
-/.idea.IrukaDive.iml	
+/projectSettingsUpdater.xml
+/modules.xml
+/contentModel.xml
+/.idea.IrukaDrive.iml
 # Editor-based HTTP Client requests	
 /httpRequests/
