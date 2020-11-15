@@ -44,7 +44,7 @@ namespace Gameplay
         {
             // For dev
             if (CurrentBeatmap == null)
-                PrepGameplay(SerializationHelpers.LoadBeatmap(@"C:\Users\jirie\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr"));
+                PrepGameplay(SerializationHelpers.LoadBeatmap(Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr")));
 
             LoadBeatmap();
         }
