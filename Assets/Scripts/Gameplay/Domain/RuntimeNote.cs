@@ -18,7 +18,8 @@ namespace Gameplay.Domain
     public enum NoteResult
     {
         HitPerfect,
-        HitNear,
+        HitEarly,
+        HitLate,
         WrongChar,
         Miss,
     }

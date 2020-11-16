@@ -137,7 +137,9 @@ namespace Gameplay
             if (character == currentCharNote.Char)
             {
                 currentCharNote.ResultTiming = timingMs;
-                var result = timingMsAbs < C.TimingWindowPerfect ? NoteResult.HitPerfect : NoteResult.HitNear;
+                var result = timingMsAbs < C.TimingWindowPerfect 
+                    ? NoteResult.HitPerfect 
+                    : (timingMs < 0 ? NoteResult.HitEarly : NoteResult.HitLate);
                 currentCharNote.Result = result;
                 OnHit?.Invoke(currentCharNote.Char, result, beatTiming);
             }
