@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Shared.Domain
 {
+    [Serializable]
     public class GameSettings
     {
         public float BeatmapScrollSpeedMod = 1f;

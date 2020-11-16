@@ -45,7 +45,7 @@ namespace Gameplay
 
         private void ShowResult()
         {
-            _beatmapResult = GameplayManager.RuntimeWords.GetResults();
+            _beatmapResult = GameplayManager.RuntimeWords.GetNotes();
         }
     }
 }

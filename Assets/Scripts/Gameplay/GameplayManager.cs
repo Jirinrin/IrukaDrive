@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Domain;
@@ -41,7 +41,11 @@ namespace Gameplay
         {
             // For dev
             if (CurrentBeatmap == null)
-                PrepGameplay(SerializationHelpers.LoadBeatmap(Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr")));
+            {
+                PrepGameplay(SerializationHelpers.LoadBeatmap(Environment.ExpandEnvironmentVariables(
+                    @"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr")));
+                GameManager.SetState(GameState.Gameplay);
+            }
 
             LoadBeatmap();
         }
@@ -174,7 +178,11 @@ namespace Gameplay
 
         private void SongFinished()
         {
-            GameManager.EndGameplay();
+            BeatmapFinished = true;
+            var result = new BeatmapScore(RuntimeWords.GetNotes().ToList());
+            Local.Scores.AddScore(CurrentBeatmap.id, result);
+            Local.CommitScores();
+            GameManager.EndGameplay(result);
         }
 
         private void OnEnable()

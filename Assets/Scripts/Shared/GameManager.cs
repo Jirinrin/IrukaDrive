@@ -1,5 +1,8 @@
-﻿using Gameplay;
+﻿using System;
+using Gameplay;
+using JetBrains.Annotations;
 using Menu;
+using Menu.ScreenControllers;
 using Shared.Domain;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,15 +26,16 @@ namespace Shared
             SceneManager.LoadScene("Gameplay");
         }
         
-        public static void EndGameplay()
+        public static void EndGameplay([CanBeNull] BeatmapScore beatmapScore)
         {
             if (State != GameState.Gameplay)
                 return;
-            
+
             if (GameplayManager.EditorPlay)
                 ToState(GameState.BeatmapEditor);
             else
             {
+                ResultsScreen.beatmapScore = beatmapScore;
                 InitMenuScreen = MenuScreen.Result;
                 ToState(GameState.Menu);
             }
@@ -55,6 +59,9 @@ namespace Shared
             State = state;
             SceneManager.LoadScene(state.ToString());
         }
+
+        [Obsolete("Please don't use this outside of development-only scenarios")]
+        public static void SetState(GameState val) => State = val;
     }
 
     public enum GameState

@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Gameplay;
 using Gameplay.Domain;
-using Shared;
 using Shared.Domain;
 
 namespace Tools
@@ -26,7 +24,7 @@ namespace Tools
         public static float BeatWidth(this BeatmapWord word) => 
             word.text.Length * word.beatInterval;
 
-        public static IEnumerable<RuntimeNote> GetResults(this IEnumerable<RuntimeWord> words) =>
+        public static IEnumerable<RuntimeNote> GetNotes(this IEnumerable<RuntimeWord> words) =>
             words.SelectMany(word => word.CharNotes);
     }
 }
