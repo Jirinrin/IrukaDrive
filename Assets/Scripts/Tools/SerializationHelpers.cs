@@ -63,10 +63,7 @@ namespace Tools
             Debug.Log("save to file!!");
             
             beatmap.words = beatmap.words.OrderBy(word => word.beat).ToList();
-            
-            if (beatmap.guid == null)
-                beatmap.guid = Guid.NewGuid();
-            
+
             Serialization.WriteToXmlFile(path, beatmap);
             // currentBeatmap.
 
