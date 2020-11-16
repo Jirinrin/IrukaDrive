@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Gameplay;
 using Shared.Domain;
@@ -17,8 +17,13 @@ namespace Menu.ScreenControllers
         private void Start()
         {
             textBlock.text = string.Join(Environment.NewLine,
-                "Results:",
-                string.Join(", ", GameplayManager.RuntimeWords.GetResults().Select(note => 
+                $"Score: {beatmapScore.score:D8}",
+                $"Perfect: {beatmapScore.perfects}",
+                $"Early: {beatmapScore.earlies}",
+                $"Late: {beatmapScore.lates}",
+                $"Miss: {beatmapScore.misses}",
+                $"Max combo: {beatmapScore.maxCombo}",
+                string.Join(", ", GameplayManager.RuntimeWords.GetNotes().Select(note =>
                     $"[{note.Result} - {note.ResultTiming}]"
                 ))
             );
