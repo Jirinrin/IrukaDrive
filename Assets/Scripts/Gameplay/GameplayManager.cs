@@ -27,9 +27,6 @@ namespace Gameplay
             RuntimeWords = CurrentBeatmap.words.Select(word => new RuntimeWord(word)).ToList();
         }
 
-        private const float SecondsBeforeNextWord = 1f;
-        private const float MinimumSecondsAfterWord = .5f;
-
         private List<RuntimeWord>.Enumerator _wordsIterator;
         private RuntimeWord _currentWord;
         private RuntimeWord _nextWord;
@@ -85,8 +82,8 @@ namespace Gameplay
 
             _nextWord = _wordsIterator.Current;
             // Put switch to next current word to x seconds before that word, or in-between the current and next
-            _switchNextWordThreshold = _nextWord.Beat - SecondsBeforeNextWord;
-            if (_switchNextWordThreshold <= _currentWord.LastBeat + MinimumSecondsAfterWord)
+            _switchNextWordThreshold = _currentWord.LastBeat + C.TimingWindowMissSec * SongManager.Instance.BeatsPerSec;
+            if (_switchNextWordThreshold > _nextWord.Beat - C.TimingWindowMissSec * SongManager.Instance.BeatsPerSec)
                 _switchNextWordThreshold = (_currentWord.LastBeat + _nextWord.Beat) / 2;
         }
 
@@ -122,7 +119,7 @@ namespace Gameplay
             var currentCharNote = (RuntimeNote) _currentWord.CurrentInputNote; // c# 8
 
             var beatTiming = SongManager.Instance.SongPosBeats - currentCharNote.BeatAbs;
-            var timingMs = beatTiming / CurrentBeatmap.bpm * 60 * 1000;
+            var timingMs = beatTiming / SongManager.Instance.BeatsPerSec * 1000;
             var timingMsAbs = Math.Abs(timingMs);
 
             if (timingMsAbs > C.TimingWindowMiss)

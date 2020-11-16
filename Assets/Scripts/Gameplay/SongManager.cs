@@ -13,7 +13,7 @@ namespace Gameplay
     
         private AudioSource _audioSource;
 
-        private float _secPerBeat;
+        [NonSerialized] public float BeatsPerSec; // todo: static
 
         [NonSerialized] public float SongPosSec;
         [NonSerialized] public float SongPosBeats;
@@ -35,7 +35,7 @@ namespace Gameplay
         {
             _currentBeatmap = beatmap;
             _songFinishTimestamp = beatmap.finishTimestamp ?? beatmap.song.length;
-            _secPerBeat = 60f / _currentBeatmap.bpm;
+            BeatsPerSec = _currentBeatmap.bpm / 60f;
             _audioSource.clip = _currentBeatmap.song;
 
             _songDspTimeStart = (float)AudioSettings.dspTime;
@@ -51,7 +51,7 @@ namespace Gameplay
             if (_audioSource.isPlaying)
             {
                 SongPosSec = (float) (AudioSettings.dspTime - _songDspTimeStart);
-                SongPosBeats = (SongPosSec - _currentBeatmap.beatOffset) / _secPerBeat; 
+                SongPosBeats = (SongPosSec - _currentBeatmap.beatOffset) * BeatsPerSec; 
             }
         
             if (SongPosSec > _songFinishTimestamp & !_songFinished)
