@@ -84,8 +84,8 @@ namespace Gameplay
 
             _nextWord = _wordsIterator.Current;
             // Put switch to next current word to x seconds before that word, or in-between the current and next
-            _switchNextWordThreshold = _currentWord.LastBeat + C.TimingWindowMissSec * SongManager.Instance.BeatsPerSec;
-            if (_switchNextWordThreshold > _nextWord.Beat - C.TimingWindowMissSec * SongManager.Instance.BeatsPerSec)
+            _switchNextWordThreshold = _currentWord.LastBeat + C.TimingWindowGoodSec * SongManager.Instance.BeatsPerSec;
+            if (_switchNextWordThreshold > _nextWord.Beat - C.TimingWindowGoodSec * SongManager.Instance.BeatsPerSec)
                 _switchNextWordThreshold = (_currentWord.LastBeat + _nextWord.Beat) / 2;
         }
 
@@ -131,25 +131,20 @@ namespace Gameplay
             var timingMs = beatTiming / SongManager.Instance.BeatsPerSec * 1000;
             var timingMsAbs = Math.Abs(timingMs);
 
-            if (timingMsAbs > C.TimingWindowMiss)
+            if (timingMsAbs > C.TimingWindowGood)
                 return;
             
-            if (character != currentCharNote.Char)
+            if (character == currentCharNote.Char)
             {
-                currentCharNote.Result = NoteResult.WrongChar;
-                OnHit?.Invoke(currentCharNote.Char, NoteResult.WrongChar, null);
+                currentCharNote.ResultTiming = timingMs;
+                var result = timingMsAbs < C.TimingWindowPerfect ? NoteResult.HitPerfect : NoteResult.HitNear;
+                currentCharNote.Result = result;
+                OnHit?.Invoke(currentCharNote.Char, result, beatTiming);
             }
             else
             {
-                if (timingMsAbs < C.TimingWindowGood)
-                {
-                    currentCharNote.ResultTiming = timingMs;
-                    var result = timingMsAbs < C.TimingWindowPerfect ? NoteResult.HitPerfect : NoteResult.HitNear;
-                    currentCharNote.Result = result;
-                    OnHit?.Invoke(currentCharNote.Char, result, beatTiming);
-                }
-                else
-                    currentCharNote.Result = NoteResult.Miss;
+                currentCharNote.Result = NoteResult.WrongChar;
+                OnHit?.Invoke(currentCharNote.Char, NoteResult.WrongChar, null);
             }
 
             AdvanceChar();
