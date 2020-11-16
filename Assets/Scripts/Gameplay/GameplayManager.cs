@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Domain;
@@ -29,7 +29,6 @@ namespace Gameplay
 
         private const float SecondsBeforeNextWord = 1f;
         private const float MinimumSecondsAfterWord = .5f;
-        private const float MaxJudgementBeatTimeWindow = 2f;
 
         private List<RuntimeWord>.Enumerator _wordsIterator;
         private RuntimeWord _currentWord;
@@ -122,6 +121,13 @@ namespace Gameplay
         
             var currentCharNote = (RuntimeNote) _currentWord.CurrentInputNote; // c# 8
 
+            var beatTiming = SongManager.Instance.SongPosBeats - currentCharNote.BeatAbs;
+            var timingMs = beatTiming / CurrentBeatmap.bpm * 60 * 1000;
+            var timingMsAbs = Math.Abs(timingMs);
+
+            if (timingMsAbs > C.TimingWindowMiss)
+                return;
+            
             if (character != currentCharNote.Char)
             {
                 currentCharNote.Result = NoteResult.WrongChar;
@@ -129,17 +135,15 @@ namespace Gameplay
             }
             else
             {
-                var beatSnapshot = SongManager.Instance.SongPosBeats;
-                var timing = beatSnapshot - currentCharNote.BeatAbs;
-                if (Math.Abs(timing) < MaxJudgementBeatTimeWindow)
+                if (timingMsAbs < C.TimingWindowGood)
                 {
-                    currentCharNote.ResultTiming = timing;
-                    currentCharNote.Result = NoteResult.Hit;
-                    // todo: scale this by the bpm (maybe somewhere else than here)
-                    OnHit?.Invoke(currentCharNote.Char, NoteResult.Hit, timing);
+                    currentCharNote.ResultTiming = timingMs;
+                    var result = timingMsAbs < C.TimingWindowPerfect ? NoteResult.HitPerfect : NoteResult.HitNear;
+                    currentCharNote.Result = result;
+                    OnHit?.Invoke(currentCharNote.Char, result, beatTiming);
                 }
                 else
-                    currentCharNote.Result = null;
+                    currentCharNote.Result = NoteResult.Miss;
             }
 
             _currentWord.AdvanceInputNote();
