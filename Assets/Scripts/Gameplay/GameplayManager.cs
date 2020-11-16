@@ -172,7 +172,6 @@ namespace Gameplay
 
         private void SongFinished()
         {
-            OnBeatmapSongFinished?.Invoke();
             GameManager.EndGameplay();
         }
 
@@ -188,7 +187,6 @@ namespace Gameplay
         public static event Action OnNote;
         public static event Action<char, NoteResult, float?> OnHit; // Pass in char, noteresult, timing
         public static event Action OnMiss;
-        public static event Action OnBeatmapSongFinished; // todo: remove, it's not necessary
         public static event Action<float> OnChangeCurrentWord; // Pass in beat
         public static event Action<int?> OnChangeCurrentChar; // Pass in index
     }

@@ -47,10 +47,5 @@ namespace Gameplay
         {
             _beatmapResult = GameplayManager.RuntimeWords.GetResults();
         }
-
-        private void OnEnable()
-        {
-            GameplayManager.OnBeatmapSongFinished += ShowResult;
-        }
     }
 }
