@@ -13,7 +13,7 @@ namespace Gameplay
     
         private AudioSource _audioSource;
 
-        [NonSerialized] public float BeatsPerSec; // todo: static
+        [NonSerialized] public float BeatsPerSec;
 
         [NonSerialized] public float SongPosSec;
         [NonSerialized] public float SongPosBeats;

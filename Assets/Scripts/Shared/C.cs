@@ -21,7 +21,8 @@ namespace Shared
 
         public const float TimingWindowPerfect = 90; // ms
         public const float TimingWindowGood = 140; // ms
+        public const float TimingWindowGoodSec = TimingWindowGood/1000;
         public const float TimingWindowMiss = 500; // ms
-        public const float TimingWindowMissSec = .5f;
+        public const float TimingWindowMissSec = TimingWindowMiss/1000;
     }
 }

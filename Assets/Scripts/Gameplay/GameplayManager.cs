@@ -31,6 +31,7 @@ namespace Gameplay
         private RuntimeWord _currentWord;
         private RuntimeWord _nextWord;
         private float _switchNextWordThreshold;
+        private float? _currentCharMissThreshold;
 
         [NonSerialized] public bool BeatmapStarted;
         [NonSerialized] public bool BeatmapFinished;
@@ -72,6 +73,7 @@ namespace Gameplay
             _currentWord = _nextWord;
             OnChangeCurrentWord?.Invoke(_currentWord.Beat);
             OnChangeCurrentChar?.Invoke(0);
+            SetCurrentCharMissThreshold();
         
             if (!_wordsIterator.MoveNext())
             {
@@ -89,6 +91,13 @@ namespace Gameplay
 
         private void CheckNextWord()
         {
+            if (SongManager.Instance.SongPosBeats > _currentCharMissThreshold)
+            {
+                _currentWord.CurrentInputNote.Result = NoteResult.Miss;
+                OnMiss?.Invoke();
+                AdvanceChar();
+            }
+            
             if (_lastWordReached || SongManager.Instance.SongPosBeats < _switchNextWordThreshold)
                 return;
         
@@ -143,10 +152,27 @@ namespace Gameplay
                     currentCharNote.Result = NoteResult.Miss;
             }
 
+            AdvanceChar();
+        }
+
+        private void AdvanceChar()
+        {
             var newCurrentChar = _currentWord.AdvanceInputNote();
             OnChangeCurrentChar?.Invoke(newCurrentChar);
-            if (newCurrentChar == null && _lastWordReached)
-                BeatmapFinished = true;
+            if (newCurrentChar == null)
+            {
+                _currentCharMissThreshold = null;
+                if (_lastWordReached)
+                    BeatmapFinished = true;
+            }
+            else
+                SetCurrentCharMissThreshold();
+        }
+
+        private void SetCurrentCharMissThreshold()
+        {
+            _currentCharMissThreshold =
+                _currentWord.Beat + _currentWord.CurrentInputNote.Beat + C.TimingWindowGoodSec * SongManager.Instance.BeatsPerSec;
         }
 
         private void SongFinished()
