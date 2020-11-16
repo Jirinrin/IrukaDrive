@@ -2,6 +2,7 @@
 using System.Linq;
 using Shared.Domain;
 using Tools;
+using UnityEngine;
 
 namespace Gameplay.Domain
 {
@@ -31,33 +32,33 @@ namespace Gameplay.Domain
 
         public void Finish()
         {
-            while (!Finished)
-            {
-                CurrentInputNote.Result = NoteResult.Miss;
-                AdvanceInputNote(false);
-            }
+            if (Finished)
+                return;
+
+            do CurrentInputNote.Result = NoteResult.Miss;
+            while (AdvanceInputNote() != null);
         }
 
-        private void SetCurrentInputNote(int? index, bool invokeChange)
+        private void SetCurrentInputNote(int? index)
         {
-            if (invokeChange)
-                GameplayManager.Instance.ChangeCurrentChar(index);
             CurrentInputNote = index == null ? null : CharNotes[(int) index];
         }
 
-        public void AdvanceInputNote(bool invokeChange = true)
+        // Returns null if finished
+        public int? AdvanceInputNote()
         {
             if (Finished)
-                return;
+                return null;
         
             _inputNoteIndex++;
             if (Finished)
             {
-                SetCurrentInputNote(null, invokeChange);
-                return;
+                SetCurrentInputNote(null);
+                return null;
             }
 
-            SetCurrentInputNote(_inputNoteIndex, invokeChange);
+            SetCurrentInputNote(_inputNoteIndex);
+            return _inputNoteIndex;
         }
 
         public bool CheckPassedNote(float beatTime)

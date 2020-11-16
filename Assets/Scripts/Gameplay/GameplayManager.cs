@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Domain;
@@ -143,7 +143,10 @@ namespace Gameplay
                     currentCharNote.Result = NoteResult.Miss;
             }
 
-            _currentWord.AdvanceInputNote();
+            var newCurrentChar = _currentWord.AdvanceInputNote();
+            OnChangeCurrentChar?.Invoke(newCurrentChar);
+            if (newCurrentChar == null && _lastWordReached)
+                BeatmapFinished = true;
         }
 
         private void SongFinished()
@@ -159,13 +162,6 @@ namespace Gameplay
             SongManager.OnSongFinished += SongFinished;
         }
 
-        public void ChangeCurrentChar(int? val)
-        {
-            if (_lastWordReached && val == null) 
-                BeatmapFinished = true;
-            OnChangeCurrentChar?.Invoke(val);
-        }
-        
         public void BackToMainMenu() => GameManager.ToMainMenu();
 
         public static event Action OnNote;
