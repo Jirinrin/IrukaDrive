@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Shared.Domain;
 using Tools;
@@ -8,12 +8,13 @@ namespace Gameplay.Domain
     public class RuntimeWord : ParsedWord<RuntimeNote>
     {
         public readonly float LastBeat;
-    
+
         private int _inputNoteIndex;
         private int _noteIndex;
         public RuntimeNote CurrentInputNote; // c# 8: add nullable question mark
         public RuntimeNote CurrentNote; // c# 8: add nullable question mark
-        public bool Finished;
+        public bool Finished => _inputNoteIndex >= CharNotes.Count;
+
         private bool _passed;
 
         public RuntimeWord(BeatmapWord word)
@@ -28,29 +29,35 @@ namespace Gameplay.Domain
             CurrentNote = CharNotes[0];
         }
 
-        private void SetCurrentInputNote(int? index)
+        public void Finish()
         {
-            GameplayManager.Instance.ChangeCurrentChar(index);
-            if (index == null)
-                CurrentInputNote = null;
-            else
-                CurrentInputNote = CharNotes[(int) index]; // c# 8
+            while (!Finished)
+            {
+                CurrentInputNote.Result = NoteResult.Miss;
+                AdvanceInputNote(false);
+            }
         }
 
-        public void AdvanceInputNote()
+        private void SetCurrentInputNote(int? index, bool invokeChange)
+        {
+            if (invokeChange)
+                GameplayManager.Instance.ChangeCurrentChar(index);
+            CurrentInputNote = index == null ? null : CharNotes[(int) index];
+        }
+
+        public void AdvanceInputNote(bool invokeChange = true)
         {
             if (Finished)
                 return;
         
             _inputNoteIndex++;
-            if (_inputNoteIndex >= CharNotes.Count)
+            if (Finished)
             {
-                Finished = true;
-                SetCurrentInputNote(null);
+                SetCurrentInputNote(null, invokeChange);
                 return;
             }
 
-            SetCurrentInputNote(_inputNoteIndex);
+            SetCurrentInputNote(_inputNoteIndex, invokeChange);
         }
 
         public bool CheckPassedNote(float beatTime)
