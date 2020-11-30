@@ -28,7 +28,7 @@ namespace Gameplay
             outputTextBox.text = string.Join(Environment.NewLine,
                 "Diagnostics:",
                 $"{GameplayManager.CurrentBeatmap.bpm} BPM",
-                $"{SongManager.Instance.SongPosSec} seconds in",
+                $"{SongManager.Instance.songPosSec} seconds in",
                 $"{SongManager.Instance.SongPosBeatsMod} beats in",
                 $"{SongManager.Instance.SongPosBars} bars in"
             );

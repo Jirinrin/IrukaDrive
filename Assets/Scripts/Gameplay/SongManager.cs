@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Shared.Domain;
 using Tools.Commons;
 using UnityEngine;
@@ -13,14 +13,12 @@ namespace Gameplay
     
         private AudioSource _audioSource;
 
-        [NonSerialized] public float BeatsPerSec;
-
-        [NonSerialized] public float SongPosSec;
-        [NonSerialized] public float SongPosBeats;
+        [NonSerialized] public float songPosSec;
+        [NonSerialized] public float songPosBeats;
     
-        public float SongPosBeatsMod => Mathf.FloorToInt(SongPosBeats % _currentBeatmap.beatsPerBar);
-        public float SongPosBars => Mathf.FloorToInt((SongPosBeats - _currentBeatmap.barOffset) / _currentBeatmap.beatsPerBar);
-        public float BeatTiming => SongPosBeats % 1;
+        public float SongPosBeatsMod => Mathf.FloorToInt(songPosBeats % _currentBeatmap.beatsPerBar);
+        public float SongPosBars => Mathf.FloorToInt((songPosBeats - _currentBeatmap.barOffset) / _currentBeatmap.beatsPerBar);
+        public float BeatTiming => songPosBeats % 1;
 
         private float _songDspTimeStart;
 
@@ -38,7 +36,6 @@ namespace Gameplay
             BeatsPerSec = _currentBeatmap.bpm / 60f;
             _audioSource.clip = _currentBeatmap.song;
 
-            _songDspTimeStart = (float)AudioSettings.dspTime;
             _songFinished = false;
             _audioSource.Play();
         }
@@ -50,11 +47,11 @@ namespace Gameplay
 
             if (_audioSource.isPlaying)
             {
-                SongPosSec = (float) (AudioSettings.dspTime - _songDspTimeStart);
-                SongPosBeats = (SongPosSec - _currentBeatmap.beatOffset) * BeatsPerSec; 
+                songPosSec = _audioSource.time;
+                songPosBeats = _currentBeatmap.SecToBeats(songPosSec);
             }
         
-            if (SongPosSec > _songFinishTimestamp & !_songFinished)
+            if (songPosSec > _songFinishTimestamp & !_songFinished)
             {
                 _songFinished = true;
                 OnSongFinished?.Invoke();
