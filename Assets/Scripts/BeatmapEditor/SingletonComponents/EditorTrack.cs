@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Shared;
 using Shared.Domain;
 using Tools;
@@ -59,13 +59,22 @@ namespace BeatmapEditor.SingletonComponents
         
         // Stuff responding to gestures
 
+        private float ScreenXToBeat(float screenX) => ((_panX + screenX) / _beatSpacing).RoundToNearest(C.EditorBeatSnap); 
+
         public void CreateWord(float screenX)
         {
-            var newWordBeat = ((_panX + screenX) / _beatSpacing).RoundToNearest(C.EditorBeatSnap);
+            var newWordBeat = ScreenXToBeat(screenX);
             var newWord = new BeatmapWord(newWordBeat);
             BeatmapEditorManager.Instance.currentBeatmap.words.Add(newWord);
             RefreshBeatmap();
             _notesRecycler.EditWord(newWordBeat.BeatToIndex());
+        }
+
+        public void PlayFromPoint(float screenX)
+        {
+            var newWordBeat = ScreenXToBeat(screenX);
+            var beatmap = BeatmapEditorManager.Instance.currentBeatmap;
+            GameManager.ToGameplay(beatmap, beatmap.BeatsToSecs(newWordBeat));
         }
 
         private const float DefaultBeatSpacing = 20f;

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Domain;
@@ -54,7 +54,7 @@ namespace Gameplay
 
         public void LoadBeatmap()
         {
-            SongManager.Instance.LoadSong(CurrentBeatmap);
+            SongManager.Instance.LoadSong(CurrentBeatmap, BeatmapStartTime);
         
             Track.Instance.InitTrack(CurrentBeatmap, RuntimeWords);
         
@@ -63,6 +63,8 @@ namespace Gameplay
         
             _wordsIterator = RuntimeWords.ToList().GetEnumerator();
             AdvanceWord(true);
+
+            // todo: if BeatmapStartTime != 0f, advance the iterator until that point
         
             BeatmapStarted = true;
             BeatmapFinished = false;

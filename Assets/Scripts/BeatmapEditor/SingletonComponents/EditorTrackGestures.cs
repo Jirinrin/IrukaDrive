@@ -39,8 +39,12 @@ namespace BeatmapEditor.SingletonComponents
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            var x = eventData.position.x * ScreenToCanvas.Factor;
             if (Keyboard.current.ctrlKey.isPressed)
-                EditorTrack.Instance.CreateWord(eventData.position.x * ScreenToCanvas.Factor);
+                EditorTrack.Instance.CreateWord(x);
+            else if (Keyboard.current.altKey.isPressed)
+                EditorTrack.Instance.PlayFromPoint(x);
+                
         }
     }
 }

@@ -27,13 +27,14 @@ namespace Gameplay
             _audioSource = GetComponent<AudioSource>();
         }
 
-        public void LoadSong(Beatmap beatmap)
+        public void LoadSong(Beatmap beatmap, float startTime = 0f)
         {
             _currentBeatmap = beatmap;
             _songFinishTimestamp = beatmap.finishTimestamp ?? beatmap.song.length;
             _audioSource.clip = _currentBeatmap.song;
 
             _songFinished = false;
+            _audioSource.time = startTime;
             _audioSource.Play();
         }
 
