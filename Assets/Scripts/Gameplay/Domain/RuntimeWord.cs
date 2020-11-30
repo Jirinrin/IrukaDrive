@@ -30,10 +30,13 @@ namespace Gameplay.Domain
             CurrentNote = CharNotes[0];
         }
 
+        // あくまでのsafeguard: in theory this should never trigger
         public void Finish()
         {
             if (Finished)
                 return;
+
+            Debug.LogError("Word was unfinished, which it shouldn't be!!");
 
             do CurrentInputNote.Result = NoteResult.Miss;
             while (AdvanceInputNote() != null);

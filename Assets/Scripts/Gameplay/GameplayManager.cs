@@ -37,6 +37,8 @@ namespace Gameplay
         [NonSerialized] public bool BeatmapFinished;
         private bool _lastWordReached;
 
+        private BeatmapScore _displayScore;
+
         private void Start()
         {
             // For dev
@@ -55,6 +57,9 @@ namespace Gameplay
             SongManager.Instance.LoadSong(CurrentBeatmap);
         
             Track.Instance.InitTrack(CurrentBeatmap, RuntimeWords);
+        
+            _displayScore = new BeatmapScore(CurrentBeatmap.NotesCount);
+            OnScoreChange?.Invoke(0);
         
             _wordsIterator = RuntimeWords.ToList().GetEnumerator();
             AdvanceWord(true);
@@ -97,7 +102,7 @@ namespace Gameplay
         {
             if (SongManager.Instance.SongPosBeats > _currentCharMissThreshold)
             {
-                _currentWord.CurrentInputNote.Result = NoteResult.Miss;
+                SetNoteResult(_currentWord.CurrentInputNote, NoteResult.Miss);
                 OnMiss?.Invoke();
                 AdvanceChar();
             }
@@ -144,16 +149,23 @@ namespace Gameplay
                 var result = timingMsAbs < C.TimingWindowPerfect 
                     ? NoteResult.HitPerfect 
                     : (timingMs < 0 ? NoteResult.HitEarly : NoteResult.HitLate);
-                currentCharNote.Result = result;
+                SetNoteResult(currentCharNote, result);
                 OnHit?.Invoke(currentCharNote.Char, result, beatTiming);
             }
             else
             {
-                currentCharNote.Result = NoteResult.WrongChar;
+                SetNoteResult(currentCharNote, NoteResult.WrongChar);
                 OnHit?.Invoke(currentCharNote.Char, NoteResult.WrongChar, null);
             }
 
             AdvanceChar();
+        }
+
+        private void SetNoteResult(RuntimeNote note, NoteResult result)
+        {
+            note.Result = result;
+            _displayScore.AddNoteResult(result);
+            OnScoreChange?.Invoke(_displayScore.Score);
         }
 
         private void AdvanceChar()
@@ -196,6 +208,7 @@ namespace Gameplay
 
         public static event Action OnNote;
         public static event Action<char, NoteResult, float?> OnHit; // Pass in char, noteresult, timing
+        public static event Action<int> OnScoreChange; // Pass in score
         public static event Action OnMiss;
         public static event Action<float> OnChangeCurrentWord; // Pass in beat
         public static event Action<int?> OnChangeCurrentChar; // Pass in index

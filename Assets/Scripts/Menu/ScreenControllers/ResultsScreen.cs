@@ -17,15 +17,15 @@ namespace Menu.ScreenControllers
         private void Start()
         {
             textBlock.text = string.Join(Environment.NewLine,
-                $"Score: {beatmapScore.score:D8}",
+                $"Score: {beatmapScore.Score:D8}",
                 $"Perfect: {beatmapScore.perfects}",
                 $"Early: {beatmapScore.earlies}",
                 $"Late: {beatmapScore.lates}",
                 $"Miss: {beatmapScore.misses}",
-                $"Max combo: {beatmapScore.maxCombo}",
-                string.Join(", ", GameplayManager.RuntimeWords.GetNotes().Select(note =>
-                    $"[{note.Result} - {note.ResultTiming}]"
-                ))
+                $"Max combo: {beatmapScore.maxCombo}"
+                // ,string.Join(", ", GameplayManager.RuntimeWords.GetNotes().Select(note =>
+                //     $"[{note.Result} - {note.ResultTiming}]"
+                // ))
             );
         }
 

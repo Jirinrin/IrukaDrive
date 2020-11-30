@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Domain;
-using Shared.Domain;
 using Tools;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,9 +42,6 @@ namespace Gameplay
                 );
         }
 
-        private void ShowResult()
-        {
-            _beatmapResult = GameplayManager.RuntimeWords.GetNotes();
-        }
+        private void ShowResult() => _beatmapResult = GameplayManager.RuntimeWords.GetNotes();
     }
 }
