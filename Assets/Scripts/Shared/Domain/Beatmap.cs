@@ -30,6 +30,20 @@ namespace Shared.Domain
         
         // Getters
         public int NotesCount => words.Aggregate(0, (acc, w) => acc + w.text.Length);
+        private float? _beatsPerSec;
+        public float BeatsPerSec
+        {
+            get
+            {
+                // return _beatsPerSec ??= bpm / 60f; // c# 8
+                if (_beatsPerSec == null) _beatsPerSec = bpm / 60f;
+                return _beatsPerSec.Value;
+            }
+        }
+
+        // Misc util methods
+        public float SecToBeats(float seconds) => (seconds - beatOffset) * BeatsPerSec;
+        public float BeatsToSecs(float beats) => beats / BeatsPerSec + beatOffset;
 
         public Beatmap()
         {

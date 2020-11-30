@@ -20,8 +20,6 @@ namespace Gameplay
         public float SongPosBars => Mathf.FloorToInt((songPosBeats - _currentBeatmap.barOffset) / _currentBeatmap.beatsPerBar);
         public float BeatTiming => songPosBeats % 1;
 
-        private float _songDspTimeStart;
-
         private bool _songFinished;
     
         private void Start()
@@ -33,7 +31,6 @@ namespace Gameplay
         {
             _currentBeatmap = beatmap;
             _songFinishTimestamp = beatmap.finishTimestamp ?? beatmap.song.length;
-            BeatsPerSec = _currentBeatmap.bpm / 60f;
             _audioSource.clip = _currentBeatmap.song;
 
             _songFinished = false;

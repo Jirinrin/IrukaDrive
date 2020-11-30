@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Domain;
@@ -93,8 +93,8 @@ namespace Gameplay
 
             _nextWord = _wordsIterator.Current;
             // Put switch to next current word to x seconds before that word, or in-between the current and next
-            _switchNextWordThreshold = _currentWord.LastBeat + C.TimingWindowGoodSec * SongManager.Instance.BeatsPerSec;
-            if (_switchNextWordThreshold > _nextWord.Beat - C.TimingWindowGoodSec * SongManager.Instance.BeatsPerSec)
+            _switchNextWordThreshold = _currentWord.LastBeat + C.TimingWindowGoodSec * CurrentBeatmap.BeatsPerSec;
+            if (_switchNextWordThreshold > _nextWord.Beat - C.TimingWindowGoodSec * CurrentBeatmap.BeatsPerSec)
                 _switchNextWordThreshold = (_currentWord.LastBeat + _nextWord.Beat) / 2;
         }
 
