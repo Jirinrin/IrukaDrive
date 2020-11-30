@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Gameplay.unity
+    path: Assets/_Scenes/Gameplay.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/_Scenes/Menu.unity
     guid: a5db626a6f36339429e5347a0e8d68c5
   - enabled: 1
-    path: Assets/Scenes/BeatmapEditor.unity
+    path: Assets/_Scenes/BeatmapEditor.unity
     guid: db78da622d2e6d2408c36aa2b99f8f4c
   m_configObjects: {}
