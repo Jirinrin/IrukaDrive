@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Tools.Commons;
+using UnityEngine;
 
 namespace Gameplay
 {
     [RequireComponent(typeof(AudioSource))]
-    public class SfxManager : MonoBehaviour
+    public class SfxManager : Singleton<SfxManager>
     {
         [SerializeField] private AudioClip tickSample = null;
     
@@ -14,10 +15,9 @@ namespace Gameplay
             _audioSource = GetComponent<AudioSource>();
         }
 
-        private void Tap(char character)
-        {
-            _audioSource.PlayOneShot(tickSample);
-        }
+        private void Tap(char character) => _audioSource.PlayOneShot(tickSample);
+
+        public void MakeTickSound() => _audioSource.PlayOneShot(tickSample);
 
         private void OnEnable()
         {

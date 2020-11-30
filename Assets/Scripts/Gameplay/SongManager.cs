@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Shared.Domain;
 using Tools.Commons;
 using UnityEngine;
@@ -21,14 +21,18 @@ namespace Gameplay
         public float BeatTiming => songPosBeats % 1;
 
         private bool _songFinished;
+
+        private bool _tickOnBeat;
     
         private void Start()
         {
             _audioSource = GetComponent<AudioSource>();
         }
 
-        public void LoadSong(Beatmap beatmap, float startTime = 0f)
+        public void LoadSong(Beatmap beatmap, float startTime = 0f, bool tickOnBeat = false)
         {
+            _tickOnBeat = tickOnBeat;
+            
             _currentBeatmap = beatmap;
             _songFinishTimestamp = beatmap.finishTimestamp ?? beatmap.song.length;
             _audioSource.clip = _currentBeatmap.song;
@@ -54,6 +58,22 @@ namespace Gameplay
                 _songFinished = true;
                 OnSongFinished?.Invoke();
             }
+            
+            if (_tickOnBeat)
+                TickOnBeat();
+        }
+
+        private int SongPosBeatsRounded => Mathf.RoundToInt(songPosBeats);
+        private int _prevSongPosBeatsRounded;
+
+        private void TickOnBeat()
+        {
+            var beatNew = SongPosBeatsRounded;
+            if (beatNew == _prevSongPosBeatsRounded)
+                return;
+
+            _prevSongPosBeatsRounded = beatNew;
+            SfxManager.Instance.MakeTickSound();
         }
     
         public static event Action OnSongFinished;
