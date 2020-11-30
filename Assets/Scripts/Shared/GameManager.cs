@@ -60,7 +60,7 @@ namespace Shared
             SceneManager.LoadScene(state.ToString());
         }
 
-        [Obsolete("Please don't use this outside of development-only scenarios")]
+        // [Obsolete("Please don't use this outside of development-only scenarios")]
         public static void SetState(GameState val) => State = val;
     }
 
