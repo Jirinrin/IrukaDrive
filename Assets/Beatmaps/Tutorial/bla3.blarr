@@ -5,7 +5,7 @@
   <jacketFile>jacket.jpg</jacketFile>
   <songFile>0000 - Tutorial.mp3</songFile>
   <bpm>135</bpm>
-  <beatOffset>0</beatOffset>
+  <beatOffset>0.17</beatOffset>
   <beatsPerBar>4</beatsPerBar>
   <barOffset>0</barOffset>
   <finishTimestamp>5</finishTimestamp>

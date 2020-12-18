@@ -204,8 +204,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 357716769}
   m_HandleRect: {fileID: 357716768}
   m_Direction: 2
-  m_Value: -0.00006001326
-  m_Size: 0.6714402
+  m_Value: -0.000015235564
+  m_Size: 0.6714531
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -280,7 +280,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 164.25986}
+  m_AnchoredPosition: {x: 0, y: 164.25249}
   m_SizeDelta: {x: 0, y: 500}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &123147349
@@ -682,6 +682,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 140342991}
   m_CullTransparentMesh: 0
+--- !u!1 &140944886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 140944887}
+  m_Layer: 5
+  m_Name: irukaWrapper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &140944887
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140944886}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1631019389}
+  m_Father: {fileID: 592834377}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.913, y: -1.385}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &156073947
 GameObject:
   m_ObjectHideFlags: 0
@@ -1651,7 +1687,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: -1.0001187}
   m_LocalScale: {x: 24.982718, y: 24.982718, z: 24.982718}
   m_Children:
-  - {fileID: 1631019389}
+  - {fileID: 140944887}
   - {fileID: 1346488040}
   - {fileID: 123147350}
   m_Father: {fileID: 2073380153}
@@ -2429,10 +2465,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631019388}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3, y: 9.2, z: 0}
+  m_LocalPosition: {x: -2.087, y: 10.585, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 592834377}
+  m_Father: {fileID: 140944887}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1631019390
@@ -2987,4 +3023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wheel: {fileID: 1346488041}
+  irukaWrapper: {fileID: 140944886}
   wheelRotateSpeed: 10
+  irukaBobAmp: 3.8
+  irukaBobSpeed: 0.65
