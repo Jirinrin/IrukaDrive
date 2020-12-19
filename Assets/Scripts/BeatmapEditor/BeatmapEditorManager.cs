@@ -1,5 +1,5 @@
+﻿using System;
 using BeatmapEditor.SingletonComponents;
-using Gameplay;
 using Shared;
 using Shared.Domain;
 using Tools;
@@ -43,6 +43,11 @@ namespace BeatmapEditor
         {
             currentBeatmap = SerializationHelpers.LoadBeatmap() ?? currentBeatmap;
             EditorTrack.Instance.InitTrack(currentBeatmap);
+        }
+
+        public void PlaySong()
+        {
+            SongManager.Instance.LoadSong(currentBeatmap, tickOnBeat: true);
         }
 
         public void BackToMainMenu() => GameManager.ToMainMenu();
