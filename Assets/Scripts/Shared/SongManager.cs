@@ -64,12 +64,12 @@ namespace Shared
                 TickOnBeat();
         }
 
-        private int SongPosBeatsRounded => Mathf.RoundToInt(songPosBeats);
+        private int SongPosBeatsFloored => Mathf.FloorToInt(songPosBeats);
         private int _prevSongPosBeatsRounded;
 
         private void TickOnBeat()
         {
-            var beatNew = SongPosBeatsRounded;
+            var beatNew = SongPosBeatsFloored;
             if (beatNew == _prevSongPosBeatsRounded)
                 return;
 
