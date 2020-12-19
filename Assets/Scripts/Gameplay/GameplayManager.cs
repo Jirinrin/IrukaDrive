@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Domain;
@@ -62,9 +62,22 @@ namespace Gameplay
             OnScoreChange?.Invoke(0);
         
             _wordsIterator = RuntimeWords.ToList().GetEnumerator();
-            AdvanceWord(true);
 
-            // todo: if BeatmapStartTime != 0f, advance the iterator until that point
+            // Setup the first word coming up
+            if (!_wordsIterator.MoveNext()) throw new Exception("Empty beatmap");
+            _nextWord = _wordsIterator.Current;
+            AdvanceWord();
+
+            if (BeatmapStartTime > .1f)
+            {
+                while (_switchNextWordThreshold < SongManager.Instance.songPosBeats)
+                {
+                    _currentWord.Finish(false);
+                    AdvanceWord();
+                }
+                while (_currentCharMissThreshold < SongManager.Instance.songPosBeats)
+                    AdvanceChar();
+            }
         
             BeatmapStarted = true;
             BeatmapFinished = false;
@@ -72,15 +85,8 @@ namespace Gameplay
         }
 
         // todo: add exclamation points when c# 8.0 
-        private void AdvanceWord(bool init = false)
+        private void AdvanceWord()
         {
-            if (init)
-            {
-                if (!_wordsIterator.MoveNext())
-                    throw new Exception("Empty beatmap");
-                _nextWord = _wordsIterator.Current;
-            }
-        
             _currentWord = _nextWord;
             OnChangeCurrentWord?.Invoke(_currentWord.Beat);
             OnChangeCurrentChar?.Invoke(0);

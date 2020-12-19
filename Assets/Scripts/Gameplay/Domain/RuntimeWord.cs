@@ -31,12 +31,13 @@ namespace Gameplay.Domain
         }
 
         // あくまでのsafeguard: in theory this should never trigger
-        public void Finish()
+        public void Finish(bool errorOnTrigger = true)
         {
             if (Finished)
                 return;
 
-            Debug.LogError("Word was unfinished, which it shouldn't be!!");
+            if (errorOnTrigger)
+                Debug.LogError("Word was unfinished, which it shouldn't be!!");
 
             do CurrentInputNote.Result = NoteResult.Miss;
             while (AdvanceInputNote() != null);
