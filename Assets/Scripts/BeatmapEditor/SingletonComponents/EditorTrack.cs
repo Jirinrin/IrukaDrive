@@ -70,12 +70,8 @@ namespace BeatmapEditor.SingletonComponents
             _notesRecycler.EditWord(newWordBeat.BeatToIndex());
         }
 
-        public void PlayFromPoint(float screenX)
-        {
-            var newWordBeat = ScreenXToBeat(screenX);
-            var beatmap = BeatmapEditorManager.Instance.currentBeatmap;
-            GameManager.ToGameplay(beatmap, beatmap.BeatsToSecs(newWordBeat));
-        }
+        public void PlayFromPoint(float screenX) =>
+            BeatmapEditorManager.Instance.PlayBeatmapFrom(ScreenXToBeat(screenX));
 
         private const float DefaultBeatSpacing = 20f;
         private const float MaxZoomScale = 5f;

@@ -9,19 +9,22 @@ namespace BeatmapEditor
 {
     public class BeatmapEditorManager : Singleton<BeatmapEditorManager>
     {
-        public void PlayBeatmapFrom(float time)
+        public Beatmap currentBeatmap;
+        
+        public void PlayBeatmapFrom(float beatTime)
         {
+            // todo: add option to autoplay
+            GameManager.ToGameplay(currentBeatmap, currentBeatmap.BeatsToSecs(beatTime));
             // todo: capture all relevant state about the currently editing beatmap and current pan and zoom things and stuff in a static field
             // todo: also set a static field indicating to 'pick up where you left off' instead of having to manually choose a beatmap file to load and stuff
-            // todo: call GameManager ToBeatmap with some args and stuff, and set 
         }
-        
+
         private void Start()
         {
             // Uncomment this for easy iterating
-            // currentBeatmap = SerializationHelpers.LoadBeatmap(Environment.ExpandEnvironmentVariables(
-            //     @"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr"));
-            // EditorTrack.Instance.InitTrack(currentBeatmap);
+            currentBeatmap = SerializationHelpers.LoadBeatmap(Environment.ExpandEnvironmentVariables(
+                @"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr"));
+            EditorTrack.Instance.InitTrack(currentBeatmap);
         }
 
         public void SaveBeatmap()
