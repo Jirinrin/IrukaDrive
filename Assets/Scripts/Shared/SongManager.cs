@@ -1,9 +1,10 @@
 ﻿using System;
+using Gameplay;
 using Shared.Domain;
 using Tools.Commons;
 using UnityEngine;
 
-namespace Gameplay
+namespace Shared
 {
     [RequireComponent(typeof(AudioSource))]
     public class SongManager : Singleton<SongManager>

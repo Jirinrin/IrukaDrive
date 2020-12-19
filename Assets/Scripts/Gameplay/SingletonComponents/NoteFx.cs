@@ -1,5 +1,6 @@
 ﻿using Gameplay.Components;
 using Gameplay.Domain;
+using Shared;
 using TMPro;
 using Tools.Commons;
 using UnityEngine;
