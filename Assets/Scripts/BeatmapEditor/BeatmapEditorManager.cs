@@ -1,4 +1,4 @@
-﻿using BeatmapEditor.SingletonComponents;
+using BeatmapEditor.SingletonComponents;
 using Gameplay;
 using Shared;
 using Shared.Domain;
@@ -16,12 +16,11 @@ namespace BeatmapEditor
             // todo: call GameManager ToBeatmap with some args and stuff, and set 
         }
         
-        public Beatmap currentBeatmap;
-
         private void Start()
         {
             // Uncomment this for easy iterating
-            // currentBeatmap = SerializationHelpers.LoadBeatmap(@"C:\Users\侍鈴\Documents\Unity\IrukaDive\Assets\Beatmaps\Tutorial\bla3.blarr");
+            // currentBeatmap = SerializationHelpers.LoadBeatmap(Environment.ExpandEnvironmentVariables(
+            //     @"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr"));
             // EditorTrack.Instance.InitTrack(currentBeatmap);
         }
 
