@@ -5,10 +5,10 @@
   <jacketFile>jacket.jpg</jacketFile>
   <songFile>0000 - Tutorial.mp3</songFile>
   <bpm>135</bpm>
-  <beatOffset>0.17</beatOffset>
+  <beatOffset>0.05</beatOffset>
   <beatsPerBar>4</beatsPerBar>
   <barOffset>0</barOffset>
-  <finishTimestamp>5</finishTimestamp>
+  <!-- <finishTimestamp>5</finishTimestamp> -->
   <id>fa7b652b-9e2c-4d7f-ad5f-beb4b545031b</id>
   <words>
     <BeatmapWord>
