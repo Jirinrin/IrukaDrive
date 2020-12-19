@@ -15,12 +15,12 @@ namespace Shared
 
         public static MenuScreen InitMenuScreen { get; private set; } = MenuScreen.Title;
 
-        public static void ToGameplay(Beatmap beatmap, float startTime = 0f)
+        public static void ToGameplay(Beatmap beatmap, float startTime = 0f, bool autoplay = false)
         {
             if (State == GameState.Gameplay)
                 return;
             
-            GameplayManager.PrepGameplay(beatmap, startTime, State == GameState.BeatmapEditor);
+            GameplayManager.PrepGameplay(beatmap, startTime, State == GameState.BeatmapEditor, autoplay);
 
             State = GameState.Gameplay;
             SceneManager.LoadScene("Gameplay");

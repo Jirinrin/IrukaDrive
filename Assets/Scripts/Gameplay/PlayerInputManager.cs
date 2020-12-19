@@ -1,11 +1,12 @@
 ﻿using System;
+using Tools.Commons;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Gameplay
 {
     [RequireComponent(typeof(PlayerInput))]
-    public class PlayerInputManager : MonoBehaviour
+    public class PlayerInputManager : Singleton<PlayerInputManager>
     {
         public static event Action OnTap;
         public static event Action<char> OnChar;
@@ -25,7 +26,7 @@ namespace Gameplay
             Keyboard.current.onTextInput -= OnKeyboardEvent;
         }
 
-        private void OnKeyboardEvent(char character)
+        public void OnKeyboardEvent(char character)
         {
             OnChar?.Invoke(character);
         }

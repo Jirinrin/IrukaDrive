@@ -17,13 +17,15 @@ namespace Gameplay
         public static Beatmap CurrentBeatmap { get; private set; }
         public static float BeatmapStartTime { get; private set; }
         public static bool EditorPlay { get; private set; }
+        public static bool AutoPlay { get; private set; }
         [CanBeNull] public static IEnumerable<RuntimeWord> RuntimeWords { get; private set; }
         
-        public static void PrepGameplay(Beatmap beatmap, float startTime = 0, bool comingFromEditor = false)
+        public static void PrepGameplay(Beatmap beatmap, float startTime = 0, bool comingFromEditor = false, bool autoplay = false)
         {
             CurrentBeatmap = beatmap;
             BeatmapStartTime = startTime;
             EditorPlay = comingFromEditor;
+            AutoPlay = autoplay;
             RuntimeWords = CurrentBeatmap.words.Select(word => new RuntimeWord(word)).ToList();
         }
 
@@ -45,7 +47,7 @@ namespace Gameplay
             if (CurrentBeatmap == null)
             {
                 PrepGameplay(SerializationHelpers.LoadBeatmap(Environment.ExpandEnvironmentVariables(
-                    @"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr")));
+                    @"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr")), autoplay: true);
                 GameManager.SetState(GameState.Gameplay);
             }
 
@@ -133,6 +135,12 @@ namespace Gameplay
                 OnNote?.Invoke();
         
             Track.Instance.UpdateProgress(SongManager.Instance.songPosBeats);
+
+            if (AutoPlay)
+            {
+                if (_currentWord?.CurrentInputNote?.BeatAbs <= SongManager.Instance.songPosBeats)
+                    PlayerInputManager.Instance.OnKeyboardEvent(_currentWord.CurrentInputNote.Char);
+            }
         }
 
         private void Tap() { }
