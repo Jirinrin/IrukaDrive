@@ -1,4 +1,4 @@
-﻿using Gameplay;
+using Gameplay;
 using Tools.Commons;
 using UnityEngine;
 
@@ -23,6 +23,10 @@ namespace Shared
         private void OnEnable()
         {
             PlayerInputManager.OnChar += Tap;
+        }
+        private void OnDisable()
+        {
+            PlayerInputManager.OnChar -= Tap;
         }
     }
 }
