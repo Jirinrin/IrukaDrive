@@ -221,7 +221,13 @@ namespace Gameplay
             SongManager.OnSongFinished -= SongFinished;
         }
 
-        public void BackToMainMenu() => GameManager.ToMainMenu();
+        public void BackToMainMenu()
+        {
+            if (EditorPlay)
+                GameManager.ToBeatmapEditor();
+            else
+                GameManager.ToMainMenu();
+        }
 
         public static event Action OnNote;
         public static event Action<char, NoteResult, float?> OnHit; // Pass in char, noteresult, timing
