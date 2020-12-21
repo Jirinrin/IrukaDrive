@@ -13,8 +13,8 @@ namespace BeatmapEditor
 
         public void PlayBeatmapFrom(float beatTime)
         {
-            // todo: add option to autoplay
-            GameManager.ToGameplay(currentBeatmap, currentBeatmap.BeatsToSecs(beatTime));
+            var autoplay = Keyboard.current.shiftKey.isPressed;
+            GameManager.ToGameplay(currentBeatmap, currentBeatmap.BeatsToSecs(beatTime), autoplay);
             // todo: capture all relevant state about the currently editing beatmap and current pan and zoom things and stuff in a static field
             // todo: also set a static field indicating to 'pick up where you left off' instead of having to manually choose a beatmap file to load and stuff
         }
