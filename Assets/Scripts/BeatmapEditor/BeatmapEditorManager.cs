@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BeatmapEditor.SingletonComponents;
 using Shared;
 using Shared.Domain;
@@ -21,10 +21,15 @@ namespace BeatmapEditor
 
         private void Start()
         {
-            // Uncomment this for easy iterating
-            currentBeatmap = SerializationHelpers.LoadBeatmap(Environment.ExpandEnvironmentVariables(
-                @"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr"));
-            EditorTrack.Instance.InitTrack(currentBeatmap);
+            // For dev
+            if (GameManager.State != GameState.BeatmapEditor)
+            {
+                GameManager.SetState(GameState.BeatmapEditor);
+                // Uncomment this for easy iterating
+                currentBeatmap = SerializationHelpers.LoadBeatmap(Environment.ExpandEnvironmentVariables(
+                    @"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr"));
+                EditorTrack.Instance.InitTrack(currentBeatmap);
+            }
         }
 
         public void SaveBeatmap()

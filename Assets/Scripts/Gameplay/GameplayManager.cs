@@ -43,11 +43,11 @@ namespace Gameplay
         private void Start()
         {
             // For dev
-            if (CurrentBeatmap == null)
+            if (GameManager.State != GameState.Gameplay)
             {
+                GameManager.SetState(GameState.Gameplay);
                 PrepGameplay(SerializationHelpers.LoadBeatmap(Environment.ExpandEnvironmentVariables(
                     @"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr")), autoplay: true);
-                GameManager.SetState(GameState.Gameplay);
             }
 
             LoadBeatmap();
