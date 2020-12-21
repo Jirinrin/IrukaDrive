@@ -4,6 +4,7 @@ using Shared;
 using Shared.Domain;
 using Tools;
 using Tools.Commons;
+using UnityEngine.InputSystem;
 
 namespace BeatmapEditor
 {
