@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Domain;
@@ -218,6 +218,12 @@ namespace Gameplay
             PlayerInputManager.OnTap += Tap;
             PlayerInputManager.OnChar += OnChar;
             SongManager.OnSongFinished += SongFinished;
+        }
+        private void OnDisable()
+        {
+            PlayerInputManager.OnTap -= Tap;
+            PlayerInputManager.OnChar -= OnChar;
+            SongManager.OnSongFinished -= SongFinished;
         }
 
         public void BackToMainMenu() => GameManager.ToMainMenu();
