@@ -20,7 +20,7 @@ namespace BeatmapEditor.SingletonComponents
 
         private bool _shouldDraw;
 
-        private EditorTrackViewState _viewState;
+        private static EditorTrackViewState _viewState;
 
         public void RefreshBeatmap()
         {
@@ -28,11 +28,14 @@ namespace BeatmapEditor.SingletonComponents
             _shouldDraw = true;
         }
 
-        public void InitTrack(Beatmap beatmap)
+        public void InitTrack(Beatmap beatmap, bool keepViewState = false)
         {
             containerRect = containerRectTransform.rect;
 
-            _viewState = new EditorTrackViewState();
+            if (keepViewState)
+                _viewState?.Init();
+            else
+                _viewState = new EditorTrackViewState();
 
             _notesRecycler = EditorTrackNotesRecycler.Instance;
             _notesRecycler.Init(beatmap);

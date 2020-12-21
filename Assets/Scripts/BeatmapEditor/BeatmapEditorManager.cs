@@ -12,12 +12,14 @@ namespace BeatmapEditor
     {
         public static Beatmap currentBeatmap;
 
+        private static bool _inEditorPlay;
+
         public void PlayBeatmapFrom(float beatTime)
         {
             var autoplay = Keyboard.current.shiftKey.isPressed;
+            // todo: somehow keep this scene loaded in background
+            _inEditorPlay = true;
             GameManager.ToGameplay(currentBeatmap, currentBeatmap.BeatsToSecs(beatTime), autoplay);
-            // todo: capture all relevant state about the currently editing beatmap and current pan and zoom things and stuff in a static field
-            // todo: also set a static field indicating to 'pick up where you left off' instead of having to manually choose a beatmap file to load and stuff
         }
 
         private void Start()
@@ -30,6 +32,12 @@ namespace BeatmapEditor
                 currentBeatmap = SerializationHelpers.LoadBeatmap(Environment.ExpandEnvironmentVariables(
                     @"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr"));
                 EditorTrack.Instance.InitTrack(currentBeatmap);
+            }
+            
+            if (_inEditorPlay)
+            {
+                _inEditorPlay = false;
+                EditorTrack.Instance.InitTrack(currentBeatmap, true);
             }
         }
 

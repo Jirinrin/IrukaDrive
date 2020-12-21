@@ -16,7 +16,9 @@ namespace BeatmapEditor.Domain
         public float beatSpacing = DefaultBeatSpacing;
         
 
-        public EditorTrackViewState()
+        public EditorTrackViewState() => Init();
+
+        public void Init()
         {
             OnPan?.Invoke(panX);
             OnZoom?.Invoke(beatSpacing);
