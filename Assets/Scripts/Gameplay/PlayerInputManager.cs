@@ -2,6 +2,7 @@
 using Tools.Commons;
 using UnityEngine;
 using UnityEngine.InputSystem;
+// ReSharper disable InconsistentNaming
 
 namespace Gameplay
 {
