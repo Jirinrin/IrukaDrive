@@ -23,7 +23,7 @@ namespace BeatmapEditor.SingletonComponents
         
         protected override void InitWord(EditorWordObject item, int index)
         {
-            item.InputFieldPrefab = inputFieldPrefab;
+            item.inputFieldPrefab = inputFieldPrefab;
             base.InitWord(item, index);
         }
 

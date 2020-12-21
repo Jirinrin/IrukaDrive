@@ -34,7 +34,7 @@ namespace BeatmapEditor.Domain
                 var newCharNotes = _word.ParseNotes();
                 CharNotes = CharNotes.Select((note, i) =>
                 {
-                    note.Beat = newCharNotes[i].Beat;
+                    note.beat = newCharNotes[i].beat;
                     return note;
                 }).ToList();
             }

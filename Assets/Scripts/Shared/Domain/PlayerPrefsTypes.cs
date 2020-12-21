@@ -7,7 +7,7 @@ namespace Shared.Domain
     [Serializable]
     public class GameSettings
     {
-        public float BeatmapScrollSpeedMod = 1f;
+        public float beatmapScrollSpeedMod = 1f;
     }
 
     [Serializable]

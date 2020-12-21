@@ -34,8 +34,8 @@ namespace Gameplay
         private float _switchNextWordThreshold;
         private float? _currentCharMissThreshold;
 
-        [NonSerialized] public bool BeatmapStarted;
-        [NonSerialized] public bool BeatmapFinished;
+        [NonSerialized] public bool beatmapStarted;
+        [NonSerialized] public bool beatmapFinished;
         private bool _lastWordReached;
 
         private BeatmapScore _displayScore;
@@ -80,8 +80,8 @@ namespace Gameplay
                     AdvanceChar();
             }
         
-            BeatmapStarted = true;
-            BeatmapFinished = false;
+            beatmapStarted = true;
+            beatmapFinished = false;
             _lastWordReached = false;
         }
 
@@ -102,16 +102,16 @@ namespace Gameplay
 
             _nextWord = _wordsIterator.Current;
             // Put switch to next current word to x seconds before that word, or in-between the current and next
-            _switchNextWordThreshold = _currentWord.LastBeat + C.TimingWindowGoodSec * CurrentBeatmap.BeatsPerSec;
+            _switchNextWordThreshold = _currentWord.lastBeat + C.TimingWindowGoodSec * CurrentBeatmap.BeatsPerSec;
             if (_switchNextWordThreshold > _nextWord.Beat - C.TimingWindowGoodSec * CurrentBeatmap.BeatsPerSec)
-                _switchNextWordThreshold = (_currentWord.LastBeat + _nextWord.Beat) / 2;
+                _switchNextWordThreshold = (_currentWord.lastBeat + _nextWord.Beat) / 2;
         }
 
         private void CheckNextWord()
         {
             if (SongManager.Instance.songPosBeats > _currentCharMissThreshold)
             {
-                SetNoteResult(_currentWord.CurrentInputNote, NoteResult.Miss);
+                SetNoteResult(_currentWord.currentInputNote, NoteResult.Miss);
                 OnMiss?.Invoke();
                 AdvanceChar();
             }
@@ -126,7 +126,7 @@ namespace Gameplay
 
         private void Update()
         {
-            if (!BeatmapStarted)
+            if (!beatmapStarted)
                 return;
         
             CheckNextWord();
@@ -137,8 +137,8 @@ namespace Gameplay
 
             if (AutoPlay)
             {
-                if (_currentWord?.CurrentInputNote?.BeatAbs <= SongManager.Instance.songPosBeats)
-                    PlayerInputManager.Instance.OnKeyboardEvent(_currentWord.CurrentInputNote.Char);
+                if (_currentWord?.currentInputNote?.beatAbs <= SongManager.Instance.songPosBeats)
+                    PlayerInputManager.Instance.OnKeyboardEvent(_currentWord.currentInputNote.character);
             }
         }
 
@@ -147,28 +147,28 @@ namespace Gameplay
             if (_currentWord.Finished)
                 return;
         
-            var currentCharNote = (RuntimeNote) _currentWord.CurrentInputNote; // c# 8
+            var currentCharNote = (RuntimeNote) _currentWord.currentInputNote; // c# 8
 
-            var beatTiming = SongManager.Instance.songPosBeats - currentCharNote.BeatAbs;
+            var beatTiming = SongManager.Instance.songPosBeats - currentCharNote.beatAbs;
             var timingMs = beatTiming / CurrentBeatmap.BeatsPerSec * 1000;
             var timingMsAbs = Math.Abs(timingMs);
 
             if (timingMsAbs > C.TimingWindowGood)
                 return;
             
-            if (character == currentCharNote.Char)
+            if (character == currentCharNote.character)
             {
-                currentCharNote.ResultTiming = timingMs;
+                currentCharNote.resultTiming = timingMs;
                 var result = timingMsAbs < C.TimingWindowPerfect 
                     ? NoteResult.HitPerfect 
                     : (timingMs < 0 ? NoteResult.HitEarly : NoteResult.HitLate);
                 SetNoteResult(currentCharNote, result);
-                OnHit?.Invoke(currentCharNote.Char, result, beatTiming);
+                OnHit?.Invoke(currentCharNote.character, result, beatTiming);
             }
             else
             {
                 SetNoteResult(currentCharNote, NoteResult.WrongChar);
-                OnHit?.Invoke(currentCharNote.Char, NoteResult.WrongChar, null);
+                OnHit?.Invoke(currentCharNote.character, NoteResult.WrongChar, null);
             }
 
             AdvanceChar();
@@ -176,7 +176,7 @@ namespace Gameplay
 
         private void SetNoteResult(RuntimeNote note, NoteResult result)
         {
-            note.Result = result;
+            note.result = result;
             _displayScore.AddNoteResult(result);
             OnScoreChange?.Invoke(_displayScore.Score);
         }
@@ -189,7 +189,7 @@ namespace Gameplay
             {
                 _currentCharMissThreshold = null;
                 if (_lastWordReached)
-                    BeatmapFinished = true;
+                    beatmapFinished = true;
             }
             else
                 SetCurrentCharMissThreshold();
@@ -198,12 +198,12 @@ namespace Gameplay
         private void SetCurrentCharMissThreshold()
         {
             _currentCharMissThreshold =
-                _currentWord.Beat + _currentWord.CurrentInputNote.Beat + C.TimingWindowGoodSec * CurrentBeatmap.BeatsPerSec;
+                _currentWord.Beat + _currentWord.currentInputNote.beat + C.TimingWindowGoodSec * CurrentBeatmap.BeatsPerSec;
         }
 
         private void SongFinished()
         {
-            BeatmapFinished = true;
+            beatmapFinished = true;
             var result = new BeatmapScore(RuntimeWords.GetNotes().ToList());
             Local.Scores.AddScore(CurrentBeatmap.id, result);
             Local.CommitScores();

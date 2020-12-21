@@ -14,7 +14,7 @@ namespace Gameplay.SingletonComponents
     {
         protected override void InitCharObj(TextMeshProUGUI charObj, RuntimeNote note)
         {
-            charObj.text = note.Char.ToString();
+            charObj.text = note.character.ToString();
             charObj.color = Color.white;
         }
 

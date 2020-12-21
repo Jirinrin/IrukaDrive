@@ -55,19 +55,19 @@ namespace Shared
         
         protected virtual void InitWord(TWordObj item, int index)
         {
-            item.Word = _wordLookup[index];
+            item.word = _wordLookup[index];
             var itemTransform = item.transform;
             itemTransform.localPosition = new Vector3(beatSpacing * index.IndexToBeat(), 0, 0);
             if (item.charObjRefs == null || item.charObjRefs.Count > 0)
                 item.charObjRefs = new List<TCharObj>();
 
-            foreach (var note in item.Word.CharNotes)
+            foreach (var note in item.word.CharNotes)
             {
                 var charObj = _charRecyclerPool.Request();
                 InitCharObj(charObj, note);
                 var charObjTransform = charObj.transform;
                 charObjTransform.SetParent(itemTransform);
-                charObjTransform.localPosition = new Vector3(beatSpacing * note.Beat, 0, 0);
+                charObjTransform.localPosition = new Vector3(beatSpacing * note.beat, 0, 0);
                 charObj.gameObject.SetActive(true);
                 item.charObjRefs.Add(charObj);
             }

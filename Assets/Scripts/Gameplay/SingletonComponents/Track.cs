@@ -114,7 +114,7 @@ namespace Gameplay.SingletonComponents
     
         private float _beatSpacing;
         public void SetBpm(float bpm) =>
-            _beatSpacing = (bpm / _initBpm) * C.DefaultScrollSpeed * Local.Settings.BeatmapScrollSpeedMod;
+            _beatSpacing = (bpm / _initBpm) * C.DefaultScrollSpeed * Local.Settings.beatmapScrollSpeedMod;
 
         private void OnEnable()
         {

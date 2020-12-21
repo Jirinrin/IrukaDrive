@@ -12,7 +12,6 @@ namespace Gameplay.SingletonComponents
     public class NoteFx : Singleton<NoteFx>
     {
         [SerializeField] private CharacterHitAnim characterPrefab = null;
-        private TextMeshProUGUI _characterObj;
     
         [SerializeField] private Image circleSpriteNote = null;
         [SerializeField] private Image circleSpriteTap = null;

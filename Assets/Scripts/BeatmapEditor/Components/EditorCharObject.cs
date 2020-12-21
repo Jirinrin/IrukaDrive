@@ -7,26 +7,26 @@ namespace BeatmapEditor.Components
 {
     public class EditorCharObject : MonoBehaviour
     {
-        [NonSerialized] public ParsedNote Note;
-        [NonSerialized] public TextMeshProUGUI Obj;
+        [NonSerialized] public ParsedNote note;
+        [NonSerialized] public TextMeshProUGUI obj;
 
         public void Init(ParsedNote note)
         {
-            Obj = GetComponent<TextMeshProUGUI>();
-            Note = note;
-            Text = note.Char.ToString();
+            obj = GetComponent<TextMeshProUGUI>();
+            this.note = note;
+            Text = note.character.ToString();
         }
         
         public string Text
         {
-            get => Obj.text;
-            set => Obj.text = value;
+            get => obj.text;
+            set => obj.text = value;
         }
 
         public void Cleanup()
         {
-            Obj = null;
-            Note = null;
+            obj = null;
+            note = null;
         }
     }
 }

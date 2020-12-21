@@ -10,9 +10,6 @@ namespace BeatmapEditor.SingletonComponents
     {
         private SheetLineRecyclerList _sheetLines;
 
-        private float _panX;
-        private float _beatSpacing;
-
         public void InitSheet(Beatmap beatmap)
         {
             SheetLineRecyclerList.Instance.Init(beatmap);
@@ -26,9 +23,6 @@ namespace BeatmapEditor.SingletonComponents
         private void OnEnable()
         {
             _sheetLines = GetComponent<SheetLineRecyclerList>();
-        }
-        private void OnDisable()
-        {
         }
     }
 }

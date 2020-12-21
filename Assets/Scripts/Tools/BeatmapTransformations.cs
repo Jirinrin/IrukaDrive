@@ -12,8 +12,8 @@ namespace Tools
             return word.text.ToCharArray().Select((c, i) =>
                 new ParsedNote
                 {
-                    Beat = i * word.beatInterval,
-                    Char = c,
+                    beat = i * word.beatInterval,
+                    character = c,
                 }
             ).ToList();
         }

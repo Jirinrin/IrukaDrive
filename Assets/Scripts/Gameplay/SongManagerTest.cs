@@ -23,7 +23,7 @@ namespace Gameplay
 
         private void Update()
         {
-            if (!GameplayManager.Instance.BeatmapStarted)
+            if (!GameplayManager.Instance.beatmapStarted)
                 return;
             
             outputTextBox.text = string.Join(Environment.NewLine,
@@ -38,7 +38,7 @@ namespace Gameplay
                 resultsTextBox.text = string.Join(Environment.NewLine,
                     "Results:",
                     string.Join(", ", _beatmapResult.Select(note => 
-                        $"[{note.Result} - {note.ResultTiming}]"
+                        $"[{note.result} - {note.resultTiming}]"
                     ))
                 );
         }

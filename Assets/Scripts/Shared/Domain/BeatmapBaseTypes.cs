@@ -6,8 +6,8 @@ namespace Shared.Domain
 {
     public class ParsedNote
     {
-        public float Beat;
-        public char Char;
+        public float beat;
+        public char character;
     }
 
     public class WordObject<TCharObj, TWord, TNote> : MonoBehaviour
@@ -17,7 +17,7 @@ namespace Shared.Domain
     {
         [CanBeNull] public List<TCharObj> charObjRefs;
 
-        public TWord Word;
+        public TWord word;
     }
     
     public abstract class ParsedWord<TNote> where TNote : ParsedNote

@@ -8,26 +8,26 @@ namespace Gameplay.Domain
 {
     public class RuntimeWord : ParsedWord<RuntimeNote>
     {
-        public readonly float LastBeat;
+        public readonly float lastBeat;
 
         private int _inputNoteIndex;
         private int _noteIndex;
-        public RuntimeNote CurrentInputNote; // c# 8: add nullable question mark
-        public RuntimeNote CurrentNote; // c# 8: add nullable question mark
+        public RuntimeNote currentInputNote; // c# 8: add nullable question mark
+        public RuntimeNote currentNote; // c# 8: add nullable question mark
         public bool Finished => _inputNoteIndex >= CharNotes.Count;
 
         private bool _passed;
 
         public RuntimeWord(BeatmapWord word)
         {
-            CharNotes = word.ParseNotes().Select(note => new RuntimeNote(note, word.beat + note.Beat)).ToList();
+            CharNotes = word.ParseNotes().Select(note => new RuntimeNote(note, word.beat + note.beat)).ToList();
             if (!CharNotes.Any())
                 throw new Exception("Empty word: " + this);
         
             Beat = word.beat;
-            LastBeat = word.LastBeat();
-            CurrentInputNote = CharNotes[0];
-            CurrentNote = CharNotes[0];
+            lastBeat = word.LastBeat();
+            currentInputNote = CharNotes[0];
+            currentNote = CharNotes[0];
         }
 
         // あくまでのsafeguard: in theory this should never trigger
@@ -39,13 +39,13 @@ namespace Gameplay.Domain
             if (errorOnTrigger)
                 Debug.LogError("Word was unfinished, which it shouldn't be!!");
 
-            do CurrentInputNote.Result = NoteResult.Miss;
+            do currentInputNote.result = NoteResult.Miss;
             while (AdvanceInputNote() != null);
         }
 
         private void SetCurrentInputNote(int? index)
         {
-            CurrentInputNote = index == null ? null : CharNotes[(int) index];
+            currentInputNote = index == null ? null : CharNotes[(int) index];
         }
 
         // Returns null if finished
@@ -67,7 +67,7 @@ namespace Gameplay.Domain
 
         public bool CheckPassedNote(float beatTime)
         {
-            if (_passed || !(CurrentNote?.BeatAbs < beatTime))
+            if (_passed || !(currentNote?.beatAbs < beatTime))
                 return false;
 
             // Passed new note!
@@ -75,10 +75,10 @@ namespace Gameplay.Domain
             if (_noteIndex >= CharNotes.Count)
             {
                 _passed = true;
-                CurrentNote = null;
+                currentNote = null;
             }
             else
-                CurrentNote = CharNotes[_noteIndex];
+                currentNote = CharNotes[_noteIndex];
 
             // todo: maybe make this flip in-between notes or sth
             // if (_inputNoteIndex < _noteIndex && CurrentInputNote?.Result == null)

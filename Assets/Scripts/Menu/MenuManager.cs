@@ -20,7 +20,7 @@ namespace Menu
         // Init params for MenuScreen
         public MenuScreen CurrentScreen { get; private set; } = GameManager.InitMenuScreen;
 
-        private Dictionary<string, GameObject> _screens = new Dictionary<string, GameObject>();
+        private readonly Dictionary<string, GameObject> _screens = new Dictionary<string, GameObject>();
         private GameObject CurrentScreenObj => _screens[CurrentScreen.ToString()];
 
         private void Awake()

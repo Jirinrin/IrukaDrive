@@ -12,7 +12,7 @@ namespace BeatmapEditor.Components
 {
     public class EditorWordObject : WordObject<EditorCharObject, EditorWord, ParsedNote>, IPointerClickHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
     {
-        [NonSerialized] public TMP_InputField InputFieldPrefab;
+        [NonSerialized] public TMP_InputField inputFieldPrefab;
         
         private float _dragDelta;
         private bool _dragging;
@@ -36,7 +36,7 @@ namespace BeatmapEditor.Components
         private void RefreshWord()
         {
             foreach (var charObj in charObjRefs)
-                charObj.transform.localPosition = new Vector3(_beatSpacing * charObj.Note.Beat, 0, 0);
+                charObj.transform.localPosition = new Vector3(_beatSpacing * charObj.note.beat, 0, 0);
         }
 
         private float _beatSpacing;
@@ -48,16 +48,16 @@ namespace BeatmapEditor.Components
 
         private void UpdateBeatInterval(float newInterval)
         {
-            Word.BeatInterval = newInterval;
+            word.BeatInterval = newInterval;
             RefreshWord();
         }
 
         public void Edit()
         {
-            _activeInputField = Instantiate(InputFieldPrefab, transform);
-            _activeInputField.transform.localPosition = new Vector3(Word.BeatWidth/2f * _beatSpacing,-30f,0);
+            _activeInputField = Instantiate(inputFieldPrefab, transform);
+            _activeInputField.transform.localPosition = new Vector3(word.BeatWidth/2f * _beatSpacing,-30f,0);
             _activeInputField.onSubmit.AddListener(OnSubmitWordType);
-            _activeInputField.SetTextWithoutNotify(Word.Text);
+            _activeInputField.SetTextWithoutNotify(word.Text);
             _activeInputField.ActivateInputField();
             
             _inputting = true;
@@ -77,9 +77,9 @@ namespace BeatmapEditor.Components
         public void OnSubmitWordType(string result)
         {
             if (result.Length == 0)
-                Word.Delete();
+                word.Delete();
             else
-                Word.Text = result;
+                word.Text = result;
             
             EditorTrack.Instance.RefreshBeatmap();
             Destroy(_activeInputField.gameObject);
@@ -113,7 +113,7 @@ namespace BeatmapEditor.Components
             if (!_dragging)
                 return;
             
-            Word.Beat = (transform.localPosition.x / _beatSpacing).RoundToNearest(C.EditorBeatSnap);
+            word.Beat = (transform.localPosition.x / _beatSpacing).RoundToNearest(C.EditorBeatSnap);
             EditorTrack.Instance.RefreshBeatmap();
             _dragging = false;
         }
@@ -131,7 +131,7 @@ namespace BeatmapEditor.Components
             else if (eventData.button == PointerEventData.InputButton.Right)
             {
                 _dragType = DragType.ChangeBeatInterval;
-                _beatIntervalIndexBeforeDrag = C.BeatIntervalValues.FindIndex(val => val.Equals(Word.BeatInterval));
+                _beatIntervalIndexBeforeDrag = C.BeatIntervalValues.FindIndex(val => val.Equals(word.BeatInterval));
                 if (_beatIntervalIndexBeforeDrag == -1)
                     _beatIntervalIndexBeforeDrag = 3;
             }

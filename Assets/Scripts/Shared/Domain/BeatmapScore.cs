@@ -29,15 +29,15 @@ namespace Shared.Domain
 
             foreach (var note in notes)
             {
-                if (note.Result == null)
+                if (note.result == null)
                     Debug.LogError("Found null note in results");
-                AddNoteResult(note.Result ?? NoteResult.Miss);
+                AddNoteResult(note.result ?? NoteResult.Miss);
             }
             
-            perfects = notes.Count(n => n.Result == NoteResult.HitPerfect);
-            earlies = notes.Count(n => n.Result == NoteResult.HitEarly);
-            lates = notes.Count(n => n.Result == NoteResult.HitLate);
-            misses = notes.Count(n => n.Result == NoteResult.WrongChar || n.Result == NoteResult.Miss);
+            perfects = notes.Count(n => n.result == NoteResult.HitPerfect);
+            earlies = notes.Count(n => n.result == NoteResult.HitEarly);
+            lates = notes.Count(n => n.result == NoteResult.HitLate);
+            misses = notes.Count(n => n.result == NoteResult.WrongChar || n.result == NoteResult.Miss);
         }
 
         public BeatmapScore(int notesCount)
