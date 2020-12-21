@@ -54,12 +54,12 @@ namespace Tools.Commons
             }
         }
 
-        private void OnApplicationQuit()
+        protected void OnApplicationQuit()
         {
             _shuttingDown = true;
         }
 
-        private void OnDestroy()
+        protected void OnDestroy()
         {
             _instance = null;
         }
