@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BeatmapEditor.Domain;
 using Shapes;
 using Shared;
 using Shared.Domain;
@@ -88,13 +89,13 @@ namespace BeatmapEditor.SingletonComponents
         private void OnZoom(float beatSpacing) => _beatSpacing = beatSpacing;
         private void OnEnable()
         {
-            EditorTrack.OnPan += OnPan;
-            EditorTrack.OnZoom += OnZoom;
+            EditorTrackViewState.OnPan += OnPan;
+            EditorTrackViewState.OnZoom += OnZoom;
         }
         private void OnDisable()
         {
-            EditorTrack.OnPan -= OnPan;
-            EditorTrack.OnZoom -= OnZoom;
+            EditorTrackViewState.OnPan -= OnPan;
+            EditorTrackViewState.OnZoom -= OnZoom;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using BeatmapEditor.Domain;
 using Shared;
 using Shared.Domain;
 using Tools;
@@ -19,6 +20,8 @@ namespace BeatmapEditor.SingletonComponents
 
         private bool _shouldDraw;
 
+        private EditorTrackViewState _viewState;
+
         public void RefreshBeatmap()
         {
             _notesRecycler.RefreshBeatmap();
@@ -28,11 +31,8 @@ namespace BeatmapEditor.SingletonComponents
         public void InitTrack(Beatmap beatmap)
         {
             containerRect = containerRectTransform.rect;
-            
-            Debug.Log("init track");
 
-            OnPan?.Invoke(_panX);
-            OnZoom?.Invoke(_beatSpacing);
+            _viewState = new EditorTrackViewState();
 
             _notesRecycler = EditorTrackNotesRecycler.Instance;
             _notesRecycler.Init(beatmap);
@@ -59,7 +59,7 @@ namespace BeatmapEditor.SingletonComponents
         
         // Stuff responding to gestures
 
-        private float ScreenXToBeat(float screenX) => ((_panX + screenX) / _beatSpacing).RoundToNearest(C.EditorBeatSnap); 
+        private float ScreenXToBeat(float screenX) => ((_viewState.panX + screenX) / _viewState.beatSpacing).RoundToNearest(C.EditorBeatSnap); 
 
         public void CreateWord(float screenX)
         {
@@ -73,35 +73,18 @@ namespace BeatmapEditor.SingletonComponents
         public void PlayFromPoint(float screenX) =>
             BeatmapEditorManager.Instance.PlayBeatmapFrom(ScreenXToBeat(screenX));
 
-        private const float DefaultBeatSpacing = 20f;
-        private const float MaxZoomScale = 5f;
-        private float _scaleX = 1f;
-        private float _beatSpacing = DefaultBeatSpacing;
         public void Zoom(float delta, float screenPivotX)
         {
-            var oldScale = _scaleX;
-            _scaleX = Mathf.Clamp(_scaleX + delta, 1f, MaxZoomScale);
-            _beatSpacing = _scaleX * DefaultBeatSpacing;
-            var scaleDiff = _scaleX / oldScale;
-            
-            var pivotX = _panX + screenPivotX;
-            Pan(-pivotX * (scaleDiff-1f));
+            _viewState.Zoom(delta, screenPivotX);
+            transform.localPosition = new Vector3(-_viewState.panX, 0, 0);
             _shouldDraw = true;
-            OnZoom?.Invoke(_beatSpacing);
         }
 
-        // panX gets inversed to make 'the pan amount' more intuitive to deal with
-        private const float MinimumPan = -20f;
-        private float _panX = MinimumPan;
         public void Pan(float deltaX)
         {
-            _panX = Mathf.Max(_panX - deltaX, MinimumPan);
-            transform.localPosition = new Vector3(-_panX, 0, 0);
-            OnPan?.Invoke(_panX);
+            _viewState.Pan(deltaX);
+            transform.localPosition = new Vector3(-_viewState.panX, 0, 0);
             _shouldDraw = true;
         }
-
-        public static event Action<float> OnPan;
-        public static event Action<float> OnZoom;
     }
 }

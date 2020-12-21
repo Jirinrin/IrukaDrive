@@ -74,16 +74,16 @@ namespace BeatmapEditor.SingletonComponents
 
         // Coming from EditorTrack
         
-        private void OnZoom(float beatSpacing) => base.beatSpacing = beatSpacing;
+        private void OnZoom(float newBeatSpacing) => beatSpacing = newBeatSpacing;
         private void OnEnable()
         {
-            EditorTrack.OnPan += OnPan;
-            EditorTrack.OnZoom += OnZoom;
+            EditorTrackViewState.OnPan += OnPan;
+            EditorTrackViewState.OnZoom += OnZoom;
         }
         private void OnDisable()
         {
-            EditorTrack.OnPan -= OnPan;
-            EditorTrack.OnZoom -= OnZoom;
+            EditorTrackViewState.OnPan -= OnPan;
+            EditorTrackViewState.OnZoom -= OnZoom;
         }
     }
 }
