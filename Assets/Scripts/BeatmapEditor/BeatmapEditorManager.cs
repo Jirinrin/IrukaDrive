@@ -47,7 +47,10 @@ namespace BeatmapEditor
 
         public void PlaySong()
         {
-            SongManager.Instance.LoadSong(currentBeatmap, tickOnBeat: true);
+            if (!SongManager.Instance.IsPlaying)
+                SongManager.Instance.LoadSong(currentBeatmap, tickOnBeat: true);
+            else
+                SongManager.Instance.Stop();
         }
 
         public void BackToMainMenu() => GameManager.ToMainMenu();

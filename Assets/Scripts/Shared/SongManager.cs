@@ -21,6 +21,8 @@ namespace Shared
         public float SongPosBars => Mathf.FloorToInt((songPosBeats - _currentBeatmap.barOffset) / _currentBeatmap.beatsPerBar);
         public float BeatTiming => songPosBeats % 1;
 
+        public bool IsPlaying => _audioSource.isPlaying;
+
         private bool _songFinished;
 
         private bool _tickOnBeat;
@@ -43,6 +45,11 @@ namespace Shared
             _audioSource.Play();
         }
 
+        public void Stop()
+        {
+            _audioSource.Stop();
+        }
+        
         private void Update()
         {
             if (_currentBeatmap == null)
