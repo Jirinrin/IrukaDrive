@@ -30,7 +30,6 @@ namespace Menu
             foreach (var screen in screens)
             {
                 var obj = screen.gameObject;
-                Debug.Log(obj.name);
                 _screens[obj.name] = obj;
                 obj.SetActive(false);
             }
@@ -51,7 +50,10 @@ namespace Menu
         }
         
         public void ToGameplay() =>
-            GameManager.ToGameplay(SerializationHelpers.LoadBeatmap());
+            GameManager.ToGameplay(SerializationHelpers.LoadBeatmap(
+                // Uncomment this for easy dev
+                // Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr")
+            ));
 
         public void ToEditor() =>
             GameManager.ToBeatmapEditor();
