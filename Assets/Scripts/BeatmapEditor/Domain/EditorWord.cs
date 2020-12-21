@@ -48,6 +48,6 @@ namespace BeatmapEditor.Domain
             CharNotes = _word.ParseNotes();
         }
 
-        public void Delete() => BeatmapEditorManager.Instance.currentBeatmap.words.Remove(_word);
+        public void Delete() => BeatmapEditorManager.currentBeatmap.words.Remove(_word);
     }
 }

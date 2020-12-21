@@ -9,8 +9,8 @@ namespace BeatmapEditor
 {
     public class BeatmapEditorManager : Singleton<BeatmapEditorManager>
     {
-        public Beatmap currentBeatmap;
-        
+        public static Beatmap currentBeatmap;
+
         public void PlayBeatmapFrom(float beatTime)
         {
             // todo: add option to autoplay

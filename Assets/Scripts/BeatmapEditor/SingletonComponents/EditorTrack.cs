@@ -65,7 +65,7 @@ namespace BeatmapEditor.SingletonComponents
         {
             var newWordBeat = ScreenXToBeat(screenX);
             var newWord = new BeatmapWord(newWordBeat);
-            BeatmapEditorManager.Instance.currentBeatmap.words.Add(newWord);
+            BeatmapEditorManager.currentBeatmap.words.Add(newWord);
             RefreshBeatmap();
             _notesRecycler.EditWord(newWordBeat.BeatToIndex());
         }
