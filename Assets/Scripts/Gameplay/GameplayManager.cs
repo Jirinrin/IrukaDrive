@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Domain;
@@ -210,23 +210,25 @@ namespace Gameplay
             GameManager.EndGameplay(result);
         }
 
-        private void OnEnable()
-        {
-            PlayerInputManager.OnChar += OnChar;
-            SongManager.OnSongFinished += SongFinished;
-        }
-        private void OnDisable()
-        {
-            PlayerInputManager.OnChar -= OnChar;
-            SongManager.OnSongFinished -= SongFinished;
-        }
-
         public void BackToMainMenu()
         {
             if (EditorPlay)
                 GameManager.ToBeatmapEditor();
             else
                 GameManager.ToMainMenu();
+        }
+
+        private void OnEnable()
+        {
+            PlayerInputManager.OnChar += OnChar;
+            PlayerInputManager.Back += BackToMainMenu;
+            SongManager.OnSongFinished += SongFinished;
+        }
+        private void OnDisable()
+        {
+            PlayerInputManager.OnChar -= OnChar;
+            PlayerInputManager.Back -= BackToMainMenu;
+            SongManager.OnSongFinished -= SongFinished;
         }
 
         public static event Action OnNote;
