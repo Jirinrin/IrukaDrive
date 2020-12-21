@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Tools.Commons;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,13 +8,10 @@ namespace Gameplay
     [RequireComponent(typeof(PlayerInput))]
     public class PlayerInputManager : Singleton<PlayerInputManager>
     {
-        public static event Action OnTap;
+        public static event Action Confirm;
         public static event Action<char> OnChar;
 
-        public void OnConfirm()
-        {
-            OnTap?.Invoke();
-        }
+        public void OnConfirm() => Confirm?.Invoke();
 
         public void OnEnable()
         {

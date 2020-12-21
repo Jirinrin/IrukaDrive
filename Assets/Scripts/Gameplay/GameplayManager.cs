@@ -8,7 +8,6 @@ using Shared;
 using Shared.Domain;
 using Tools;
 using Tools.Commons;
-using UnityEngine;
 
 namespace Gameplay
 {
@@ -143,8 +142,6 @@ namespace Gameplay
             }
         }
 
-        private void Tap() { }
-
         private void OnChar(char character)
         {
             if (_currentWord.Finished)
@@ -215,13 +212,11 @@ namespace Gameplay
 
         private void OnEnable()
         {
-            PlayerInputManager.OnTap += Tap;
             PlayerInputManager.OnChar += OnChar;
             SongManager.OnSongFinished += SongFinished;
         }
         private void OnDisable()
         {
-            PlayerInputManager.OnTap -= Tap;
             PlayerInputManager.OnChar -= OnChar;
             SongManager.OnSongFinished -= SongFinished;
         }
