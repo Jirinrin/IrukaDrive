@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 
 namespace BeatmapEditor.Components
 {
-    public class EditorWordObject : WordObject<EditorCharObject, EditorWord, ParsedNote>, IPointerClickHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
+    public class EditorWordObject : WordObject<EditorWord, ParsedNote>, IPointerClickHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
     {
         [NonSerialized] public TMP_InputField inputFieldPrefab;
         
@@ -31,19 +31,6 @@ namespace BeatmapEditor.Components
         {
             MoveWord,
             ChangeBeatInterval,
-        }
-
-        private void RefreshWord()
-        {
-            foreach (var charObj in charObjRefs)
-                charObj.transform.localPosition = new Vector3(_beatSpacing * charObj.note.beat, 0, 0);
-        }
-
-        private float _beatSpacing;
-        public void UpdateSpacing(float newSpacing)
-        {
-            _beatSpacing = newSpacing;
-            RefreshWord();
         }
 
         private void UpdateBeatInterval(float newInterval)

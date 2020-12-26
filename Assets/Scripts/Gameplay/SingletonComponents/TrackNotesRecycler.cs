@@ -4,18 +4,18 @@ using System.Linq;
 using Gameplay.Components;
 using Gameplay.Domain;
 using Shared;
-using TMPro;
+using Shared.Domain;
 using UnityEngine;
 
 // todo: shared base with editor notes recycler
 namespace Gameplay.SingletonComponents
 {
-    public class TrackNotesRecycler : TrackNotesRecyclerBase<TrackNotesRecycler, RuntimeWord, RuntimeNote, TextMeshProUGUI, RuntimeWordObject>
+    public class TrackNotesRecycler : TrackNotesRecyclerBase<TrackNotesRecycler, RuntimeWord, RuntimeNote, RuntimeWordObject>
     {
-        protected override void InitCharObj(TextMeshProUGUI charObj, RuntimeNote note)
+        protected override void InitCharObj(CharObject charObj, RuntimeNote note)
         {
-            charObj.text = note.character.ToString();
-            charObj.color = Color.white;
+            base.InitCharObj(charObj, note);
+            charObj.obj.color = Color.white;
         }
 
         protected override void InitWord(RuntimeWordObject item, int index)

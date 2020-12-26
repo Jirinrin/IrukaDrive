@@ -87,7 +87,7 @@ namespace Gameplay.SingletonComponents
             
             if (charIndex == null)
             {
-                _currentWordObj.charObjRefs.Last().color = Color.white;
+                _currentWordObj.charObjRefs.Last().obj.color = Color.white;
                 return;
             }
 
@@ -96,9 +96,9 @@ namespace Gameplay.SingletonComponents
             if (index >= _currentWordObj.charObjRefs.Count)
                 return;
         
-            _currentWordObj.charObjRefs[index].color = Color.red;
+            _currentWordObj.charObjRefs[index].obj.color = Color.red;
             if (index > 0)
-                _currentWordObj.charObjRefs[index-1].color = Color.white;
+                _currentWordObj.charObjRefs[index-1].obj.color = Color.white;
         }
 
         public void ForceRefresh() => _notesRecycler.RefreshWindow();
