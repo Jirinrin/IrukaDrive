@@ -43,18 +43,16 @@ namespace Shared
             _songFinished = false;
             _audioSource.time = startTime;
             _audioSource.Play();
+            UpdateSongState();
         }
 
         public void Stop()
         {
             _audioSource.Stop();
         }
-        
-        private void Update()
-        {
-            if (_currentBeatmap == null)
-                return;
 
+        private void UpdateSongState()
+        {
             if (_audioSource.isPlaying)
             {
                 songPosSec = _audioSource.time;
@@ -66,6 +64,14 @@ namespace Shared
                 _songFinished = true;
                 OnSongFinished?.Invoke();
             }
+        }
+        
+        private void Update()
+        {
+            if (_currentBeatmap == null)
+                return;
+
+            UpdateSongState();
             
             if (_tickOnBeat)
                 TickOnBeat();
