@@ -60,7 +60,7 @@ namespace Gameplay.SingletonComponents
                 // _sheet.DrawSheet();
             }
         }
-    
+
         private void ChangeCurrentWord(float beat)
         {
             // todo: de-mark previous current word if there was still some current
@@ -94,6 +94,8 @@ namespace Gameplay.SingletonComponents
             if (index > 0)
                 _currentWordObj.charObjRefs[index-1].color = Color.white;
         }
+
+        public void ForceRefresh() => _notesRecycler.RefreshWindow();
     
         private float _panX;
 

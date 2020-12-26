@@ -73,10 +73,13 @@ namespace Gameplay
             if (BeatmapStartTime > .1f)
             {
                 var beatmapStartBeat = CurrentBeatmap.SecToBeats(BeatmapStartTime);
+                Track.Instance.UpdateProgress(beatmapStartBeat);
+                Track.Instance.ForceRefresh();
+                
                 while (_switchNextWordThreshold < SongManager.Instance.songPosBeats)
                 {
                     _currentWord.Finish(false);
-                    AdvanceWord(_currentWord.lastBeat >= beatmapStartBeat);
+                    AdvanceWord(_nextWord.lastBeat >= beatmapStartBeat);
                 }
                 while (_currentCharMissThreshold < SongManager.Instance.songPosBeats)
                     AdvanceChar();
