@@ -9,13 +9,16 @@ namespace Tools
     {
         public static List<ParsedNote> ParseNotes(this BeatmapWord word)
         {
-            return word.text.ToCharArray().Select((c, i) =>
-                new ParsedNote
-                {
-                    beat = i * word.beatInterval,
-                    character = c,
-                }
-            ).ToList();
+            return word.text.ToCharArray()
+                .Select((c, i) =>
+                    new ParsedNote
+                    {
+                        beat = i * word.beatInterval,
+                        character = c,
+                    }
+                )
+                .Where(note => note.character != ' ')
+                .ToList();
         }
 
         public static float LastBeat(this BeatmapWord word) => 
