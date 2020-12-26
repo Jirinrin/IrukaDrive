@@ -13,28 +13,33 @@
   <words>
     <BeatmapWord>
       <beat>16</beat>
-      <text>xxxx</text>
+      <text>abcd</text>
       <beatInterval>1</beatInterval>
     </BeatmapWord>
     <BeatmapWord>
       <beat>24</beat>
-      <text>xxxx</text>
+      <text>efgh</text>
       <beatInterval>1</beatInterval>
     </BeatmapWord>
     <BeatmapWord>
-      <beat>45</beat>
-      <text>qwert</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>60</beat>
-      <text>asdfe</text>
+      <beat>32.5</beat>
+      <text>zxcv</text>
       <beatInterval>1</beatInterval>
     </BeatmapWord>
     <BeatmapWord>
-      <beat>70</beat>
-      <text>ol\';7</text>
-      <beatInterval>0.5</beatInterval>
+      <beat>38.5</beat>
+      <text>qw</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>42.5</beat>
+      <text>ert</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>72</beat>
+      <text>far</text>
+      <beatInterval>1</beatInterval>
     </BeatmapWord>
   </words>
 </Beatmap>
