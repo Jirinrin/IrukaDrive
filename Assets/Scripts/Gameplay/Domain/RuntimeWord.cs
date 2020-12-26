@@ -9,6 +9,7 @@ namespace Gameplay.Domain
     public class RuntimeWord : ParsedWord<RuntimeNote>
     {
         public readonly float lastBeat;
+        public readonly string text;
 
         private int _inputNoteIndex;
         private int _noteIndex;
@@ -28,6 +29,8 @@ namespace Gameplay.Domain
             lastBeat = word.LastBeat();
             currentInputNote = CharNotes[0];
             currentNote = CharNotes[0];
+
+            text = word.text;
         }
 
         // あくまでのsafeguard: in theory this should never trigger
@@ -37,7 +40,7 @@ namespace Gameplay.Domain
                 return;
 
             if (errorOnTrigger)
-                Debug.LogError("Word was unfinished, which it shouldn't be!!");
+                Debug.LogError($"Word was unfinished, which it shouldn't be!! {text} -- {currentInputNote.character}");
 
             do currentInputNote.result = NoteResult.Miss;
             while (AdvanceInputNote() != null);
