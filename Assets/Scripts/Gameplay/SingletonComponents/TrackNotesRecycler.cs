@@ -58,11 +58,11 @@ namespace Gameplay.SingletonComponents
 
         private void OnEnable()
         {
-            Track.OnPan += OnPan;
+            TrackViewState.OnPan += OnPan;
         }
         private void OnDisable()
         {
-            Track.OnPan -= OnPan;
+            TrackViewState.OnPan -= OnPan;
         }
     }
 }

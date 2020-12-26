@@ -362,7 +362,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.009433985, g: 0.009433985, b: 0.009433985, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1118,7 +1118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.047058824, g: 0.047058824, b: 0.047058824, a: 1}
+  m_Color: {r: 0.047058824, g: 0.047058824, b: 0.047058824, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1695,7 +1695,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2030784867
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1724,13 +1724,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2030784866}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70ad32df1578486a88febd612ae07829, type: 3}
+  m_Script: {fileID: 11500000, guid: 65eee94b0e2044f2af3018090450e638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barLinePrefab: {fileID: 270888843974027579, guid: 11a88c069afded0448e28caa817f4c29,
-    type: 3}
-  beatLinePrefab: {fileID: 270888843974027579, guid: 03744eeb777bf9c48a214bd4e78df0fc,
-    type: 3}
 --- !u!114 &2030784869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1740,9 +1736,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2030784866}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1744cf578a3743cc9332503ba5d30955, type: 3}
+  m_Script: {fileID: 11500000, guid: 4617f198240a477cb952052cfc3ca199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  barLinePrefab: {fileID: 270888843974027579, guid: 11a88c069afded0448e28caa817f4c29,
+    type: 3}
+  beatLinePrefab: {fileID: 270888843974027579, guid: 03744eeb777bf9c48a214bd4e78df0fc,
+    type: 3}
 --- !u!1001 &539179081200567344
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -15,14 +15,8 @@ namespace BeatmapEditor.SingletonComponents
             EditorSheetLineRecycler.Instance.Init(beatmap);
         }
 
-        public void DrawSheet()
-        {
-            _sheetLines.RefreshWindow();
-        }
+        public void DrawSheet() => _sheetLines.RefreshWindow();
 
-        private void OnEnable()
-        {
-            _sheetLines = GetComponent<EditorSheetLineRecycler>();
-        }
+        private void OnEnable() => _sheetLines = GetComponent<EditorSheetLineRecycler>();
     }
 }

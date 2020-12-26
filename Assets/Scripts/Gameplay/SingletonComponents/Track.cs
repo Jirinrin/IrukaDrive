@@ -19,12 +19,13 @@ namespace Gameplay.SingletonComponents
         [SerializeField] public RectTransform judgementPoint;
     
         private TrackNotesRecycler _notesRecycler;
-        // todo: add sheet
-        // private EditorTrackSheetBg _sheet;
+        private TrackSheetBg _sheet;
 
         private float _judgementOffsetX;
     
         private bool _shouldDraw;
+        
+        private TrackViewState _viewState;
         
         private RuntimeWordObject _currentWordObj;
         public void InitTrack(Beatmap beatmap, IEnumerable<RuntimeWord> words)
@@ -33,14 +34,13 @@ namespace Gameplay.SingletonComponents
         
             Debug.Log("init track");
 
-            InitBpm(beatmap.bpm);
-            OnPan?.Invoke(_panX);
+            _viewState = new TrackViewState(beatmap.bpm);
         
             _notesRecycler = TrackNotesRecycler.Instance;
-            _notesRecycler.Init(words, _beatSpacing);
+            _notesRecycler.Init(words, _viewState.beatSpacing);
         
-            // _sheet = EditorTrackSheetBg.Instance;
-            // _sheet.InitSheet(beatmap);
+            _sheet = TrackSheetBg.Instance;
+            _sheet.InitSheet(beatmap);
         
             UpdateProgress(0f);
         }
@@ -56,8 +56,7 @@ namespace Gameplay.SingletonComponents
             {
                 _shouldDraw = false;
                 // todo: only do this every so often
-                _notesRecycler.RefreshWindow();
-                // _sheet.DrawSheet();
+                ForceRefresh();
             }
         }
 
@@ -101,35 +100,23 @@ namespace Gameplay.SingletonComponents
                 _currentWordObj.charObjRefs[index-1].obj.color = Color.white;
         }
 
-        public void ForceRefresh() => _notesRecycler.RefreshWindow();
-    
-        private float _panX;
+        public void ForceRefresh()
+        {
+            _notesRecycler.RefreshWindow();
+            _sheet.Refresh();
+        }
 
         public void UpdateProgress(float posBeats)
         {
-            _panX = posBeats * _beatSpacing;
-            transform.localPosition = new Vector3(_judgementOffsetX - _panX, 0, 0);
-            OnPan?.Invoke(_panX);
-            _shouldDraw = true;
+            _viewState.SetProgress(posBeats);
+            transform.localPosition = new Vector3(_judgementOffsetX - _viewState.panX, 0, 0);
+            _shouldDraw = true; // todo: unnecessary?
         }
-
-        private float _initBpm;
-        private void InitBpm(float bpm)
-        {
-            _initBpm = bpm;
-            SetBpm(_initBpm);
-        }
-    
-        private float _beatSpacing;
-        public void SetBpm(float bpm) =>
-            _beatSpacing = (bpm / _initBpm) * C.DefaultScrollSpeed * Local.Settings.beatmapScrollSpeedMod;
 
         private void OnEnable()
         {
             GameplayManager.OnChangeCurrentWord += ChangeCurrentWord;
             GameplayManager.OnChangeCurrentChar += ChangeCurrentChar;
         }
-    
-        public static event Action<float> OnPan;
     }
 }
