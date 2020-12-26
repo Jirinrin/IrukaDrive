@@ -41,10 +41,6 @@ namespace Shared.Domain
             }
         }
 
-        // Misc util methods
-        public float SecToBeats(float seconds) => (seconds - beatOffset) * BeatsPerSec;
-        public float BeatsToSecs(float beats) => beats / BeatsPerSec + beatOffset;
-
         public Beatmap()
         {
             id = Guid.NewGuid();

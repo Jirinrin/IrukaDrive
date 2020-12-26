@@ -5,7 +5,7 @@ using Shared.Domain;
 
 namespace Tools
 {
-    public static class BeatmapTransformations
+    public static class BeatmapExtensions
     {
         public static List<ParsedNote> ParseNotes(this BeatmapWord word)
         {
@@ -26,5 +26,10 @@ namespace Tools
 
         public static IEnumerable<RuntimeNote> GetNotes(this IEnumerable<RuntimeWord> words) =>
             words.SelectMany(word => word.CharNotes);
+        
+        public static float SecToBeats(this Beatmap b, float seconds) => (seconds - b.beatOffset) * b.BeatsPerSec;
+        public static float BeatsToSecs(this Beatmap b, float beats) => beats / b.BeatsPerSec + b.beatOffset;
+        
+        public static void SortWords(this Beatmap b) => b.words = b.words.OrderBy(word => word.beat).ToList();
     }
 }

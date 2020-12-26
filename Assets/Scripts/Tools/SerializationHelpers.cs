@@ -60,12 +60,8 @@ namespace Tools
 
         private static void SaveBeatmapToFile(Beatmap beatmap, string path)
         {
-            Debug.Log("save to file!!");
-            
-            beatmap.words = beatmap.words.OrderBy(word => word.beat).ToList();
-
+            beatmap.SortWords();
             Serialization.WriteToXmlFile(path, beatmap);
-            // currentBeatmap.
 
             // todo: do some checking on overlapping words? Or do that in the editor?
         }
