@@ -61,14 +61,20 @@ namespace Gameplay.SingletonComponents
             }
         }
 
+        private void SetCurrentWordObj(RuntimeWordObject obj)
+        {
+            _currentWordObj = obj;
+            ChangeCurrentChar(0);
+        }
+
         private void ChangeCurrentWord(float beat)
         {
             // todo: de-mark previous current word if there was still some current
             var index = beat.BeatToIndex();
             if (_notesRecycler.VisibleWordObjects.ContainsKey(index))
-                _currentWordObj = _notesRecycler.VisibleWordObjects[index];
+                SetCurrentWordObj(_notesRecycler.VisibleWordObjects[index]);
             else
-                _notesRecycler.EnqueueForWordAppear(index, () => _currentWordObj = _notesRecycler.VisibleWordObjects[index]);
+                _notesRecycler.EnqueueForWordAppear(index, SetCurrentWordObj);
             // If they're transparent by default:
             // foreach (var obj in _currentWordObjects)
             //     obj.color = Color.white;

@@ -91,14 +91,11 @@ namespace Gameplay
         }
 
         // todo: add exclamation points when c# 8.0 
-        private void AdvanceWord(bool triggerEvents = true)
+        private void AdvanceWord(bool triggerEvent = true)
         {
             _currentWord = _nextWord;
-            if (triggerEvents)
-            {
+            if (triggerEvent)
                 OnChangeCurrentWord?.Invoke(_currentWord.Beat);
-                OnChangeCurrentChar?.Invoke(0);
-            }
             SetCurrentCharMissThreshold();
         
             if (!_wordsIterator.MoveNext())

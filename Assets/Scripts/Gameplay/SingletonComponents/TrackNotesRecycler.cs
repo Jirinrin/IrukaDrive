@@ -25,7 +25,7 @@ namespace Gameplay.SingletonComponents
             if (_wordAppearActionQueue.ContainsKey(index))
             {
                 while (_wordAppearActionQueue[index].Any())
-                    _wordAppearActionQueue[index].Dequeue().Invoke();
+                    _wordAppearActionQueue[index].Dequeue().Invoke(item);
                 _wordAppearActionQueue.Remove(index);
             }
         }
@@ -33,7 +33,7 @@ namespace Gameplay.SingletonComponents
         private void LoadBeatmap(IEnumerable<RuntimeWord> words, float startBeatSpacing)
         {
             beatSpacing = startBeatSpacing;
-            _wordAppearActionQueue = new Dictionary<int, Queue<Action>>();
+            _wordAppearActionQueue = new Dictionary<int, Queue<Action<RuntimeWordObject>>>();
             base.LoadBeatmap(words);
         }
 
@@ -46,11 +46,11 @@ namespace Gameplay.SingletonComponents
 
 
         // This is for when you want to do something once a certain word appears
-        private Dictionary<int, Queue<Action>> _wordAppearActionQueue;
-        public void EnqueueForWordAppear(int index, Action action)
+        private Dictionary<int, Queue<Action<RuntimeWordObject>>> _wordAppearActionQueue;
+        public void EnqueueForWordAppear(int index, Action<RuntimeWordObject> action)
         {
             if (!_wordAppearActionQueue.ContainsKey(index))
-                _wordAppearActionQueue[index] = new Queue<Action>();
+                _wordAppearActionQueue[index] = new Queue<Action<RuntimeWordObject>>();
             _wordAppearActionQueue[index].Enqueue(action);
         }
 
