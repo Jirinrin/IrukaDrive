@@ -116,7 +116,7 @@ namespace Shared
         
         public void RefreshWindow()
         {
-            // todo: have a separate handler for onlyl updating the pan? (For performance reasons)
+            // todo: have a separate handler for only updating the pan? (For performance reasons)
             wordRecyclerList.SetVisibleWindow(GetCurrentWindow());
             UpdateSpacing();
         }

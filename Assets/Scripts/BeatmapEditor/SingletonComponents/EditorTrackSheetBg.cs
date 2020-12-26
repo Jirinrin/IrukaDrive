@@ -5,14 +5,14 @@ using UnityEngine;
 namespace BeatmapEditor.SingletonComponents
 {
     // todo: better 'shared container / coordinate' system to sync to EditorTrack
-    [RequireComponent(typeof(SheetLineRecyclerList))]
+    [RequireComponent(typeof(EditorSheetLineRecycler))]
     public class EditorTrackSheetBg : Singleton<EditorTrackSheetBg>
     {
-        private SheetLineRecyclerList _sheetLines;
+        private EditorSheetLineRecycler _sheetLines;
 
         public void InitSheet(Beatmap beatmap)
         {
-            SheetLineRecyclerList.Instance.Init(beatmap);
+            EditorSheetLineRecycler.Instance.Init(beatmap);
         }
 
         public void DrawSheet()
@@ -22,7 +22,7 @@ namespace BeatmapEditor.SingletonComponents
 
         private void OnEnable()
         {
-            _sheetLines = GetComponent<SheetLineRecyclerList>();
+            _sheetLines = GetComponent<EditorSheetLineRecycler>();
         }
     }
 }

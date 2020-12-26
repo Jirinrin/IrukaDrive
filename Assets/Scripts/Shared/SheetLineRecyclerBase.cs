@@ -1,29 +1,29 @@
 ﻿using System.Collections.Generic;
-using BeatmapEditor.Domain;
 using Shapes;
-using Shared;
 using Shared.Domain;
 using Tools.Commons;
 using UnityEngine;
 
-namespace BeatmapEditor.SingletonComponents
+namespace Shared
 {
     // todo: make sure the recycler thing gets updated not every frame
-    // todo: better 'shared container / coordinate' system to sync to EditorTrack
-    // todo: make shared thing with 'normal' sheetlinerecyclerlist
-    public class SheetLineRecyclerList : Singleton<SheetLineRecyclerList>
+    // todo: better 'shared container / coordinate' system to sync to Track
+    public class SheetLineRecyclerBase : Singleton<SheetLineRecyclerBase>
     {
-        [SerializeField] private Line barLinePrefab = null;
-        [SerializeField] private Line beatLinePrefab = null;
+        [SerializeField] protected Line barLinePrefab = null;
+        [SerializeField] protected Line beatLinePrefab = null;
 
         private RecyclerList<Line> _recyclerList1;
         private RecyclerList<Line> _recyclerList2;
 
         private Beatmap _currentBeatmap;
+        
+        // Expected to be set from Init before calling base.Init
+        protected Rect containerRect;
 
         private Line CreateBarLine() => Instantiate(barLinePrefab, transform);
         private Line CreateBeatLine() => Instantiate(beatLinePrefab, transform);
-
+        
         private void InitLine(Line item, int index) =>
             item.transform.localPosition = new Vector3(_beatSpacing * index.IndexToBeat(), 0, 0);
 
@@ -55,13 +55,13 @@ namespace BeatmapEditor.SingletonComponents
         private int[] GetCurrentWindow()
         {
             var minBeat = Mathf.Max(_panX / _beatSpacing, 0f);
-            var maxBeat = minBeat + EditorTrack.Instance.containerRect.width / _beatSpacing;
+            var maxBeat = minBeat + containerRect.width / _beatSpacing;
             return new[] {minBeat.BeatToIndex(), maxBeat.BeatToIndex()};
         }
-        
-        public void Init(Beatmap beatmap)
+
+        public virtual void Init(Beatmap beatmap)
         {
-            var lineStartEndY = EditorTrack.Instance.containerRect.height / 2f - 10f;
+            var lineStartEndY = containerRect.height / 2f - 10f;
             barLinePrefab.Start = new Vector3(0, lineStartEndY, 0);
             barLinePrefab.End = new Vector3(0, -lineStartEndY, 0);
             beatLinePrefab.Start = new Vector3(0, lineStartEndY, 0);
@@ -75,27 +75,18 @@ namespace BeatmapEditor.SingletonComponents
 
         public void RefreshWindow()
         {
+            // todo: have a separate handler for only updating the pan? (For performance reasons)
             _recyclerList1.SetVisibleWindow(GetCurrentWindow());
             _recyclerList2.SetVisibleWindow(GetCurrentWindow());
             UpdateLinesSpacing(_recyclerList1);
             UpdateLinesSpacing(_recyclerList2);
         }
 
-        // Coming from EditorTrack
+        // Coming from Track
         
         private float _panX;
         private float _beatSpacing;
-        private void OnPan(float panX) => _panX = panX;
-        private void OnZoom(float beatSpacing) => _beatSpacing = beatSpacing;
-        private void OnEnable()
-        {
-            EditorTrackViewState.OnPan += OnPan;
-            EditorTrackViewState.OnZoom += OnZoom;
-        }
-        private void OnDisable()
-        {
-            EditorTrackViewState.OnPan -= OnPan;
-            EditorTrackViewState.OnZoom -= OnZoom;
-        }
+        protected void OnPan(float panX) => _panX = panX;
+        protected void OnZoom(float beatSpacing) => _beatSpacing = beatSpacing;
     }
 }
