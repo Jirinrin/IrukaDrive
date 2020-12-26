@@ -8,6 +8,7 @@ using Shared;
 using Shared.Domain;
 using Tools;
 using Tools.Commons;
+using UnityEngine;
 
 namespace Gameplay
 {
@@ -71,10 +72,11 @@ namespace Gameplay
 
             if (BeatmapStartTime > .1f)
             {
+                var beatmapStartBeat = CurrentBeatmap.SecToBeats(BeatmapStartTime);
                 while (_switchNextWordThreshold < SongManager.Instance.songPosBeats)
                 {
                     _currentWord.Finish(false);
-                    AdvanceWord();
+                    AdvanceWord(_currentWord.lastBeat >= beatmapStartBeat);
                 }
                 while (_currentCharMissThreshold < SongManager.Instance.songPosBeats)
                     AdvanceChar();
@@ -86,11 +88,14 @@ namespace Gameplay
         }
 
         // todo: add exclamation points when c# 8.0 
-        private void AdvanceWord()
+        private void AdvanceWord(bool triggerEvents = true)
         {
             _currentWord = _nextWord;
-            OnChangeCurrentWord?.Invoke(_currentWord.Beat);
-            OnChangeCurrentChar?.Invoke(0);
+            if (triggerEvents)
+            {
+                OnChangeCurrentWord?.Invoke(_currentWord.Beat);
+                OnChangeCurrentChar?.Invoke(0);
+            }
             SetCurrentCharMissThreshold();
         
             if (!_wordsIterator.MoveNext())
