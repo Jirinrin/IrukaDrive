@@ -7,14 +7,16 @@ using UnityEngine.InputSystem;
 namespace Gameplay
 {
     [RequireComponent(typeof(PlayerInput))]
-    public class PlayerInputManager : Singleton<PlayerInputManager>
+    public class InputManager : Singleton<InputManager>
     {
-        public static event Action Confirm;
-        public static event Action Back;
+        public static event Action PressConfirm;
+        public static event Action PressBack;
+        public static event Action PressPlay;
         public static event Action<char> OnChar;
 
-        public void OnConfirm() => Confirm?.Invoke();
-        public void OnBack() => Back?.Invoke();
+        public void OnConfirm() => PressConfirm?.Invoke();
+        public void OnBack() => PressBack?.Invoke();
+        public void OnPlay() => PressPlay?.Invoke();
 
         public void OnEnable()
         {

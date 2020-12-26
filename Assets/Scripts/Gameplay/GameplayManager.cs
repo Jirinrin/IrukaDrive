@@ -138,7 +138,7 @@ namespace Gameplay
             if (AutoPlay)
             {
                 if (_currentWord?.currentInputNote?.beatAbs <= SongManager.Instance.songPosBeats)
-                    PlayerInputManager.Instance.OnKeyboardEvent(_currentWord.currentInputNote.character);
+                    InputManager.Instance.OnKeyboardEvent(_currentWord.currentInputNote.character);
             }
         }
 
@@ -220,14 +220,14 @@ namespace Gameplay
 
         private void OnEnable()
         {
-            PlayerInputManager.OnChar += OnChar;
-            PlayerInputManager.Back += BackToMainMenu;
+            InputManager.OnChar += OnChar;
+            InputManager.PressBack += BackToMainMenu;
             SongManager.OnSongFinished += SongFinished;
         }
         private void OnDisable()
         {
-            PlayerInputManager.OnChar -= OnChar;
-            PlayerInputManager.Back -= BackToMainMenu;
+            InputManager.OnChar -= OnChar;
+            InputManager.PressBack -= BackToMainMenu;
             SongManager.OnSongFinished -= SongFinished;
         }
 

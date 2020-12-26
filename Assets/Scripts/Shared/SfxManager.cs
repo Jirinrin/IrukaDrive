@@ -8,6 +8,7 @@ namespace Shared
     public class SfxManager : Singleton<SfxManager>
     {
         [SerializeField] private AudioClip tickSample = null;
+        [SerializeField] private bool soundOnChar;
     
         private AudioSource _audioSource;
     
@@ -22,11 +23,12 @@ namespace Shared
 
         private void OnEnable()
         {
-            PlayerInputManager.OnChar += Tap;
+            if (soundOnChar)
+                InputManager.OnChar += Tap;
         }
         private void OnDisable()
         {
-            PlayerInputManager.OnChar -= Tap;
+            InputManager.OnChar -= Tap;
         }
     }
 }

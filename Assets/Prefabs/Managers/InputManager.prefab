@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 390d6a447f25e8444a6d754724b0d85e,
     type: 3}
-  m_NotificationBehavior: 3
+  m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -88,7 +88,7 @@ MonoBehaviour:
     m_ActionName: Something/Confirm[/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Something
+  m_DefaultActionMap: KeyboardActions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &539179082108384340

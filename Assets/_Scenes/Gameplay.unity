@@ -1953,6 +1953,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4482602232265337427, guid: 15eede697aba96f4f896372526f7ad84,
+        type: 3}
+      propertyPath: soundOnChar
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4482602232265337429, guid: 15eede697aba96f4f896372526f7ad84,
         type: 3}
       propertyPath: m_Name

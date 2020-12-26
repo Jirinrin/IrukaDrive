@@ -1,4 +1,5 @@
-﻿using Tools;
+﻿using Gameplay;
+using Tools;
 using Tools.Commons;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -42,9 +43,20 @@ namespace BeatmapEditor.SingletonComponents
             var x = eventData.position.x * ScreenToCanvas.Factor;
             if (Keyboard.current.ctrlKey.isPressed)
                 EditorTrack.Instance.CreateWord(x);
-            else if (Keyboard.current.altKey.isPressed)
-                EditorTrack.Instance.PlayFromPoint(x);
-                
+        }
+
+        private void OnPlay()
+        {
+            EditorTrack.Instance.PlayFromPoint(Input.mousePosition.x * ScreenToCanvas.Factor, !Keyboard.current.shiftKey.isPressed);
+        }
+
+        private void OnEnable()
+        {
+            InputManager.PressPlay += OnPlay;
+        }
+        private void OnDisable()
+        {
+            InputManager.PressPlay -= OnPlay;
         }
     }
 }

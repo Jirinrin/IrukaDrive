@@ -73,8 +73,8 @@ namespace BeatmapEditor.SingletonComponents
             _notesRecycler.EditWord(newWordBeat.BeatToIndex());
         }
 
-        public void PlayFromPoint(float screenX) =>
-            BeatmapEditorManager.Instance.PlayBeatmapFrom(ScreenXToBeat(screenX));
+        public void PlayFromPoint(float screenX, bool autoplay) =>
+            BeatmapEditorManager.Instance.PlayBeatmapFrom(ScreenXToBeat(screenX), autoplay);
 
         public void Zoom(float delta, float screenPivotX)
         {

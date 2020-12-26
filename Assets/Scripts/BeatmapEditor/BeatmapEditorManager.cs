@@ -14,9 +14,8 @@ namespace BeatmapEditor
 
         private static bool _inEditorPlay;
 
-        public void PlayBeatmapFrom(float beatTime)
+        public void PlayBeatmapFrom(float beatTime, bool autoplay = true)
         {
-            var autoplay = Keyboard.current.shiftKey.isPressed;
             // todo: somehow keep this scene loaded in background
             _inEditorPlay = true;
             GameManager.ToGameplay(currentBeatmap, currentBeatmap.BeatsToSecs(beatTime), autoplay);

@@ -2,7 +2,7 @@
     "name": "Input",
     "maps": [
         {
-            "name": "Something",
+            "name": "KeyboardActions",
             "id": "6557e301-e211-4e57-97ad-a231b78032e3",
             "actions": [
                 {
@@ -17,6 +17,14 @@
                     "name": "Back",
                     "type": "Button",
                     "id": "9a4424d2-9b99-4abc-8c04-82c16e8adb28",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Play",
+                    "type": "Button",
+                    "id": "6fc6fd69-7925-4dcb-aec8-f8a3a53400f4",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -42,6 +50,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a118a9a3-03c8-4dd4-9101-0a84ecb5e923",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Play",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

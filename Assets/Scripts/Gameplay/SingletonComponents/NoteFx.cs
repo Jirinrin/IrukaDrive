@@ -69,13 +69,13 @@ namespace Gameplay.SingletonComponents
         {
             GameplayManager.OnNote += Pulse;
             GameplayManager.OnHit += OnHit;
-            PlayerInputManager.OnChar += OnTap;
+            InputManager.OnChar += OnTap;
         }
         private void OnDisable()
         {
             GameplayManager.OnNote -= Pulse;
             GameplayManager.OnHit -= OnHit;
-            PlayerInputManager.OnChar -= OnTap;
+            InputManager.OnChar -= OnTap;
         }
     }
 }
