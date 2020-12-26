@@ -47,7 +47,7 @@ namespace Gameplay
             {
                 GameManager.SetState(GameState.Gameplay);
                 PrepGameplay(SerializationHelpers.LoadBeatmap(Environment.ExpandEnvironmentVariables(
-                    @"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr")), autoplay: true);
+                    @"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\easy.drive")), autoplay: true);
             }
 
             LoadBeatmap();

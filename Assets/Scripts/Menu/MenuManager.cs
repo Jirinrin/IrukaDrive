@@ -52,7 +52,7 @@ namespace Menu
         public void ToGameplay() =>
             GameManager.ToGameplay(SerializationHelpers.LoadBeatmap(
                 // Uncomment this for easy dev
-                // Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\bla3.blarr")
+                // Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\easy.drive")
             ));
 
         public void ToEditor() =>

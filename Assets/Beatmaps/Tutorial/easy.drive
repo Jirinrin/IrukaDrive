@@ -8,28 +8,18 @@
   <beatOffset>0.05</beatOffset>
   <beatsPerBar>4</beatsPerBar>
   <barOffset>0</barOffset>
-  <!-- <finishTimestamp>5</finishTimestamp> -->
+  <finishTimestamp xsi:nil="true" />
   <id>fa7b652b-9e2c-4d7f-ad5f-beb4b545031b</id>
   <words>
     <BeatmapWord>
-      <beat>3</beat>
-      <text>xbc</text>
+      <beat>16</beat>
+      <text>xxxx</text>
       <beatInterval>1</beatInterval>
     </BeatmapWord>
     <BeatmapWord>
-      <beat>9</beat>
-      <text>yadiya</text>
-      <beatInterval>0.3333</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>15</beat>
-      <text>yarn</text>
-      <beatInterval>2</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>25</beat>
-      <text>1234</text>
-      <beatInterval>2</beatInterval>
+      <beat>24</beat>
+      <text>xxxx</text>
+      <beatInterval>1</beatInterval>
     </BeatmapWord>
     <BeatmapWord>
       <beat>45</beat>

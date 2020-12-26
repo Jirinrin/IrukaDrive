@@ -50,7 +50,7 @@ namespace Tools
         public static void SaveBeatmapAs(Beatmap beatmap)
         {
             var path = EditorUtility.SaveFilePanel("Save beatmap", Path.GetDirectoryName(beatmap.filePath),
-                Path.GetFileName(beatmap.filePath), "blarr");
+                Path.GetFileName(beatmap.filePath), "drive");
             SaveBeatmapToFile(beatmap, path);
         }
         public static void SaveBeatmap(Beatmap beatmap)
@@ -69,7 +69,7 @@ namespace Tools
         [CanBeNull]
         public static Beatmap LoadBeatmap()
         {
-            var beatmapPath = EditorUtility.OpenFilePanel("Select a Beatmap","","blarr");
+            var beatmapPath = EditorUtility.OpenFilePanel("Select a Beatmap","","drive");
             return beatmapPath.Length == 0 
                 ? null 
                 : LoadBeatmap(beatmapPath);
