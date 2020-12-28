@@ -37,7 +37,7 @@ namespace Gameplay
             if (_beatmapResult != null)
                 resultsTextBox.text = string.Join(Environment.NewLine,
                     "Results:",
-                    string.Join(", ", _beatmapResult.Select(note => 
+                    string.Join(", ", _beatmapResult.Where(n => n.result != null).Select(note => 
                         $"[{note.result} - {note.resultTiming}]"
                     ))
                 );
