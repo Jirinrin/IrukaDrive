@@ -607,8 +607,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -162.29999, y: -127.29999}
-  m_SizeDelta: {x: 310.4, y: 214.65683}
+  m_AnchoredPosition: {x: -162.29999, y: -57}
+  m_SizeDelta: {x: 310.4, y: 74.04895}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &708218421
 MonoBehaviour:
@@ -896,8 +896,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 198.9, y: -122.29999}
-  m_SizeDelta: {x: 357.2942, y: 214.65683}
+  m_AnchoredPosition: {x: 198.9, y: -58.498993}
+  m_SizeDelta: {x: 357.2942, y: 87.053955}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1457230627
 MonoBehaviour:
@@ -1533,7 +1533,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830584, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: BackToMainMenu
+      value: ExitGameplay
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830584, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}

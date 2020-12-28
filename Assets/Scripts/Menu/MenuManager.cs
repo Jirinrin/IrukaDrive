@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Shared;
-using Tools;
 using Tools.Commons;
 using UnityEngine;
 
@@ -48,12 +47,6 @@ namespace Menu
             CurrentScreen = screen;
             CurrentScreenObj.SetActive(true);
         }
-        
-        public void ToGameplay() =>
-            GameManager.ToGameplay(SerializationHelpers.LoadBeatmap(
-                // Uncomment this for easy dev
-                // Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\easy.drive")
-            ));
 
         public void ToEditor() =>
             GameManager.ToBeatmapEditor();

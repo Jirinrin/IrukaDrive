@@ -215,29 +215,29 @@ namespace Gameplay
             GameManager.EndGameplay(result);
         }
 
-        public void BackToMainMenu()
+        public void ExitGameplay()
         {
             if (EditorPlay)
                 GameManager.ToBeatmapEditor();
             else
-                GameManager.ToMainMenu();
+                GameManager.ToSongSelect();
         }
 
         private void OnEnable()
         {
             InputManager.OnChar += OnChar;
-            InputManager.PressBack += BackToMainMenu;
+            InputManager.PressBack += ExitGameplay;
             SongManager.OnSongFinished += SongFinished;
         }
         private void OnDisable()
         {
             InputManager.OnChar -= OnChar;
-            InputManager.PressBack -= BackToMainMenu;
+            InputManager.PressBack -= ExitGameplay;
             SongManager.OnSongFinished -= SongFinished;
         }
 
         public static event Action OnNote;
-        public static event Action<char, NoteResult, float?> OnHit; // Pass in char, noteresult, timing
+        public static event Action<char, NoteResult, float?> OnHit; // Pass in char, note result, timing
         public static event Action<int> OnScoreChange; // Pass in score
         public static event Action OnMiss;
         public static event Action<float> OnChangeCurrentWord; // Pass in beat

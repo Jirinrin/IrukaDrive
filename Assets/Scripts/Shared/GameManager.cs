@@ -54,6 +54,12 @@ namespace Shared
             ToState(GameState.Menu);
         }
 
+        public static void ToSongSelect()
+        {
+            InitMenuScreen = MenuScreen.SongSelect;
+            ToState(GameState.Menu);
+        }
+
         private static void ToState(GameState state)
         {
             State = state;
