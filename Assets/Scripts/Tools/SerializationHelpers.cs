@@ -68,14 +68,13 @@ namespace Tools
 
         public static void LoadBeatmap(Action<Beatmap> onFinished)
         {
-            // todo: prefill the beatmap directory (prob different for unity editor and built versions)
+            var dir = $"{Application.streamingAssetsPath}/Beatmaps";
             FileBrowser.ShowLoadDialog(p => onFinished(LoadBeatmap(p[0])), () => onFinished(null),
-                FileBrowser.PickMode.Files,false, "", title: "Select a beatmap"); // ext: "drive"
+                FileBrowser.PickMode.Files,false, dir, title: "Select a beatmap"); // ext: "drive"
         }
         public static Beatmap LoadBeatmap(string filePath)
         {
             // filePath = filePath.Replace('/', Path.DirectorySeparatorChar);
-        
             var beatmap = Serialization.ReadFromXmlFile<Beatmap>(filePath);
             beatmap.filePath = filePath;
             var songPath = Path.GetDirectoryName(filePath) + Path.DirectorySeparatorChar + beatmap.songFile;

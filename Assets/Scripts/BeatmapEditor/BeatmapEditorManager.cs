@@ -4,6 +4,7 @@ using Shared;
 using Shared.Domain;
 using Tools;
 using Tools.Commons;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace BeatmapEditor
@@ -28,8 +29,7 @@ namespace BeatmapEditor
             {
                 GameManager.SetState(GameState.BeatmapEditor);
                 // Uncomment this for easy iterating
-                currentBeatmap = SerializationHelpers.LoadBeatmap(Environment.ExpandEnvironmentVariables(
-                    @"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\easy.drive"));
+                currentBeatmap = SerializationHelpers.LoadBeatmap($"{Application.streamingAssetsPath}/Beatmaps/Tutorial/easy.drive");
                 EditorTrack.Instance.InitTrack(currentBeatmap);
             }
             

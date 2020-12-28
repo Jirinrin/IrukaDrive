@@ -47,8 +47,7 @@ namespace Gameplay
             if (GameManager.State != GameState.Gameplay)
             {
                 GameManager.SetState(GameState.Gameplay);
-                PrepGameplay(SerializationHelpers.LoadBeatmap(Environment.ExpandEnvironmentVariables(
-                    @"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\easy.drive")), autoplay: true);
+                PrepGameplay(SerializationHelpers.LoadBeatmap($"{Application.streamingAssetsPath}/Beatmaps/Tutorial/easy.drive"), autoplay: true);
             }
 
             LoadBeatmap();

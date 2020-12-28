@@ -9,15 +9,13 @@ namespace Menu.ScreenControllers
     {        
         public void ToGameplay() =>
             // Use this for easy dev
-            // GameManager.ToGameplay(SerializationHelpers.LoadBeatmap( Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\easy.drive")));
+            // GameManager.ToGameplay(SerializationHelpers.LoadBeatmap( $"{Application.streamingAssetsPath}/Beatmaps/Tutorial/easy.drive"));
             SerializationHelpers.LoadBeatmap(b => GameManager.ToGameplay(b));
 
         public void ToGameplay(string pathInBeatmapsFolder)
         {
             GameManager.ToGameplay(SerializationHelpers.LoadBeatmap(
-                // todo: figure out path in actual installation
-                Environment.ExpandEnvironmentVariables($@"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\{pathInBeatmapsFolder}.drive")
-            ));
+                $"{Application.streamingAssetsPath}/Beatmaps/{pathInBeatmapsFolder}.drive"));
         }
     }
 }
