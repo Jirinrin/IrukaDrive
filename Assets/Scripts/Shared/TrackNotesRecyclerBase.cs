@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Shared.Domain;
 using TMPro;
 using Tools.Commons;
@@ -148,9 +148,14 @@ namespace Shared
         
         public void Destroy()
         {
+            Cleanup();
+            Object.Destroy(gameObject);
+        }
+
+        public void Cleanup()
+        {
             wordRecyclerList.Destroy();
             _charRecyclerPool.Destroy();
-            Object.Destroy(gameObject);
         }
         
         // Coming from track

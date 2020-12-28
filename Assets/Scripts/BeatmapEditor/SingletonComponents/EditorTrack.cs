@@ -90,5 +90,11 @@ namespace BeatmapEditor.SingletonComponents
             transform.localPosition = new Vector3(-_viewState.panX, 0, 0);
             _shouldDraw = true;
         }
+
+        public void ResetTrack()
+        {
+            _notesRecycler.Cleanup();
+            _sheet.Cleanup();
+        }
     }
 }

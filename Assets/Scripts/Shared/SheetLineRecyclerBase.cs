@@ -86,6 +86,12 @@ namespace Shared
             UpdateLinesSpacing(_recyclerList2);
         }
 
+        public void Cleanup()
+        {
+            _recyclerList1.Destroy();
+            _recyclerList2.Destroy();
+        }
+
         // Coming from Track
         
         private float _panX;

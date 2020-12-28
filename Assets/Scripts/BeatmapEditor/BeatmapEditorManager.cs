@@ -32,12 +32,13 @@ namespace BeatmapEditor
                 currentBeatmap = SerializationHelpers.LoadBeatmap($"{Application.streamingAssetsPath}/Beatmaps/Tutorial/easy.drive");
                 EditorTrack.Instance.InitTrack(currentBeatmap);
             }
-            
-            if (_inEditorPlay)
+            else if (_inEditorPlay)
             {
                 _inEditorPlay = false;
                 EditorTrack.Instance.InitTrack(currentBeatmap, true);
             }
+            else if (currentBeatmap != null)
+                ReloadBeatmap();
         }
 
         public void SaveBeatmap()
@@ -53,11 +54,26 @@ namespace BeatmapEditor
         
         public void LoadBeatmap()
         {
+            if (currentBeatmap != null)
+                ResetEditor();
+            
             SerializationHelpers.LoadBeatmap(b =>
             {
                 currentBeatmap = b ?? currentBeatmap;
                 EditorTrack.Instance.InitTrack(currentBeatmap);
             });
+        }
+
+        private void ReloadBeatmap()
+        {
+            currentBeatmap = SerializationHelpers.LoadBeatmap(currentBeatmap.filePath);
+            ResetEditor();
+            EditorTrack.Instance.InitTrack(currentBeatmap);
+        }
+
+        private void ResetEditor()
+        {
+            EditorTrack.Instance.ResetTrack();
         }
 
         public void PlaySong()
