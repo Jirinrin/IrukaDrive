@@ -8,7 +8,7 @@
   <beatOffset>0.05</beatOffset>
   <beatsPerBar>4</beatsPerBar>
   <barOffset>0</barOffset>
-  <finishTimestamp xsi:nil="true" />
+  <finishTimestamp>70</finishTimestamp>
   <id>fa7b652b-9e2c-4d7f-ad5f-beb4b545031b</id>
   <words>
     <BeatmapWord>
@@ -28,18 +28,128 @@
     </BeatmapWord>
     <BeatmapWord>
       <beat>38.5</beat>
-      <text>qw</text>
+      <text>nm</text>
       <beatInterval>1</beatInterval>
     </BeatmapWord>
     <BeatmapWord>
       <beat>42.5</beat>
-      <text>ert</text>
+      <text>ioiu</text>
       <beatInterval>1</beatInterval>
     </BeatmapWord>
     <BeatmapWord>
-      <beat>72</beat>
-      <text>far</text>
+      <beat>48</beat>
+      <text>1867</text>
       <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>54</beat>
+      <text>;l</text>
+      <beatInterval>0.3333333</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>56.5</beat>
+      <text>sg</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>59</beat>
+      <text>h</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>64</beat>
+      <text>wrouwrouwrou</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>71</beat>
+      <text>yo</text>
+      <beatInterval>4</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>79</beat>
+      <text>ya</text>
+      <beatInterval>4</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>87</beat>
+      <text>yu</text>
+      <beatInterval>4</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>96.5</beat>
+      <text>np</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>100.5</beat>
+      <text>va</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>104.5</beat>
+      <text>do</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>108.5</beat>
+      <text>pp</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>111.5</beat>
+      <text>;</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>112.5</beat>
+      <text>t4</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>116.5</beat>
+      <text>so</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>120.5</beat>
+      <text> \</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>124.5</beat>
+      <text> o</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>128.5</beat>
+      <text> /</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>131.5</beat>
+      <text>w  e j</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>136.5</beat>
+      <text> x</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>139.5</beat>
+      <text>e rt</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>144</beat>
+      <text>`</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>147</beat>
+      <text> o ji</text>
+      <beatInterval>0.333333343</beatInterval>
     </BeatmapWord>
   </words>
 </Beatmap>
