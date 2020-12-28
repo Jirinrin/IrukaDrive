@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Shared
@@ -9,7 +9,7 @@ namespace Shared
     
         public const float EditorBeatSnap = .5f;
         public const float DefaultBeatInterval = 1f;
-        public static readonly List<float> BeatIntervalValues = new List<float>{.25f, .3333f, .5f, 1f, 2f, 4f};
+        public static readonly List<float> BeatIntervalValues = new List<float>{.125f, 1f/6f, .25f, 1f/3f, .5f, 1f, 2f, 4f};
 
         // todo: better system than *1000 and /1000?
         public const float BeatIndexFactor = 1000f;
