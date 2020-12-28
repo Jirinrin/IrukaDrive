@@ -54,13 +54,15 @@ namespace Gameplay.SingletonComponents
 
         private void Update()
         {
+            var scaleDownFactor = 3f * Time.deltaTime;
+            
             circleSpriteNote.transform.localScale = new Vector3(_noteCircleScale, _noteCircleScale);
             if (_noteCircleScale > DefaultCircleScale)
-                _noteCircleScale -= (MaxCircleScale - DefaultCircleScale) / 70;
+                _noteCircleScale -= (MaxCircleScale - DefaultCircleScale) * scaleDownFactor;
 
             circleSpriteTap.transform.localScale = new Vector3(_tapCircleScale, _tapCircleScale);
             if (_tapCircleScale > DefaultCircleScale)
-                _tapCircleScale -= (MaxCircleScale - DefaultCircleScale) / 70;
+                _tapCircleScale -= (MaxCircleScale - DefaultCircleScale) * scaleDownFactor;
 
             circlePulseAnimation["CirclePulse"].time = SongManager.Instance.BeatTiming;
         }

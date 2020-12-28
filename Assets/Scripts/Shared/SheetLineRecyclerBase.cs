@@ -62,13 +62,17 @@ namespace Shared
         public virtual void Init(Beatmap beatmap)
         {
             var lineStartEndY = containerRect.height / 2f - 10f;
-            barLinePrefab.Start = new Vector3(0, lineStartEndY, 0);
-            barLinePrefab.End = new Vector3(0, -lineStartEndY, 0);
-            beatLinePrefab.Start = new Vector3(0, lineStartEndY, 0);
-            beatLinePrefab.End = new Vector3(0, -lineStartEndY, 0);
+            var barLineTemplate = Instantiate(barLinePrefab);
+            var beatLineTemplate = Instantiate(beatLinePrefab);
+            barLineTemplate.Start = new Vector3(0, lineStartEndY, 0);
+            barLineTemplate.End = new Vector3(0, -lineStartEndY, 0);
+            beatLineTemplate.Start = new Vector3(0, lineStartEndY, 0);
+            beatLineTemplate.End = new Vector3(0, -lineStartEndY, 0);
+            barLinePrefab = barLineTemplate;
+            beatLinePrefab = beatLineTemplate;
             
             _currentBeatmap = beatmap;
-            
+
             _recyclerList1 = new RecyclerList<Line>(CreateBarLine, InitLine, GetNewLineIndicesInWindowBar, GetCurrentWindow());
             _recyclerList2 = new RecyclerList<Line>(CreateBeatLine, InitLine, GetNewLineIndicesInWindowBeat, GetCurrentWindow());
         }

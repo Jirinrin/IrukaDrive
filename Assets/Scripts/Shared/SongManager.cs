@@ -27,7 +27,7 @@ namespace Shared
 
         private bool _tickOnBeat;
     
-        private void Start()
+        private void OnEnable()
         {
             _audioSource = GetComponent<AudioSource>();
         }
