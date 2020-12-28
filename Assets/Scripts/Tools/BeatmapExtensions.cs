@@ -25,7 +25,7 @@ namespace Tools
             word.beat + word.BeatWidth();
     
         public static float BeatWidth(this BeatmapWord word) => 
-            word.text.Length * word.beatInterval;
+            (word.text.Length-1) * word.beatInterval;
 
         public static IEnumerable<RuntimeNote> GetNotes(this IEnumerable<RuntimeWord> words) =>
             words.SelectMany(word => word.CharNotes);
