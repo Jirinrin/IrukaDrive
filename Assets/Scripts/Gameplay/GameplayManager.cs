@@ -69,13 +69,17 @@ namespace Gameplay
             _nextWord = _wordsIterator.Current;
             AdvanceWord();
 
+            beatmapStarted = true;
+            beatmapFinished = false;
+            _lastWordReached = false;
+            
             if (BeatmapStartTime > .1f)
             {
                 var beatmapStartBeat = CurrentBeatmap.SecToBeats(BeatmapStartTime);
                 Track.Instance.UpdateProgress(beatmapStartBeat);
                 Track.Instance.ForceRefresh();
-                
-                while (_switchNextWordThreshold < SongManager.Instance.songPosBeats)
+
+                while (_switchNextWordThreshold < SongManager.Instance.songPosBeats && !_lastWordReached)
                 {
                     _currentWord.Finish(false);
                     AdvanceWord(_nextWord.lastBeat >= beatmapStartBeat);
@@ -83,10 +87,6 @@ namespace Gameplay
                 while (_currentCharMissThreshold < SongManager.Instance.songPosBeats)
                     AdvanceChar();
             }
-        
-            beatmapStarted = true;
-            beatmapFinished = false;
-            _lastWordReached = false;
         }
 
         // todo: add exclamation points when c# 8.0 
