@@ -47,15 +47,17 @@ namespace BeatmapEditor
         }
         public void SaveBeatmapAs()
         {
-            // todo: return the new file name so the beatmapEditor can continue to work with that
-            SerializationHelpers.SaveBeatmapAs(currentBeatmap);
+            SerializationHelpers.SaveBeatmapAs(currentBeatmap, path => currentBeatmap.filePath = path ?? currentBeatmap.filePath);
             // todo: display some message that it succeeded
         }
         
         public void LoadBeatmap()
         {
-            currentBeatmap = SerializationHelpers.LoadBeatmap() ?? currentBeatmap;
-            EditorTrack.Instance.InitTrack(currentBeatmap);
+            SerializationHelpers.LoadBeatmap(b =>
+            {
+                currentBeatmap = b ?? currentBeatmap;
+                EditorTrack.Instance.InitTrack(currentBeatmap);
+            });
         }
 
         public void PlaySong()

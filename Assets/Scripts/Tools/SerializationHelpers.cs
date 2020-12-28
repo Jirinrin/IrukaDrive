@@ -1,10 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using Gameplay;
-using JetBrains.Annotations;
 using Shared.Domain;
-using UnityEditor;
+using SimpleFileBrowser;
 using UnityEngine;
 
 namespace Tools
@@ -40,18 +37,21 @@ namespace Tools
         //     return clip;
         // }
 
-        // todo: move somewhere else than SerializationHelpers
-        public static AudioClip FindSong()
-        {
-            var path = EditorUtility.OpenFilePanel("Select a Song","","mp3,ogg,wav");
-            return LoadSong(path);
-        }
+        // // todo: move somewhere else than SerializationHelpers
+        // public static AudioClip FindSong()
+        // {
+        //     var path = EditorUtility.OpenFilePanel("Select a Song","","mp3,ogg,wav");
+        //     return LoadSong(path);
+        // }
 
-        public static void SaveBeatmapAs(Beatmap beatmap)
+        public static void SaveBeatmapAs(Beatmap beatmap, Action<string> onSuccess)
         {
-            var path = EditorUtility.SaveFilePanel("Save beatmap", Path.GetDirectoryName(beatmap.filePath),
-                Path.GetFileName(beatmap.filePath), "drive");
-            SaveBeatmapToFile(beatmap, path);
+            FileBrowser.ShowSaveDialog(p =>
+            {
+                SaveBeatmapToFile(beatmap, p[0]);
+                onSuccess(p[0]);
+            }, null, FileBrowser.PickMode.Files,false,
+                Path.GetDirectoryName(beatmap.filePath), Path.GetFileName(beatmap.filePath), title: "Save beatmap");
         }
         public static void SaveBeatmap(Beatmap beatmap)
         {
@@ -66,13 +66,11 @@ namespace Tools
             // todo: do some checking on overlapping words? Or do that in the editor?
         }
 
-        [CanBeNull]
-        public static Beatmap LoadBeatmap()
+        public static void LoadBeatmap(Action<Beatmap> onFinished)
         {
-            var beatmapPath = EditorUtility.OpenFilePanel("Select a Beatmap","","drive");
-            return beatmapPath.Length == 0 
-                ? null 
-                : LoadBeatmap(beatmapPath);
+            // todo: prefill the beatmap directory (prob different for unity editor and built versions)
+            FileBrowser.ShowLoadDialog(p => onFinished(LoadBeatmap(p[0])), () => onFinished(null),
+                FileBrowser.PickMode.Files,false, "", title: "Select a beatmap"); // ext: "drive"
         }
         public static Beatmap LoadBeatmap(string filePath)
         {

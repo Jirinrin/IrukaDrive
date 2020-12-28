@@ -8,10 +8,9 @@ namespace Menu.ScreenControllers
     public class SongSelectScreen : MonoBehaviour
     {        
         public void ToGameplay() =>
-            GameManager.ToGameplay(SerializationHelpers.LoadBeatmap(
-                // Uncomment this for easy dev
-                // Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\easy.drive")
-            ));
+            // Use this for easy dev
+            // GameManager.ToGameplay(SerializationHelpers.LoadBeatmap( Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\Documents\Unity\IrukaDrive\Assets\Beatmaps\Tutorial\easy.drive")));
+            SerializationHelpers.LoadBeatmap(b => GameManager.ToGameplay(b));
 
         public void ToGameplay(string pathInBeatmapsFolder)
         {
