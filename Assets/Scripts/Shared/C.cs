@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Shared
@@ -20,7 +20,8 @@ namespace Shared
         public const float DefaultScrollSpeed = 40f;
 
         public const float TimingWindowPerfect = 90; // ms
+        public const float TimingWindowPerfectSec = TimingWindowPerfect/1000f; // ms
         public const float TimingWindowGood = 140; // ms
-        public const float TimingWindowGoodSec = TimingWindowGood/1000;
+        public const float TimingWindowGoodSec = TimingWindowGood/1000f;
     }
 }

@@ -141,7 +141,7 @@ namespace Gameplay
 
             if (AutoPlay)
             {
-                if (_currentWord?.currentInputNote?.beatAbs <= SongManager.Instance.songPosBeats)
+                if (_currentWord?.currentInputNote?.beatAbs <= SongManager.Instance.songPosBeats + C.TimingWindowPerfectSec*CurrentBeatmap.BeatsPerSec/8f)
                     InputManager.Instance.OnKeyboardEvent(_currentWord.currentInputNote.character);
             }
         }
