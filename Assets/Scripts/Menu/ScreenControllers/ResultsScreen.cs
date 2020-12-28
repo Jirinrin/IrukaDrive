@@ -31,7 +31,7 @@ namespace Menu.ScreenControllers
 
         public void BackToSongSelect()
         {
-            MenuManager.Instance.ToScreen("Title");
+            MenuManager.Instance.ToScreen("SongSelect");
         }
     }
 }
