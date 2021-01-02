@@ -8,7 +8,6 @@ namespace Gameplay.Domain
 {
     public class RuntimeWord : ParsedWord<RuntimeNote>
     {
-        public readonly float lastBeat;
         public readonly string text;
 
         private int _inputNoteIndex;
@@ -26,7 +25,7 @@ namespace Gameplay.Domain
                 throw new Exception("Empty word: " + this);
         
             Beat = word.beat;
-            lastBeat = word.LastBeat();
+            LastBeat = word.LastBeat();
             currentInputNote = CharNotes[0];
             currentNote = CharNotes[0];
 

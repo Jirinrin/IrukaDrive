@@ -62,7 +62,8 @@ namespace Shared.Domain
     
     public abstract class ParsedWord<TNote> where TNote : ParsedNote
     {
-        public List<TNote> CharNotes { get; set; }
+        public List<TNote> CharNotes { get; protected set; }
         public virtual float Beat { get; set; }
+        public virtual float LastBeat { get; protected set; }
     }
 }

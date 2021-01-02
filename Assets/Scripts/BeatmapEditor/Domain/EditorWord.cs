@@ -39,7 +39,7 @@ namespace BeatmapEditor.Domain
                 }).ToList();
             }
         }
-        public float LastBeat => _word.LastBeat();
+        public override float LastBeat => _word.LastBeat();
         public float BeatWidth => _word.BeatWidth();
 
         public EditorWord(BeatmapWord word)

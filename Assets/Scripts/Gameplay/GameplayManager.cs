@@ -82,7 +82,7 @@ namespace Gameplay
                 while (_switchNextWordThreshold < SongManager.Instance.songPosBeats && !_lastWordReached)
                 {
                     _currentWord.Finish(false);
-                    AdvanceWord(_nextWord.lastBeat >= beatmapStartBeat);
+                    AdvanceWord(_nextWord.LastBeat >= beatmapStartBeat);
                 }
                 while (_currentCharMissThreshold < SongManager.Instance.songPosBeats)
                     AdvanceChar();
@@ -106,9 +106,9 @@ namespace Gameplay
 
             _nextWord = _wordsIterator.Current;
             // Put switch to next current word to x seconds before that word, or in-between the current and next
-            _switchNextWordThreshold = _currentWord.lastBeat + C.TimingWindowGoodSec * CurrentBeatmap.BeatsPerSec;
+            _switchNextWordThreshold = _currentWord.LastBeat + C.TimingWindowGoodSec * CurrentBeatmap.BeatsPerSec;
             if (_switchNextWordThreshold > _nextWord.Beat - C.TimingWindowGoodSec * CurrentBeatmap.BeatsPerSec)
-                _switchNextWordThreshold = (_currentWord.lastBeat + _nextWord.Beat) / 2;
+                _switchNextWordThreshold = (_currentWord.LastBeat + _nextWord.Beat) / 2;
         }
 
         private void CheckNextWord()
