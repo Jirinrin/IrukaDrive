@@ -6,27 +6,30 @@ using UnityEngine;
 namespace Gameplay.SingletonComponents
 {
     [RequireComponent(typeof(TextMeshProUGUI))]
+    [RequireComponent(typeof(Animator))]
     public class HitResultDisplay : MonoBehaviour
     {
         private const float DisappearTime = 1f;
 
+        private static readonly int HitResultKey = Animator.StringToHash("HitResult");
+        
         private static readonly string[] ResultStrings = { "MISS", "PERFECT", "EARLY", "LATE", "WRONG" };
-        private static readonly Color[] ResultColors = { Color.red, Color.white, Color.gray, Color.gray, Color.red };
 
         private TextMeshProUGUI _text;
-        // private Animator _anim;
-        
+        private Animator _anim;
+
         private void Awake()
         {
             _text = GetComponent<TextMeshProUGUI>();
             _text.text = "";
+            _anim = GetComponent<Animator>();
         }
 
         private void OnHitResult(NoteResult result)
         {
             var index = (int) result;
             _text.text = ResultStrings[index];
-            _text.color = ResultColors[index];
+            _anim.SetInteger(HitResultKey, index);
             StopAllCoroutines();
             StartCoroutine(DisappearAfterTime(DisappearTime));
         }
@@ -34,7 +37,7 @@ namespace Gameplay.SingletonComponents
         private IEnumerator DisappearAfterTime(float time)
         {
             yield return new WaitForSeconds(time);
-            _text.text = "";
+            _anim.SetInteger(HitResultKey, -1);
         }
         
         private void OnHit(char c, NoteResult result, float? _) => OnHitResult(result);
