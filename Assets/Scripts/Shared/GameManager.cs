@@ -68,6 +68,11 @@ namespace Shared
 
         // [Obsolete("Please don't use this outside of development-only scenarios")]
         public static void SetState(GameState val) => State = val;
+
+        public static void Exit()
+        {
+            Application.Quit();
+        }
     }
 
     public enum GameState

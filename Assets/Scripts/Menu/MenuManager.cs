@@ -50,5 +50,7 @@ namespace Menu
 
         public void ToEditor() =>
             GameManager.ToBeatmapEditor();
+
+        public void Exit() => GameManager.Exit();
     }
 }
