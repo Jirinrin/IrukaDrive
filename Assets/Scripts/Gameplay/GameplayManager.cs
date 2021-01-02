@@ -47,7 +47,7 @@ namespace Gameplay
             if (GameManager.State != GameState.Gameplay)
             {
                 GameManager.SetState(GameState.Gameplay);
-                PrepGameplay(SerializationHelpers.LoadBeatmap($"{Application.streamingAssetsPath}/Beatmaps/Tutorial/easy.drive"), autoplay: true);
+                PrepGameplay(SerializationHelpers.LoadBeatmap($"{Application.streamingAssetsPath}/Beatmaps/Tutorial/easy.drive"), autoplay: false);
             }
 
             LoadBeatmap();
@@ -172,7 +172,7 @@ namespace Gameplay
             else
             {
                 SetNoteResult(currentCharNote, NoteResult.WrongChar);
-                OnHit?.Invoke(currentCharNote.character, NoteResult.WrongChar, null);
+                OnHit?.Invoke(character, NoteResult.WrongChar, null);
             }
 
             AdvanceChar();

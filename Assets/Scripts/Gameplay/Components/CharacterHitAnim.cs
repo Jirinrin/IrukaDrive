@@ -1,4 +1,5 @@
 ﻿using System;
+using Gameplay.Domain;
 using TMPro;
 using UnityEngine;
 
@@ -6,8 +7,10 @@ namespace Gameplay.Components
 {
     public class CharacterHitAnim : MonoBehaviour
     {
+        private static readonly int PlayAnimKey = Animator.StringToHash("PlayAnim");
+        
         [NonSerialized] public TextMeshProUGUI text;
-        private Animation _animation;
+        private Animator _anim;
     
         public void AnimationFinished()
         {
@@ -19,13 +22,13 @@ namespace Gameplay.Components
         {
             gameObject.SetActive(false);
             text = GetComponentInChildren<TextMeshProUGUI>();
-            _animation = GetComponent<Animation>();
+            _anim = GetComponent<Animator>();
         }
 
-        public void StartAnim()
+        public void StartAnim(NoteResult result)
         {
             gameObject.SetActive(true);
-            _animation.Play();
+            _anim.SetInteger(PlayAnimKey, (int) result);
         }
 
         public Action OnFinish;

@@ -41,7 +41,7 @@ namespace Gameplay.SingletonComponents
             var obj = _characterAnimObjPool.Request();
 
             obj.text.text = c.ToString();
-            obj.StartAnim();
+            obj.StartAnim(result);
             obj.OnFinish = () => _characterAnimObjPool.Add(obj);
         }
 
