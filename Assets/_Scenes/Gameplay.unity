@@ -310,7 +310,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
+    rgba: 4281138944
   m_fontColor: {r: 0, g: 1, b: 0.17310214, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -776,8 +776,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -162.29999, y: -57}
-  m_SizeDelta: {x: 310.4, y: 74.04895}
+  m_AnchoredPosition: {x: -62.059998, y: -53.83}
+  m_SizeDelta: {x: 109.9202, y: 67.70969}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &708218421
 MonoBehaviour:
@@ -801,10 +801,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 9aa054b80e3e83e4388d94efff16769f, type: 3}
-    m_FontSize: 14
+    m_FontSize: 5
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 5
     m_MaxSize: 40
     m_Alignment: 6
     m_AlignByGeometry: 0
@@ -988,6 +988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1432501251}
   - component: {fileID: 1432501252}
+  - component: {fileID: 1432501253}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -1031,6 +1032,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreField: {fileID: 1808040248}
+--- !u!114 &1432501253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432501250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c22d7de142f6f845837c5cbfa2423dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outputTextBox: {fileID: 1457230627}
+  resultsTextBox: {fileID: 708218421}
 --- !u!1 &1457230625
 GameObject:
   m_ObjectHideFlags: 0
@@ -1065,8 +1080,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 198.9, y: -58.498993}
-  m_SizeDelta: {x: 357.2942, y: 87.053955}
+  m_AnchoredPosition: {x: 101.829956, y: -47.410004}
+  m_SizeDelta: {x: 163.15411, y: 64.86655}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1457230627
 MonoBehaviour:
@@ -1090,10 +1105,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 9aa054b80e3e83e4388d94efff16769f, type: 3}
-    m_FontSize: 14
+    m_FontSize: 7
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -1747,7 +1762,7 @@ PrefabInstance:
     - target: {fileID: 2743387031121635658, guid: f6cef0e3cf6d1054d9b98be07f3939ca,
         type: 3}
       propertyPath: m_text
-      value: <
+      value: <-
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031121635658, guid: f6cef0e3cf6d1054d9b98be07f3939ca,
         type: 3}

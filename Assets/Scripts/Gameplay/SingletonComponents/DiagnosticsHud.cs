@@ -7,9 +7,9 @@ using Tools;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Gameplay
+namespace Gameplay.SingletonComponents
 {
-    public class SongManagerTest : MonoBehaviour
+    public class DiagnosticsHud : MonoBehaviour
     {
         public Text outputTextBox;
         public Text resultsTextBox;
@@ -29,9 +29,9 @@ namespace Gameplay
             outputTextBox.text = string.Join(Environment.NewLine,
                 "Diagnostics:",
                 $"{GameplayManager.CurrentBeatmap.bpm} BPM",
-                $"{SongManager.Instance.songPosSec} seconds in",
-                $"{SongManager.Instance.SongPosBeatsMod} beats in",
-                $"{SongManager.Instance.SongPosBars} bars in"
+                $"{SongManager.Instance.songPosSec} secs",
+                $"{SongManager.Instance.SongPosBeatsMod} beats",
+                $"{SongManager.Instance.SongPosBars} bars"
             );
             ShowResult();
             if (_beatmapResult != null)
