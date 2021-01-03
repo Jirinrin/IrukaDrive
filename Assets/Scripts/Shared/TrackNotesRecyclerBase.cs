@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Shared.Domain;
@@ -107,11 +107,11 @@ namespace Shared
         
         // Public
         
-        public void RefreshWindow()
+        public void RefreshWindow(bool updateSpacing = false)
         {
-            // todo: have a separate handler for only updating the pan? (For performance reasons)
             wordRecyclerList.SetVisibleWindow(GetCurrentWindow());
-            UpdateSpacing();
+            if (updateSpacing)
+                UpdateSpacing();
         }
 
         // Init

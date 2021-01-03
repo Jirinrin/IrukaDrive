@@ -77,13 +77,15 @@ namespace Shared
             _recyclerList2 = new RecyclerList<Line>(CreateBeatLine, InitLine, GetNewLineIndicesInWindowBeat, GetCurrentWindow());
         }
 
-        public void RefreshWindow()
+        public void RefreshWindow(bool updateSpacing = false)
         {
-            // todo: have a separate handler for only updating the pan? (For performance reasons)
             _recyclerList1.SetVisibleWindow(GetCurrentWindow());
             _recyclerList2.SetVisibleWindow(GetCurrentWindow());
-            UpdateLinesSpacing(_recyclerList1);
-            UpdateLinesSpacing(_recyclerList2);
+            if (updateSpacing)
+            {
+                UpdateLinesSpacing(_recyclerList1);
+                UpdateLinesSpacing(_recyclerList2);
+            }
         }
 
         public void Cleanup()

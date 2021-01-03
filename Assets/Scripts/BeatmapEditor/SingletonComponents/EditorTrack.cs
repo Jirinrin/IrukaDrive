@@ -19,6 +19,7 @@ namespace BeatmapEditor.SingletonComponents
         private EditorTrackSheetBg _sheet;
 
         private bool _shouldDraw;
+        private bool _zoomed;
 
         private static EditorTrackViewState _viewState;
 
@@ -44,7 +45,7 @@ namespace BeatmapEditor.SingletonComponents
             _sheet = EditorTrackSheetBg.Instance;
             _sheet.InitSheet(beatmap);
             
-            _sheet.DrawSheet(); // necessary?
+            _sheet.DrawSheet(true); // todo: necessary?
             
             Pan(0f);
             Zoom(0f, 0f);
@@ -55,8 +56,9 @@ namespace BeatmapEditor.SingletonComponents
             if (_shouldDraw)
             {
                 _shouldDraw = false;
-                _notesRecycler.RefreshWindow();
-                _sheet.DrawSheet();
+                _notesRecycler.RefreshWindow(_zoomed);
+                _sheet.DrawSheet(_zoomed);
+                _zoomed = false;
             }
         }
         
@@ -82,6 +84,7 @@ namespace BeatmapEditor.SingletonComponents
             _viewState.Zoom(delta, screenPivotX);
             transform.localPosition = new Vector3(-_viewState.panX, 0, 0);
             _shouldDraw = true;
+            _zoomed = true;
         }
 
         public void Pan(float deltaX)
