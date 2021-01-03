@@ -40,11 +40,6 @@ namespace Shared.Domain
                 else
                     maxCombo = Mathf.Max(++comboCounter, maxCombo);
             }
-            
-            perfects = notes.Count(n => n.result == NoteResult.HitPerfect);
-            earlies = notes.Count(n => n.result == NoteResult.HitEarly);
-            lates = notes.Count(n => n.result == NoteResult.HitLate);
-            misses = notes.Count(n => n.result == NoteResult.WrongChar || n.result == NoteResult.Miss);
         }
 
         public BeatmapScore(int notesCount)
