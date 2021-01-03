@@ -13,7 +13,7 @@ namespace Gameplay.SingletonComponents
 
         private static readonly int HitResultKey = Animator.StringToHash("HitResult");
         
-        private static readonly string[] ResultStrings = { "MISS", "PERFECT", "EARLY", "LATE", "WRONG" };
+        private static readonly string[] ResultStrings = { "NULL", "PERFECT", "EARLY", "LATE", "ERROR" };
 
         private TextMeshProUGUI _text;
         private Animator _anim;
