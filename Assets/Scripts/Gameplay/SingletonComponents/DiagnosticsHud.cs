@@ -18,14 +18,15 @@ namespace Gameplay.SingletonComponents
     
         private void Start()
         {
-            Invoke(nameof(ShowResult), 3f);
+            InvokeRepeating(nameof(UpdateDisplay), 0f, 1f);
         }
 
-        private void Update()
+        private void UpdateDisplay()
         {
             if (!GameplayManager.Instance.beatmapStarted)
                 return;
             
+            _beatmapResult = GameplayManager.RuntimeWords.GetNotes();
             outputTextBox.text = string.Join(Environment.NewLine,
                 "Diagnostics:",
                 $"{GameplayManager.CurrentBeatmap.bpm} BPM",
@@ -33,16 +34,15 @@ namespace Gameplay.SingletonComponents
                 $"{SongManager.Instance.SongPosBeatsMod} beats",
                 $"{SongManager.Instance.SongPosBars} bars"
             );
-            ShowResult();
             if (_beatmapResult != null)
                 resultsTextBox.text = string.Join(Environment.NewLine,
                     "Results:",
                     string.Join(", ", _beatmapResult.Where(n => n.result != null).Select(note => 
                         $"[{note.result} - {note.resultTiming}]"
-                    ))
+                    )),
+                    "Max Combo:",
+                    GameplayManager.Instance.displayScore.maxCombo
                 );
         }
-
-        private void ShowResult() => _beatmapResult = GameplayManager.RuntimeWords.GetNotes();
     }
 }
