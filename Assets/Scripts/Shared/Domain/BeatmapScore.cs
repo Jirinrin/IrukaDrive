@@ -19,7 +19,7 @@ namespace Shared.Domain
         public int earlies;
         public int lates;
         public int misses;
-        public int maxCombo; // todo: implement
+        public int maxCombo;
         
         public int Score => Mathf.FloorToInt((perfects + (earlies + lates) * .5f) * _scorePerNote); // Range 0-10000000
         
@@ -27,11 +27,18 @@ namespace Shared.Domain
         {
             _scorePerNote = (float)MaxScore / notes.Count;
 
+            var comboCounter = 0;
+            
             foreach (var note in notes)
             {
                 if (note.result == null)
                     Debug.LogError("Found null note in results");
                 AddNoteResult(note.result ?? NoteResult.Miss);
+
+                if (note.result == NoteResult.WrongChar || note.result == NoteResult.Miss)
+                    comboCounter = 0;
+                else
+                    maxCombo = Mathf.Max(++comboCounter, maxCombo);
             }
             
             perfects = notes.Count(n => n.result == NoteResult.HitPerfect);
