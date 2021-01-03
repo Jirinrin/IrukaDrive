@@ -10,7 +10,7 @@ namespace Shared
     public class SongManager : Singleton<SongManager>
     {
         [NonSerialized] private Beatmap _currentBeatmap;
-        private float _songFinishTimestamp;
+        [NonSerialized] public float songLength;
     
         private AudioSource _audioSource;
 
@@ -37,13 +37,14 @@ namespace Shared
             _tickOnBeat = tickOnBeat;
             
             _currentBeatmap = beatmap;
-            _songFinishTimestamp = beatmap.finishTimestamp ?? beatmap.song.length;
+            songLength = beatmap.finishTimestamp ?? beatmap.song.length;
             _audioSource.clip = _currentBeatmap.song;
 
             _songFinished = false;
             _audioSource.time = startTime;
             _audioSource.Play();
             UpdateSongState();
+            OnSongStarted?.Invoke();
         }
 
         public void Stop()
@@ -59,7 +60,7 @@ namespace Shared
                 songPosBeats = _currentBeatmap.SecToBeats(songPosSec);
             }
         
-            if (songPosSec > _songFinishTimestamp & !_songFinished)
+            if (songPosSec > songLength & !_songFinished)
             {
                 _songFinished = true;
                 OnSongFinished?.Invoke();
@@ -89,7 +90,8 @@ namespace Shared
             _prevSongPosBeatsRounded = beatNew;
             SfxManager.Instance.MakeTickSound();
         }
-    
+
+        public static event Action OnSongStarted;
         public static event Action OnSongFinished;
     }
 }
