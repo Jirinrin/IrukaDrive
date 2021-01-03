@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Shared.Domain;
@@ -90,7 +90,7 @@ namespace Shared
 
         private int[] GetCurrentWindow()
         {
-            var containerWidthExtension = containerWidth * .1f;
+            var containerWidthExtension = containerWidth * .5f;
             var minBeat = Mathf.Max((panX - containerWidthExtension) / beatSpacing, 0f);
             var maxBeat = minBeat + (containerWidth + containerWidthExtension*2f) / beatSpacing;
             return new[] {minBeat.BeatToIndex(), maxBeat.BeatToIndex()};

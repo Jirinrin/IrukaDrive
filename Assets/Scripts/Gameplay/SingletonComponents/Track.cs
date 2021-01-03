@@ -106,11 +106,15 @@ namespace Gameplay.SingletonComponents
             _sheet.Refresh();
         }
 
+        private int _updateProgressCounter;
         public void UpdateProgress(float posBeats)
         {
             _viewState.SetProgress(posBeats);
             transform.localPosition = new Vector3(_judgementOffsetX - _viewState.panX, 0, 0);
-            _shouldDraw = true; // todo: unnecessary?
+            
+            // Crappy mechanism to not refresh window on every loop
+            if ((_updateProgressCounter = (_updateProgressCounter + 1) % 10) == 0) 
+                _shouldDraw = true;
         }
 
         private void OnEnable()
