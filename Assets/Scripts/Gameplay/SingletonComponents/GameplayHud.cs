@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Gameplay.Domain;
+using TMPro;
 using Tools.Commons;
 
 namespace Gameplay.SingletonComponents
@@ -12,7 +13,7 @@ namespace Gameplay.SingletonComponents
 
         private void OnEnable()
         {
-            GameplayManager.OnScoreChange += OnScoreChange;
+            BeatmapDisplayScore.OnScoreChange += OnScoreChange;
         }
     }
 }
