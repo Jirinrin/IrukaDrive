@@ -42,12 +42,10 @@ namespace Shared.Domain
             }
         }
 
-        public BeatmapScore(int notesCount)
-        {
+        public BeatmapScore(int notesCount) => 
             _scorePerNote = (float)MaxScore / notesCount;
-        }
 
-        public void AddNoteResult(NoteResult noteResult)
+        public virtual void AddNoteResult(NoteResult noteResult)
         {
             switch (noteResult)
             {

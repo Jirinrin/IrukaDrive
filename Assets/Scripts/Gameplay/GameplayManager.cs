@@ -39,7 +39,7 @@ namespace Gameplay
         [NonSerialized] public bool beatmapFinished;
         private bool _lastWordReached;
 
-        private BeatmapScore _displayScore;
+        public BeatmapDisplayScore displayScore;
 
         private void Start()
         {
@@ -59,7 +59,7 @@ namespace Gameplay
         
             Track.Instance.InitTrack(CurrentBeatmap, RuntimeWords);
         
-            _displayScore = new BeatmapScore(CurrentBeatmap.NotesCount);
+            displayScore = new BeatmapDisplayScore(CurrentBeatmap.NotesCount);
             OnScoreChange?.Invoke(0);
         
             _wordsIterator = RuntimeWords.ToList().GetEnumerator();
@@ -181,8 +181,9 @@ namespace Gameplay
         private void SetNoteResult(RuntimeNote note, NoteResult result)
         {
             note.result = result;
-            _displayScore.AddNoteResult(result);
-            OnScoreChange?.Invoke(_displayScore.Score);
+            displayScore.AddNoteResult(result);
+            OnScoreChange?.Invoke(displayScore.Score);
+            OnComboChange?.Invoke(displayScore.comboCounter);
         }
 
         private void AdvanceChar()
@@ -237,7 +238,8 @@ namespace Gameplay
 
         public static event Action OnNote;
         public static event Action<char, NoteResult, float?> OnHit; // Pass in char, note result, timing
-        public static event Action<int> OnScoreChange; // Pass in score
+        public static event Action<int> OnScoreChange;
+        public static event Action<int> OnComboChange;
         public static event Action OnMiss;
         public static event Action<float> OnChangeCurrentWord; // Pass in beat
         public static event Action<int?> OnChangeCurrentChar; // Pass in index
