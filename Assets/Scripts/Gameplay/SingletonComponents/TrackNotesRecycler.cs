@@ -18,15 +18,15 @@ namespace Gameplay.SingletonComponents
             charObj.obj.color = Color.white;
         }
 
-        protected override void InitWord(RuntimeWordObject item, int index)
+        protected override void InitWord(ObjWidthItem item)
         {
-            base.InitWord(item, index);
+            base.InitWord(item);
         
-            if (_wordAppearActionQueue.ContainsKey(index))
+            if (_wordAppearActionQueue.ContainsKey(item.startIndex))
             {
-                while (_wordAppearActionQueue[index].Any())
-                    _wordAppearActionQueue[index].Dequeue().Invoke(item);
-                _wordAppearActionQueue.Remove(index);
+                while (_wordAppearActionQueue[item.startIndex].Any())
+                    _wordAppearActionQueue[item.startIndex].Dequeue().Invoke(item.obj);
+                _wordAppearActionQueue.Remove(item.startIndex);
             }
         }
 
@@ -41,7 +41,6 @@ namespace Gameplay.SingletonComponents
         {
             containerWidth = Track.Instance.containerRect.width;
             LoadBeatmap(words, startBeatSpacing);
-            base.Init();
         }
 
 

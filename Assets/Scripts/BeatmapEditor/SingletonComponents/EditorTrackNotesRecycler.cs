@@ -16,33 +16,26 @@ namespace BeatmapEditor.SingletonComponents
 
         private Beatmap _currentBeatmap;
 
-        protected override void InitWord(EditorWordObject item, int index)
+        protected override void InitWord(ObjWidthItem item)
         {
-            item.inputFieldPrefab = inputFieldPrefab;
-            base.InitWord(item, index);
+            item.obj.inputFieldPrefab = inputFieldPrefab;
+            base.InitWord(item);
         }
 
-        public void LoadBeatmap(List<BeatmapWord> words)
-        {
+        public void LoadBeatmap(List<BeatmapWord> words) =>
             base.LoadBeatmap(words.Select(word => new EditorWord(word)));
-        }
 
         public void Init(Beatmap beatmap)
         {
             containerWidth = EditorTrack.Instance.containerRect.width;
             _currentBeatmap = beatmap;
             LoadBeatmap(_currentBeatmap.words);
-            base.Init();
         }
 
-        public void RefreshBeatmap()
-        {
-            LoadBeatmap(_currentBeatmap.words);
-            wordRecyclerList.Refresh();
-        }
+        public void RefreshBeatmap() => LoadNewWords(_currentBeatmap.words.Select(word => new EditorWord(word)));
 
         public void EditWord(int index) =>
-            wordRecyclerList.visibleItemsLookup[index].Edit();
+            wordRecyclerList.visibleItemsLookup[index].obj.Edit();
 
         // Coming from EditorTrack
         

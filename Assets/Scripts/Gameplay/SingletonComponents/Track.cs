@@ -71,7 +71,7 @@ namespace Gameplay.SingletonComponents
             // todo: de-mark previous current word if there was still some current
             var index = beat.BeatToIndex();
             if (_notesRecycler.VisibleWordObjects.ContainsKey(index))
-                SetCurrentWordObj(_notesRecycler.VisibleWordObjects[index]);
+                SetCurrentWordObj(_notesRecycler.VisibleWordObjects[index].obj);
             else
                 _notesRecycler.EnqueueForWordAppear(index, SetCurrentWordObj);
             // If they're transparent by default:

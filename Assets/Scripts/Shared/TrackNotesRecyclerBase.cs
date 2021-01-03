@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Shared.Domain;
 using TMPro;
 using Tools.Commons;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Shared
 {
@@ -18,15 +21,12 @@ namespace Shared
         private GameObject _rubbishBin;
 
         private RecyclerPool<CharObject> _charRecyclerPool;
-        protected RecyclerList<TWordObj> wordRecyclerList;
+        protected WordRecyclerList wordRecyclerList;
 
-        private SortedSet<int> _wordIndices;
-        private Dictionary<int, TWord> _wordLookup;
-        
         // Expected to be set from Init before calling base.Init
         protected float containerWidth;
         
-        public Dictionary<int, TWordObj> VisibleWordObjects => wordRecyclerList.visibleItemsLookup;
+        public Dictionary<int, ObjWidthItem> VisibleWordObjects => wordRecyclerList.visibleItemsLookup;
         
         private void Awake() 
         {
@@ -51,15 +51,15 @@ namespace Shared
 
         protected virtual void InitCharObj(CharObject charObj, TNote note) => charObj.Init(note);
         
-        protected virtual void InitWord(TWordObj item, int index)
+        protected virtual void InitWord(ObjWidthItem item)
         {
-            item.word = _wordLookup[index];
-            var itemTransform = item.transform;
-            itemTransform.localPosition = new Vector3(beatSpacing * index.IndexToBeat(), 0, 0);
-            if (item.charObjRefs == null || item.charObjRefs.Count > 0)
-                item.charObjRefs = new List<CharObject>();
+            item.obj.word = item.backingItem;
+            var itemTransform = item.obj.transform;
+            itemTransform.localPosition = new Vector3(beatSpacing * item.startIndex.IndexToBeat(), 0, 0);
+            if (item.obj.charObjRefs == null || item.obj.charObjRefs.Count > 0)
+                item.obj.charObjRefs = new List<CharObject>();
 
-            foreach (var note in item.word.CharNotes)
+            foreach (var note in item.backingItem.CharNotes)
             {
                 var charObj = _charRecyclerPool.Request();
                 InitCharObj(charObj, note);
@@ -67,7 +67,7 @@ namespace Shared
                 charObjTransform.SetParent(itemTransform);
                 charObjTransform.localPosition = new Vector3(beatSpacing * note.beat, 0, 0);
                 charObj.gameObject.SetActive(true);
-                item.charObjRefs.Add(charObj);
+                item.obj.charObjRefs.Add(charObj);
             }
         }
 
@@ -88,15 +88,9 @@ namespace Shared
             item.charObjRefs = null;
         }
 
-        private IEnumerable<int> GetNewNoteIndicesInWindow(int from, int to)
-        {
-            // todo: better, with accounting for last index / width spacing and stuff. But for now a slightly larger window will do
-            return _wordIndices.GetViewBetween(from, to);
-        }
-
         private int[] GetCurrentWindow()
         {
-            var containerWidthExtension = containerWidth * 1f;
+            var containerWidthExtension = containerWidth * .1f;
             var minBeat = Mathf.Max((panX - containerWidthExtension) / beatSpacing, 0f);
             var maxBeat = minBeat + (containerWidth + containerWidthExtension*2f) / beatSpacing;
             return new[] {minBeat.BeatToIndex(), maxBeat.BeatToIndex()};
@@ -104,11 +98,10 @@ namespace Shared
         
         private void UpdateSpacing()
         {
-            var lookup = wordRecyclerList.visibleItemsLookup;
-            foreach (var index in lookup.Keys)
+            foreach (var item in wordRecyclerList.visibleItemsLookup.Values)
             {
-                lookup[index].transform.localPosition = new Vector3(beatSpacing * index.IndexToBeat(), 0, 0);
-                lookup[index].UpdateSpacing(beatSpacing);
+                item.obj.transform.localPosition = new Vector3(beatSpacing * item.startIndex.IndexToBeat(), 0, 0);
+                item.obj.UpdateSpacing(beatSpacing);
             }
         }
         
@@ -123,26 +116,15 @@ namespace Shared
 
         // Init
 
-        // Should be wrapped by a more specific Init, please call after LoadBeatmap
-        protected void Init()
-        {
-            _charRecyclerPool = new RecyclerPool<CharObject>(CreateChar);
-            wordRecyclerList = new RecyclerList<TWordObj>(
-                CreateWord, InitWord, GetNewNoteIndicesInWindow, GetCurrentWindow(), CleanupWord);
-        }
-        
-        // Should be wrapped by a more specific LoadBeatmap
         protected void LoadBeatmap(IEnumerable<TWord> words)
         {
-            _wordLookup = new Dictionary<int, TWord>();
-            _wordIndices = new SortedSet<int>();
-            foreach (var word in words)
-            {
-                var index = word.Beat.BeatToIndex();
-                _wordIndices.Add(index);
-                _wordLookup[index] = word;
-            }
+            _charRecyclerPool = new RecyclerPool<CharObject>(CreateChar);
+            wordRecyclerList = new WordRecyclerList(
+                CreateWord, InitWord, CleanupWord, GetCurrentWindow(), words);
         }
+        
+        protected void LoadNewWords(IEnumerable<TWord> words) =>
+            wordRecyclerList.LoadNewWords(words);
         
         // Misc
         
@@ -164,5 +146,171 @@ namespace Shared
         
         protected float beatSpacing;
         protected void OnZoom(float newBeatSpacing) => beatSpacing = newBeatSpacing;
+        
+        ////////////////////////////
+        // S U B C L A S S E S
+        ////////////////////////////
+        
+        public class WidthItem
+        {
+            public int startIndex;
+            public int endIndex;
+            public TWord backingItem;
+        }
+
+        public class ObjWidthItem : WidthItem
+        {
+            public readonly TWordObj obj;
+            public ObjWidthItem(WidthItem w, TWordObj obj)
+            {
+                startIndex = w.startIndex;
+                endIndex = w.endIndex;
+                backingItem = w.backingItem;
+                this.obj = obj;
+            }
+        }
+    
+        protected class WordRecyclerList
+        {
+            private readonly RecyclerPool<TWordObj> _recyclerPool;
+
+            private Dictionary<int, WidthItem> _allItemsLookup;
+            private SortedSet<int> _itemStartIndices;
+            private SortedSet<int> _itemEndIndices;
+            private Dictionary<int, int> _itemEndToStartIndex;
+            
+            public readonly Dictionary<int, ObjWidthItem> visibleItemsLookup = new Dictionary<int, ObjWidthItem>();
+
+            // Must have 2 items
+            private int[] _window;
+        
+            private readonly Action<ObjWidthItem> _initItem;     // (item, index) => void
+            private readonly Action<TWordObj, int> _cleanupItem; // (item, index) => void
+
+            public WordRecyclerList(
+                Func<TWordObj> createItem, Action<ObjWidthItem> initItem, Action<TWordObj, int> cleanupItem, 
+                int[] startWindow, IEnumerable<TWord> words)
+            {
+                _initItem = initItem;
+                _cleanupItem = cleanupItem;
+                _recyclerPool = new RecyclerPool<TWordObj>(createItem);
+                _window = startWindow;
+
+                InitItems(words);
+                AddNewWindow(startWindow);
+            }
+
+            private void InitItems(IEnumerable<TWord> words)
+            {
+                _allItemsLookup = new Dictionary<int, WidthItem>();
+                _itemStartIndices = new SortedSet<int>();
+                _itemEndIndices = new SortedSet<int>();
+                _itemEndToStartIndex = new Dictionary<int, int>();
+                
+                foreach (var word in words)
+                {
+                    var startIndex = word.Beat.BeatToIndex();
+                    var endIndex = word.LastBeat.BeatToIndex();
+                    _allItemsLookup[startIndex] = new WidthItem
+                    {
+                        startIndex = startIndex,
+                        endIndex = endIndex,
+                        backingItem = word,
+                    };
+                    _itemStartIndices.Add(startIndex);
+                    _itemEndIndices.Add(endIndex);
+                    _itemEndToStartIndex[endIndex] = startIndex;
+                }
+            }
+            
+            private IEnumerable<int> GetItemIndicesInWindow(int from, int to, bool isLeftSide)
+            {
+                return isLeftSide
+                    ? _itemEndIndices.GetViewBetween(from, to).Select(i => _itemEndToStartIndex[i])
+                    : _itemStartIndices.GetViewBetween(from, to);
+            }
+
+            private void RemoveFromWindow(IEnumerable<ObjWidthItem> itemsToRemove)
+            {
+                var indices = itemsToRemove.Select(wi => wi.startIndex).ToArray();
+                foreach (var index in indices)
+                {
+                    var item = visibleItemsLookup[index];
+                    item.obj.gameObject.SetActive(false);
+                    _cleanupItem(item.obj, item.startIndex);
+                    visibleItemsLookup.Remove(item.startIndex);
+                    _recyclerPool.Add(item.obj);
+                }
+            }
+            private void RemoveFromWindow(int from, int to, bool isLeftSide)
+            {
+                var indices = isLeftSide
+                    ? visibleItemsLookup.Values.Where(wItem => wItem.endIndex >= from && wItem.endIndex <= to)
+                    : visibleItemsLookup.Values.Where(wItem => wItem.startIndex >= from && wItem.startIndex <= to);
+                RemoveFromWindow(indices);
+            }
+        
+            private void AddToWindow(IEnumerable<int> newIndices)
+            {
+                foreach (var itemIndex in newIndices.Except(visibleItemsLookup.Keys))
+                {
+                    var widthItem = _allItemsLookup[itemIndex];
+                    var obj = _recyclerPool.Request();
+                    obj.gameObject.SetActive(true);
+                    visibleItemsLookup[itemIndex] = new ObjWidthItem(widthItem, obj);
+                    _initItem(visibleItemsLookup[itemIndex]);
+                }
+            }
+            private void AddToWindow(int from, int to, bool isLeftSide) => 
+                AddToWindow(GetItemIndicesInWindow(from, to, isLeftSide));
+            private void AddNewWindow(int[] newWindow)
+            {
+                var indices = _itemStartIndices.GetViewBetween(newWindow[0], newWindow[1]).Union(
+                    _itemEndIndices.GetViewBetween(newWindow[0], newWindow[1]).Select(i => _itemEndToStartIndex[i]));
+                AddToWindow(indices);
+            }
+
+            private void RecycleAll() => RemoveFromWindow(visibleItemsLookup.Values);
+
+            private void ReplaceWindow(int[] newWindow)
+            {
+                RecycleAll();
+                AddNewWindow(newWindow);
+            }
+            
+            public void LoadNewWords(IEnumerable<TWord> words)
+            {
+                RecycleAll();
+                InitItems(words);
+                AddNewWindow(_window);
+            }
+            
+            public void SetVisibleWindow(int[] newWindow)
+            {
+                if (newWindow[0] > _window[1] || newWindow[1] < _window[0])
+                {
+                    ReplaceWindow(newWindow);
+                    _window = newWindow;
+                    return;
+                }
+            
+                if (newWindow[0] > _window[0])
+                    RemoveFromWindow(_window[0], newWindow[0], true);
+                else if (newWindow[0] < _window[0])
+                    AddToWindow(newWindow[0], _window[0], true);
+                if (newWindow[1] > _window[1])
+                    AddToWindow(_window[1], newWindow[1], false);
+                else if (newWindow[1] < _window[1])
+                    RemoveFromWindow(newWindow[1], _window[1], false);
+            
+                _window = newWindow;
+            }
+
+            public void Destroy()
+            {
+                RecycleAll();
+                _recyclerPool.Destroy();
+            }
+        }
     }
 }
