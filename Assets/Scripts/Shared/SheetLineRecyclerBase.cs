@@ -54,8 +54,9 @@ namespace Shared
 
         private int[] GetCurrentWindow()
         {
-            var minBeat = Mathf.Max(_panX / _beatSpacing, 0f);
-            var maxBeat = minBeat + containerRect.width / _beatSpacing;
+            var containerWidthExtension = containerRect.width * .1f;
+            var minBeat = Mathf.Max((_panX - containerWidthExtension) / _beatSpacing, 0f);
+            var maxBeat = minBeat + (containerRect.width + containerWidthExtension*2f) / _beatSpacing;
             return new[] {minBeat.BeatToIndex(), maxBeat.BeatToIndex()};
         }
 
