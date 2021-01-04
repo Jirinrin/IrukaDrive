@@ -1,4 +1,5 @@
 ﻿using Gameplay;
+using Shared;
 using Tools;
 using Tools.Commons;
 using UnityEngine;

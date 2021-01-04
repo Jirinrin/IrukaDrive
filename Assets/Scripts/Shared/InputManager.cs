@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 // ReSharper disable InconsistentNaming
 
-namespace Gameplay
+namespace Shared
 {
     [RequireComponent(typeof(PlayerInput))]
     public class InputManager : Singleton<InputManager>
