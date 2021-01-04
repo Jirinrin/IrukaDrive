@@ -47,7 +47,7 @@ namespace Gameplay
             if (GameManager.State != GameState.Gameplay)
             {
                 GameManager.SetState(GameState.Gameplay);
-                PrepGameplay(SerializationHelpers.LoadBeatmap($"{Application.streamingAssetsPath}/Beatmaps/Tutorial/easy.drive"), autoplay: false);
+                PrepGameplay(SerializationHelpers.LoadBeatmap($"{Application.streamingAssetsPath}/Beatmaps/Tutorial/advanced.drive"), autoplay: false);
             }
 
             LoadBeatmap();
