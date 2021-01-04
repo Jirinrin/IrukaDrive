@@ -32,7 +32,15 @@ namespace Menu.ScreenControllers.SongSelect
             InitSongs();
         }
 
-        private void OnEnable() => _audioSource = GetComponent<AudioSource>();
+        private void OnEnable()
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
+
+        private void OnDisable()
+        {
+            SongManager.Instance.Stop();
+        }
 
         private void Start()
         {
@@ -77,7 +85,7 @@ namespace Menu.ScreenControllers.SongSelect
 
         private void SelectSong(Song song)
         {
-            if (_selectedSong != null)
+            if (_selectedSong != null || _selectedSong?.folderPath == song.folderPath)
                 _cardsLookup[_selectedSong.folderName].SetSelected(false);
             _selectedSong = song;
             _cardsLookup[_selectedSong.folderName].SetSelected(true);
