@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
@@ -13,6 +13,7 @@ namespace Shared.Domain
         public string title;
         public string artist;
         public string jacketFile;
+        [NonSerialized] [XmlIgnore] public Texture2D jacket;
 
         // Important metadata
         public string songFile;

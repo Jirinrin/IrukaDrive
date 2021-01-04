@@ -8,18 +8,26 @@ namespace Tools
 {
     public static class SerializationHelpers
     {
-        private static AudioClip LoadSong(string filePath)
+        private static byte[] LoadFile(string filePath)
         {
-            Debug.Log("load song!!");
             var fileRequest = new WWW($"file://{filePath}");
             // yield return www;
         
             // todo: use UnityWebRequest; use www.GetAudioClip or UnityWebRequestMultimedia.GetAudioClip
-
-            Debug.Log("did request!!");
-
-            var clip = NAudioPlayer.FromMp3Data(fileRequest.bytes);
+            return fileRequest.bytes;
+        }
+        
+        private static AudioClip LoadSong(string filePath)
+        {
+            var clip = NAudioPlayer.FromMp3Data(LoadFile(filePath));
             return clip;
+        }
+        
+        private static Texture2D LoadImage(string filePath)
+        {
+            var texture = new Texture2D(2, 2); // why only 2x2 tho...?
+            texture.LoadImage(LoadFile(filePath));
+            return texture;
         }
 
         // got this from stackoverflow https://stackoverflow.com/questions/30852691/loading-mp3-files-at-runtime-in-unity
@@ -70,15 +78,15 @@ namespace Tools
         {
             var dir = $"{Application.streamingAssetsPath}/Beatmaps";
             FileBrowser.ShowLoadDialog(p => onFinished(LoadBeatmap(p[0])), () => onFinished(null),
-                FileBrowser.PickMode.Files,false, dir, title: "Select a beatmap"); // ext: "drive"
+                FileBrowser.PickMode.Files,false, dir, title: "Select a drive chart"); // ext: "drive"
         }
         public static Beatmap LoadBeatmap(string filePath)
         {
             // filePath = filePath.Replace('/', Path.DirectorySeparatorChar);
             var beatmap = Serialization.ReadFromXmlFile<Beatmap>(filePath);
             beatmap.filePath = filePath;
-            var songPath = Path.GetDirectoryName(filePath) + Path.DirectorySeparatorChar + beatmap.songFile;
-            beatmap.song = LoadSong(songPath);
+            beatmap.song = LoadSong(Path.Combine(Path.GetDirectoryName(filePath), beatmap.songFile));
+            beatmap.jacket = LoadImage(Path.Combine(Path.GetDirectoryName(filePath), beatmap.jacketFile));
             return beatmap;
         }
     }
