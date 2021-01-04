@@ -45,8 +45,8 @@ namespace Menu.ScreenControllers.SongSelect
         private void Start()
         {
             InitSongWheel();
-            SelectSong(songsCached.First());
             songDataPanel.OnChooseDiff += SelectDiff;
+            SelectSong(songsCached.First());
         }
 
         // todo: allow nested beatmaps and stuff

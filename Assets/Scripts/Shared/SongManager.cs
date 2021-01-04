@@ -56,7 +56,8 @@ namespace Shared
 
         public void Stop()
         {
-            _audioSource.Stop();
+            if (_audioSource != null)
+                _audioSource.Stop();
         }
 
         private void UpdateSongState()
