@@ -36,7 +36,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
             OnChooseDiff?.Invoke(_song.diffPaths[index]);
         }
 
-        private void Start()
+        private void OnEnable()
         {
             foreach (var (btn, i) in diffButtons.WithIndex())
             {
