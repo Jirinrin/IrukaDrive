@@ -1,4 +1,5 @@
-﻿using Shared;
+﻿using BeatmapEditor.Domain;
+using Shared;
 using Tools;
 using Tools.Commons;
 using UnityEngine;
@@ -46,20 +47,27 @@ namespace BeatmapEditor.SingletonComponents
             var x = eventData.position.x * ScreenToCanvas.Factor;
             if (Keyboard.current.ctrlKey.isPressed)
                 EditorTrack.Instance.CreateWord(x);
+            else if (eventData.button == PointerEventData.InputButton.Left)
+                EditorTrackClipboard.Instance.SetCursor(x);
         }
 
-        private void OnPlay()
-        {
+        private void OnPlay() => 
             EditorTrack.Instance.PlayFromPoint(Input.mousePosition.x * ScreenToCanvas.Factor, !Keyboard.current.shiftKey.isPressed);
-        }
+
+        private void OnCopy() => EditorTrackClipboard.Instance.Copy();
+        private void OnPaste() => EditorTrackClipboard.Instance.Paste();
 
         private void OnEnable()
         {
             InputManager.PressPlay += OnPlay;
+            EditorInputManager.Copy += OnCopy;
+            EditorInputManager.Paste += OnPaste;
         }
         private void OnDisable()
         {
             InputManager.PressPlay -= OnPlay;
+            EditorInputManager.Copy -= OnCopy;
+            EditorInputManager.Paste -= OnPaste;
         }
     }
 }

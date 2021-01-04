@@ -18,14 +18,14 @@ namespace BeatmapEditor.Domain
 
         public void Init()
         {
-            OnPan?.Invoke(panX);
-            OnZoom?.Invoke(beatSpacing);
+            OnPan?.Invoke();
+            OnZoom?.Invoke();
         }
 
         public void Pan(float deltaX)
         {
             panX = Mathf.Max(panX - deltaX, MinimumPan);
-            OnPan?.Invoke(panX);
+            OnPan?.Invoke();
         }
         
         public void Zoom(float delta, float screenPivotX)
@@ -37,10 +37,10 @@ namespace BeatmapEditor.Domain
             
             var pivotX = panX + screenPivotX;
             Pan(-pivotX * (scaleDiff-1f));
-            OnZoom?.Invoke(beatSpacing);
+            OnZoom?.Invoke();
         }
 
-        public static event Action<float> OnPan;
-        public static event Action<float> OnZoom;
+        public static event Action OnPan;
+        public static event Action OnZoom;
     }
 }

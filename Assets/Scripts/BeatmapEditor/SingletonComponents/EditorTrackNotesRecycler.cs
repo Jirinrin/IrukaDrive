@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BeatmapEditor.Components;
 using BeatmapEditor.Domain;
@@ -19,6 +19,12 @@ namespace BeatmapEditor.SingletonComponents
         {
             item.obj.inputFieldPrefab = inputFieldPrefab;
             base.InitWord(item);
+        }
+
+        protected override void CleanupWord(EditorWordObject item, int index)
+        {
+            item.Selected = false;
+            base.CleanupWord(item, index);
         }
 
         public void LoadBeatmap(List<BeatmapWord> words) =>

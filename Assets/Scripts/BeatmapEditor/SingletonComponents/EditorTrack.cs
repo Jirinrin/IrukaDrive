@@ -32,6 +32,7 @@ namespace BeatmapEditor.SingletonComponents
 
             _notesRecycler = EditorTrackNotesRecycler.Instance;
             _notesRecycler.Init(beatmap);
+            EditorTrackClipboard.Instance.Init();
             // todo: also refresh window?
             
             _sheet = EditorTrackSheetBg.Instance;
@@ -58,14 +59,17 @@ namespace BeatmapEditor.SingletonComponents
 
         public static float ScreenXToBeat(float screenX) => ((viewState.panX + screenX) / viewState.beatSpacing).RoundToNearest(C.EditorBeatSnap);
 
-        public void CreateWord(float screenX)
+        public void AddWord(BeatmapWord word)
         {
-            var newWordBeat = ScreenXToBeat(screenX);
-            var newWord = new BeatmapWord(newWordBeat);
-            BeatmapEditorManager.currentBeatmap.words.Add(newWord);
+            BeatmapEditorManager.currentBeatmap.words.Add(word);
             BeatmapEditorManager.currentBeatmap.SortWords();
             RefreshBeatmap();
-            _notesRecycler.EditWord(newWordBeat.BeatToIndex());
+        }
+        public void CreateWord(float screenX)
+        {
+            var beat = ScreenXToBeat(screenX);
+            AddWord(new BeatmapWord(beat));
+            _notesRecycler.EditWord(beat.BeatToIndex());
         }
 
         public void PlayFromPoint(float screenX, bool autoplay) =>

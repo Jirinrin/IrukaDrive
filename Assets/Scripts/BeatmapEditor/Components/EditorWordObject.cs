@@ -7,6 +7,7 @@ using TMPro;
 using Tools;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace BeatmapEditor.Components
 {
@@ -22,6 +23,17 @@ namespace BeatmapEditor.Components
 
         private TMP_InputField _activeInputField;
         private static bool _inputting;
+
+        private bool _selected;
+        public bool Selected
+        {
+            get => _selected;
+            set
+            {
+                _selected = value;
+                SetColor(_selected ? Color.green : Color.white);
+            }
+        }
 
         // Constants and stuff
         
@@ -58,7 +70,10 @@ namespace BeatmapEditor.Components
             if (_dragging || _inputting)
                 return;
             
-            Edit();
+            if (Keyboard.current.altKey.isPressed)
+                EditorTrackClipboard.Instance.SelectWord(!Selected ? this : null);
+            else
+                Edit();
         }
 
         public void OnSubmitWordType(string result)

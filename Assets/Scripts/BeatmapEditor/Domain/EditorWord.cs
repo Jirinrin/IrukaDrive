@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using Gameplay;
-using Shared;
 using Shared.Domain;
 using Tools;
 
@@ -49,5 +47,15 @@ namespace BeatmapEditor.Domain
         }
 
         public void Delete() => BeatmapEditorManager.currentBeatmap.words.Remove(_word);
+
+        public BeatmapWord CloneWord(float? beat = null)
+        {
+            return new BeatmapWord
+            {
+                beat = beat ?? Beat,
+                text = Text,
+                beatInterval = BeatInterval,
+            };
+        }
     }
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Shared.Domain;
@@ -71,21 +71,13 @@ namespace Shared
             }
         }
 
-        private void CleanupWord(TWordObj item, int index)
+        protected virtual void CleanupWord(TWordObj item, int index)
         {
-            foreach (var charObject in item.charObjRefs)
-                charObject.Cleanup();
-            
-            if (item.charObjRefs == null)
-                return;
-            
-            foreach (var charObject in item.charObjRefs)
+            item.Cleanup(charObject =>
             {
-                charObject.gameObject.SetActive(false);
                 charObject.transform.SetParent(_rubbishBin.transform);
                 _charRecyclerPool.Add(charObject);
-            }
-            item.charObjRefs = null;
+            });
         }
 
         private int[] GetCurrentWindow()

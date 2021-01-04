@@ -33,6 +33,30 @@ namespace Shared.Domain
             _beatSpacing = newSpacing;
             RefreshWord();
         }
+
+        protected void SetColor(Color color)
+        {
+            foreach (var charObj in charObjRefs)
+                charObj.obj.color = color;
+        }
+
+        public void Cleanup([CanBeNull] Action<CharObject> cleanupChar = null)
+        {
+            OnDestroy?.Invoke();
+            
+            if (charObjRefs == null)
+                return;
+            
+            foreach (var charObject in charObjRefs)
+            {
+                cleanupChar?.Invoke(charObject);
+                charObject.Cleanup();
+            }
+            
+            charObjRefs = null;
+        }
+
+        public event Action OnDestroy;
     }
 
     public class CharObject : MonoBehaviour
@@ -55,8 +79,10 @@ namespace Shared.Domain
         
         public void Cleanup()
         {
+            obj.color = Color.white;
             obj = null;
             note = null;
+            gameObject.SetActive(false);
         }
     }
     
