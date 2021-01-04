@@ -61,14 +61,14 @@ namespace Shared
         public virtual void Init(Beatmap beatmap)
         {
             var lineStartEndY = containerRect.height / 2f - 10f;
-            var barLineTemplate = Instantiate(barLinePrefab);
-            var beatLineTemplate = Instantiate(beatLinePrefab);
-            barLineTemplate.Start = new Vector3(0, lineStartEndY, 0);
-            barLineTemplate.End = new Vector3(0, -lineStartEndY, 0);
-            beatLineTemplate.Start = new Vector3(0, lineStartEndY, 0);
-            beatLineTemplate.End = new Vector3(0, -lineStartEndY, 0);
-            barLinePrefab = barLineTemplate;
-            beatLinePrefab = beatLineTemplate;
+            barLinePrefab = Instantiate(barLinePrefab, transform);
+            beatLinePrefab = Instantiate(beatLinePrefab, transform);
+            barLinePrefab.Start = new Vector3(0, lineStartEndY, 0);
+            barLinePrefab.End = new Vector3(0, -lineStartEndY, 0);
+            beatLinePrefab.Start = new Vector3(0, lineStartEndY, 0);
+            beatLinePrefab.End = new Vector3(0, -lineStartEndY, 0);
+            barLinePrefab.gameObject.SetActive(false);
+            beatLinePrefab.gameObject.SetActive(false);
             
             _currentBeatmap = beatmap;
 
