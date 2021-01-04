@@ -7,7 +7,6 @@ using Shared;
 using Shared.Domain;
 using UnityEngine;
 
-// todo: shared base with editor notes recycler
 namespace Gameplay.SingletonComponents
 {
     public class TrackNotesRecycler : TrackNotesRecyclerBase<TrackNotesRecycler, RuntimeWord, RuntimeNote, RuntimeWordObject>
@@ -30,17 +29,16 @@ namespace Gameplay.SingletonComponents
             }
         }
 
-        private void LoadBeatmap(IEnumerable<RuntimeWord> words, float startBeatSpacing)
+        private void LoadBeatmap(IEnumerable<RuntimeWord> words)
         {
-            beatSpacing = startBeatSpacing;
             _wordAppearActionQueue = new Dictionary<int, Queue<Action<RuntimeWordObject>>>();
             base.LoadBeatmap(words);
         }
 
-        public void Init(IEnumerable<RuntimeWord> words, float startBeatSpacing)
+        public void Init(IEnumerable<RuntimeWord> words)
         {
             containerWidth = Track.Instance.containerRect.width;
-            LoadBeatmap(words, startBeatSpacing);
+            LoadBeatmap(words);
         }
 
 
@@ -53,15 +51,7 @@ namespace Gameplay.SingletonComponents
             _wordAppearActionQueue[index].Enqueue(action);
         }
 
-        // Coming from TrackManager
-
-        private void OnEnable()
-        {
-            TrackViewState.OnPan += OnPan;
-        }
-        private void OnDisable()
-        {
-            TrackViewState.OnPan -= OnPan;
-        }
+        protected override float PanX => Track.viewState.panX;
+        protected override float BeatSpacing => Track.viewState.beatSpacing;
     }
 }

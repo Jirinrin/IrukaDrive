@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace BeatmapEditor.SingletonComponents
 {
-    // todo: better 'shared container / coordinate' system to sync to EditorTrack
     [RequireComponent(typeof(EditorSheetLineRecycler))]
     public class EditorTrackSheetBg : Singleton<EditorTrackSheetBg>
     {

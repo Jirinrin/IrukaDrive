@@ -1,20 +1,16 @@
 ﻿using System;
 using Shared;
+using Shared.Domain;
 
 namespace Gameplay.Domain
 {
-    public class TrackViewState
+    public class TrackViewState : ViewState
     {
-        public float panX;
-
-        private float _scaleX = 1f;
-        public float beatSpacing;
-
-        public float initBpm;
+        private readonly float _initBpm;
 
         public TrackViewState(float initBpm)
         {
-            this.initBpm = initBpm;
+            _initBpm = initBpm;
             
             SetBpm(initBpm);
             OnPan?.Invoke(panX);
@@ -23,7 +19,7 @@ namespace Gameplay.Domain
         
         public void SetBpm(float bpm)
         {
-            beatSpacing = (bpm / initBpm) * C.DefaultScrollSpeed * Local.Settings.beatmapScrollSpeedMod;
+            beatSpacing = (bpm / _initBpm) * C.DefaultScrollSpeed * Local.Settings.beatmapScrollSpeedMod;
             // todo: maybe still need to do some panning like in EditorTrackViewState?
             OnZoom?.Invoke(beatSpacing);
         }

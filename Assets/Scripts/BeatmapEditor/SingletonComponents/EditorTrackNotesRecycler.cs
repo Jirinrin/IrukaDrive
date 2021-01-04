@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using BeatmapEditor.Components;
 using BeatmapEditor.Domain;
@@ -9,7 +9,6 @@ using UnityEngine; // todo: remove
 
 namespace BeatmapEditor.SingletonComponents
 {
-    // todo: better 'shared container / coordinate' system to sync to EditorTrack
     public class EditorTrackNotesRecycler : TrackNotesRecyclerBase<EditorTrackNotesRecycler, EditorWord, ParsedNote, EditorWordObject>
     {
         [SerializeField] private TMP_InputField inputFieldPrefab = null;
@@ -37,17 +36,7 @@ namespace BeatmapEditor.SingletonComponents
         public void EditWord(int index) =>
             wordRecyclerList.visibleItemsLookup[index].obj.Edit();
 
-        // Coming from EditorTrack
-        
-        private void OnEnable()
-        {
-            EditorTrackViewState.OnPan += OnPan;
-            EditorTrackViewState.OnZoom += OnZoom;
-        }
-        private void OnDisable()
-        {
-            EditorTrackViewState.OnPan -= OnPan;
-            EditorTrackViewState.OnZoom -= OnZoom;
-        }
+        protected override float PanX => EditorTrack.viewState.panX;
+        protected override float BeatSpacing => EditorTrack.viewState.beatSpacing;
     }
 }

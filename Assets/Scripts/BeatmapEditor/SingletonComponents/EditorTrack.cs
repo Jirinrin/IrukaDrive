@@ -1,27 +1,19 @@
-using System;
 using BeatmapEditor.Domain;
 using Shared;
 using Shared.Domain;
 using Tools;
-using Tools.Commons;
 using UnityEngine;
 
 namespace BeatmapEditor.SingletonComponents
 {
-    // todo: better 'shared container / coordinate' system to sync to EditorTrack
     // todo: handle track not being initted yet
-    public class EditorTrack : Singleton<EditorTrack>
+    public class EditorTrack : TrackBase<EditorTrack, EditorTrackViewState>
     {
-        [SerializeField] private RectTransform containerRectTransform = null;
-        [NonSerialized] public Rect containerRect;
-
         private EditorTrackNotesRecycler _notesRecycler;
         private EditorTrackSheetBg _sheet;
 
         private bool _shouldDraw;
         private bool _zoomed;
-
-        private static EditorTrackViewState _viewState;
 
         public void RefreshBeatmap()
         {
@@ -31,12 +23,12 @@ namespace BeatmapEditor.SingletonComponents
 
         public void InitTrack(Beatmap beatmap, bool keepViewState = false)
         {
-            containerRect = containerRectTransform.rect;
+            base.InitTrack();
 
             if (keepViewState)
-                _viewState?.Init();
+                viewState?.Init();
             else
-                _viewState = new EditorTrackViewState();
+                viewState = new EditorTrackViewState();
 
             _notesRecycler = EditorTrackNotesRecycler.Instance;
             _notesRecycler.Init(beatmap);
@@ -64,7 +56,7 @@ namespace BeatmapEditor.SingletonComponents
         
         // Stuff responding to gestures
 
-        private float ScreenXToBeat(float screenX) => ((_viewState.panX + screenX) / _viewState.beatSpacing).RoundToNearest(C.EditorBeatSnap); 
+        public static float ScreenXToBeat(float screenX) => ((viewState.panX + screenX) / viewState.beatSpacing).RoundToNearest(C.EditorBeatSnap);
 
         public void CreateWord(float screenX)
         {
@@ -81,16 +73,16 @@ namespace BeatmapEditor.SingletonComponents
 
         public void Zoom(float delta, float screenPivotX)
         {
-            _viewState.Zoom(delta, screenPivotX);
-            transform.localPosition = new Vector3(-_viewState.panX, 0, 0);
+            viewState.Zoom(delta, screenPivotX);
+            transform.localPosition = new Vector3(-viewState.panX, 0, 0);
             _shouldDraw = true;
             _zoomed = true;
         }
 
         public void Pan(float deltaX)
         {
-            _viewState.Pan(deltaX);
-            transform.localPosition = new Vector3(-_viewState.panX, 0, 0);
+            viewState.Pan(deltaX);
+            transform.localPosition = new Vector3(-viewState.panX, 0, 0);
             _shouldDraw = true;
         }
 

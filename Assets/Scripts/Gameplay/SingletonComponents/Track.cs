@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Components;
 using Gameplay.Domain;
 using Shared;
 using Shared.Domain;
-using Tools.Commons;
 using UnityEngine;
 
 namespace Gameplay.SingletonComponents
 {
-    // todo: effect when player hits / misses / nears char, and make that persist in the char as it moves beyond the hantei
-    public class Track : Singleton<Track>
+    public class Track : TrackBase<Track, TrackViewState>
     {
-        [SerializeField] private RectTransform containerRectTransform = null;
-        [NonSerialized] public Rect containerRect;
-
         [SerializeField] public RectTransform judgementPoint;
     
         private TrackNotesRecycler _notesRecycler;
@@ -24,20 +18,16 @@ namespace Gameplay.SingletonComponents
         private float _judgementOffsetX;
     
         private bool _shouldDraw;
-        
-        private TrackViewState _viewState;
-        
+
         private RuntimeWordObject _currentWordObj;
         public void InitTrack(Beatmap beatmap, IEnumerable<RuntimeWord> words)
         {
-            containerRect = containerRectTransform.rect;
-        
-            Debug.Log("init track");
+            base.InitTrack();
 
-            _viewState = new TrackViewState(beatmap.bpm);
+            viewState = new TrackViewState(beatmap.bpm);
         
             _notesRecycler = TrackNotesRecycler.Instance;
-            _notesRecycler.Init(words, _viewState.beatSpacing);
+            _notesRecycler.Init(words);
         
             _sheet = TrackSheetBg.Instance;
             _sheet.InitSheet(beatmap);
@@ -55,7 +45,6 @@ namespace Gameplay.SingletonComponents
             if (_shouldDraw)
             {
                 _shouldDraw = false;
-                // todo: only do this every so often
                 ForceRefresh();
             }
         }
@@ -109,8 +98,8 @@ namespace Gameplay.SingletonComponents
         private int _updateProgressCounter;
         public void UpdateProgress(float posBeats)
         {
-            _viewState.SetProgress(posBeats);
-            transform.localPosition = new Vector3(_judgementOffsetX - _viewState.panX, 0, 0);
+            viewState.SetProgress(posBeats);
+            transform.localPosition = new Vector3(_judgementOffsetX - viewState.panX, 0, 0);
             
             // Crappy mechanism to not refresh window on every loop
             if ((_updateProgressCounter = (_updateProgressCounter + 1) % 10) == 0) 

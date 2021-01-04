@@ -11,16 +11,8 @@ namespace Gameplay.SingletonComponents
             containerRect = Track.Instance.containerRect;
             base.Init(beatmap);
         }
-        
-        private void OnEnable()
-        {
-            TrackViewState.OnPan += OnPan;
-            TrackViewState.OnZoom += OnZoom;
-        }
-        private void OnDisable()
-        {
-            TrackViewState.OnPan -= OnPan;
-            TrackViewState.OnZoom -= OnZoom;
-        }
+
+        protected override float PanX => Track.viewState.panX;
+        protected override float BeatSpacing => Track.viewState.beatSpacing;
     }
 }

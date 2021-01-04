@@ -6,9 +6,7 @@ using UnityEngine;
 
 namespace Shared
 {
-    // todo: make sure the recycler thing gets updated not every frame
-    // todo: better 'shared container / coordinate' system to sync to Track
-    public class SheetLineRecyclerBase : Singleton<SheetLineRecyclerBase>
+    public abstract class SheetLineRecyclerBase : Singleton<SheetLineRecyclerBase>
     {
         [SerializeField] protected Line barLinePrefab = null;
         [SerializeField] protected Line beatLinePrefab = null;
@@ -25,14 +23,14 @@ namespace Shared
         private Line CreateBeatLine() => Instantiate(beatLinePrefab, transform);
         
         private void InitLine(Line item, int index) =>
-            item.transform.localPosition = new Vector3(_beatSpacing * index.IndexToBeat(), 0, 0);
+            item.transform.localPosition = new Vector3(BeatSpacing * index.IndexToBeat(), 0, 0);
 
         private void UpdateLinesSpacing(RecyclerList<Line> list)
         {
             foreach (var index in list.visibleItemsLookup.Keys)
             {
                 // todo: somehow make the accuracy smoother than 1/BeatIndexFactor again here
-                list.visibleItemsLookup[index].transform.localPosition = new Vector3(_beatSpacing * index.IndexToBeat(), 0, 0);
+                list.visibleItemsLookup[index].transform.localPosition = new Vector3(BeatSpacing * index.IndexToBeat(), 0, 0);
             }
         }
 
@@ -55,8 +53,8 @@ namespace Shared
         private int[] GetCurrentWindow()
         {
             var containerWidthExtension = containerRect.width * .1f;
-            var minBeat = Mathf.Max((_panX - containerWidthExtension) / _beatSpacing, 0f);
-            var maxBeat = minBeat + (containerRect.width + containerWidthExtension*2f) / _beatSpacing;
+            var minBeat = Mathf.Max((PanX - containerWidthExtension) / BeatSpacing, 0f);
+            var maxBeat = minBeat + (containerRect.width + containerWidthExtension*2f) / BeatSpacing;
             return new[] {minBeat.BeatToIndex(), maxBeat.BeatToIndex()};
         }
 
@@ -95,11 +93,7 @@ namespace Shared
             _recyclerList2.Destroy();
         }
 
-        // Coming from Track
-        
-        private float _panX;
-        private float _beatSpacing;
-        protected void OnPan(float panX) => _panX = panX;
-        protected void OnZoom(float beatSpacing) => _beatSpacing = beatSpacing;
+        protected abstract float PanX { get; }
+        protected abstract float BeatSpacing { get; }
     }
 }

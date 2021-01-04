@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Gameplay.SingletonComponents
 {
-    // todo: better 'shared container / coordinate' system to sync to EditorTrack
     [RequireComponent(typeof(SheetLineRecycler))]
     public class TrackSheetBg : Singleton<TrackSheetBg>
     {

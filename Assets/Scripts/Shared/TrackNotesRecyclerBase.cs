@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Shared.Domain;
@@ -55,7 +55,7 @@ namespace Shared
         {
             item.obj.word = item.backingItem;
             var itemTransform = item.obj.transform;
-            itemTransform.localPosition = new Vector3(beatSpacing * item.startIndex.IndexToBeat(), 0, 0);
+            itemTransform.localPosition = new Vector3(BeatSpacing * item.startIndex.IndexToBeat(), 0, 0);
             if (item.obj.charObjRefs == null || item.obj.charObjRefs.Count > 0)
                 item.obj.charObjRefs = new List<CharObject>();
 
@@ -65,7 +65,7 @@ namespace Shared
                 InitCharObj(charObj, note);
                 var charObjTransform = charObj.transform;
                 charObjTransform.SetParent(itemTransform);
-                charObjTransform.localPosition = new Vector3(beatSpacing * note.beat, 0, 0);
+                charObjTransform.localPosition = new Vector3(BeatSpacing * note.beat, 0, 0);
                 charObj.gameObject.SetActive(true);
                 item.obj.charObjRefs.Add(charObj);
             }
@@ -91,8 +91,8 @@ namespace Shared
         private int[] GetCurrentWindow()
         {
             var containerWidthExtension = containerWidth * .5f;
-            var minBeat = Mathf.Max((panX - containerWidthExtension) / beatSpacing, 0f);
-            var maxBeat = minBeat + (containerWidth + containerWidthExtension*2f) / beatSpacing;
+            var minBeat = Mathf.Max((PanX - containerWidthExtension) / BeatSpacing, 0f);
+            var maxBeat = minBeat + (containerWidth + containerWidthExtension*2f) / BeatSpacing;
             return new[] {minBeat.BeatToIndex(), maxBeat.BeatToIndex()};
         }
         
@@ -100,8 +100,8 @@ namespace Shared
         {
             foreach (var item in wordRecyclerList.visibleItemsLookup.Values)
             {
-                item.obj.transform.localPosition = new Vector3(beatSpacing * item.startIndex.IndexToBeat(), 0, 0);
-                item.obj.UpdateSpacing(beatSpacing);
+                item.obj.transform.localPosition = new Vector3(BeatSpacing * item.startIndex.IndexToBeat(), 0, 0);
+                item.obj.UpdateSpacing(BeatSpacing);
             }
         }
         
@@ -139,13 +139,9 @@ namespace Shared
             wordRecyclerList.Destroy();
             _charRecyclerPool.Destroy();
         }
-        
-        // Coming from track
-        protected float panX;
-        protected void OnPan(float newPanX) => panX = newPanX;
-        
-        protected float beatSpacing;
-        protected void OnZoom(float newBeatSpacing) => beatSpacing = newBeatSpacing;
+
+        protected abstract float PanX { get; }
+        protected abstract float BeatSpacing { get; }
         
         ////////////////////////////
         // S U B C L A S S E S
