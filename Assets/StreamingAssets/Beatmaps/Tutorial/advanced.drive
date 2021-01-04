@@ -3,6 +3,7 @@
   <title>Tutorial</title>
   <artist>Sota Fujimori</artist>
   <jacketFile>jacket.jpg</jacketFile>
+  <difficulty>Advanced</difficulty>
   <songFile>0000 - Tutorial.mp3</songFile>
   <bpm>135</bpm>
   <beatOffset>0.05</beatOffset>

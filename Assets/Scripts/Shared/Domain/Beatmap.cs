@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
@@ -6,6 +6,13 @@ using UnityEngine;
 
 namespace Shared.Domain
 {
+    public enum Difficulty
+    {
+        Novice,
+        Advanced,
+        Expert,
+    }
+    
     [Serializable]
     public class Beatmap
     {
@@ -14,6 +21,7 @@ namespace Shared.Domain
         public string artist;
         public string jacketFile;
         [NonSerialized] [XmlIgnore] public Texture2D jacket;
+        public Difficulty difficulty;
 
         // Important metadata
         public string songFile;
