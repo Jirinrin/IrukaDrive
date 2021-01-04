@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Shared
 {
+    // todo: expect only some beatmap metadata, without all the notes and stuff
     [RequireComponent(typeof(AudioSource))]
     public class SongManager : Singleton<SongManager>
     {
@@ -32,6 +33,12 @@ namespace Shared
             _audioSource = GetComponent<AudioSource>();
         }
 
+        public void PlaySong(AudioClip song, float startTime = 0f)
+        {
+            _audioSource.clip = song;
+            _audioSource.time = startTime;
+            _audioSource.Play();
+        }
         public void LoadSong(Beatmap beatmap, float startTime = 0f, bool tickOnBeat = false)
         {
             _tickOnBeat = tickOnBeat;

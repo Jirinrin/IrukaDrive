@@ -169,7 +169,7 @@ namespace Shared
             
             public readonly Dictionary<int, ObjWidthItem> visibleItemsLookup = new Dictionary<int, ObjWidthItem>();
 
-            // Must have 2 items
+            // Must have 2 items. todo: convert to tuple
             private int[] _window;
         
             private readonly Action<ObjWidthItem> _initItem;     // (item, index) => void

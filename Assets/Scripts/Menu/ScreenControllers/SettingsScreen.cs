@@ -1,5 +1,4 @@
-﻿using System;
-using Menu.ScreenControllers.SettingControllers;
+﻿using Menu.ScreenControllers.SettingControllers;
 using Shared;
 using UnityEngine;
 
