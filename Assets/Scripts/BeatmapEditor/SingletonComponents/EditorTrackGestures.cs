@@ -19,7 +19,10 @@ namespace BeatmapEditor.SingletonComponents
                 if (Keyboard.current.shiftKey.isPressed)
                     EditorTrack.Instance.Zoom(eventData.delta.y / 60f, eventData.position.x * ScreenToCanvas.Factor);
                 else
-                    EditorTrack.Instance.Pan(eventData.delta.x * ScreenToCanvas.Factor);
+                {
+                    var xFactor = Keyboard.current.altKey.isPressed ? 4f : 1f;
+                    EditorTrack.Instance.Pan(eventData.delta.x * ScreenToCanvas.Factor * xFactor);
+                }
             }
         }
 
