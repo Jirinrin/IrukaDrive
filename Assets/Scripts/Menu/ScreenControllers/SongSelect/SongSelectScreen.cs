@@ -57,12 +57,10 @@ namespace Menu.ScreenControllers.SongSelect
                 return;
             
             var songs = Directory.GetDirectories($"{Application.streamingAssetsPath}/Beatmaps");
-            Debug.Log($"yo. songs => {songs.Join(", ")}");
             foreach (var songFolder in songs)
             {
                 var songPath = Path.Combine(BeatmapPath, songFolder);
                 var diffPaths = Directory.GetFiles(songPath, "*.drive").Select(d => Path.Combine(songPath, d)).ToArray();
-                Debug.Log($"diffs: {diffPaths.Join(" - ")}");
                 if (!diffPaths.Any())
                 {
                     Debug.LogWarning($"Song {songPath} has no diffs");
