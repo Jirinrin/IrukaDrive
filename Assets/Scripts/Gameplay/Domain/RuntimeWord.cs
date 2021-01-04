@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Shared.Domain;
 using Tools;
 using UnityEngine;
@@ -12,8 +13,8 @@ namespace Gameplay.Domain
 
         private int _inputNoteIndex;
         private int _noteIndex;
-        public RuntimeNote currentInputNote; // c# 8: add nullable question mark
-        public RuntimeNote currentNote; // c# 8: add nullable question mark
+        [CanBeNull] public RuntimeNote currentInputNote;
+        [CanBeNull] public RuntimeNote currentNote;
         public bool Finished => _inputNoteIndex >= CharNotes.Count;
 
         private bool _passed;

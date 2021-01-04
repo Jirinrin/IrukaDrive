@@ -88,7 +88,6 @@ namespace Gameplay
             }
         }
 
-        // todo: add exclamation points when c# 8.0 
         private void AdvanceWord(bool triggerEvent = true)
         {
             _currentWord = _nextWord;
@@ -150,7 +149,7 @@ namespace Gameplay
             if (_currentWord.Finished)
                 return;
         
-            var currentCharNote = (RuntimeNote) _currentWord.currentInputNote; // c# 8
+            var currentCharNote = _currentWord.currentInputNote;
 
             var beatTiming = SongManager.Instance.songPosBeats - currentCharNote.beatAbs;
             var timingMs = beatTiming / CurrentBeatmap.BeatsPerSec * 1000;
