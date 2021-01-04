@@ -35,7 +35,7 @@ namespace Shared.Domain
         public Guid id; // Generated automatically by the beatmap editor
 
         // Notes, expected to be sorted
-        public List<BeatmapWord> words;
+        public List<BeatmapWordBase> words;
         
         // Getters
         public int NotesCount => words.Aggregate(0, (acc, w) => acc + w.text.Length);

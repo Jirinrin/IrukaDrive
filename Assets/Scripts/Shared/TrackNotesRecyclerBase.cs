@@ -9,11 +9,11 @@ using Object = UnityEngine.Object;
 
 namespace Shared
 {
-    public abstract class TrackNotesRecyclerBase<T, TWord, TNote, TWordObj> : Singleton<T> 
-        where T : TrackNotesRecyclerBase<T, TWord, TNote, TWordObj>
-        where TWord : ParsedWord<TNote>
-        where TNote : ParsedNote // todo: infer from TWord?
-        where TWordObj : WordObject<TWord, TNote>
+    public abstract class TrackNotesRecyclerBase<T, TWord, TChar, TWordObj> : Singleton<T>
+        where T : TrackNotesRecyclerBase<T, TWord, TChar, TWordObj>
+        where TWord : ParsedWordBase<TChar>
+        where TChar : ParsedCharBase
+        where TWordObj : WordObjectBase<TWord>
     {
         [SerializeField] protected TextMeshProUGUI characterPrefab = null;
         private CharObject _charObjPrefab;
@@ -43,41 +43,79 @@ namespace Shared
                 characterTemplate.gameObject.AddComponent<CharObject>();
             _charObjPrefab = characterTemplate.GetComponent<CharObject>();
         }
+
+        private void DoForObj(TWordObj obj, Action<WordObject> forWord = null, Action<ChordObject> forChord = null)
+        {
+            switch (obj)
+            {
+                case WordObject wordObject:
+                    forWord?.Invoke(wordObject);
+                    break;
+                case ChordObject chordObject:
+                    forChord?.Invoke(chordObject);
+                    break;
+            }
+        }
+
+        private void DoForWord(TWord obj, Action<ParsedWord> forWord = null, Action<ParsedWordBase> forChord = null)
+        {
+            switch (obj)
+            {
+                case ParsedWord wordObject:
+                    forWord?.Invoke(wordObject);
+                    break;
+                case ParsedWordBase chordObject:
+                    forChord?.Invoke(chordObject);
+                    break;
+            }
+        }
         
         // Methods necessary for RecyclerList
 
         private CharObject CreateChar() => Instantiate(_charObjPrefab, transform);
         private TWordObj CreateWord() => Instantiate(_emptyWordObjPrefab, transform);
 
-        protected virtual void InitCharObj(CharObject charObj, TNote note) => charObj.Init(note);
+        protected virtual void InitCharObj(CharObject charObj, ParsedChar c) => charObj.Init(c);
         
         protected virtual void InitWord(ObjWidthItem item)
         {
             item.obj.word = item.backingItem;
             var itemTransform = item.obj.transform;
             itemTransform.localPosition = new Vector3(BeatSpacing * item.startIndex.IndexToBeat(), 0, 0);
-            if (item.obj.charObjRefs == null || item.obj.charObjRefs.Count > 0)
-                item.obj.charObjRefs = new List<CharObject>();
-
-            foreach (var note in item.backingItem.CharNotes)
+            DoForObj(item.obj, o =>
             {
-                var charObj = _charRecyclerPool.Request();
-                InitCharObj(charObj, note);
-                var charObjTransform = charObj.transform;
-                charObjTransform.SetParent(itemTransform);
-                charObjTransform.localPosition = new Vector3(BeatSpacing * note.beat, 0, 0);
-                charObj.gameObject.SetActive(true);
-                item.obj.charObjRefs.Add(charObj);
-            }
+                if (o.CharObjRefs == null || o.CharObjRefs.Count > 0)
+                    o.CharObjRefs = new List<CharObject>();
+                
+                DoForWord(item.backingItem, w =>
+                {
+                    foreach (var c in w.CharNotes)
+                    {
+                        var charObj = _charRecyclerPool.Request();
+                        InitCharObj(charObj, c);
+                        var charObjTransform = charObj.transform;
+                        charObjTransform.SetParent(itemTransform);
+                        charObjTransform.localPosition = new Vector3(BeatSpacing * c.beat, 0, 0);
+                        charObj.gameObject.SetActive(true);
+                        o.CharObjRefs.Add(charObj);
+                    }
+                });
+            });
+            // todo: chord
+
         }
 
-        protected virtual void CleanupWord(TWordObj item, int index)
+        protected virtual void CleanupWord(TWordObj obj, int index)
         {
-            item.Cleanup(charObject =>
+            DoForObj(obj, o =>
             {
-                charObject.transform.SetParent(_rubbishBin.transform);
-                _charRecyclerPool.Add(charObject);
+                o.Cleanup(charObject =>
+                {
+                    charObject.transform.SetParent(_rubbishBin.transform);
+                    _charRecyclerPool.Add(charObject);
+                });
             });
+            // todo: chord
         }
 
         private int[] GetCurrentWindow()
@@ -93,7 +131,7 @@ namespace Shared
             foreach (var item in wordRecyclerList.visibleItemsLookup.Values)
             {
                 item.obj.transform.localPosition = new Vector3(BeatSpacing * item.startIndex.IndexToBeat(), 0, 0);
-                item.obj.UpdateSpacing(BeatSpacing);
+                DoForObj(item.obj, o => o.UpdateSpacing(BeatSpacing));
             }
         }
         

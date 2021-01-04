@@ -113,7 +113,7 @@ namespace Gameplay
         {
             if (SongManager.Instance.songPosBeats > _currentCharMissThreshold)
             {
-                SetNoteResult(_currentWord.currentInputNote, NoteResult.Miss);
+                SetNoteResult(_currentWord.currentInputChar, NoteResult.Miss);
                 OnMiss?.Invoke();
                 AdvanceChar();
             }
@@ -139,8 +139,8 @@ namespace Gameplay
 
             if (AutoPlay)
             {
-                if (_currentWord?.currentInputNote?.beatAbs <= SongManager.Instance.songPosBeats + C.TimingWindowPerfectSec*CurrentBeatmap.BeatsPerSec/8f)
-                    InputManager.Instance.OnKeyboardEvent(_currentWord.currentInputNote.character);
+                if (_currentWord?.currentInputChar?.beatAbs <= SongManager.Instance.songPosBeats + C.TimingWindowPerfectSec*CurrentBeatmap.BeatsPerSec/8f)
+                    InputManager.Instance.OnKeyboardEvent(_currentWord.currentInputChar.character);
             }
         }
 
@@ -149,7 +149,7 @@ namespace Gameplay
             if (_currentWord.Finished)
                 return;
         
-            var currentCharNote = _currentWord.currentInputNote;
+            var currentCharNote = _currentWord.currentInputChar; // c# 8
 
             var beatTiming = SongManager.Instance.songPosBeats - currentCharNote.beatAbs;
             var timingMs = beatTiming / CurrentBeatmap.BeatsPerSec * 1000;
@@ -176,7 +176,7 @@ namespace Gameplay
             AdvanceChar();
         }
 
-        private void SetNoteResult(RuntimeNote note, NoteResult result)
+        private void SetNoteResult(RuntimeChar note, NoteResult result)
         {
             note.result = result;
             displayScore.AddNoteResult(result);
@@ -199,7 +199,7 @@ namespace Gameplay
         private void SetCurrentCharMissThreshold()
         {
             _currentCharMissThreshold =
-                _currentWord.Beat + _currentWord.currentInputNote.beat + C.TimingWindowGoodSec * CurrentBeatmap.BeatsPerSec;
+                _currentWord.Beat + _currentWord.currentInputChar.beat + C.TimingWindowGoodSec * CurrentBeatmap.BeatsPerSec;
         }
 
         private void SongFinished()

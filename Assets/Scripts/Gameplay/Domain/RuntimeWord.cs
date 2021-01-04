@@ -7,14 +7,14 @@ using UnityEngine;
 
 namespace Gameplay.Domain
 {
-    public class RuntimeWord : ParsedWord<RuntimeNote>
+    public class RuntimeWord : ParsedWord<RuntimeChar>
     {
         public readonly string text;
 
         private int _inputNoteIndex;
         private int _noteIndex;
-        [CanBeNull] public RuntimeNote currentInputNote;
-        [CanBeNull] public RuntimeNote currentNote;
+        [CanBeNull] public RuntimeChar currentInputChar;
+        [CanBeNull] public RuntimeChar currentChar;
         public bool Finished => _inputNoteIndex >= CharNotes.Count;
 
         private bool _passed;
@@ -24,14 +24,14 @@ namespace Gameplay.Domain
             if (word.text.Match(@"^xxx*$").Success)
                 word = word.Clone(textOverride: Dict.DictEn.GetRandomWordOfLength(word.text.Length));
 
-            CharNotes = word.ParseNotes().Select(note => new RuntimeNote(note, word.beat + note.beat)).ToList();
+            CharNotes = word.ParseNotes().Select(note => new RuntimeChar(note, word.beat + note.beat)).ToList();
             if (!CharNotes.Any())
                 throw new Exception("Empty word: " + this);
         
             Beat = word.beat;
             LastBeat = word.LastBeat();
-            currentInputNote = CharNotes[0];
-            currentNote = CharNotes[0];
+            currentInputChar = CharNotes[0];
+            currentChar = CharNotes[0];
 
             text = word.text;
         }
@@ -43,15 +43,15 @@ namespace Gameplay.Domain
                 return;
 
             if (errorOnTrigger)
-                Debug.LogError($"Word was unfinished, which it shouldn't be!! {text} -- {currentInputNote.character}");
+                Debug.LogError($"Word was unfinished, which it shouldn't be!! {text} -- {currentInputChar.character}");
 
-            do currentInputNote.result = NoteResult.Miss;
+            do currentInputChar.result = NoteResult.Miss;
             while (AdvanceInputNote() != null);
         }
 
         private void SetCurrentInputNote(int? index)
         {
-            currentInputNote = index == null ? null : CharNotes[(int) index];
+            currentInputChar = index == null ? null : CharNotes[(int) index];
         }
 
         // Returns null if finished
@@ -73,7 +73,7 @@ namespace Gameplay.Domain
 
         public bool CheckPassedNote(float beatTime)
         {
-            if (_passed || !(currentNote?.beatAbs < beatTime))
+            if (_passed || !(currentChar?.beatAbs < beatTime))
                 return false;
 
             // Passed new note!
@@ -81,10 +81,10 @@ namespace Gameplay.Domain
             if (_noteIndex >= CharNotes.Count)
             {
                 _passed = true;
-                currentNote = null;
+                currentChar = null;
             }
             else
-                currentNote = CharNotes[_noteIndex];
+                currentChar = CharNotes[_noteIndex];
 
             // todo: maybe make this flip in-between notes or sth
             // if (_inputNoteIndex < _noteIndex && CurrentInputNote?.Result == null)
@@ -96,4 +96,6 @@ namespace Gameplay.Domain
             return true;
         }
     }
+    
+    // todo: chord version + base; difficult because multiple inheritance kinda needed
 }

@@ -9,7 +9,7 @@ using UnityEngine; // todo: remove
 
 namespace BeatmapEditor.SingletonComponents
 {
-    public class EditorTrackNotesRecycler : TrackNotesRecyclerBase<EditorTrackNotesRecycler, EditorWord, ParsedNote, EditorWordObject>
+    public class EditorTrackNotesRecycler : TrackNotesRecyclerBase<EditorTrackNotesRecycler, EditorWordBase<BeatmapWordBase, ParsedCharBase>, ParsedCharBase, EditorWordObjectBase<>>
     {
         [SerializeField] private TMP_InputField inputFieldPrefab = null;
 
@@ -27,7 +27,7 @@ namespace BeatmapEditor.SingletonComponents
             base.CleanupWord(item, index);
         }
 
-        public void LoadBeatmap(List<BeatmapWord> words) =>
+        public void LoadBeatmap(List<BeatmapWordBase> words) =>
             base.LoadBeatmap(words.Select(word => new EditorWord(word)));
 
         public void Init(Beatmap beatmap)

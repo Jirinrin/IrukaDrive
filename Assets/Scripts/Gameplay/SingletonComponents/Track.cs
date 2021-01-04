@@ -70,23 +70,23 @@ namespace Gameplay.SingletonComponents
     
         private void ChangeCurrentChar(int? charIndex)
         {
-            if (_currentWordObj.charObjRefs == null)
+            if (_currentWordObj.CharObjRefs == null)
                 return;
             
             if (charIndex == null)
             {
-                _currentWordObj.charObjRefs.Last().obj.color = Color.white;
+                _currentWordObj.CharObjRefs.Last().obj.color = Color.white;
                 return;
             }
 
             var index = (int) charIndex;
             
-            if (index >= _currentWordObj.charObjRefs.Count)
+            if (index >= _currentWordObj.CharObjRefs.Count)
                 return;
         
-            _currentWordObj.charObjRefs[index].obj.color = Color.red;
+            _currentWordObj.CharObjRefs[index].obj.color = Color.red;
             if (index > 0)
-                _currentWordObj.charObjRefs[index-1].obj.color = Color.white;
+                _currentWordObj.CharObjRefs[index-1].obj.color = Color.white;
         }
 
         public void ForceRefresh()

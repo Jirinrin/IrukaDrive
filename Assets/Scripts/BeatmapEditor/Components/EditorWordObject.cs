@@ -11,7 +11,17 @@ using UnityEngine.InputSystem;
 
 namespace BeatmapEditor.Components
 {
-    public class EditorWordObject : WordObject<EditorWord, ParsedNote>, IPointerClickHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
+    public class EditorWordObject : EditorWordObjectBase<ParsedWord, ParsedChar>, IWordObject
+    {
+        
+    }
+    
+    
+    // todo: chord version + base; difficult because multiple inheritance kinda needed
+
+    public abstract class EditorWordObjectBase<TWord, TChar> : WordObjectBase<TWord, TChar>, IPointerClickHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
+        where TWord : ParsedWordBase<TChar>
+        where TChar : ParsedCharBase
     {
         [NonSerialized] public TMP_InputField inputFieldPrefab;
         
@@ -54,7 +64,7 @@ namespace BeatmapEditor.Components
         public void Edit()
         {
             _activeInputField = Instantiate(inputFieldPrefab, transform);
-            _activeInputField.transform.localPosition = new Vector3(word.BeatWidth/2f * _beatSpacing,-30f,0);
+            _activeInputField.transform.localPosition = new Vector3(word.BeatWidth/2f * beatSpacing,-30f,0);
             _activeInputField.onSubmit.AddListener(OnSubmitWordType);
             _activeInputField.SetTextWithoutNotify(word.Text);
             _activeInputField.ActivateInputField();
@@ -104,7 +114,7 @@ namespace BeatmapEditor.Components
             
             _dragDelta += eventData.delta.x * ScreenToCanvas.Factor;
             if (_dragType == DragType.MoveWord)
-                transform.localPosition = new Vector3(_xBeforeDrag + _dragDelta.RoundToNearest(_beatSpacing*C.EditorBeatSnap), 0, 0);
+                transform.localPosition = new Vector3(_xBeforeDrag + _dragDelta.RoundToNearest(beatSpacing*C.EditorBeatSnap), 0, 0);
             else
                 UpdateBeatInterval(DragXToBeatInterval(_dragDelta));
                 
@@ -115,7 +125,7 @@ namespace BeatmapEditor.Components
             if (!_dragging)
                 return;
             
-            word.Beat = (transform.localPosition.x / _beatSpacing).RoundToNearest(C.EditorBeatSnap);
+            word.Beat = (transform.localPosition.x / beatSpacing).RoundToNearest(C.EditorBeatSnap);
             EditorTrack.Instance.RefreshBeatmap();
             _dragging = false;
         }
@@ -143,5 +153,6 @@ namespace BeatmapEditor.Components
             _dragDelta = 0f;
             _dragging = true;
         }
+        
     }
 }

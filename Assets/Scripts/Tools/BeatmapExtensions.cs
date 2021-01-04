@@ -7,11 +7,10 @@ namespace Tools
 {
     public static class BeatmapExtensions
     {
-        public static List<ParsedNote> ParseNotes(this BeatmapWord word)
-        {
-            return word.text.ToCharArray()
+        public static List<ParsedChar> ParseNotes(this BeatmapWord word) =>
+            word.text.ToCharArray()
                 .Select((c, i) =>
-                    new ParsedNote
+                    new ParsedChar
                     {
                         beat = i * word.beatInterval,
                         character = c,
@@ -19,15 +18,20 @@ namespace Tools
                 )
                 .Where(note => note.character != ' ')
                 .ToList();
-        }
 
-        public static float LastBeat(this BeatmapWord word) => 
-            word.beat + word.BeatWidth();
-    
-        public static float BeatWidth(this BeatmapWord word) => 
-            (word.text.Length-1) * word.beatInterval;
+        public static List<ParsedCharBase> ParseNotes(this BeatmapChord word) =>
+            word.text.ToCharArray()
+                .Select((c, i) =>
+                    new ParsedCharBase
+                    {
+                        character = c,
+                    }
+                )
+                .ToList();
 
-        public static IEnumerable<RuntimeNote> GetNotes(this IEnumerable<RuntimeWord> words) =>
+        public static float LastBeat(this BeatmapWordBase word) => word.beat + word.BeatWidth;
+
+        public static IEnumerable<RuntimeChar> GetNotes(this IEnumerable<RuntimeWord> words) =>
             words.SelectMany(word => word.CharNotes);
         
         public static float SecToBeats(this Beatmap b, float seconds) => (seconds - b.beatOffset) * b.BeatsPerSec;
