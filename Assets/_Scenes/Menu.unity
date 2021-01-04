@@ -176,6 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -204,8 +205,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 357716769}
   m_HandleRect: {fileID: 357716768}
   m_Direction: 2
-  m_Value: -0.00020935145
-  m_Size: 0.56663275
+  m_Value: -0.0000029585333
+  m_Size: 0.5667656
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -415,7 +416,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 216.66254}
+  m_AnchoredPosition: {x: 0, y: 216.61783}
   m_SizeDelta: {x: 0, y: 500}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &123147349
@@ -583,6 +584,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 100
   m_DefaultSpriteDPI: 100
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &140342995
 Canvas:
   m_ObjectHideFlags: 0
@@ -817,6 +819,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 100
   m_DefaultSpriteDPI: 100
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &156073951
 Canvas:
   m_ObjectHideFlags: 0
@@ -2248,6 +2251,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 100
   m_DefaultSpriteDPI: 100
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &561857679
 Canvas:
   m_ObjectHideFlags: 0
@@ -3763,7 +3767,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: f6cef0e3cf6d1054d9b98be07f3939ca,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50.100006
+      value: -50.099976
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: f6cef0e3cf6d1054d9b98be07f3939ca,
         type: 3}
@@ -4795,7 +4799,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: f6cef0e3cf6d1054d9b98be07f3939ca,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 35.899994
+      value: 35.900024
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: f6cef0e3cf6d1054d9b98be07f3939ca,
         type: 3}
@@ -5493,6 +5497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -5893,6 +5898,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 100
   m_DefaultSpriteDPI: 100
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &2073380152
 Canvas:
   m_ObjectHideFlags: 0
