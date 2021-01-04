@@ -20,6 +20,9 @@ namespace Gameplay.Domain
 
         public RuntimeWord(BeatmapWord word)
         {
+            if (word.text.Match(@"^xxx*$").Success)
+                word = word.Clone(textOverride: Dict.DictEn.GetRandomWordOfLength(word.text.Length));
+
             CharNotes = word.ParseNotes().Select(note => new RuntimeNote(note, word.beat + note.beat)).ToList();
             if (!CharNotes.Any())
                 throw new Exception("Empty word: " + this);

@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace Shared.Domain
 {
@@ -14,5 +15,12 @@ namespace Shared.Domain
         {
             this.beat = beat;
         }
+        
+        public BeatmapWord Clone(float? beatOverride = null, [CanBeNull] string textOverride = null) => new BeatmapWord
+        {
+            beat = beatOverride ?? beat,
+            text = textOverride ?? text,
+            beatInterval = beatInterval,
+        };
     }
 }

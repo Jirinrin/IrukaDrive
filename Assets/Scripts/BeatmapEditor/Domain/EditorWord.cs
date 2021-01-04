@@ -50,12 +50,7 @@ namespace BeatmapEditor.Domain
 
         public BeatmapWord CloneWord(float? beat = null)
         {
-            return new BeatmapWord
-            {
-                beat = beat ?? Beat,
-                text = Text,
-                beatInterval = BeatInterval,
-            };
+            return _word.Clone(beat);
         }
     }
 }
