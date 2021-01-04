@@ -85,5 +85,14 @@ namespace BeatmapEditor
         }
 
         public void BackToMainMenu() => GameManager.ToMainMenu();
+
+        private void OnEnable()
+        {
+            EditorInputManager.Save += SaveBeatmap;
+        }
+        private void OnDisable()
+        {
+            EditorInputManager.Save -= SaveBeatmap;
+        }
     }
 }

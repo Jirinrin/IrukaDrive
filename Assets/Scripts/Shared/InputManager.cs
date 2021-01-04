@@ -1,8 +1,9 @@
-﻿using System;
+﻿// ReSharper disable InconsistentNaming
+
+using System;
 using Tools.Commons;
 using UnityEngine;
 using UnityEngine.InputSystem;
-// ReSharper disable InconsistentNaming
 
 namespace Shared
 {
