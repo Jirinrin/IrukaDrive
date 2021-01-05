@@ -82,7 +82,7 @@ namespace BeatmapEditor
         {
             currentBeatmap = SerializationHelpers.LoadBeatmap(currentBeatmap.filePath);
             ResetEditor();
-            EditorTrack.Instance.LoadBeatmap(currentBeatmap);
+            EditorTrack.Instance.LoadBeatmap(currentBeatmap, true);
         }
 
         private void ResetEditor()
