@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Menu.ScreenControllers.SongSelect.Components;
@@ -41,7 +41,8 @@ namespace Menu.ScreenControllers.SongSelect
 
         private void OnDisable()
         {
-            SongManager.Instance.Stop();
+            if (SongManager.Instance)
+                SongManager.Instance.Stop();
         }
 
         private void Start()
