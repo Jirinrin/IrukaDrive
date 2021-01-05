@@ -14,7 +14,7 @@ namespace Shared
 
         public static TViewState viewState;
 
-        protected void InitContainerRect()
+        protected virtual void Init()
         {
             containerRect = containerRectTransform.rect;
         }

@@ -25,7 +25,7 @@ namespace Gameplay.SingletonComponents
         {
             viewState = new TrackViewState(beatmap.bpm);
         
-            InitContainerRect();
+            Init();
 
             _notesRecycler.Init(words);
             _sheet.InitSheet(beatmap);

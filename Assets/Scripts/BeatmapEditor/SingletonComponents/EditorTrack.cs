@@ -15,6 +15,8 @@ namespace BeatmapEditor.SingletonComponents
         private bool _shouldDraw;
         private bool _zoomed;
 
+        private bool _initted;
+
         public void RefreshBeatmap()
         {
             _notesRecycler.RefreshBeatmap();
@@ -27,6 +29,13 @@ namespace BeatmapEditor.SingletonComponents
             _sheet = EditorTrackSheetBg.Instance;
         }
 
+        protected override void Init()
+        {
+            base.Init();
+            EditorTrackClipboard.Instance.Init();
+            _initted = true;
+        }
+
         public void LoadBeatmap(Beatmap beatmap, bool keepViewState = false)
         {
             if (keepViewState)
@@ -34,10 +43,11 @@ namespace BeatmapEditor.SingletonComponents
             else
                 viewState = new EditorTrackViewState();
             
-            InitContainerRect();
+            if (!_initted)
+                Init();
 
             _notesRecycler.Init(beatmap);
-            EditorTrackClipboard.Instance.Init();
+            
             // todo: also refresh window?
             
             _sheet.InitSheet(beatmap);
