@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Components;
 using Gameplay.Domain;
@@ -110,6 +110,12 @@ namespace Gameplay.SingletonComponents
         {
             GameplayManager.OnChangeCurrentWord += ChangeCurrentWord;
             GameplayManager.OnChangeCurrentChar += ChangeCurrentChar;
+        }
+
+        private void OnDisable()
+        {
+            GameplayManager.OnChangeCurrentWord -= ChangeCurrentWord;
+            GameplayManager.OnChangeCurrentChar -= ChangeCurrentChar;
         }
     }
 }
