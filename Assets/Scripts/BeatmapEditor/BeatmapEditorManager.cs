@@ -15,6 +15,15 @@ namespace BeatmapEditor
 
         private static bool _inEditorPlay;
 
+        private bool _isFunctional;
+        private void SetFunctional(bool isFunctional)
+        {
+            if (_isFunctional == isFunctional)
+                return;
+            _isFunctional = isFunctional;
+            EditorTrackGestures.Instance.enabled = isFunctional;
+        }
+
         public void PlayBeatmapFrom(float beatTime, bool autoplay = true)
         {
             // todo: somehow keep this scene loaded in background
@@ -24,6 +33,7 @@ namespace BeatmapEditor
 
         private void Start()
         {
+            SetFunctional(true);
             // For dev
             if (GameManager.State != GameState.BeatmapEditor)
             {
@@ -39,6 +49,8 @@ namespace BeatmapEditor
             }
             else if (currentBeatmap != null)
                 ReloadBeatmap();
+            else
+                SetFunctional(false);
         }
 
         public void SaveBeatmap()
@@ -61,6 +73,7 @@ namespace BeatmapEditor
             {
                 currentBeatmap = b ?? currentBeatmap;
                 EditorTrack.Instance.InitTrack(currentBeatmap);
+                SetFunctional(true);
             });
         }
 
