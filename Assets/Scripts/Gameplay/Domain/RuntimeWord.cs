@@ -7,46 +7,43 @@ using UnityEngine;
 
 namespace Gameplay.Domain
 {
-    public class RuntimeWord : ParsedWord<RuntimeChar>
+    public sealed class RuntimeWord : ParsedWord<RuntimeChar>
     {
-        public readonly string text;
+        private readonly string _text;
+        private bool _passed;
+        public bool Finished => _inputNoteIndex >= CharNotes.Count;
+        public float CurrentBeat => IsChord ? Beat : (currentInputChar?.beatAbs ?? Beat);
+        public bool WasHit => _inputNoteIndex > 0;
 
         private int _inputNoteIndex;
-        private int _noteIndex;
         [CanBeNull] public RuntimeChar currentInputChar;
-        [CanBeNull] public RuntimeChar currentChar;
-        public bool Finished => _inputNoteIndex >= CharNotes.Count;
 
-        private bool _passed;
+        // Exclusive to Word
+        private int _noteIndex;
+        [CanBeNull] private RuntimeChar _currentChar;
+        
+        // Exclusive to Chord
+        private string _remainingChordText;
 
         public RuntimeWord(BeatmapWord word)
         {
             if (word.text.Match(@"^xxx*$").Success)
                 word = word.Clone(textOverride: Dict.DictEn.GetRandomWordOfLength(word.text.Length));
-
+            
+            Beat = word.beat;
+            LastBeat = word.LastBeat();
+            IsChord = word.isChord;
             CharNotes = word.ParseNotes().Select(note => new RuntimeChar(note, word.beat + note.beat)).ToList();
             if (!CharNotes.Any())
                 throw new Exception("Empty word: " + this);
-        
-            Beat = word.beat;
-            LastBeat = word.LastBeat();
+            _text = word.text;
+
             currentInputChar = CharNotes[0];
-            currentChar = CharNotes[0];
 
-            text = word.text;
-        }
-
-        // あくまでのsafeguard: in theory this should never trigger
-        public void Finish(bool errorOnTrigger = true)
-        {
-            if (Finished)
-                return;
-
-            if (errorOnTrigger)
-                Debug.LogError($"Word was unfinished, which it shouldn't be!! {text} -- {currentInputChar.character}");
-
-            do currentInputChar.result = NoteResult.Miss;
-            while (AdvanceInputNote() != null);
+            if (IsChord)
+                _remainingChordText = _text;
+            else
+                _currentChar = CharNotes[0];
         }
 
         private void SetCurrentInputNote(int? index)
@@ -70,29 +67,80 @@ namespace Gameplay.Domain
             SetCurrentInputNote(_inputNoteIndex);
             return _inputNoteIndex;
         }
+        
+        // WORD STUFF
 
+        public (bool hit, RuntimeChar c) HitOnWord(char c)
+        {
+            if (Finished) return (false, null);
+
+            return (c == currentInputChar?.character, currentInputChar);
+        }
+        
+        // CHORD STUFF
+
+        public (bool hit, RuntimeChar currentInputChar, bool finished) HitOnChord(char c)
+        {
+            if (Finished) return (false, null, true);
+
+            var currentC = currentInputChar;
+            AdvanceInputNote();
+            
+            var i = _remainingChordText.IndexOf(c);
+            if (i == -1)
+                return (false, currentC, Finished);
+
+            _remainingChordText = _remainingChordText.Remove(i, 1);
+
+            return (true, currentC, Finished);
+        }
+
+        public void FinishChord(Action<RuntimeChar, NoteResult> setNoteResult)
+        {
+            if (Finished)
+            {
+                Debug.LogWarning($"Tried to finish already finished chord: {_text}");
+                return;
+            }
+
+            do setNoteResult(currentInputChar, NoteResult.Miss);
+            while (AdvanceInputNote() != null);
+        }
+        
+        // MISC
+        
+        // あくまでのsafeguard: in theory this should never trigger
+        public void FinishWord(bool errorOnTrigger = true)
+        {
+            if (Finished || IsChord)
+                return;
+
+            if (errorOnTrigger)
+                Debug.LogError($"Word was unfinished, which it shouldn't be!! {_text} -- {currentInputChar!.character}");
+
+            do currentInputChar!.result = NoteResult.Miss;
+            while (AdvanceInputNote() != null);
+        }
+        
         public bool CheckPassedNote(float beatTime)
         {
-            if (_passed || !(currentChar?.beatAbs < beatTime))
+            if (_passed || (IsChord ? Beat : _currentChar?.beatAbs) > beatTime)
                 return false;
 
             // Passed new note!
-            _noteIndex++;
-            if (_noteIndex >= CharNotes.Count)
-            {
+            if (IsChord)
                 _passed = true;
-                currentChar = null;
-            }
             else
-                currentChar = CharNotes[_noteIndex];
-
-            // todo: maybe make this flip in-between notes or sth
-            // if (_inputNoteIndex < _noteIndex && CurrentInputNote?.Result == null)
-            // {
-            //     _inputNoteIndex = _noteIndex;
-            //     SetCurrentInputNote(_passed ? (int?) null : _inputNoteIndex);
-            // }
-
+            {
+                _noteIndex++;
+                if (_noteIndex >= CharNotes.Count)
+                {
+                    _passed = true;
+                    _currentChar = null;
+                }
+                else
+                    _currentChar = CharNotes[_noteIndex];
+            }
             return true;
         }
     }

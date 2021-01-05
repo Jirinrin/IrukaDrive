@@ -23,4 +23,12 @@ namespace Gameplay.Domain
         HitLate = 3,
         WrongChar = 4,
     }
+
+    public enum ChordResult
+    {
+        AllPerfect = 5,
+        AllGood = 6,
+        AllWrong = 7,
+        Partial = 8,
+    }
 }

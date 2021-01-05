@@ -54,7 +54,8 @@ namespace BeatmapEditor.Components
         public void Edit()
         {
             _activeInputField = Instantiate(inputFieldPrefab, transform);
-            _activeInputField.transform.localPosition = new Vector3(word.BeatWidth/2f * _beatSpacing,-30f,0);
+            var inputX = IsChord ? 0 : word.BeatWidth / 2f * _beatSpacing;
+            _activeInputField.transform.localPosition = new Vector3(inputX,-30f,0);
             _activeInputField.onSubmit.AddListener(OnSubmitWordType);
             _activeInputField.SetTextWithoutNotify(word.Text);
             _activeInputField.ActivateInputField();
@@ -105,7 +106,7 @@ namespace BeatmapEditor.Components
             _dragDelta += eventData.delta.x * ScreenToCanvas.Factor;
             if (_dragType == DragType.MoveWord)
                 transform.localPosition = new Vector3(_xBeforeDrag + _dragDelta.RoundToNearest(_beatSpacing*C.EditorBeatSnap), 0, 0);
-            else
+            else if (!IsChord)
                 UpdateBeatInterval(DragXToBeatInterval(_dragDelta));
                 
         }
@@ -130,7 +131,7 @@ namespace BeatmapEditor.Components
                 _dragType = DragType.MoveWord;
                 _xBeforeDrag = transform.localPosition.x;
             }
-            else if (eventData.button == PointerEventData.InputButton.Right)
+            else if (eventData.button == PointerEventData.InputButton.Right && !IsChord)
             {
                 _dragType = DragType.ChangeBeatInterval;
                 _beatIntervalIndexBeforeDrag = C.BeatIntervalValues.FindIndex(val => val.Equals(word.BeatInterval));

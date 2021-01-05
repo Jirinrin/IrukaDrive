@@ -50,7 +50,10 @@ namespace Gameplay.SingletonComponents
         private void SetCurrentWordObj(RuntimeWordObject obj)
         {
             _currentWordObj = obj;
-            ChangeCurrentChar(0);
+            if (obj.IsChord)
+                ChangeCurrentChord(obj);
+            else
+                ChangeCurrentChar(0);
         }
 
         private void ChangeCurrentWord(float beat)
@@ -65,7 +68,11 @@ namespace Gameplay.SingletonComponents
             // foreach (var obj in _currentWordObjects)
             //     obj.color = Color.white;
         }
-    
+
+        private void ChangeCurrentChord(RuntimeWordObject obj) => obj.SetColor(Color.red);
+        private void UnmarkCurrentChord() => _currentWordObj.SetColor(Color.white);
+        private void UnmarkCurrentChord(IEnumerable<NoteResult> _) => UnmarkCurrentChord(); 
+
         private void ChangeCurrentChar(int? charIndex)
         {
             if (_currentWordObj.charObjRefs == null)
@@ -111,12 +118,16 @@ namespace Gameplay.SingletonComponents
             
             GameplayManager.OnChangeCurrentWord += ChangeCurrentWord;
             GameplayManager.OnChangeCurrentChar += ChangeCurrentChar;
+            GameplayManager.OnHitChord += UnmarkCurrentChord;
+            GameplayManager.OnMissChord += UnmarkCurrentChord;
         }
 
         private void OnDisable()
         {
             GameplayManager.OnChangeCurrentWord -= ChangeCurrentWord;
             GameplayManager.OnChangeCurrentChar -= ChangeCurrentChar;
+            GameplayManager.OnHitChord -= UnmarkCurrentChord;
+            GameplayManager.OnMissChord -= UnmarkCurrentChord;
         }
     }
 }

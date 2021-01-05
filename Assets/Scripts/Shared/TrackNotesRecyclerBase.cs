@@ -56,19 +56,18 @@ namespace Shared
             item.obj.word = item.backingItem;
             var itemTransform = item.obj.transform;
             itemTransform.localPosition = new Vector3(BeatSpacing * item.startIndex.IndexToBeat(), 0, 0);
-            if (item.obj.charObjRefs == null || item.obj.charObjRefs.Count > 0)
-                item.obj.charObjRefs = new List<CharObject>();
 
-            foreach (var note in item.backingItem.CharNotes)
+            var charObjRefs = item.backingItem.CharNotes.Select(c =>
             {
                 var charObj = _charRecyclerPool.Request();
-                InitCharObj(charObj, note);
+                InitCharObj(charObj, c);
                 var charObjTransform = charObj.transform;
                 charObjTransform.SetParent(itemTransform);
-                charObjTransform.localPosition = new Vector3(BeatSpacing * note.beat, 0, 0);
                 charObj.gameObject.SetActive(true);
-                item.obj.charObjRefs.Add(charObj);
-            }
+                return charObj;
+            }).ToList();
+            
+            item.obj.Init(charObjRefs, BeatSpacing);
         }
 
         protected virtual void CleanupWord(TWordObj item, int index)

@@ -1,6 +1,7 @@
-using System.Linq;
+﻿using System.Linq;
 using Shared.Domain;
 using Tools;
+using UnityEngine;
 
 namespace BeatmapEditor.Domain
 {
@@ -11,10 +12,14 @@ namespace BeatmapEditor.Domain
         // For this the original CharNotes cannot be kept
         public string Text
         {
-            get => _word.text;
+            get => _word.isChord ? $"[[{_word.text}" : _word.text;
             set
             {
-                _word.text = value;
+                var chordMatch = value.Match(@"^\[\[(.+)$");
+                // todo: also do such a thing for random word of length? e.g. {3} like syntax
+                _word.isChord = chordMatch.Success;
+                _word.text = _word.isChord ? chordMatch.Groups[1].Value : value;
+                Debug.Log($"set text: {_word.text}");
                 CharNotes = _word.ParseNotes();
             }
         }
@@ -39,6 +44,7 @@ namespace BeatmapEditor.Domain
         }
         public override float LastBeat => _word.LastBeat();
         public float BeatWidth => _word.BeatWidth();
+        public override bool IsChord => _word.isChord;
 
         public EditorWord(BeatmapWord word)
         {
@@ -48,9 +54,6 @@ namespace BeatmapEditor.Domain
 
         public void Delete() => BeatmapEditorManager.currentBeatmap.words.Remove(_word);
 
-        public BeatmapWord CloneWord(float? beat = null)
-        {
-            return _word.Clone(beat);
-        }
+        public BeatmapWord CloneWord(float? beat = null) => _word.Clone(beat);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Gameplay.Domain;
 using TMPro;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace Gameplay.SingletonComponents
 
         private static readonly int HitResultKey = Animator.StringToHash("HitResult");
         
-        private static readonly string[] ResultStrings = { "NULL", "PERFECT", "EARLY", "LATE", "ERROR" };
+        private static readonly string[] ResultStrings = { "MISS", "PERFECT", "EARLY", "LATE", "ERROR", "PERFECT", "GOOD", "ERROR", "PARTIAL" };
 
         private TextMeshProUGUI _text;
         private Animator _anim;
@@ -25,9 +26,8 @@ namespace Gameplay.SingletonComponents
             _anim = GetComponent<Animator>();
         }
 
-        private void OnHitResult(NoteResult result)
+        private void OnHitResult(int index)
         {
-            var index = (int) result;
             _text.text = ResultStrings[index];
             _anim.SetInteger(HitResultKey, index);
             StopAllCoroutines();
@@ -39,19 +39,40 @@ namespace Gameplay.SingletonComponents
             yield return new WaitForSeconds(time);
             _anim.SetInteger(HitResultKey, -1);
         }
+
+        private ChordResult ChordResultsToDisplayIndex(IEnumerable<NoteResult> results)
+        {
+            var wrongFound = false;
+            var goodFound = false;
+            var perfectFound = false;
+            foreach (var r in results)
+            {
+                if (r == NoteResult.Miss || r == NoteResult.WrongChar) wrongFound = true;
+                else if (r == NoteResult.HitPerfect) perfectFound = true;
+                else goodFound = true;
+            }
+            if (wrongFound)
+                return goodFound || perfectFound ? ChordResult.Partial : ChordResult.AllWrong;
+            return goodFound ? ChordResult.AllGood : ChordResult.AllPerfect;
+        }
         
-        private void OnHit(char c, NoteResult result, float? _) => OnHitResult(result);
-        private void OnMiss() => OnHitResult(NoteResult.Miss);
+        private void OnHit(char c, NoteResult result, float? _) => OnHitResult((int) result);
+        private void OnHitChord(IEnumerable<NoteResult> results) => OnHitResult((int) ChordResultsToDisplayIndex(results));
+        private void OnMiss() => OnHitResult((int) NoteResult.Miss);
         
         private void OnEnable()
         {
             GameplayManager.OnHit += OnHit;
+            GameplayManager.OnHitChord += OnHitChord;
             GameplayManager.OnMiss += OnMiss;
+            GameplayManager.OnMissChord += OnMiss;
         }
         private void OnDisable()
         {
             GameplayManager.OnHit -= OnHit;
+            GameplayManager.OnHitChord -= OnHitChord;
             GameplayManager.OnMiss -= OnMiss;
+            GameplayManager.OnMissChord -= OnMiss;
         }
     }
 }

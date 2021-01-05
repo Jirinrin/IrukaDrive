@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using TMPro;
+using Tools;
 using UnityEngine;
 
 namespace Shared.Domain
@@ -16,16 +17,37 @@ namespace Shared.Domain
         where TWord : ParsedWord<TChar>
         where TChar : ParsedChar // todo: a way to infer this?
     {
+        private const float ChordDefaultHeightDiff = 30;
+        
         [CanBeNull] public List<CharObject> charObjRefs;
 
         public TWord word;
         
         protected float _beatSpacing;
-        
-        protected void RefreshWord()
+
+        public bool IsChord => word.IsChord;
+
+        public void RefreshWord()
         {
-            foreach (var charObj in charObjRefs)
-                charObj.transform.localPosition = new Vector3(_beatSpacing * charObj.note.beat, 0, 0);
+            if (charObjRefs == null)
+                return;
+
+            if (IsChord)
+            {
+                var char0Offset = (charObjRefs.Count-1) / 2f;
+                foreach (var (charObj, i) in charObjRefs.WithIndex())
+                    charObj.transform.localPosition = new Vector3(0, (char0Offset - i) * ChordDefaultHeightDiff, 0);
+            }
+            else
+                foreach (var charObj in charObjRefs)
+                    charObj.transform.localPosition = new Vector3(_beatSpacing * charObj.note.beat, 0, 0);
+        }
+
+        public void Init(List<CharObject> charObjRefs, float beatSpacing)
+        {
+            this.charObjRefs = charObjRefs;
+            _beatSpacing = beatSpacing;
+            RefreshWord();
         }
 
         public void UpdateSpacing(float newSpacing)
@@ -34,7 +56,7 @@ namespace Shared.Domain
             RefreshWord();
         }
 
-        protected void SetColor(Color color)
+        public void SetColor(Color color)
         {
             foreach (var charObj in charObjRefs)
                 charObj.obj.color = color;
@@ -88,6 +110,7 @@ namespace Shared.Domain
     
     public abstract class ParsedWord<TChar> where TChar : ParsedChar
     {
+        public virtual bool IsChord { get; protected set; }
         public List<TChar> CharNotes { get; protected set; }
         public virtual float Beat { get; set; }
         public virtual float LastBeat { get; protected set; }
