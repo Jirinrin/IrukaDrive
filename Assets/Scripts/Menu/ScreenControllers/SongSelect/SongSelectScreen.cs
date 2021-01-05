@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Menu.ScreenControllers.SongSelect.Components;
@@ -20,7 +20,7 @@ namespace Menu.ScreenControllers.SongSelect
 
         private AudioSource _audioSource;
 
-        private static List<Song> songsCached = new List<Song>();
+        private static readonly List<Song> SongsCached = new List<Song>();
 
         private Song _selectedSong;
         private string _selectedDiffPath;
@@ -35,6 +35,8 @@ namespace Menu.ScreenControllers.SongSelect
         private void OnEnable()
         {
             _audioSource = GetComponent<AudioSource>();
+            if (_selectedSong != null)
+                SelectSong(_selectedSong, true);
         }
 
         private void OnDisable()
@@ -46,14 +48,14 @@ namespace Menu.ScreenControllers.SongSelect
         {
             InitSongWheel();
             songDataPanel.OnChooseDiff += SelectDiff;
-            SelectSong(songsCached.First());
+            SelectSong(SongsCached.First());
         }
 
         // todo: allow nested beatmaps and stuff
         // todo: think about the right structure. Which data per chart and which maybe in a shared thing? Which data do we want to know in song select already?
         private void InitSongs()
         {
-            if (songsCached.Any())
+            if (SongsCached.Any())
                 return;
             
             var songs = Directory.GetDirectories($"{Application.streamingAssetsPath}/Beatmaps");
@@ -68,7 +70,7 @@ namespace Menu.ScreenControllers.SongSelect
                 }
 
                 var firstBeatmap = SerializationHelpers.LoadBeatmap(diffPaths.First());
-                songsCached.Add(new Song
+                SongsCached.Add(new Song
                 {
                     title = firstBeatmap.title,
                     artist = firstBeatmap.artist,
@@ -81,9 +83,13 @@ namespace Menu.ScreenControllers.SongSelect
             }
         }
 
-        private void SelectSong(Song song)
+        private void SelectSongSimple(Song song) => SelectSong(song);
+        private void SelectSong(Song song, bool selectAnyway = false)
         {
-            if (_selectedSong != null || _selectedSong?.folderPath == song.folderPath)
+            if (_selectedSong?.folderPath == song.folderPath && !selectAnyway)
+                return;
+            
+            if (_selectedSong != null)
                 _cardsLookup[_selectedSong.folderName].SetSelected(false);
             _selectedSong = song;
             _cardsLookup[_selectedSong.folderName].SetSelected(true);
@@ -102,10 +108,10 @@ namespace Menu.ScreenControllers.SongSelect
         {
             _cardsLookup = new Dictionary<string, SongCard>();
             
-            foreach (var (song, i) in songsCached.WithIndex())
+            foreach (var (song, i) in SongsCached.WithIndex())
             {
                 var card = Instantiate(songCardPrefab, songWheelContainer.transform);
-                card.Init(song, SelectSong);
+                card.Init(song, SelectSongSimple);
                 _cardsLookup[song.folderName] = card;
                 
                 if (i == 0)
