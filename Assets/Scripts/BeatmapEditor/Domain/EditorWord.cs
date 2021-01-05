@@ -1,10 +1,10 @@
-﻿using System.Linq;
+using System.Linq;
 using Shared.Domain;
 using Tools;
 
 namespace BeatmapEditor.Domain
 {
-    public class EditorWord : ParsedWord<ParsedNote>
+    public class EditorWord : ParsedWord<ParsedChar>
     {
         private readonly BeatmapWord _word;
 

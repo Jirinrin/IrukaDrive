@@ -23,7 +23,7 @@ namespace Shared.Domain
         
         public int Score => Mathf.FloorToInt((perfects + (earlies + lates) * .5f) * _scorePerNote); // Range 0-10000000
         
-        public BeatmapScore(IReadOnlyCollection<RuntimeNote> notes)
+        public BeatmapScore(IReadOnlyCollection<RuntimeChar> notes)
         {
             _scorePerNote = (float)MaxScore / notes.Count;
 

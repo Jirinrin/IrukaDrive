@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Domain;
 using Shared.Domain;
@@ -7,7 +7,7 @@ namespace Tools
 {
     public static class BeatmapExtensions
     {
-        public static List<ParsedNote> ParseNotes(this BeatmapWord word)
+        public static List<ParsedChar> ParseNotes(this BeatmapWord word)
         {
             return word.text.ToCharArray()
                 .Select((c, i) =>
@@ -27,7 +27,7 @@ namespace Tools
         public static float BeatWidth(this BeatmapWord word) => 
             (word.text.Length-1) * word.beatInterval;
 
-        public static IEnumerable<RuntimeNote> GetNotes(this IEnumerable<RuntimeWord> words) =>
+        public static IEnumerable<RuntimeChar> GetNotes(this IEnumerable<RuntimeWord> words) =>
             words.SelectMany(word => word.CharNotes);
         
         public static float SecToBeats(this Beatmap b, float seconds) => (seconds - b.beatOffset) * b.BeatsPerSec;

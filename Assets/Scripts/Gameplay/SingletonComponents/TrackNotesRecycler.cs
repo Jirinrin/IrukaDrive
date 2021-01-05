@@ -9,11 +9,11 @@ using UnityEngine;
 
 namespace Gameplay.SingletonComponents
 {
-    public class TrackNotesRecycler : TrackNotesRecyclerBase<TrackNotesRecycler, RuntimeWord, RuntimeNote, RuntimeWordObject>
+    public class TrackNotesRecycler : TrackNotesRecyclerBase<TrackNotesRecycler, RuntimeWord, RuntimeChar, RuntimeWordObject>
     {
-        protected override void InitCharObj(CharObject charObj, RuntimeNote note)
+        protected override void InitCharObj(CharObject charObj, RuntimeChar ch)
         {
-            base.InitCharObj(charObj, note);
+            base.InitCharObj(charObj, ch);
             charObj.obj.color = Color.white;
         }
 

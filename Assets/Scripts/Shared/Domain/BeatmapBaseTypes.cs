@@ -6,15 +6,15 @@ using UnityEngine;
 
 namespace Shared.Domain
 {
-    public class ParsedNote
+    public class ParsedChar
     {
         public float beat;
         public char character;
     }
 
-    public class WordObject<TWord, TNote> : MonoBehaviour
-        where TWord : ParsedWord<TNote>
-        where TNote : ParsedNote // todo: a way to infer this?
+    public class WordObject<TWord, TChar> : MonoBehaviour
+        where TWord : ParsedWord<TChar>
+        where TChar : ParsedChar // todo: a way to infer this?
     {
         [CanBeNull] public List<CharObject> charObjRefs;
 
@@ -61,14 +61,14 @@ namespace Shared.Domain
 
     public class CharObject : MonoBehaviour
     {
-        [NonSerialized] public ParsedNote note;
+        [NonSerialized] public ParsedChar note;
         [NonSerialized] public TextMeshProUGUI obj;
 
-        public void Init(ParsedNote note)
+        public void Init(ParsedChar ch)
         {
-            this.note = note;
+            this.note = ch;
             obj = GetComponent<TextMeshProUGUI>();
-            Text = note.character.ToString();
+            Text = ch.character.ToString();
         }
         
         public string Text
@@ -86,9 +86,9 @@ namespace Shared.Domain
         }
     }
     
-    public abstract class ParsedWord<TNote> where TNote : ParsedNote
+    public abstract class ParsedWord<TChar> where TChar : ParsedChar
     {
-        public List<TNote> CharNotes { get; protected set; }
+        public List<TChar> CharNotes { get; protected set; }
         public virtual float Beat { get; set; }
         public virtual float LastBeat { get; protected set; }
     }

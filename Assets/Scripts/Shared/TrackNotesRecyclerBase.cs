@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Shared.Domain;
@@ -9,11 +9,11 @@ using Object = UnityEngine.Object;
 
 namespace Shared
 {
-    public abstract class TrackNotesRecyclerBase<T, TWord, TNote, TWordObj> : Singleton<T> 
-        where T : TrackNotesRecyclerBase<T, TWord, TNote, TWordObj>
-        where TWord : ParsedWord<TNote>
-        where TNote : ParsedNote // todo: infer from TWord?
-        where TWordObj : WordObject<TWord, TNote>
+    public abstract class TrackNotesRecyclerBase<T, TWord, TChar, TWordObj> : Singleton<T> 
+        where T : TrackNotesRecyclerBase<T, TWord, TChar, TWordObj>
+        where TWord : ParsedWord<TChar>
+        where TChar : ParsedChar // todo: infer from TWord?
+        where TWordObj : WordObject<TWord, TChar>
     {
         [SerializeField] protected TextMeshProUGUI characterPrefab = null;
         private CharObject _charObjPrefab;
@@ -49,7 +49,7 @@ namespace Shared
         private CharObject CreateChar() => Instantiate(_charObjPrefab, transform);
         private TWordObj CreateWord() => Instantiate(_emptyWordObjPrefab, transform);
 
-        protected virtual void InitCharObj(CharObject charObj, TNote note) => charObj.Init(note);
+        protected virtual void InitCharObj(CharObject charObj, TChar ch) => charObj.Init(ch);
         
         protected virtual void InitWord(ObjWidthItem item)
         {

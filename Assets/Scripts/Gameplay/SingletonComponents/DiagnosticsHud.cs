@@ -14,7 +14,7 @@ namespace Gameplay.SingletonComponents
         public Text outputTextBox;
         public Text resultsTextBox;
 
-        private IEnumerable<RuntimeNote> _beatmapResult;
+        private IEnumerable<RuntimeChar> _beatmapResult;
     
         private void Start()
         {

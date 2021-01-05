@@ -5,11 +5,11 @@ using BeatmapEditor.Domain;
 using Shared;
 using Shared.Domain;
 using TMPro;
-using UnityEngine; // todo: remove
+using UnityEngine;
 
 namespace BeatmapEditor.SingletonComponents
 {
-    public class EditorTrackNotesRecycler : TrackNotesRecyclerBase<EditorTrackNotesRecycler, EditorWord, ParsedNote, EditorWordObject>
+    public class EditorTrackNotesRecycler : TrackNotesRecyclerBase<EditorTrackNotesRecycler, EditorWord, ParsedChar, EditorWordObject>
     {
         [SerializeField] private TMP_InputField inputFieldPrefab = null;
 

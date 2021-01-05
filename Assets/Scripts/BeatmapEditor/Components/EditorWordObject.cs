@@ -11,7 +11,7 @@ using UnityEngine.InputSystem;
 
 namespace BeatmapEditor.Components
 {
-    public class EditorWordObject : WordObject<EditorWord, ParsedNote>, IPointerClickHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
+    public class EditorWordObject : WordObject<EditorWord, ParsedChar>, IPointerClickHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
     {
         [NonSerialized] public TMP_InputField inputFieldPrefab;
         
