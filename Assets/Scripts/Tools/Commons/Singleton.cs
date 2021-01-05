@@ -39,17 +39,19 @@ namespace Tools.Commons
 
                     if (_instance)
                         return _instance;
-                
-                    // Create new instance if one doesn't already exist.
-                    // Need to create a new GameObject to attach the singleton to.
-                    var singletonObject = new GameObject();
-                    _instance = singletonObject.AddComponent<T>();
-                    singletonObject.name = typeof(T) + " (Singleton)";
 
-                    // Make instance persistent.
-                    DontDestroyOnLoad(singletonObject);
+                    return null;
 
-                    return _instance;
+                    // // Create new instance if one doesn't already exist.
+                    // // Need to create a new GameObject to attach the singleton to.
+                    // var singletonObject = new GameObject();
+                    // _instance = singletonObject.AddComponent<T>();
+                    // singletonObject.name = typeof(T) + " (Singleton)";
+
+                    // // Make instance persistent.
+                    // DontDestroyOnLoad(singletonObject);
+
+                    // return _instance;
                 }
             }
         }
