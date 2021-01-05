@@ -20,16 +20,14 @@ namespace Gameplay.SingletonComponents
         private bool _shouldDraw;
 
         private RuntimeWordObject _currentWordObj;
+
         public void InitTrack(Beatmap beatmap, IEnumerable<RuntimeWord> words)
         {
-            base.InitTrack();
-
             viewState = new TrackViewState(beatmap.bpm);
         
-            _notesRecycler = TrackNotesRecycler.Instance;
+            InitContainerRect();
+
             _notesRecycler.Init(words);
-        
-            _sheet = TrackSheetBg.Instance;
             _sheet.InitSheet(beatmap);
         
             UpdateProgress(0f);
@@ -108,6 +106,9 @@ namespace Gameplay.SingletonComponents
 
         private void OnEnable()
         {
+            _notesRecycler = TrackNotesRecycler.Instance;
+            _sheet = TrackSheetBg.Instance;
+            
             GameplayManager.OnChangeCurrentWord += ChangeCurrentWord;
             GameplayManager.OnChangeCurrentChar += ChangeCurrentChar;
         }

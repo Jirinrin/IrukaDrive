@@ -40,12 +40,12 @@ namespace BeatmapEditor
                 GameManager.SetState(GameState.BeatmapEditor);
                 // Uncomment this for easy iterating
                 currentBeatmap = SerializationHelpers.LoadBeatmap($"{Application.streamingAssetsPath}/Beatmaps/Tutorial/advanced.drive");
-                EditorTrack.Instance.InitTrack(currentBeatmap);
+                EditorTrack.Instance.LoadBeatmap(currentBeatmap);
             }
             else if (_inEditorPlay)
             {
                 _inEditorPlay = false;
-                EditorTrack.Instance.InitTrack(currentBeatmap, true);
+                EditorTrack.Instance.LoadBeatmap(currentBeatmap, true);
             }
             else if (currentBeatmap != null)
                 ReloadBeatmap();
@@ -64,6 +64,7 @@ namespace BeatmapEditor
             // todo: display some message that it succeeded
         }
         
+        // Called from Load button
         public void LoadBeatmap()
         {
             if (currentBeatmap != null)
@@ -72,7 +73,7 @@ namespace BeatmapEditor
             SerializationHelpers.LoadBeatmap(b =>
             {
                 currentBeatmap = b ?? currentBeatmap;
-                EditorTrack.Instance.InitTrack(currentBeatmap);
+                EditorTrack.Instance.LoadBeatmap(currentBeatmap);
                 SetFunctional(true);
             });
         }
@@ -81,7 +82,7 @@ namespace BeatmapEditor
         {
             currentBeatmap = SerializationHelpers.LoadBeatmap(currentBeatmap.filePath);
             ResetEditor();
-            EditorTrack.Instance.InitTrack(currentBeatmap);
+            EditorTrack.Instance.LoadBeatmap(currentBeatmap);
         }
 
         private void ResetEditor()

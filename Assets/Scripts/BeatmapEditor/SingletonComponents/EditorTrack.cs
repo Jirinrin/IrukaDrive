@@ -21,25 +21,28 @@ namespace BeatmapEditor.SingletonComponents
             _shouldDraw = true;
         }
 
-        public void InitTrack(Beatmap beatmap, bool keepViewState = false)
+        public void OnEnable()
         {
-            base.InitTrack();
+            _notesRecycler = EditorTrackNotesRecycler.Instance;
+            _sheet = EditorTrackSheetBg.Instance;
+        }
 
+        public void LoadBeatmap(Beatmap beatmap, bool keepViewState = false)
+        {
             if (keepViewState)
                 viewState?.Init();
             else
                 viewState = new EditorTrackViewState();
+            
+            InitContainerRect();
 
-            _notesRecycler = EditorTrackNotesRecycler.Instance;
             _notesRecycler.Init(beatmap);
             EditorTrackClipboard.Instance.Init();
             // todo: also refresh window?
             
-            _sheet = EditorTrackSheetBg.Instance;
             _sheet.InitSheet(beatmap);
-            
             _sheet.DrawSheet(true); // todo: necessary?
-            
+
             Pan(0f);
             Zoom(0f, 0f);
         }

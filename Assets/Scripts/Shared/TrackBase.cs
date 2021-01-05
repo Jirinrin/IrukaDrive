@@ -13,8 +13,8 @@ namespace Shared
         [NonSerialized] public Rect containerRect;
 
         public static TViewState viewState;
-        
-        public void InitTrack()
+
+        protected void InitContainerRect()
         {
             containerRect = containerRectTransform.rect;
         }
