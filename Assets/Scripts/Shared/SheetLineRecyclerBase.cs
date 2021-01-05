@@ -11,6 +11,8 @@ namespace Shared
         [SerializeField] protected Line barLinePrefab = null;
         [SerializeField] protected Line beatLinePrefab = null;
 
+        private bool _initted;
+
         private RecyclerList<Line> _recyclerList1;
         private RecyclerList<Line> _recyclerList2;
 
@@ -60,15 +62,19 @@ namespace Shared
 
         public virtual void Init(Beatmap beatmap)
         {
-            var lineStartEndY = containerRect.height / 2f - 10f;
-            barLinePrefab = Instantiate(barLinePrefab, transform);
-            beatLinePrefab = Instantiate(beatLinePrefab, transform);
-            barLinePrefab.Start = new Vector3(0, lineStartEndY, 0);
-            barLinePrefab.End = new Vector3(0, -lineStartEndY, 0);
-            beatLinePrefab.Start = new Vector3(0, lineStartEndY, 0);
-            beatLinePrefab.End = new Vector3(0, -lineStartEndY, 0);
-            barLinePrefab.gameObject.SetActive(false);
-            beatLinePrefab.gameObject.SetActive(false);
+            if (!_initted)
+            {
+                var lineStartEndY = containerRect.height / 2f - 10f;
+                barLinePrefab = Instantiate(barLinePrefab, transform);
+                beatLinePrefab = Instantiate(beatLinePrefab, transform);
+                barLinePrefab.Start = new Vector3(0, lineStartEndY, 0);
+                barLinePrefab.End = new Vector3(0, -lineStartEndY, 0);
+                beatLinePrefab.Start = new Vector3(0, lineStartEndY, 0);
+                beatLinePrefab.End = new Vector3(0, -lineStartEndY, 0);
+                barLinePrefab.gameObject.SetActive(false);
+                beatLinePrefab.gameObject.SetActive(false);
+                _initted = true;
+            }
             
             _currentBeatmap = beatmap;
 
