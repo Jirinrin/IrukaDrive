@@ -29,7 +29,7 @@ namespace Gameplay.SingletonComponents
             }
         }
 
-        private void LoadBeatmap(IEnumerable<RuntimeWord> words)
+        private new void LoadBeatmap(IEnumerable<RuntimeWord> words)
         {
             _wordAppearActionQueue = new Dictionary<int, Queue<Action<RuntimeWordObject>>>();
             base.LoadBeatmap(words);
