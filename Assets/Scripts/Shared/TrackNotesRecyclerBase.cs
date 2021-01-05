@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Shared.Domain;
@@ -128,8 +128,8 @@ namespace Shared
 
         public void Cleanup()
         {
-            wordRecyclerList.Destroy();
-            _charRecyclerPool.Destroy();
+            wordRecyclerList?.Destroy();
+            _charRecyclerPool?.Destroy();
         }
 
         protected abstract float PanX { get; }

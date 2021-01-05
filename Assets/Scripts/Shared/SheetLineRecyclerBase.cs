@@ -89,8 +89,8 @@ namespace Shared
 
         public void Cleanup()
         {
-            _recyclerList1.Destroy();
-            _recyclerList2.Destroy();
+            _recyclerList1?.Destroy();
+            _recyclerList2?.Destroy();
         }
 
         protected abstract float PanX { get; }
