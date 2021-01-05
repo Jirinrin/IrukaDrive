@@ -8,6 +8,8 @@ namespace Shared
         public const float FloatTolerance = 0.001f;
     
         public const float EditorBeatSnap = .5f;
+        public const float EditorBeatSnapFine = .25f;
+        public const float EditorBeatSnapSuperFine = .01f;
         public const float DefaultBeatInterval = 1f;
         public static readonly List<float> BeatIntervalValues = new List<float>{.125f, 1f/6f, .25f, 1f/3f, .5f, 1f, 2f, 4f};
 
