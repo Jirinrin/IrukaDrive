@@ -19,7 +19,6 @@ namespace BeatmapEditor.Domain
                 // todo: also do such a thing for random word of length? e.g. {3} like syntax
                 _word.isChord = chordMatch.Success;
                 _word.text = _word.isChord ? chordMatch.Groups[1].Value : value;
-                Debug.Log($"set text: {_word.text}");
                 CharNotes = _word.ParseNotes();
             }
         }

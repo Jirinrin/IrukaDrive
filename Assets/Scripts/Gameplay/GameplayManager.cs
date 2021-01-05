@@ -155,8 +155,14 @@ namespace Gameplay
 
             if (AutoPlay)
             {
-                if (_currentWord?.currentInputChar?.beatAbs <= SongManager.Instance.songPosBeats + C.TimingWindowPerfectSec*CurrentBeatmap.BeatsPerSec/8f)
-                    InputManager.Instance.OnKeyboardEvent(_currentWord.currentInputChar.character);
+                if (_currentWord.CurrentBeat <= SongManager.Instance.songPosBeats + C.TimingWindowPerfectSec*CurrentBeatmap.BeatsPerSec/8f)
+                {
+                    if (_currentWord.IsChord)
+                        foreach (var c in _currentWord.CharNotes)
+                            InputManager.Instance.OnKeyboardEvent(c.character);
+                    else if (_currentWord.currentInputChar != null)
+                        InputManager.Instance.OnKeyboardEvent(_currentWord.currentInputChar.character);
+                }
             }
         }
 

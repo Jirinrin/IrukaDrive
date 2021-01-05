@@ -124,7 +124,7 @@ namespace Gameplay.Domain
         
         public bool CheckPassedNote(float beatTime)
         {
-            if (_passed || (IsChord ? Beat : _currentChar?.beatAbs) > beatTime)
+            if (_passed || CurrentBeat > beatTime)
                 return false;
 
             // Passed new note!
