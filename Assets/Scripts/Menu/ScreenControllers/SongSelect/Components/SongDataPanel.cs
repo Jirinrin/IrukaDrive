@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Shared;
 using Shared.Domain;
@@ -21,7 +21,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
         [SerializeField] private Button[] diffButtons;
         [SerializeField] private TextMeshProUGUI[] highscoreTexts;
 
-        private readonly TextMeshProUGUI[] _diffButtonTxts = new TextMeshProUGUI[4];
+        private TextMeshProUGUI[] _diffButtonTexts;
 
         private Song _song;
 
@@ -32,14 +32,14 @@ namespace Menu.ScreenControllers.SongSelect.Components
         {
             if (_selectedDiffIndex != index)
             {
-                _diffButtonTxts[_selectedDiffIndex].color = TextColorUnselected;
+                _diffButtonTexts[_selectedDiffIndex].color = TextColorUnselected;
                 _selectedDiffIndex = index;
             }
-            _diffButtonTxts[index].color = TextColorSelected;
+            _diffButtonTexts[index].color = TextColorSelected;
             
             var beatmap = Cache.GetBeatmap(_song.diffPaths[index]);
             var top3Scores = Local.Scores[beatmap.id].Reverse().Take(3).Select(s => s.Score).ToArray();
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < highscoreTexts.Length; i++)
                 highscoreTexts[i].text = i >= top3Scores.Length ? "" : top3Scores[i].ToString("D8");
 
             OnChooseDiff?.Invoke(_song.diffPaths[index]);
@@ -47,11 +47,12 @@ namespace Menu.ScreenControllers.SongSelect.Components
 
         private void OnEnable()
         {
+            _diffButtonTexts = new TextMeshProUGUI[diffButtons.Length];
             foreach (var (btn, i) in diffButtons.WithIndex())
             {
                 btn.onClick.AddListener(() => ChooseDiff(i));
-                _diffButtonTxts[i] = btn.GetComponentInChildren<TextMeshProUGUI>();
-                _diffButtonTxts[i].color = TextColorUnselected;
+                _diffButtonTexts[i] = btn.GetComponentInChildren<TextMeshProUGUI>();
+                _diffButtonTexts[i].color = TextColorUnselected;
             }
         }
 
@@ -61,10 +62,10 @@ namespace Menu.ScreenControllers.SongSelect.Components
             songTitleText.text = song.title;
             songArtistText.text = song.artist;
             jacketImage.texture = song.jacket;
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i < diffButtons.Length; i++)
             {
                 var btn = diffButtons[i];
-                var txt = _diffButtonTxts[i];
+                var txt = _diffButtonTexts[i];
                 if (i >= song.diffPaths.Length)
                 {
                     btn.interactable = false;
