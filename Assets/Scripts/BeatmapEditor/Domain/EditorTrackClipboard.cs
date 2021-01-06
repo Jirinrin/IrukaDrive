@@ -82,8 +82,8 @@ namespace BeatmapEditor.Domain
         public void Paste()
         {
             if (_wordOnClipboard == null ||
-                _cursorPos < EditorTrack.ScreenXToBeat(EditorTrack.viewState.panX) ||
-                _cursorPos > EditorTrack.ScreenXToBeat(EditorTrack.viewState.panX + EditorTrack.Instance.containerRect.width))
+                _cursorPos < EditorTrack.ScreenXToBeat(0) ||
+                _cursorPos > EditorTrack.ScreenXToBeat(EditorTrack.Instance.containerRect.width))
                 return;
 
             EditorTrack.Instance.AddWord(_wordOnClipboard.CloneWord(_cursorPos));
