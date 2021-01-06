@@ -2,9 +2,9 @@
 <Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <title>Tutorial</title>
   <artist>Sota Fujimori</artist>
-  <creator>dreamy ouchaco</creator>
   <jacketFile>jacket.jpg</jacketFile>
   <difficulty>Advanced</difficulty>
+  <creator>dreamy ouchaco</creator>
   <songFile>0000 - Tutorial.mp3</songFile>
   <bpm>135</bpm>
   <beatOffset>0.05</beatOffset>
@@ -21,7 +21,7 @@
     <BeatmapWord>
       <beat>24</beat>
       <text>xxxx</text>
-      <isChord>true</isChord>
+      <beatInterval>1</beatInterval>
     </BeatmapWord>
     <BeatmapWord>
       <beat>32.5</beat>
