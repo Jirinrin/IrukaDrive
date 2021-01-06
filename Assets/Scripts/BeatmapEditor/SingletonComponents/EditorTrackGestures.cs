@@ -59,13 +59,13 @@ namespace BeatmapEditor.SingletonComponents
 
         private void OnEnable()
         {
-            InputManager.PressPlay += OnPlay;
+            EditorInputManager.Play += OnPlay;
             EditorInputManager.Copy += OnCopy;
             EditorInputManager.Paste += OnPaste;
         }
         private void OnDisable()
         {
-            InputManager.PressPlay -= OnPlay;
+            EditorInputManager.Play -= OnPlay;
             EditorInputManager.Copy -= OnCopy;
             EditorInputManager.Paste -= OnPaste;
         }

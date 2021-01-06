@@ -17,5 +17,8 @@ namespace BeatmapEditor
         
         public static event Action Paste;
         public void OnPaste() => Paste?.Invoke();
+        
+        public static event Action Play;
+        public void OnPlay() => Play?.Invoke();
     }
 }

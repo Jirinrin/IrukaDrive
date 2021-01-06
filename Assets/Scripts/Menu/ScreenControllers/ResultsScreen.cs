@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Gameplay;
+using Shared;
 using Shared.Domain;
 using TMPro;
 using Tools;
@@ -31,7 +32,10 @@ namespace Menu.ScreenControllers
 
         public void BackToSongSelect()
         {
-            MenuManager.Instance.ToScreen("SongSelect");
+            MenuManager.Instance.ToScreen(MenuScreen.SongSelect);
         }
+        
+        private void OnEnable() => InputManager.PressConfirm += BackToSongSelect;
+        private void OnDisable() => InputManager.PressConfirm -= BackToSongSelect;
     }
 }

@@ -34,12 +34,16 @@ namespace Menu.ScreenControllers.SongSelect
             _audioSource = GetComponent<AudioSource>();
             if (_selectedSong != null)
                 SelectSong(_selectedSong, true);
+            InputManager.PressBack += BackToTitle;
+            InputManager.PressConfirm += Play;
         }
 
         private void OnDisable()
         {
             if (SongManager.Instance)
                 SongManager.Instance.Stop();
+            InputManager.PressBack -= BackToTitle;
+            InputManager.PressConfirm -= Play;
         }
 
         private void Start()
@@ -101,5 +105,7 @@ namespace Menu.ScreenControllers.SongSelect
         {
             GameManager.ToGameplay(Cache.GetBeatmap($"{Application.streamingAssetsPath}/Beatmaps/{pathInBeatmapsFolder}.drive"));
         }
+
+        public void BackToTitle() => MenuManager.Instance.ToScreen(MenuScreen.Title);
     }
 }

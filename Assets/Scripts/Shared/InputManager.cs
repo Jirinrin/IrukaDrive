@@ -12,12 +12,10 @@ namespace Shared
     {
         public static event Action PressConfirm;
         public static event Action PressBack;
-        public static event Action PressPlay;
         public static event Action<char> OnChar;
 
         public void OnConfirm() => PressConfirm?.Invoke();
         public void OnBack() => PressBack?.Invoke();
-        public void OnPlay() => PressPlay?.Invoke();
 
         public void OnEnable()
         {
