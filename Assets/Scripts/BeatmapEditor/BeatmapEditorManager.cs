@@ -103,12 +103,10 @@ namespace BeatmapEditor
         private void OnEnable()
         {
             EditorInputManager.Save += SaveBeatmap;
-            InputManager.PressBack += BackToMainMenu;
         }
         private void OnDisable()
         {
             EditorInputManager.Save -= SaveBeatmap;
-            InputManager.PressBack -= BackToMainMenu;
         }
     }
 }
