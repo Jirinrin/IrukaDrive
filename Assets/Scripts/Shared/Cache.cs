@@ -10,7 +10,7 @@ namespace Shared
 {
     public static class Cache
     {
-        private static readonly string BeatmapPath = $"{Application.streamingAssetsPath}/Beatmaps";
+        private static readonly string BeatmapPath = $"{Application.streamingAssetsPath}/DriveCharts";
 
         private static readonly Dictionary<string, Beatmap> Beatmaps = new Dictionary<string, Beatmap>();
         public static Beatmap GetBeatmap(string path)
@@ -34,7 +34,7 @@ namespace Shared
             if (Songs.Any())
                 return;
             
-            var songs = Directory.GetDirectories($"{Application.streamingAssetsPath}/Beatmaps");
+            var songs = Directory.GetDirectories($"{Application.streamingAssetsPath}/DriveCharts");
             foreach (var songFolder in songs)
             {
                 var songPath = Path.Combine(BeatmapPath, songFolder);

@@ -100,7 +100,7 @@ namespace Tools
 
         public static void LoadBeatmap(Action<Beatmap> onFinished)
         {
-            var dir = $"{Application.streamingAssetsPath}/Beatmaps";
+            var dir = $"{Application.streamingAssetsPath}/DriveCharts";
             FileBrowser.ShowLoadDialog(p => onFinished(Shared.Cache.GetBeatmap(p[0])), () => onFinished(null),
                 FileBrowser.PickMode.Files,false, dir, title: "Select a drive chart"); // ext: "drive"
         }

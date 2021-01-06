@@ -98,12 +98,12 @@ namespace Menu.ScreenControllers.SongSelect
 
         public void ToGameplay() =>
             // Use this for easy dev
-            // GameManager.ToGameplay(SerializationHelpers.LoadBeatmap( $"{Application.streamingAssetsPath}/Beatmaps/Tutorial/advanced.drive"));
+            // GameManager.ToGameplay(SerializationHelpers.LoadBeatmap( $"{Application.streamingAssetsPath}/DriveCharts/Tutorial/advanced.drive"));
             SerializationHelpers.LoadBeatmap(b => GameManager.ToGameplay(b));
 
         public void ToGameplay(string pathInBeatmapsFolder)
         {
-            GameManager.ToGameplay(Cache.GetBeatmap($"{Application.streamingAssetsPath}/Beatmaps/{pathInBeatmapsFolder}.drive"));
+            GameManager.ToGameplay(Cache.GetBeatmap($"{Application.streamingAssetsPath}/DriveCharts/{pathInBeatmapsFolder}.drive"));
         }
 
         public void BackToTitle() => MenuManager.Instance.ToScreen(MenuScreen.Title);
