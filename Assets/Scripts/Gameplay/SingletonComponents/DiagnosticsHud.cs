@@ -18,7 +18,7 @@ namespace Gameplay.SingletonComponents
     
         private void Start()
         {
-            InvokeRepeating(nameof(UpdateDisplay), 0f, 1f);
+            InvokeRepeating(nameof(UpdateDisplay), 0f, .4f);
         }
 
         private void UpdateDisplay()
