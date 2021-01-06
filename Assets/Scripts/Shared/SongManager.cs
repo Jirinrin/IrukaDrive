@@ -68,7 +68,7 @@ namespace Shared
                 songPosBeats = _currentBeatmap.SecToBeats(songPosSec);
             }
         
-            if (songPosSec > songLength & !_songFinished)
+            if (!_songFinished && (songPosSec >= songLength || !_audioSource.isPlaying))
             {
                 _songFinished = true;
                 OnSongFinished?.Invoke();
