@@ -15,7 +15,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
         private static readonly Color TextColorSelected = Color.green;
         private static readonly Color TextColorUnselected = new Color(0f, 0.5f, 0f);
 
-        [SerializeField] private TextMeshProUGUI songTitleText;
+        [SerializeField] private TitleText songTitleText;
         [SerializeField] private TextMeshProUGUI songArtistText;
         [SerializeField] private RawImage jacketImage;
         [SerializeField] private Button[] diffButtons;
@@ -72,7 +72,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
         public void SetSong(Song song)
         {
             _song = song;
-            songTitleText.text = song.title;
+            songTitleText.Text = song.title;
             songArtistText.text = song.artist;
             jacketImage.texture = song.jacket;
             for (var i = 0; i < diffButtons.Length; i++)

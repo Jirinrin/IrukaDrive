@@ -206,7 +206,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 357716768}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.8727273
+  m_Size: 0.6525451
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2850,6 +2850,7 @@ GameObject:
   - component: {fileID: 814020698}
   - component: {fileID: 814020700}
   - component: {fileID: 814020699}
+  - component: {fileID: 814020701}
   m_Layer: 5
   m_Name: Song Title
   m_TagString: Untagged
@@ -2896,7 +2897,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Title
+  m_text: iejriuere
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4cc450aab4cbed44ebb10495524b5f92, type: 2}
   m_sharedMaterial: {fileID: 3398393377605773935, guid: 4cc450aab4cbed44ebb10495524b5f92,
@@ -2940,7 +2941,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 1
   m_linkedTextComponent: {fileID: 0}
@@ -2974,6 +2975,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 814020697}
   m_CullTransparentMesh: 0
+--- !u!114 &814020701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814020697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0346bcc701a8a34b924e726a20146d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &825286656
 GameObject:
   m_ObjectHideFlags: 0
@@ -6067,7 +6080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf8a9a6ab154467baeebc360905c5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  songTitleText: {fileID: 814020699}
+  songTitleText: {fileID: 814020701}
   songArtistText: {fileID: 1282685999}
   jacketImage: {fileID: 1655508644}
   diffButtons:
@@ -6161,8 +6174,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 825286658}
   m_HandleRect: {fileID: 825286657}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 1.0000091
+  m_Size: 0.852545
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
