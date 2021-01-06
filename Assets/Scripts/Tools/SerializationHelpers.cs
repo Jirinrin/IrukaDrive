@@ -10,6 +10,25 @@ namespace Tools
 {
     public static class SerializationHelpers
     {
+        private static AudioType GetAudioType(string ext)
+        {
+            switch (ext.Substring(1).ToLower())
+            {
+                case "mp3":
+                case "m4a":
+                    return AudioType.MPEG;
+                case "ogg":
+                    return AudioType.OGGVORBIS;
+                case "wav":
+                    return AudioType.WAV;
+                case "aiff":
+                    return AudioType.AIFF;
+                default:
+                    Debug.LogWarning($"Unknown audio type: {ext}");
+                    return AudioType.UNKNOWN;
+            }
+        }
+        
         private static byte[] LoadFile(string filePath)
         {
             return File.ReadAllBytes(filePath);
@@ -29,7 +48,7 @@ namespace Tools
         }
         private static async Task<AudioClip> LoadSongAsync(string filePath)
         {
-            var req = UnityWebRequestMultimedia.GetAudioClip($"file://{filePath}", AudioType.MPEG); // todo: determine the AudioType
+            var req = UnityWebRequestMultimedia.GetAudioClip($"file://{filePath}", GetAudioType(Path.GetExtension(filePath)));
             await req.SendWebRequest();
             var clip = DownloadHandlerAudioClip.GetContent(req);
             return clip;
@@ -49,21 +68,6 @@ namespace Tools
             texture.LoadImage(f);
             return texture;
         }
-
-        // got this from stackoverflow https://stackoverflow.com/questions/30852691/loading-mp3-files-at-runtime-in-unity
-        // private static AudioClip LoadSongg(string path) 
-        // {
-        //     var www = new WWW("file://" + path);
-        //     // yield return www;
-        //     
-        //     var clip = www.GetAudioClip(false, false);
-        //     
-        //     var songName = clip.name;
-        //     var length = clip.length;
-        //     Debug.Log(songName);
-        //     Debug.Log(length);
-        //     return clip;
-        // }
 
         // // todo: move somewhere else than SerializationHelpers
         // public static AudioClip FindSong()
