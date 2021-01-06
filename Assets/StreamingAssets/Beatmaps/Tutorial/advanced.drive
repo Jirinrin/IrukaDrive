@@ -14,13 +14,13 @@
   <words>
     <BeatmapWord>
       <beat>16</beat>
-      <text>abcd</text>
+      <text>xxxx</text>
       <beatInterval>1</beatInterval>
     </BeatmapWord>
     <BeatmapWord>
       <beat>24</beat>
-      <text>efgh</text>
-      <beatInterval>1</beatInterval>
+      <text>xxxx</text>
+      <isChord>true</isChord>
     </BeatmapWord>
     <BeatmapWord>
       <beat>32.5</beat>

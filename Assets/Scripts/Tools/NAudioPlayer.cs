@@ -9,7 +9,7 @@ namespace Tools
 	// todo: remove this and dll when loading audio clip from UnityWebRequestMultimedia works
 	public static class NAudioPlayer
 	{
-		public static AudioClip FromMp3Data(byte[] data)
+		private static (AudioClip clip, float[] channel) PrepareFromMp3Data(byte[] data)
 		{
 			// Load the data into a stream
 			MemoryStream mp3stream = new MemoryStream(data);
@@ -18,16 +18,16 @@ namespace Tools
 			WaveStream waveStream = WaveFormatConversionStream.CreatePcmStream(mp3audio);
 			// Convert to WAV data
 			WAV wav = new WAV(AudioMemStream(waveStream).ToArray());
+
+			AudioClip audioClip = AudioClip.Create("Audio File Name", wav.SampleCount, wav.ChannelCount, wav.Frequency, false);
+
+			return (audioClip, wav.ChannelCount == 2 ? wav.StereoChannel : wav.LeftChannel);
+		}
 		
-			AudioClip audioClip;
-			if (wav.ChannelCount == 2) {
-				audioClip = AudioClip.Create("Audio File Name", wav.SampleCount, 2, wav.Frequency, false);
-				audioClip.SetData(wav.StereoChannel, 0);
-			} else {
-				audioClip = AudioClip.Create("Audio File Name", wav.SampleCount, 1, wav.Frequency, false);
-				audioClip.SetData(wav.LeftChannel, 0);
-			}
-			// Now return the clip
+		public static AudioClip FromMp3Data(byte[] data)
+		{
+			var (audioClip, channel) = PrepareFromMp3Data(data);
+			audioClip.SetData(channel, 0);
 			return audioClip;
 		}
 

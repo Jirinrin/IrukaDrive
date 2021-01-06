@@ -206,7 +206,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 357716768}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.6792548
+  m_Size: 0.8738366
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2873,8 +2873,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 56.809998, y: 23.673218}
-  m_SizeDelta: {x: -150.59, y: 47.35}
+  m_AnchoredPosition: {x: 39.207, y: 23.673218}
+  m_SizeDelta: {x: -115.38, y: 47.35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &814020699
 MonoBehaviour:
@@ -2940,9 +2940,9 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 1
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
@@ -3997,8 +3997,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 56.810005, y: 48.099976}
-  m_SizeDelta: {x: -150.59, y: 16.33}
+  m_AnchoredPosition: {x: 39.207, y: 48.099976}
+  m_SizeDelta: {x: -115.38, y: 16.33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1282685999
 MonoBehaviour:
@@ -5506,8 +5506,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -103.69002, y: 27.98999}
-  m_SizeDelta: {x: -220.34, y: 55.98001}
+  m_AnchoredPosition: {x: -121.29, y: 27.98999}
+  m_SizeDelta: {x: -255.54, y: 55.98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1724693452
 GameObject:
@@ -6052,7 +6052,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 172.97998, y: -29.059998}
+  m_AnchoredPosition: {x: 172.97998, y: -29.059967}
   m_SizeDelta: {x: 345.9597, y: -58.120605}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1898374252
@@ -6161,8 +6161,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 825286658}
   m_HandleRect: {fileID: 825286657}
   m_Direction: 2
-  m_Value: 1.0000106
-  m_Size: 0.8792547
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

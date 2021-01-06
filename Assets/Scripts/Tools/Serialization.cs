@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 // Source: https://stackoverflow.com/questions/6115721/how-to-save-restore-serializable-object-to-from-file
@@ -88,7 +91,12 @@ namespace Tools
                     reader.Close();
             }
         }
-    
+
+        public static Task<T> ReadFromXmlFileAsync<T>(string filePath) where T : new()
+        {
+            return Task.Run(() => ReadFromXmlFile<T>(filePath));
+        }
+
         // /// <summary>
         // /// Writes the given object instance to a Json file.
         // /// <para>Object type must have a parameterless constructor.</para>

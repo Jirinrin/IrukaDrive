@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Shared.Domain;
 using SimpleFileBrowser;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Tools
 {
@@ -10,11 +12,14 @@ namespace Tools
     {
         private static byte[] LoadFile(string filePath)
         {
-            var fileRequest = new WWW($"file://{filePath}");
-            // yield return www;
-        
-            // todo: use UnityWebRequest; use www.GetAudioClip or UnityWebRequestMultimedia.GetAudioClip
-            return fileRequest.bytes;
+            return File.ReadAllBytes(filePath);
+        }
+        private static async Task<byte[]> LoadFileAsync(string filePath)
+        {
+            // var req = new UnityWebRequest($"file://{filePath}");
+            // await req.SendWebRequest();
+            // return req.downloadHandler.data;
+            return await Task.Run(() => File.ReadAllBytes(filePath));
         }
         
         private static AudioClip LoadSong(string filePath)
@@ -22,11 +27,26 @@ namespace Tools
             var clip = NAudioPlayer.FromMp3Data(LoadFile(filePath));
             return clip;
         }
+        private static async Task<AudioClip> LoadSongAsync(string filePath)
+        {
+            var req = UnityWebRequestMultimedia.GetAudioClip($"file://{filePath}", AudioType.MPEG); // todo: determine the AudioType
+            await req.SendWebRequest();
+            var clip = DownloadHandlerAudioClip.GetContent(req);
+            return clip;
+        }
         
         private static Texture2D LoadImage(string filePath)
         {
-            var texture = new Texture2D(2, 2); // why only 2x2 tho...?
-            texture.LoadImage(LoadFile(filePath));
+            var texture = new Texture2D(2, 2);
+            var f = LoadFile(filePath);
+            texture.LoadImage(f);
+            return texture;
+        }
+        private static async Task<Texture2D> LoadImageAsync(string filePath)
+        {
+            var texture = new Texture2D(2, 2);
+            var f = await LoadFileAsync(filePath);
+            texture.LoadImage(f);
             return texture;
         }
 
@@ -77,17 +97,34 @@ namespace Tools
         public static void LoadBeatmap(Action<Beatmap> onFinished)
         {
             var dir = $"{Application.streamingAssetsPath}/Beatmaps";
-            FileBrowser.ShowLoadDialog(p => onFinished(LoadBeatmap(p[0])), () => onFinished(null),
+            FileBrowser.ShowLoadDialog(p => onFinished(Shared.Cache.GetBeatmap(p[0])), () => onFinished(null),
                 FileBrowser.PickMode.Files,false, dir, title: "Select a drive chart"); // ext: "drive"
+        }
+
+        private static Beatmap InitBeatmap(Beatmap b, string filePath)
+        {
+            b.filePath = filePath;
+            b.song = LoadSong(Path.Combine(Path.GetDirectoryName(filePath), b.songFile));
+            b.jacket = LoadImage(Path.Combine(Path.GetDirectoryName(filePath), b.jacketFile));
+            return b;
+        }
+        private static async Task<Beatmap> InitBeatmapAsync(Beatmap b, string filePath)
+        {
+            b.filePath = filePath;
+            b.song = await LoadSongAsync(Path.Combine(Path.GetDirectoryName(filePath), b.songFile));
+            b.jacket = await LoadImageAsync(Path.Combine(Path.GetDirectoryName(filePath), b.jacketFile));
+            return b;
         }
         public static Beatmap LoadBeatmap(string filePath)
         {
-            // filePath = filePath.Replace('/', Path.DirectorySeparatorChar);
             var beatmap = Serialization.ReadFromXmlFile<Beatmap>(filePath);
-            beatmap.filePath = filePath;
-            beatmap.song = LoadSong(Path.Combine(Path.GetDirectoryName(filePath), beatmap.songFile));
-            beatmap.jacket = LoadImage(Path.Combine(Path.GetDirectoryName(filePath), beatmap.jacketFile));
-            return beatmap;
+            return InitBeatmap(beatmap, filePath);
+        }
+        
+        public static async Task<Beatmap> LoadBeatmapAsync(string filePath)
+        {
+            var beatmap = await Serialization.ReadFromXmlFileAsync<Beatmap>(filePath);
+            return await InitBeatmapAsync(beatmap, filePath);
         }
     }
 }

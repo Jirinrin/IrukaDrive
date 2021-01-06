@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Shared.Domain;
 using Tools;
 using UnityEngine;
@@ -16,6 +17,12 @@ namespace Shared
         {
             if (!Beatmaps.ContainsKey(path))
                 Beatmaps[path] = SerializationHelpers.LoadBeatmap(path);
+            return Beatmaps[path];
+        }
+        public static async Task<Beatmap> GetBeatmapAsync(string path)
+        {
+            if (!Beatmaps.ContainsKey(path))
+                Beatmaps[path] = await SerializationHelpers.LoadBeatmapAsync(path);
             return Beatmaps[path];
         }
         

@@ -90,7 +90,7 @@ namespace Menu.ScreenControllers.SongSelect
         }
         
         public void Play() =>
-            GameManager.ToGameplay(SerializationHelpers.LoadBeatmap(_selectedDiffPath));
+            GameManager.ToGameplay(Cache.GetBeatmap(_selectedDiffPath));
 
         public void ToGameplay() =>
             // Use this for easy dev
@@ -99,8 +99,7 @@ namespace Menu.ScreenControllers.SongSelect
 
         public void ToGameplay(string pathInBeatmapsFolder)
         {
-            GameManager.ToGameplay(SerializationHelpers.LoadBeatmap(
-                $"{Application.streamingAssetsPath}/Beatmaps/{pathInBeatmapsFolder}.drive"));
+            GameManager.ToGameplay(Cache.GetBeatmap($"{Application.streamingAssetsPath}/Beatmaps/{pathInBeatmapsFolder}.drive"));
         }
     }
 }

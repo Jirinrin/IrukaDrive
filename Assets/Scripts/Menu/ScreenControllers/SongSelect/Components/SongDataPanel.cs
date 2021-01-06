@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Shared;
 using Shared.Domain;
@@ -28,6 +28,20 @@ namespace Menu.ScreenControllers.SongSelect.Components
         public event Action<string> OnChooseDiff;
 
         private int _selectedDiffIndex;
+
+        private void SetHighscores(int[] scores)
+        {
+            for (var i = 0; i < highscoreTexts.Length; i++)
+                highscoreTexts[i].text = i >= scores.Length ? "" : scores[i].ToString("D8");
+        }
+
+        private async void SetHighscoresAsync(string diffPath)
+        {
+            var beatmap = await Cache.GetBeatmapAsync(diffPath);
+            var topScores = Local.Scores[beatmap.id].Reverse().Take(highscoreTexts.Length).Select(s => s.Score).ToArray();
+            SetHighscores(topScores);
+        }
+
         private void ChooseDiff(int index)
         {
             if (_selectedDiffIndex != index)
@@ -36,11 +50,10 @@ namespace Menu.ScreenControllers.SongSelect.Components
                 _selectedDiffIndex = index;
             }
             _diffButtonTexts[index].color = TextColorSelected;
-            
-            var beatmap = Cache.GetBeatmap(_song.diffPaths[index]);
-            var top3Scores = Local.Scores[beatmap.id].Reverse().Take(3).Select(s => s.Score).ToArray();
-            for (var i = 0; i < highscoreTexts.Length; i++)
-                highscoreTexts[i].text = i >= top3Scores.Length ? "" : top3Scores[i].ToString("D8");
+
+            SetHighscores(new int[0]);
+
+            SetHighscoresAsync(_song.diffPaths[index]);
 
             OnChooseDiff?.Invoke(_song.diffPaths[index]);
         }
