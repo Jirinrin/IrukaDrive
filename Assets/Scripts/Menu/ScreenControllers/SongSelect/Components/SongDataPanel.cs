@@ -20,6 +20,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
         [SerializeField] private RawImage jacketImage;
         [SerializeField] private Button[] diffButtons;
         [SerializeField] private TextMeshProUGUI[] highscoreTexts;
+        [SerializeField] private TextMeshProUGUI diffCreatorText;
 
         private TextMeshProUGUI[] _diffButtonTexts;
 
@@ -35,10 +36,12 @@ namespace Menu.ScreenControllers.SongSelect.Components
                 highscoreTexts[i].text = i >= scores.Length ? "" : scores[i].ToString("D8");
         }
 
-        private async void SetHighscoresAsync(string diffPath)
+        private async void SetDiffDataAsync(string diffPath)
         {
+            SetHighscores(new int[0]);
             var beatmap = await Cache.GetBeatmapAsync(diffPath);
             var topScores = Local.Scores[beatmap.id].Reverse().Take(highscoreTexts.Length).Select(s => s.Score).ToArray();
+            diffCreatorText.text = beatmap.creator;
             SetHighscores(topScores);
         }
 
@@ -51,9 +54,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
             }
             _diffButtonTexts[index].color = TextColorSelected;
 
-            SetHighscores(new int[0]);
-
-            SetHighscoresAsync(_song.diffPaths[index]);
+            SetDiffDataAsync(_song.diffPaths[index]);
 
             OnChooseDiff?.Invoke(_song.diffPaths[index]);
         }

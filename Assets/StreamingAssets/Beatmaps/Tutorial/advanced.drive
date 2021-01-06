@@ -2,6 +2,7 @@
 <Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <title>Tutorial</title>
   <artist>Sota Fujimori</artist>
+  <creator>dreamy ouchaco</creator>
   <jacketFile>jacket.jpg</jacketFile>
   <difficulty>Advanced</difficulty>
   <songFile>0000 - Tutorial.mp3</songFile>

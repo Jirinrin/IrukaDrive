@@ -22,6 +22,7 @@ namespace Shared.Domain
         public string jacketFile;
         [NonSerialized] [XmlIgnore] public Texture2D jacket;
         public Difficulty difficulty;
+        public string creator;
 
         // Important metadata
         public string songFile;
