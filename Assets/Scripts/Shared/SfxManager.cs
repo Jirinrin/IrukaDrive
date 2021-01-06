@@ -17,7 +17,15 @@ namespace Shared
             _audioSource = GetComponent<AudioSource>();
         }
 
-        private void Tap(char character) => _audioSource.PlayOneShot(tickSample);
+        private float _lastTapTime;
+        private void Tap(char character)
+        {
+            if (Time.time - _lastTapTime < .05f)
+                return;
+            
+            _lastTapTime = Time.time;
+            _audioSource.PlayOneShot(tickSample);
+        }
 
         public void MakeTickSound() => _audioSource.PlayOneShot(tickSample);
 
