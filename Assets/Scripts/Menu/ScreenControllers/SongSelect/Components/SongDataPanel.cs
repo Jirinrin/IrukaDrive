@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Linq;
+using Shared;
 using Shared.Domain;
 using TMPro;
 using Tools;
 using UnityEngine;
 using UnityEngine.UI;
+using Cache = Shared.Cache;
 
 namespace Menu.ScreenControllers.SongSelect.Components
 {
@@ -16,6 +19,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
         [SerializeField] private TextMeshProUGUI songArtistText;
         [SerializeField] private RawImage jacketImage;
         [SerializeField] private Button[] diffButtons;
+        [SerializeField] private TextMeshProUGUI[] highscoreTexts;
 
         private readonly TextMeshProUGUI[] _diffButtonTxts = new TextMeshProUGUI[4];
 
@@ -33,6 +37,11 @@ namespace Menu.ScreenControllers.SongSelect.Components
             }
             _diffButtonTxts[index].color = TextColorSelected;
             
+            var beatmap = Cache.GetBeatmap(_song.diffPaths[index]);
+            var top3Scores = Local.Scores[beatmap.id].Reverse().Take(3).Select(s => s.Score).ToArray();
+            for (var i = 0; i < 3; i++)
+                highscoreTexts[i].text = i >= top3Scores.Length ? "" : top3Scores[i].ToString("D8");
+
             OnChooseDiff?.Invoke(_song.diffPaths[index]);
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Shared.Domain
 {
@@ -13,7 +14,7 @@ namespace Shared.Domain
     [Serializable]
     public class PlayerScores
     {
-        public Dictionary<Guid, SortedSet<BeatmapScore>> scores = new Dictionary<Guid, SortedSet<BeatmapScore>>();
+        [SerializeField] private Dictionary<Guid, SortedSet<BeatmapScore>> scores = new Dictionary<Guid, SortedSet<BeatmapScore>>();
         
         public void AddScore(Guid beatmapId, BeatmapScore score)
         {
@@ -21,6 +22,8 @@ namespace Shared.Domain
                 scores[beatmapId] = new SortedSet<BeatmapScore>();
             scores[beatmapId].Add(score);
         }
+
+        public SortedSet<BeatmapScore> this[Guid id] => scores.ContainsKey(id) ? scores[id] : new SortedSet<BeatmapScore>();
 
         public override string ToString()
         {

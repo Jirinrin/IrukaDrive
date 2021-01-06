@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Menu.ScreenControllers.SongSelect.Components;
 using Shared;
 using Shared.Domain;
 using Tools;
 using UnityEngine;
+using Cache = Shared.Cache;
 
 namespace Menu.ScreenControllers.SongSelect
 {
     public class SongSelectScreen : MonoBehaviour
     {
-        private static readonly string BeatmapPath = $"{Application.streamingAssetsPath}/Beatmaps";
 
         [SerializeField] private GameObject songWheelContainer;
         [SerializeField] private SongDataPanel songDataPanel;
@@ -20,8 +19,6 @@ namespace Menu.ScreenControllers.SongSelect
 
         private AudioSource _audioSource;
 
-        private static readonly List<Song> SongsCached = new List<Song>();
-
         private Song _selectedSong;
         private string _selectedDiffPath;
         private float _cardHeight;
@@ -29,7 +26,7 @@ namespace Menu.ScreenControllers.SongSelect
 
         private void Awake()
         {
-            InitSongs();
+            Cache.InitSongs();
         }
 
         private void OnEnable()
@@ -49,39 +46,7 @@ namespace Menu.ScreenControllers.SongSelect
         {
             InitSongWheel();
             songDataPanel.OnChooseDiff += SelectDiff;
-            SelectSong(SongsCached.First());
-        }
-
-        // todo: allow nested beatmaps and stuff
-        // todo: think about the right structure. Which data per chart and which maybe in a shared thing? Which data do we want to know in song select already?
-        private void InitSongs()
-        {
-            if (SongsCached.Any())
-                return;
-            
-            var songs = Directory.GetDirectories($"{Application.streamingAssetsPath}/Beatmaps");
-            foreach (var songFolder in songs)
-            {
-                var songPath = Path.Combine(BeatmapPath, songFolder);
-                var diffPaths = Directory.GetFiles(songPath, "*.drive").Select(d => Path.Combine(songPath, d)).ToArray();
-                if (!diffPaths.Any())
-                {
-                    Debug.LogWarning($"Song {songPath} has no diffs");
-                    continue;
-                }
-
-                var firstBeatmap = SerializationHelpers.LoadBeatmap(diffPaths.First());
-                SongsCached.Add(new Song
-                {
-                    title = firstBeatmap.title,
-                    artist = firstBeatmap.artist,
-                    jacket = firstBeatmap.jacket,
-                    song = firstBeatmap.song,
-                    folderName = songFolder,
-                    folderPath = songPath,
-                    diffPaths = diffPaths,
-                });
-            }
+            SelectSong(Cache.Songs.First());
         }
 
         private void SelectSongSimple(Song song) => SelectSong(song);
@@ -109,7 +74,7 @@ namespace Menu.ScreenControllers.SongSelect
         {
             _cardsLookup = new Dictionary<string, SongCard>();
             
-            foreach (var (song, i) in SongsCached.WithIndex())
+            foreach (var (song, i) in Cache.Songs.WithIndex())
             {
                 var card = Instantiate(songCardPrefab, songWheelContainer.transform);
                 card.Init(song, SelectSongSimple);
