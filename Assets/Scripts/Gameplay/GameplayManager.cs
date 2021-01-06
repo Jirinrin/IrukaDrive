@@ -245,9 +245,13 @@ namespace Gameplay
         private void SongFinished()
         {
             beatmapFinished = true;
-            var result = new BeatmapScore(RuntimeWords.GetNotes().ToList());
-            Local.Scores.AddScore(CurrentBeatmap.id, result);
-            Local.CommitScores();
+            BeatmapScore result = null;
+            if (!EditorPlay)
+            {
+                result = new BeatmapScore(RuntimeWords.GetNotes().ToList());
+                Local.Scores.AddScore(CurrentBeatmap.id, result);
+                Local.CommitScores();
+            }
             GameManager.EndGameplay(result);
         }
 
