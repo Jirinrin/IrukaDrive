@@ -24,8 +24,8 @@ namespace Tools.Commons
             {
                 if (_shuttingDown)
                 {
-                    Debug.LogWarning("[Singleton] Instance '" + typeof(T) +
-                                     "' already destroyed. Returning null.");
+                    // Debug.LogWarning("[Singleton] Instance '" + typeof(T) +
+                    //                  "' already destroyed. Returning null.");
                     return null;
                 }
  
