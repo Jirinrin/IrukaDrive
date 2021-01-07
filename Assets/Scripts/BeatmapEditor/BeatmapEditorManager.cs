@@ -78,9 +78,9 @@ namespace BeatmapEditor
             });
         }
 
-        private void ReloadBeatmap()
+        private async void ReloadBeatmap()
         {
-            currentBeatmap = SerializationHelpers.LoadBeatmap(currentBeatmap.filePath);
+            currentBeatmap = await SerializationHelpers.LoadBeatmapAsync(currentBeatmap.filePath);
             ResetEditor();
             EditorTrack.Instance.LoadBeatmap(currentBeatmap, true);
         }

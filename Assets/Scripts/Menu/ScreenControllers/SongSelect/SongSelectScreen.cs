@@ -24,11 +24,6 @@ namespace Menu.ScreenControllers.SongSelect
         private float _cardHeight;
         private Dictionary<string, SongCard> _cardsLookup;
 
-        private void Awake()
-        {
-            Cache.InitSongs();
-        }
-
         private void OnEnable()
         {
             _audioSource = GetComponent<AudioSource>();
@@ -46,8 +41,12 @@ namespace Menu.ScreenControllers.SongSelect
             InputManager.PressConfirm -= Play;
         }
 
-        private void Start()
+        private void Start() => Init();
+
+        private async void Init()
         {
+            // todo: already init this in title screen already
+            await Cache.InitSongs();
             InitSongWheel();
             songDataPanel.OnChooseDiff += SelectDiff;
             SelectSong(Cache.Songs.First());
@@ -93,17 +92,17 @@ namespace Menu.ScreenControllers.SongSelect
             }
         }
         
-        public void Play() =>
-            GameManager.ToGameplay(Cache.GetBeatmap(_selectedDiffPath));
+        public async void Play() =>
+            GameManager.ToGameplay(await Cache.GetBeatmapAsync(_selectedDiffPath));
 
         public void ToGameplay() =>
             // Use this for easy dev
             // GameManager.ToGameplay(SerializationHelpers.LoadBeatmap( $"{Application.streamingAssetsPath}/DriveCharts/Tutorial/advanced.drive"));
             SerializationHelpers.LoadBeatmap(b => GameManager.ToGameplay(b));
 
-        public void ToGameplay(string pathInBeatmapsFolder)
+        public async void ToGameplay(string pathInBeatmapsFolder)
         {
-            GameManager.ToGameplay(Cache.GetBeatmap($"{Application.streamingAssetsPath}/DriveCharts/{pathInBeatmapsFolder}.drive"));
+            GameManager.ToGameplay(await Cache.GetBeatmapAsync($"{Application.streamingAssetsPath}/DriveCharts/{pathInBeatmapsFolder}.drive"));
         }
 
         public void BackToTitle() => MenuManager.Instance.ToScreen(MenuScreen.Title);

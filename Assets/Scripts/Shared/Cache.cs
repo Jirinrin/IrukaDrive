@@ -13,12 +13,6 @@ namespace Shared
         private static readonly string BeatmapPath = $"{Application.streamingAssetsPath}/DriveCharts";
 
         private static readonly Dictionary<string, Beatmap> Beatmaps = new Dictionary<string, Beatmap>();
-        public static Beatmap GetBeatmap(string path)
-        {
-            if (!Beatmaps.ContainsKey(path))
-                Beatmaps[path] = SerializationHelpers.LoadBeatmap(path);
-            return Beatmaps[path];
-        }
         public static async Task<Beatmap> GetBeatmapAsync(string path)
         {
             if (!Beatmaps.ContainsKey(path))
@@ -29,7 +23,7 @@ namespace Shared
         public static readonly List<Song> Songs = new List<Song>();
         // todo: allow nested beatmaps and stuff
         // todo: think about the right structure. Which data per chart and which maybe in a shared thing? Which data do we want to know in song select already?
-        public static void InitSongs()
+        public static async Task InitSongs()
         {
             if (Songs.Any())
                 return;
@@ -45,7 +39,7 @@ namespace Shared
                     continue;
                 }
 
-                var firstBeatmap = SerializationHelpers.LoadBeatmap(diffPaths.First());
+                var firstBeatmap = await GetBeatmapAsync(diffPaths.First());
                 Songs.Add(new Song
                 {
                     title = firstBeatmap.title,
@@ -58,6 +52,5 @@ namespace Shared
                 });
             }
         }
-
     }
 }

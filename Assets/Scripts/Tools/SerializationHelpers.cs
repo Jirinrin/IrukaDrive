@@ -101,10 +101,13 @@ namespace Tools
         public static void LoadBeatmap(Action<Beatmap> onFinished)
         {
             var dir = $"{Application.streamingAssetsPath}/DriveCharts";
-            FileBrowser.ShowLoadDialog(p => onFinished(Shared.Cache.GetBeatmap(p[0])), () => onFinished(null),
+            FileBrowser.ShowLoadDialog(async p => onFinished(await Shared.Cache.GetBeatmapAsync(p[0])), () => onFinished(null),
                 FileBrowser.PickMode.Files,false, dir, title: "Select a drive chart"); // ext: "drive"
         }
 
+        /// <summary>
+        /// Limited to charts with MP3 song
+        /// </summary>
         private static Beatmap InitBeatmap(Beatmap b, string filePath)
         {
             b.filePath = filePath;
@@ -119,6 +122,9 @@ namespace Tools
             b.jacket = await LoadImageAsync(Path.Combine(Path.GetDirectoryName(filePath), b.jacketFile));
             return b;
         }
+        /// <summary>
+        /// Limited to charts with MP3 song
+        /// </summary>
         public static Beatmap LoadBeatmap(string filePath)
         {
             var beatmap = Serialization.ReadFromXmlFile<Beatmap>(filePath);
