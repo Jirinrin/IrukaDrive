@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <title>Tutorial</title>
+  <title>Sound Voltex Tutorial</title>
   <artist>Sota Fujimori</artist>
   <jacketFile>jacket.jpg</jacketFile>
   <difficulty>Advanced</difficulty>
