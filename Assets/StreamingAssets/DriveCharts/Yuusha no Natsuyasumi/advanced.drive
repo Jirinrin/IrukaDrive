@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <title>Yuusha no Natsuyasumi</title>
+  <artist>Verdammt</artist>
+  <jacketFile>cover.png</jacketFile>
+  <difficulty>Advanced</difficulty>
+  <creator>dreamy ouchaco</creator>
+  <songFile>yuusha.ogg</songFile>
+  <bpm>167</bpm>
+  <beatOffset>0</beatOffset>
+  <beatsPerBar>4</beatsPerBar>
+  <barOffset>0</barOffset>
+  <finishTimestamp>39</finishTimestamp>
+  <id>531804e3-8e5d-4585-9fe1-97bf22c3f6ec</id>
+  <words>
+    <BeatmapWord>
+      <beat>4</beat>
+      <text>xxxxxxx</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>12</beat>
+      <text>xxxxxxx</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>20</beat>
+      <text>xxxxxxx</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>28</beat>
+      <text>o i jihib i b</text>
+      <beatInterval>0.5</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>36</beat>
+      <text>xxxxxxxxxxxxx</text>
+      <beatInterval>0.5</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>44</beat>
+      <text>i j j  [  [</text>
+      <beatInterval>0.333333343</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>48</beat>
+      <text>' x z</text>
+      <beatInterval>0.333333343</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>50.5</beat>
+      <text>nn</text>
+      <beatInterval>0.5</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>52</beat>
+      <text>u h v  a  a</text>
+      <beatInterval>0.333333343</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>56</beat>
+      <text>xxxxxx</text>
+      <beatInterval>0.5</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>60</beat>
+      <text>d d f  v  v</text>
+      <beatInterval>0.333333343</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>64</beat>
+      <text>, / .</text>
+      <beatInterval>0.333333343</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>67</beat>
+      <text>xx</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>69.5</beat>
+      <text>xx</text>
+      <beatInterval>0.5</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>71</beat>
+      <text>xxxxx</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>76</beat>
+      <text>q w w  f  f</text>
+      <beatInterval>0.333333343</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>80</beat>
+      <text>g h h</text>
+      <beatInterval>0.333333343</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>83</beat>
+      <text>w</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>84</beat>
+      <text>y t t  2</text>
+      <beatInterval>0.333333343</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>87.5</beat>
+      <text>xxxxxx</text>
+      <beatInterval>0.5</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>92</beat>
+      <text>i j n  p  p</text>
+      <beatInterval>0.333333343</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>96</beat>
+      <text>o k n</text>
+      <beatInterval>0.333333343</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>99</beat>
+      <text>xx</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+  </words>
+</Beatmap>

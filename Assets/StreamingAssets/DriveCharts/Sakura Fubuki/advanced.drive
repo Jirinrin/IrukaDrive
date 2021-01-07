@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <title>Sakura Fubuki</title>
+  <artist>Street</artist>
+  <jacketFile>cover.png</jacketFile>
+  <difficulty>Advanced</difficulty>
+  <creator>dreamy ouchaco</creator>
+  <songFile>song.ogg</songFile>
+  <bpm>175</bpm>
+  <beatOffset>0</beatOffset>
+  <beatsPerBar>4</beatsPerBar>
+  <barOffset>0</barOffset>
+  <finishTimestamp xsi:nil="true" />
+  <id>6c0ed5c3-1e1f-4328-bb63-ae6aeb52ab5c</id>
+  <words>
+    <BeatmapWord>
+      <beat>4</beat>
+      <text>e</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>10</beat>
+      <text>i     o</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>20</beat>
+      <text>\</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>26</beat>
+      <text>]     m</text>
+      <beatInterval>0.25</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>36</beat>
+      <text>jl</text>
+      <isChord>true</isChord>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>42</beat>
+      <text>oh</text>
+      <isChord>true</isChord>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>43.5</beat>
+      <text>kb</text>
+      <isChord>true</isChord>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>47.5</beat>
+      <text>ek</text>
+      <isChord>true</isChord>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>49</beat>
+      <text>d ddsa_</text>
+      <beatInterval>0.5</beatInterval>
+    </BeatmapWord>
+  </words>
+</Beatmap>
