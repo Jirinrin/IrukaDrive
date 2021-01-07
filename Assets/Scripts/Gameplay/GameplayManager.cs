@@ -169,6 +169,8 @@ namespace Gameplay
 
         private void OnChar(char character)
         {
+            if (character == ' ') character = '_';
+            
             if (_currentWord.Finished)
                 return;
 
