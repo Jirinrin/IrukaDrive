@@ -66,11 +66,12 @@ namespace Gameplay
             // Setup the first word coming up
             if (!_wordsIterator.MoveNext()) throw new Exception("Empty beatmap");
             _nextWord = _wordsIterator.Current;
-            AdvanceWord();
 
             beatmapStarted = true;
             beatmapFinished = false;
             _lastWordReached = false;
+            
+            AdvanceWord();
             
             if (BeatmapStartTime > .1f)
             {
