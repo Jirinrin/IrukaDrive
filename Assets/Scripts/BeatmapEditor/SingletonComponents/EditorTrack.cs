@@ -86,7 +86,7 @@ namespace BeatmapEditor.SingletonComponents
         }
 
         public void PlayFromPoint(float screenX, bool autoplay) =>
-            BeatmapEditorManager.Instance.PlayBeatmapFrom(ScreenXToBeat(screenX), autoplay);
+            BeatmapEditorManager.Instance.PlayBeatmapFrom(Mathf.Max(ScreenXToBeat(screenX), 0f), autoplay);
 
         public void Zoom(float delta, float screenPivotX)
         {
