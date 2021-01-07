@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <title>Wenrella no Hyouka</title>
+  <title>Wenrella no Hyouka [WIP]</title>
   <artist>Cororo</artist>
   <jacketFile>cover.png</jacketFile>
   <difficulty>Advanced</difficulty>
@@ -11,6 +11,57 @@
   <beatsPerBar>4</beatsPerBar>
   <barOffset>0</barOffset>
   <finishTimestamp xsi:nil="true" />
+  <id>c2ab39c6-b326-40ed-866f-f9dc862d6400</id>
   <words>
+    <BeatmapWord>
+      <beat>4</beat>
+      <text>e</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>6</beat>
+      <text>aoi</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>10</beat>
+      <text>xxxxxxx</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>20</beat>
+      <text>b</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>22</beat>
+      <text>cjh</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>28</beat>
+      <text>poiuy</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>36</beat>
+      <text>ud</text>
+      <isChord>true</isChord>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>40</beat>
+      <text>_</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>44</beat>
+      <text>-</text>
+      <beatInterval>1</beatInterval>
+    </BeatmapWord>
+    <BeatmapWord>
+      <beat>48</beat>
+      <text>d ddd ddd</text>
+      <beatInterval>0.5</beatInterval>
+    </BeatmapWord>
   </words>
 </Beatmap>
