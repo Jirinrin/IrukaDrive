@@ -69,7 +69,7 @@ namespace Gameplay.SingletonComponents
             //     obj.color = Color.white;
         }
 
-        private void ChangeCurrentChord(RuntimeWordObject obj) => obj.SetColor(Color.red);
+        private void ChangeCurrentChord(RuntimeWordObject obj) => obj.SetColor(Color.green);
         private void UnmarkCurrentChord() => _currentWordObj.SetColor(Color.white);
         private void UnmarkCurrentChord(IEnumerable<NoteResult> _) => UnmarkCurrentChord(); 
 
@@ -89,7 +89,7 @@ namespace Gameplay.SingletonComponents
             if (index >= _currentWordObj.charObjRefs.Count)
                 return;
         
-            _currentWordObj.charObjRefs[index].obj.color = Color.red;
+            _currentWordObj.charObjRefs[index].obj.color = Color.green;
             if (index > 0)
                 _currentWordObj.charObjRefs[index-1].obj.color = Color.white;
         }
