@@ -205,8 +205,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 357716769}
   m_HandleRect: {fileID: 357716768}
   m_Direction: 2
-  m_Value: 1.0000004
-  m_Size: 0.848889
+  m_Value: 1
+  m_Size: 0.93984634
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5656,7 +5656,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 776571bef462f9f4bbb459c7d2223f63, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9c98c95b3c35c5e49b3994a6605628e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
