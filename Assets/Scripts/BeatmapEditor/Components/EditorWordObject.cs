@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BeatmapEditor.Domain;
 using BeatmapEditor.SingletonComponents;
 using Shared;
@@ -59,6 +59,12 @@ namespace BeatmapEditor.Components
             _activeInputField.onSubmit.AddListener(OnSubmitWordType);
             _activeInputField.SetTextWithoutNotify(word.Text);
             _activeInputField.ActivateInputField();
+            
+            _activeInputField.onValueChanged.AddListener(s =>
+            {
+                if (Keyboard.current.shiftKey.isPressed && s.EndsWith(" "))
+                    _activeInputField.SetTextWithoutNotify(s.Substring(0, s.Length - 1) + "⎵");
+            });
             
             _inputting = true;
             EditorTrackGestures.Instance.enabled = false;

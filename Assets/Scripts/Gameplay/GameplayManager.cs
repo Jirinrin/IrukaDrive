@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Domain;
@@ -169,7 +169,7 @@ namespace Gameplay
 
         private void OnChar(char character)
         {
-            if (character == ' ') character = '_';
+            if (character == ' ') character = '⎵';
             
             if (_currentWord.Finished)
                 return;
