@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using BeatmapEditor.Domain;
 using BeatmapEditor.SingletonComponents;
 using Shared;

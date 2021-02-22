@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gameplay.Domain;
@@ -47,7 +47,7 @@ namespace Gameplay
             if (GameManager.State != GameState.Gameplay)
             {
                 GameManager.SetState(GameState.Gameplay);
-                PrepGameplay(SerializationHelpers.LoadBeatmap($"{Application.streamingAssetsPath}/DriveCharts/Tutorial/advanced.drive"), autoplay: false);
+                PrepGameplay(SerializationHelpers.LoadBeatmap($"{Application.streamingAssetsPath}/DriveCharts/SDVX Tutorial/2_advanced.drive"), autoplay: false);
             }
 
             LoadBeatmap();
