@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8600147816762811579}
   - component: {fileID: -5503108021878515895}
   m_Layer: 0
-  m_Name: CharacterCanvasProper
+  m_Name: CharacterCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: a
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4cc450aab4cbed44ebb10495524b5f92, type: 2}
-  m_sharedMaterial: {fileID: 3398393377605773935, guid: 4cc450aab4cbed44ebb10495524b5f92,
+  m_fontAsset: {fileID: 11400000, guid: 57c841d883a6d024f978495380eea546, type: 2}
+  m_sharedMaterial: {fileID: 204360121068090787, guid: 57c841d883a6d024f978495380eea546,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 1024
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
