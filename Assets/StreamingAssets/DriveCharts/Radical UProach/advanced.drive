@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <title>Radical UP↑roach</title>
-  <artist>Schlaf</artist>
-  <jacketFile>cover.png</jacketFile>
   <difficulty>Advanced</difficulty>
   <creator>dreamy ouchaco</creator>
-  <songFile>Rad.ogg</songFile>
-  <bpm>180</bpm>
-  <beatOffset>0</beatOffset>
-  <beatsPerBar>4</beatsPerBar>
-  <barOffset>0</barOffset>
   <finishTimestamp>50</finishTimestamp>
   <id>feb78fbe-83c4-4442-a34d-eb081a7dd166</id>
   <words>

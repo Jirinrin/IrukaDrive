@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <title>[line:δ]</title>
-  <artist>nitro</artist>
-  <jacketFile>jacket.jpg</jacketFile>
   <difficulty>Advanced</difficulty>
   <creator>dreamy ouchaco</creator>
-  <songFile>linedelta.ogg</songFile>
-  <bpm>155</bpm>
-  <beatOffset>0</beatOffset>
-  <beatsPerBar>4</beatsPerBar>
-  <barOffset>0</barOffset>
   <finishTimestamp>41</finishTimestamp>
   <id>aaf2acb0-f2e5-44a6-9320-6b5eb94ef788</id>
+  <version>1</version>
   <words>
     <BeatmapWord>
       <beat>7</beat>

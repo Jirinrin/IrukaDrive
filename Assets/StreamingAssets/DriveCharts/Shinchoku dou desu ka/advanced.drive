@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <title>Shinchoku dou desu ka</title>
-  <artist>sumijun feat.ななひら</artist>
-  <jacketFile>cover.png</jacketFile>
   <difficulty>Advanced</difficulty>
   <creator>dreamy ouchaco</creator>
-  <songFile>Shinchoku dou desu ka.ogg</songFile>
-  <bpm>199</bpm>
-  <beatOffset>0</beatOffset>
-  <beatsPerBar>4</beatsPerBar>
-  <barOffset>0</barOffset>
   <finishTimestamp>37</finishTimestamp>
   <id>dc27791d-92cc-4ae7-bfbe-2ebd379bf566</id>
   <words>

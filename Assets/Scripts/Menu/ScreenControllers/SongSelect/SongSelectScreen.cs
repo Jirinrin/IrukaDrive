@@ -59,12 +59,12 @@ namespace Menu.ScreenControllers.SongSelect
                 return;
             
             if (_selectedSong != null)
-                _cardsLookup[_selectedSong.folderName].SetSelected(false);
+                _cardsLookup[_selectedSong.folderPath].SetSelected(false);
             _selectedSong = song;
-            _cardsLookup[_selectedSong.folderName].SetSelected(true);
+            _cardsLookup[_selectedSong.folderPath].SetSelected(true);
             songDataPanel.SetSong(song);
             // todo: allow beatmap to specify where preview should start or something
-            SongManager.Instance.PlaySong(song.song, 45f);
+            SongManager.Instance.PlaySong(song.audio, 45f);
         }
 
         private void SelectDiff(string diffPath)
@@ -81,7 +81,7 @@ namespace Menu.ScreenControllers.SongSelect
             {
                 var card = Instantiate(songCardPrefab, songWheelContainer.transform);
                 card.Init(song, SelectSongSimple);
-                _cardsLookup[song.folderName] = card;
+                _cardsLookup[song.folderPath] = card;
                 
                 if (i == 0)
                     _cardHeight = card.GetComponent<RectTransform>().rect.height;
@@ -98,7 +98,7 @@ namespace Menu.ScreenControllers.SongSelect
         public void ToGameplay() =>
             // Use this for easy dev
             // GameManager.ToGameplay(SerializationHelpers.LoadBeatmap( $"{Application.streamingAssetsPath}/DriveCharts/SDVX Tutorial/2_advanced.drive"));
-            SerializationHelpers.LoadBeatmap(b => GameManager.ToGameplay(b));
+            SerializationHelpersAsync.LoadSelectBeatmap(b => GameManager.ToGameplay(b), true);
 
         public async void ToGameplay(string pathInBeatmapsFolder)
         {

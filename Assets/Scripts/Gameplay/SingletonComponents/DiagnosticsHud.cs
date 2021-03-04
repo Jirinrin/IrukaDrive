@@ -29,7 +29,7 @@ namespace Gameplay.SingletonComponents
             _beatmapResult = GameplayManager.RuntimeWords.GetNotes();
             outputTextBox.text = string.Join(Environment.NewLine,
                 "Diagnostics:",
-                $"{GameplayManager.CurrentBeatmap.bpm} BPM",
+                $"{GameplayManager.CurrentBeatmap.song.bpm} BPM",
                 $"{SongManager.Instance.songPosSec} secs",
                 $"{SongManager.Instance.SongPosBeatsMod} beats",
                 $"{SongManager.Instance.SongPosBars} bars"

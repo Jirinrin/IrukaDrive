@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <title>Yuusha no Natsuyasumi</title>
-  <artist>Verdammt</artist>
-  <jacketFile>cover.png</jacketFile>
   <difficulty>Advanced</difficulty>
   <creator>dreamy ouchaco</creator>
-  <songFile>yuusha.ogg</songFile>
-  <bpm>167</bpm>
-  <beatOffset>0</beatOffset>
-  <beatsPerBar>4</beatsPerBar>
-  <barOffset>0</barOffset>
   <finishTimestamp>39</finishTimestamp>
   <id>531804e3-8e5d-4585-9fe1-97bf22c3f6ec</id>
   <words>

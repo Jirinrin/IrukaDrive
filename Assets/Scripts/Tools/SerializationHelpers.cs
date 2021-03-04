@@ -1,56 +1,21 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
 using Shared.Domain;
 using SimpleFileBrowser;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace Tools
 {
     public static class SerializationHelpers
     {
-        private static AudioType GetAudioType(string ext)
-        {
-            switch (ext.Substring(1).ToLower())
-            {
-                case "mp3":
-                case "m4a":
-                    return AudioType.MPEG;
-                case "ogg":
-                    return AudioType.OGGVORBIS;
-                case "wav":
-                    return AudioType.WAV;
-                case "aiff":
-                    return AudioType.AIFF;
-                default:
-                    Debug.LogWarning($"Unknown audio type: {ext}");
-                    return AudioType.UNKNOWN;
-            }
-        }
-        
         private static byte[] LoadFile(string filePath)
         {
             return File.ReadAllBytes(filePath);
         }
-        private static async Task<byte[]> LoadFileAsync(string filePath)
-        {
-            // var req = new UnityWebRequest($"file://{filePath}");
-            // await req.SendWebRequest();
-            // return req.downloadHandler.data;
-            return await Task.Run(() => File.ReadAllBytes(filePath));
-        }
         
-        private static AudioClip LoadSong(string filePath)
+        private static AudioClip LoadAudio(string filePath)
         {
             var clip = NAudioPlayer.FromMp3Data(LoadFile(filePath));
-            return clip;
-        }
-        private static async Task<AudioClip> LoadSongAsync(string filePath)
-        {
-            var req = UnityWebRequestMultimedia.GetAudioClip($"file://{filePath}", GetAudioType(Path.GetExtension(filePath)));
-            await req.SendWebRequest();
-            var clip = DownloadHandlerAudioClip.GetContent(req);
             return clip;
         }
         
@@ -61,13 +26,6 @@ namespace Tools
             texture.LoadImage(f);
             return texture;
         }
-        private static async Task<Texture2D> LoadImageAsync(string filePath)
-        {
-            var texture = new Texture2D(2, 2);
-            var f = await LoadFileAsync(filePath);
-            texture.LoadImage(f);
-            return texture;
-        }
 
         // // todo: move somewhere else than SerializationHelpers
         // public static AudioClip FindSong()
@@ -75,6 +33,8 @@ namespace Tools
         //     var path = EditorUtility.OpenFilePanel("Select a Song","","mp3,ogg,wav");
         //     return LoadSong(path);
         // }
+        
+        // BEATMAP STUFF
 
         public static void SaveBeatmapAs(Beatmap beatmap, Action<string> onSuccess)
         {
@@ -97,44 +57,68 @@ namespace Tools
 
             // todo: do some checking on overlapping words? Or do that in the editor?
         }
-
-        public static void LoadBeatmap(Action<Beatmap> onFinished)
-        {
-            var dir = $"{Application.streamingAssetsPath}/DriveCharts";
-            FileBrowser.ShowLoadDialog(async p => onFinished(await Shared.Cache.GetBeatmapAsync(p[0])), () => onFinished(null),
-                FileBrowser.PickMode.Files,false, dir, title: "Select a drive chart"); // ext: "drive"
-        }
-
-        /// <summary>
-        /// Limited to charts with MP3 song
-        /// </summary>
-        private static Beatmap InitBeatmap(Beatmap b, string filePath)
-        {
-            b.filePath = filePath;
-            b.song = LoadSong(Path.Combine(Path.GetDirectoryName(filePath), b.songFile));
-            b.jacket = LoadImage(Path.Combine(Path.GetDirectoryName(filePath), b.jacketFile));
-            return b;
-        }
-        private static async Task<Beatmap> InitBeatmapAsync(Beatmap b, string filePath)
-        {
-            b.filePath = filePath;
-            b.song = await LoadSongAsync(Path.Combine(Path.GetDirectoryName(filePath), b.songFile));
-            b.jacket = await LoadImageAsync(Path.Combine(Path.GetDirectoryName(filePath), b.jacketFile));
-            return b;
-        }
-        /// <summary>
-        /// Limited to charts with MP3 song
-        /// </summary>
-        public static Beatmap LoadBeatmap(string filePath)
-        {
-            var beatmap = Serialization.ReadFromXmlFile<Beatmap>(filePath);
-            return InitBeatmap(beatmap, filePath);
-        }
         
-        public static async Task<Beatmap> LoadBeatmapAsync(string filePath)
+        /// <summary>
+        /// Limited to charts with MP3 song
+        /// </summary>
+        public static Beatmap LoadBeatmap(string filePath, Song song = null)
         {
-            var beatmap = await Serialization.ReadFromXmlFileAsync<Beatmap>(filePath);
-            return await InitBeatmapAsync(beatmap, filePath);
+            var b = Serialization.ReadFromXmlFile<Beatmap>(filePath);
+            var dir = Path.GetDirectoryName(filePath);
+                
+            b.song = song ?? LoadSong(dir);
+            b.filePath = filePath;
+            b.jacket = b.jacketFileOverride != null
+                ? LoadImage(Path.Combine(dir!, b.jacketFileOverride)) 
+                : b.song.jacket;
+
+            return b;
+        }
+
+        // SONG STUFF
+
+        public static void NewSong(Beatmap beatmap, Action<string> onSuccess)
+        {
+            FileBrowser.ShowSaveDialog(p =>
+                {
+                    var folder = p[0];
+                    if (Directory.Exists(folder))
+                    {
+                        Debug.LogWarning($"{folder} already exists");
+                        return;
+                    }
+                    Directory.CreateDirectory(folder);
+                    var s = new Song
+                    {
+                        folderPath = folder,
+                        filePath = Path.Combine(folder, "song.xml"),
+                    };
+                    SaveSong(s);
+                    SaveBeatmapToFile(new Beatmap(), Path.Combine(folder, "beginner.drive"));
+
+                }, null, FileBrowser.PickMode.Folders,false,
+                Path.GetDirectoryName(beatmap.filePath), Path.GetFileName(beatmap.filePath), title: "Save beatmap");
+        }
+        public static void SaveSong(Song song)
+        {
+            Serialization.WriteToXmlFile(song.filePath, song);
+        }
+
+        public static Song LoadSong(string folderPath)
+        {
+            var (diffs, ok) = SerializationHelperUtils.CheckSong(folderPath);
+            if (!ok) return null;
+            
+            var songFilePath = Path.Combine(folderPath, "song.xml");
+            var s = Serialization.ReadFromXmlFile<Song>(songFilePath);
+            s.filePath = songFilePath;
+            s.folderPath = folderPath;
+            s.diffPaths = diffs;
+            
+            s.audio = LoadAudio(Path.Combine(folderPath, s.audioPath));
+            s.jacket = LoadImage(Path.Combine(folderPath, s.jacketPath));
+
+            return s;
         }
     }
 }

@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <title>Wenrella no Hyouka [WIP]</title>
-  <artist>Cororo</artist>
-  <jacketFile>cover.png</jacketFile>
   <difficulty>Advanced</difficulty>
   <creator>dreamy ouchaco</creator>
-  <songFile>wenrella.mp3</songFile>
-  <bpm>200</bpm>
-  <beatOffset>0.05</beatOffset>
-  <beatsPerBar>4</beatsPerBar>
-  <barOffset>0</barOffset>
   <finishTimestamp xsi:nil="true" />
   <id>c2ab39c6-b326-40ed-866f-f9dc862d6400</id>
   <words>

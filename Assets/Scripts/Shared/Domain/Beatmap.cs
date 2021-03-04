@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Shared.Domain
@@ -16,32 +17,28 @@ namespace Shared.Domain
     [Serializable]
     public class Beatmap
     {
+        // Back reference to the song it belongs to
+        [NonSerialized][XmlIgnore] public Song song;
+        
         // Cosmetic stuff
-        public string title;
-        public string artist;
-        public string jacketFile;
-        [NonSerialized] [XmlIgnore] public Texture2D jacket;
+        [CanBeNull] public string jacketFileOverride;
+        [NonSerialized][XmlIgnore] public Texture2D jacket;
         public Difficulty difficulty;
         public string creator;
 
-        // Important metadata
-        public string songFile;
-        [NonSerialized][XmlIgnore] public AudioClip song;
+        // Useful metadata
         [NonSerialized][XmlIgnore] public string filePath;
-        public float bpm;
-        public float beatOffset;
-        [Range(2,4)] public int beatsPerBar = 4;
-        public int barOffset;
         public float? finishTimestamp; // You can specify this to have a beatmap end before the song file ends
         public Guid id; // Generated automatically by the beatmap editor
 
         // Notes, expected to be sorted
         public List<BeatmapWord> words;
         
+        public int version = 1;
+        
         // Getters
         public int NotesCount => words.Aggregate(0, (acc, w) => acc + w.text.Length);
-        private float? _beatsPerSec;
-        public float BeatsPerSec => _beatsPerSec ??= bpm / 60f;
+        public float BeatsPerSec => song.BeatsPerSec;
 
         public Beatmap()
         {

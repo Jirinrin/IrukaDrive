@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Song xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <title>Shinchoku dou desu ka</title>
+  <artist>sumijun feat.ななひら</artist>
+  <jacketPath>cover.png</jacketPath>
+  <audioPath>Shinchoku dou desu ka.ogg</audioPath>
+  <bpm>199</bpm>
+  <beatOffset>0</beatOffset>
+  <beatsPerBar>4</beatsPerBar>
+  <barOffset>0</barOffset>
+  <version>1</version>
+</Song>

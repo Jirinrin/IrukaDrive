@@ -42,7 +42,7 @@ namespace Shared
             var startIndex = Mathf.CeilToInt(from / C.BeatIndexFactor) * C.BeatIndexFactorInt;
             for (var i = startIndex; i < to; i += C.BeatIndexFactorInt)
             {
-                var onBar = i % (_currentBeatmap.beatsPerBar * C.BeatIndexFactorInt) == _currentBeatmap.barOffset * C.BeatIndexFactorInt;
+                var onBar = i % (_currentBeatmap.song.beatsPerBar * C.BeatIndexFactorInt) == _currentBeatmap.song.barOffset * C.BeatIndexFactorInt;
                 if (isBar && onBar || !isBar && !onBar)
                     output.Add(i);
             }

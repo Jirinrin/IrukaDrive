@@ -12,17 +12,23 @@ namespace Shared
     {
         private static readonly string BeatmapPath = $"{Application.streamingAssetsPath}/DriveCharts";
 
-        private static readonly Dictionary<string, Beatmap> Beatmaps = new Dictionary<string, Beatmap>();
+        private static readonly Dictionary<string, Beatmap> BeatmapsLookup = new Dictionary<string, Beatmap>();
         public static async Task<Beatmap> GetBeatmapAsync(string path)
         {
-            if (!Beatmaps.ContainsKey(path))
-                Beatmaps[path] = await SerializationHelpers.LoadBeatmapAsync(path);
-            return Beatmaps[path];
+            if (!BeatmapsLookup.ContainsKey(path))
+                BeatmapsLookup[path] = await SerializationHelpersAsync.LoadBeatmap(path, await GetSongAsync(Path.GetDirectoryName(path)));
+            return BeatmapsLookup[path];
         }
         
+        private static readonly Dictionary<string, Song> SongsLookup = new Dictionary<string, Song>();
+        public static async Task<Song> GetSongAsync(string folderPath)
+        {
+            if (!SongsLookup.ContainsKey(folderPath))
+                SongsLookup[folderPath] = await SerializationHelpersAsync.LoadSong(folderPath);
+            return SongsLookup[folderPath];
+        }
+
         public static readonly List<Song> Songs = new List<Song>();
-        // todo: allow nested beatmaps and stuff
-        // todo: think about the right structure. Which data per chart and which maybe in a shared thing? Which data do we want to know in song select already?
         public static async Task InitSongs()
         {
             if (Songs.Any())
@@ -31,25 +37,11 @@ namespace Shared
             var songs = Directory.GetDirectories($"{Application.streamingAssetsPath}/DriveCharts");
             foreach (var songFolder in songs)
             {
-                var songPath = Path.Combine(BeatmapPath, songFolder);
-                var diffPaths = Directory.GetFiles(songPath, "*.drive").Select(d => Path.Combine(songPath, d)).ToArray();
-                if (!diffPaths.Any())
-                {
-                    Debug.LogWarning($"Song {songPath} has no diffs");
-                    continue;
-                }
+                var songFolderPath = Path.Combine(BeatmapPath, songFolder);
 
-                var firstBeatmap = await GetBeatmapAsync(diffPaths.First());
-                Songs.Add(new Song
-                {
-                    title = firstBeatmap.title,
-                    artist = firstBeatmap.artist,
-                    jacket = firstBeatmap.jacket,
-                    song = firstBeatmap.song,
-                    folderName = songFolder,
-                    folderPath = songPath,
-                    diffPaths = diffPaths,
-                });
+                var s = await GetSongAsync(songFolderPath);
+                if (s != null)
+                    Songs.Add(s);                
             }
         }
     }

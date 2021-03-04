@@ -10,7 +10,7 @@ namespace Shared
     [RequireComponent(typeof(AudioSource))]
     public class SongManager : Singleton<SongManager>
     {
-        [NonSerialized] private Beatmap _currentBeatmap;
+        [NonSerialized] private Song _currentSong;
         [NonSerialized] public float songLength;
     
         private AudioSource _audioSource;
@@ -18,8 +18,8 @@ namespace Shared
         [NonSerialized] public float songPosSec;
         [NonSerialized] public float songPosBeats;
     
-        public float SongPosBeatsMod => Mathf.FloorToInt(songPosBeats % _currentBeatmap.beatsPerBar);
-        public float SongPosBars => Mathf.FloorToInt((songPosBeats - _currentBeatmap.barOffset) / _currentBeatmap.beatsPerBar);
+        public float SongPosBeatsMod => Mathf.FloorToInt(songPosBeats % _currentSong.beatsPerBar);
+        public float SongPosBars => Mathf.FloorToInt((songPosBeats - _currentSong.barOffset) / _currentSong.beatsPerBar);
         public float BeatTiming => songPosBeats % 1;
 
         public bool IsPlaying => _audioSource.isPlaying;
@@ -39,13 +39,13 @@ namespace Shared
             _audioSource.time = startTime;
             _audioSource.Play();
         }
-        public void LoadSong(Beatmap beatmap, float startTime = 0f, bool tickOnBeat = false)
+        public void LoadSong(Song song, float startTime = 0f, bool tickOnBeat = false, float? finishTimestamp = null)
         {
             _tickOnBeat = tickOnBeat;
             
-            _currentBeatmap = beatmap;
-            songLength = beatmap.finishTimestamp ?? beatmap.song.length;
-            _audioSource.clip = _currentBeatmap.song;
+            _currentSong = song;
+            songLength = finishTimestamp ?? song.audio.length;
+            _audioSource.clip = _currentSong.audio;
 
             _songFinished = false;
             _audioSource.time = startTime;
@@ -65,7 +65,7 @@ namespace Shared
             if (_audioSource.isPlaying)
             {
                 songPosSec = _audioSource.time;
-                songPosBeats = _currentBeatmap.SecToBeats(songPosSec);
+                songPosBeats = _currentSong.SecToBeats(songPosSec);
             }
         
             if (!_songFinished && (songPosSec >= songLength || !_audioSource.isPlaying))
@@ -77,7 +77,7 @@ namespace Shared
         
         private void Update()
         {
-            if (_currentBeatmap == null)
+            if (_currentSong == null)
                 return;
 
             UpdateSongState();

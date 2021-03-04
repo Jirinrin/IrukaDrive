@@ -23,7 +23,7 @@ namespace Gameplay.SingletonComponents
 
         public void InitTrack(Beatmap beatmap, IEnumerable<RuntimeWord> words)
         {
-            viewState = new TrackViewState(beatmap.bpm);
+            viewState = new TrackViewState(beatmap.song.bpm);
         
             Init();
 

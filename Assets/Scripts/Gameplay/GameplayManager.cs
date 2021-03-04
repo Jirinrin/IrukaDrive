@@ -55,7 +55,7 @@ namespace Gameplay
 
         public void LoadBeatmap()
         {
-            SongManager.Instance.LoadSong(CurrentBeatmap, BeatmapStartTime);
+            SongManager.Instance.LoadSong(CurrentBeatmap.song, BeatmapStartTime);
         
             Track.Instance.InitTrack(CurrentBeatmap, RuntimeWords);
         
@@ -75,7 +75,7 @@ namespace Gameplay
             
             if (BeatmapStartTime > .1f)
             {
-                var beatmapStartBeat = CurrentBeatmap.SecToBeats(BeatmapStartTime);
+                var beatmapStartBeat = CurrentBeatmap.song.SecToBeats(BeatmapStartTime);
                 Track.Instance.UpdateProgress(beatmapStartBeat);
                 Track.Instance.ForceRefresh();
 

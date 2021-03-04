@@ -11,6 +11,7 @@ namespace BeatmapEditor
 {
     public class BeatmapEditorManager : Singleton<BeatmapEditorManager>
     {
+        public static Song currentSong;
         public static Beatmap currentBeatmap;
 
         private static bool _inEditorPlay;
@@ -28,7 +29,7 @@ namespace BeatmapEditor
         {
             // todo: somehow keep this scene loaded in background
             _inEditorPlay = true;
-            GameManager.ToGameplay(currentBeatmap, currentBeatmap.BeatsToSecs(beatTime), autoplay);
+            GameManager.ToGameplay(currentBeatmap, currentSong.BeatsToSecs(beatTime), autoplay);
         }
 
         private void Start()
@@ -70,9 +71,10 @@ namespace BeatmapEditor
             if (currentBeatmap != null)
                 ResetEditor();
             
-            SerializationHelpers.LoadBeatmap(b =>
+            SerializationHelpersAsync.LoadSelectBeatmap(b =>
             {
                 currentBeatmap = b ?? currentBeatmap;
+                currentSong = currentBeatmap.song;
                 EditorTrack.Instance.LoadBeatmap(currentBeatmap);
                 SetFunctional(true);
             });
@@ -80,7 +82,7 @@ namespace BeatmapEditor
 
         private async void ReloadBeatmap()
         {
-            currentBeatmap = await SerializationHelpers.LoadBeatmapAsync(currentBeatmap.filePath);
+            currentBeatmap = await SerializationHelpersAsync.LoadBeatmap(currentBeatmap.filePath, currentSong);
             ResetEditor();
             EditorTrack.Instance.LoadBeatmap(currentBeatmap, true);
         }
@@ -93,7 +95,7 @@ namespace BeatmapEditor
         public void PlaySong()
         {
             if (!SongManager.Instance.IsPlaying)
-                SongManager.Instance.LoadSong(currentBeatmap, tickOnBeat: true);
+                SongManager.Instance.LoadSong(currentSong, tickOnBeat: true);
             else
                 SongManager.Instance.Stop();
         }
