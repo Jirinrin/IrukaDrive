@@ -17,10 +17,12 @@ namespace BeatmapEditor.SingletonComponents
 
         private bool _initted;
 
-        public void RefreshBeatmap()
+        public void RefreshBeatmap(bool record = true)
         {
             _notesRecycler.RefreshBeatmap();
             _shouldDraw = true;
+            if (record)
+                EditorHistory.Record();
         }
 
         public void OnEnable()
@@ -46,7 +48,7 @@ namespace BeatmapEditor.SingletonComponents
             if (!_initted)
                 Init();
 
-            _notesRecycler.Init(beatmap);
+            _notesRecycler.Init();
             
             // todo: also refresh window?
             

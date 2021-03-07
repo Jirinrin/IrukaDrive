@@ -1,4 +1,4 @@
-using System;
+using BeatmapEditor.Domain;
 using BeatmapEditor.SingletonComponents;
 using Shared;
 using Shared.Domain;
@@ -44,6 +44,7 @@ namespace BeatmapEditor
                 currentBeatmap = SerializationHelpers.LoadBeatmap($"{dir}/2_advanced.drive");
                 currentSong = SerializationHelpers.LoadSong(dir);
                 EditorTrack.Instance.LoadBeatmap(currentBeatmap);
+                EditorHistory.Reset();
             }
             else if (_inEditorPlay)
             {
@@ -84,6 +85,7 @@ namespace BeatmapEditor
 
         private async void ReloadBeatmap()
         {
+            // todo: also reload song?
             currentBeatmap = await SerializationHelpersAsync.LoadBeatmap(currentBeatmap.filePath, currentSong);
             ResetEditor();
             EditorTrack.Instance.LoadBeatmap(currentBeatmap, true);
@@ -92,6 +94,7 @@ namespace BeatmapEditor
         private void ResetEditor()
         {
             EditorTrack.Instance.ResetTrack();
+            EditorHistory.Reset();
         }
 
         public void PlaySong()

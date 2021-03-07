@@ -85,16 +85,19 @@ namespace BeatmapEditor.Components
 
         public void OnSubmitWordType(string result)
         {
+            Destroy(_activeInputField.gameObject);
+            _inputting = false;
+            EditorTrackGestures.Instance.enabled = true;
+
+            if (result == word.Text)
+                return;
+
             if (result.Length == 0)
                 word.Delete();
             else
                 word.Text = result;
-            
+
             EditorTrack.Instance.RefreshBeatmap();
-            Destroy(_activeInputField.gameObject);
-            
-            _inputting = false;
-            EditorTrackGestures.Instance.enabled = true;
         }
 
         public void Delete()
@@ -131,9 +134,15 @@ namespace BeatmapEditor.Components
             if (!_dragging)
                 return;
             
-            word.Beat = (transform.localPosition.x / _beatSpacing).RoundToNearest(GetEditorBeatSnap());
-            EditorTrack.Instance.RefreshBeatmap();
             _dragging = false;
+
+            var newBeat = (transform.localPosition.x / _beatSpacing).RoundToNearest(GetEditorBeatSnap());
+            if (Math.Abs(word.Beat - newBeat) < C.FloatTolerance &&
+                Math.Abs(word.BeatInterval - C.BeatIntervalValues[_beatIntervalIndexBeforeDrag]) < C.FloatTolerance)
+                return;
+
+            word.Beat = newBeat;
+            EditorTrack.Instance.RefreshBeatmap();
         }
 
         public void OnBeginDrag(PointerEventData eventData)

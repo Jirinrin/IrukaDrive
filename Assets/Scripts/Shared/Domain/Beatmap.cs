@@ -30,7 +30,7 @@ namespace Shared.Domain
 
         // Notes, expected to be sorted
         public List<BeatmapWord> words;
-        
+
         public int version = 1;
         
         // Getters
@@ -40,6 +40,13 @@ namespace Shared.Domain
         public Beatmap()
         {
             id = Guid.NewGuid();
+        }
+
+        public Beatmap CloneState()
+        {
+            var clone = (Beatmap) MemberwiseClone();
+            clone.words = words.Select(w => w.Clone()).ToList();
+            return clone;
         }
     }
 

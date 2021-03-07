@@ -13,8 +13,6 @@ namespace BeatmapEditor.SingletonComponents
     {
         [SerializeField] private TMP_InputField inputFieldPrefab = null;
 
-        private Beatmap _currentBeatmap;
-
         protected override void InitWord(ObjWidthItem item)
         {
             item.obj.inputFieldPrefab = inputFieldPrefab;
@@ -30,14 +28,13 @@ namespace BeatmapEditor.SingletonComponents
         public void LoadBeatmap(List<BeatmapWord> words) =>
             base.LoadBeatmap(words.Select(word => new EditorWord(word)));
 
-        public void Init(Beatmap beatmap)
+        public void Init()
         {
             containerWidth = EditorTrack.Instance.containerRect.width;
-            _currentBeatmap = beatmap;
-            LoadBeatmap(_currentBeatmap.words);
+            LoadBeatmap(BeatmapEditorManager.currentBeatmap.words);
         }
 
-        public void RefreshBeatmap() => LoadNewWords(_currentBeatmap.words.Select(word => new EditorWord(word)));
+        public void RefreshBeatmap() => LoadNewWords(BeatmapEditorManager.currentBeatmap.words.Select(word => new EditorWord(word)));
 
         public void EditWord(int index) =>
             wordRecyclerList.visibleItemsLookup[index].obj.Edit();
