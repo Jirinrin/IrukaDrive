@@ -32,8 +32,8 @@ namespace Tools
         public static IEnumerable<NoteResult> GetResults(this RuntimeWord word) =>
             word.CharNotes.Select(cn => cn.result ?? NoteResult.Miss);
         
-        public static float SecToBeats(this Song b, float seconds) => (seconds - b.beatOffset) * b.BeatsPerSec;
-        public static float BeatsToSecs(this Song b, float beats) => beats / b.BeatsPerSec + b.beatOffset;
+        public static float SecToBeats(this Song s, float seconds) => (seconds - s.beatOffset) * s.BeatsPerSec;
+        public static float BeatsToSecs(this Song s, float beats) => beats / s.BeatsPerSec + s.beatOffset;
         
         public static void SortWords(this Beatmap b) => b.words = b.words.OrderBy(word => word.beat).ToList();
     }

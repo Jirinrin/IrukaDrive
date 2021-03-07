@@ -13,9 +13,10 @@ namespace BeatmapEditor.Domain
     {
         [SerializeField] private Line cursorLinePrefab = null;
         
+        [CanBeNull] private static EditorWord _wordOnClipboard;
+
         private float _cursorPos;
         [CanBeNull] private EditorWordObject _selectedWord;
-        [CanBeNull] private EditorWord _wordOnClipboard;
 
         private bool _initted;
         private Line _cursorLine;
