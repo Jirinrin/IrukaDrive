@@ -779,7 +779,7 @@ PrefabInstance:
     - target: {fileID: 2743387031121635658, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_text
-      value: Play
+      value: Listen
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830584, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -809,7 +809,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830590, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_Name
-      value: Play
+      value: Listen
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
