@@ -29,10 +29,10 @@ namespace Tools
 
         public static (SongDifficulty[] diffPaths, bool ok) CheckSong(string folderPath)
         {
-            var songFilePath = Path.Combine(folderPath, "song.xml");
+            var songFilePath = Path.Combine(folderPath, "song.json");
             if (!File.Exists(songFilePath))
             {
-                Debug.LogWarning($"Song {folderPath} has no song.xml");
+                Debug.LogWarning($"Song {folderPath} has no song.json");
                 return (null, false);
             }
 
@@ -50,6 +50,7 @@ namespace Tools
                 // this is probably a bu\g in Utf8Json).
                 // => todo: better way to deal with this deserialization, ideally stop the deserialization before coming to the words field.
                 // e.g. look at the QuaternionFormatter how it custom works with fields. (also a Beatmap custom serializer could be nice, putting words at the very bottom)
+                // or could just make a simple (?) matcher on a couple byte sequences for the 2 properties we need
                 var diff = Serialization.ReadFromJsonFile<Beatmap>(path);
                 diff.filePath = path;
                 return (SongDifficulty) diff;

@@ -91,7 +91,7 @@ namespace Tools
                     var s = new Song
                     {
                         folderPath = folder,
-                        filePath = Path.Combine(folder, "song.xml"),
+                        filePath = Path.Combine(folder, "song.json"),
                     };
                     SaveSong(s);
                     SaveBeatmapToFile(new Beatmap(), Path.Combine(folder, "beginner.drive"));
@@ -109,7 +109,7 @@ namespace Tools
             var (diffs, ok) = SerializationHelperUtils.CheckSong(folderPath);
             if (!ok) return null;
 
-            var songFilePath = Path.Combine(folderPath, "song.xml");
+            var songFilePath = Path.Combine(folderPath, "song.json");
             var s = Serialization.ReadFromJsonFile<Song>(songFilePath);
             s.filePath = songFilePath;
             s.folderPath = folderPath;
