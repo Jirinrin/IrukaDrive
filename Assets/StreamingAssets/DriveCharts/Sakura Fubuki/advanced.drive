@@ -46,7 +46,7 @@
     },
     {
       "beat": 49,
-      "text": "d ddsa_",
+      "text": "d ddsa⎵",
       "beatInterval": 0.5
     },
     {
@@ -161,22 +161,22 @@
     },
     {
       "beat": 104,
-      "text": "_",
+      "text": "⎵",
       "beatInterval": 1
     },
     {
       "beat": 105.5,
-      "text": "e_",
+      "text": "e⎵",
       "isChord": true
     },
     {
       "beat": 106.5,
-      "text": "e_",
+      "text": "e⎵",
       "isChord": true
     },
     {
       "beat": 107.5,
-      "text": "r_",
+      "text": "r⎵",
       "isChord": true
     },
     {
