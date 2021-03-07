@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
+using Shared.Domain;
 using UnityEngine;
 
 namespace Tools
 {
-    public class SerializationHelperUtils
+    public static class SerializationHelperUtils
     {
         public static AudioType GetAudioType(string ext)
         {
@@ -25,7 +27,7 @@ namespace Tools
             }
         }
 
-        public static (string[] diffPaths, bool ok) CheckSong(string folderPath)
+        public static (SongDifficulty[] diffPaths, bool ok) CheckSong(string folderPath)
         {
             var songFilePath = Path.Combine(folderPath, "song.xml");
             if (!File.Exists(songFilePath))
@@ -33,7 +35,7 @@ namespace Tools
                 Debug.LogWarning($"Song {folderPath} has no song.xml");
                 return (null, false);
             }
-            
+
             var diffPaths = Directory.GetFiles(folderPath, "*.drive").Select(d => Path.Combine(folderPath, d)).ToArray();
             if (!diffPaths.Any())
             {
@@ -41,7 +43,20 @@ namespace Tools
                 return (null, false);
             }
 
-            return (diffPaths, true);
+            var diffs = diffPaths.Select(path =>
+            {
+                // We have to go from Beatmap to SongDifficulty, because otherwise it will fail when trying to parse
+                // the `words` field when encountering a `\\` inside of a string (then it expects ',' for some reason,
+                // this is probably a bu\g in Utf8Json).
+                // => todo: better way to deal with this deserialization, ideally stop the deserialization before coming to the words field.
+                // e.g. look at the QuaternionFormatter how it custom works with fields. (also a Beatmap custom serializer could be nice, putting words at the very bottom)
+                var diff = Serialization.ReadFromJsonFile<Beatmap>(path);
+                diff.filePath = path;
+                return (SongDifficulty) diff;
+            }).ToArray();
+            Array.Sort(diffs);
+
+            return (diffs, true);
         }
     }
 }

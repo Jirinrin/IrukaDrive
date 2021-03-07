@@ -23,8 +23,8 @@ namespace Shared.Domain
         
         [NonSerialized][IgnoreDataMember] [NotNull] public string folderPath;
         [NonSerialized][IgnoreDataMember] [NotNull] public string filePath;
-        [NonSerialized][IgnoreDataMember] [NotNull] public string[] diffPaths; // Max 4?
-        
+        [NonSerialized][IgnoreDataMember] [NotNull] public SongDifficulty[] diffs; // Max 4?
+
         private float? _beatsPerSec;
         [IgnoreDataMember] public float BeatsPerSec => _beatsPerSec ??= bpm / 60f;
         

@@ -86,7 +86,7 @@ namespace Tools
         public static void WriteToJsonFile<T>(string filePath, T objectToWrite, bool append = false, bool prettyPrint = true) where T : new()
         {
             using var writer = new StreamWriter(filePath, append);
-            var contentsToWriteToFile = JsonSerializer.ToJsonString(objectToWrite, StandardResolver.AllowPrivate);
+            var contentsToWriteToFile = JsonSerializer.ToJsonString(objectToWrite, StandardResolver.Default);
             if (prettyPrint)
                 contentsToWriteToFile = JsonSerializer.PrettyPrint(contentsToWriteToFile);
             writer.Write(contentsToWriteToFile);
@@ -102,7 +102,7 @@ namespace Tools
         public static T ReadFromJsonFile<T>(string filePath) where T : new()
         {
             using var stream = File.OpenRead(filePath);
-            return JsonSerializer.Deserialize<T>(stream);
+            return JsonSerializer.Deserialize<T>(stream, StandardResolver.Default);
         }
 
         public static Task<T> ReadFromJsonFileAsync<T>(string filePath) where T : new() =>

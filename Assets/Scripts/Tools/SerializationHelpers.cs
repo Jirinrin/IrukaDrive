@@ -113,7 +113,7 @@ namespace Tools
             var s = Serialization.ReadFromJsonFile<Song>(songFilePath);
             s.filePath = songFilePath;
             s.folderPath = folderPath;
-            s.diffPaths = diffs;
+            s.diffs = diffs;
             
             s.audio = LoadAudio(Path.Combine(folderPath, s.audioPath));
             s.jacket = LoadImage(Path.Combine(folderPath, s.jacketPath));

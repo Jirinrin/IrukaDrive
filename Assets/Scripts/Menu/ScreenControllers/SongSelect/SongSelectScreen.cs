@@ -20,7 +20,7 @@ namespace Menu.ScreenControllers.SongSelect
         private AudioSource _audioSource;
 
         private Song _selectedSong;
-        private string _selectedDiffPath;
+        private SongDifficulty _selectedDiff;
         private float _cardHeight;
         private Dictionary<string, SongCard> _cardsLookup;
 
@@ -67,9 +67,9 @@ namespace Menu.ScreenControllers.SongSelect
             SongManager.Instance.PlaySong(song.audio, 45f);
         }
 
-        private void SelectDiff(string diffPath)
+        private void SelectDiff(SongDifficulty diff)
         {
-            _selectedDiffPath = diffPath;
+            _selectedDiff = diff;
         }
 
         // todo: only render the relevant section of the list (with a RecyclerList etc)
@@ -93,7 +93,7 @@ namespace Menu.ScreenControllers.SongSelect
         }
         
         public async void Play() =>
-            GameManager.ToGameplay(await Cache.GetBeatmapAsync(_selectedDiffPath));
+            GameManager.ToGameplay(await Cache.GetBeatmapAsync(_selectedDiff.filePath));
 
         public void ToGameplay() =>
             // Use this for easy dev

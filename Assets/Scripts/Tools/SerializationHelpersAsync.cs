@@ -71,7 +71,7 @@ namespace Tools
             var s = await Serialization.ReadFromJsonFileAsync<Song>(songFilePath);
             s.filePath = songFilePath;
             s.folderPath = folderPath;
-            s.diffPaths = diffs;
+            s.diffs = diffs;
             
             if (s.audioPath != null)
                 s.audio = await LoadAudio(Path.Combine(folderPath, s.audioPath));            

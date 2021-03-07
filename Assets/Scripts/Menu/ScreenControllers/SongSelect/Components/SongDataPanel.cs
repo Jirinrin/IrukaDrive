@@ -26,7 +26,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
 
         private Song _song;
 
-        public event Action<string> OnChooseDiff;
+        public event Action<SongDifficulty> OnChooseDiff;
 
         private int _selectedDiffIndex;
 
@@ -36,10 +36,10 @@ namespace Menu.ScreenControllers.SongSelect.Components
                 highscoreTexts[i].text = i >= scores.Length ? "" : scores[i].ToString("D8");
         }
 
-        private async void SetDiffDataAsync(string diffPath)
+        private async void SetDiffDataAsync(SongDifficulty diff)
         {
             SetHighscores(new int[0]);
-            var beatmap = await Cache.GetBeatmapAsync(diffPath);
+            var beatmap = await Cache.GetBeatmapAsync(diff.filePath);
             var topScores = Local.Scores[beatmap.id].Reverse().Take(highscoreTexts.Length).Select(s => s.Score).ToArray();
             diffCreatorText.text = beatmap.creator;
             SetHighscores(topScores);
@@ -54,9 +54,8 @@ namespace Menu.ScreenControllers.SongSelect.Components
             }
             _diffButtonTexts[index].color = TextColorSelected;
 
-            SetDiffDataAsync(_song.diffPaths[index]);
-
-            OnChooseDiff?.Invoke(_song.diffPaths[index]);
+            SetDiffDataAsync(_song.diffs[index]);
+            OnChooseDiff?.Invoke(_song.diffs[index]);
         }
 
         private void OnEnable()
@@ -80,7 +79,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
             {
                 var btn = diffButtons[i];
                 var txt = _diffButtonTexts[i];
-                if (i >= song.diffPaths.Length)
+                if (i >= song.diffs.Length)
                 {
                     btn.interactable = false;
                     txt.text = "";
@@ -88,9 +87,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
                 }
 
                 btn.interactable = true;
-                // todo: get the actual difficulty name stored in the beatmap (?)
-                var btnText = song.diffPaths[i].Match(@"([^\\/]+)\.drive$")?.Groups[1].Value ?? "???";
-                txt.text = btnText.ToUpper();
+                txt.text = song.diffs[i].DifficultyName.ToUpper();
             }
             
             ChooseDiff(0);
