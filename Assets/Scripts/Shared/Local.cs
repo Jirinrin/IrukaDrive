@@ -29,17 +29,16 @@ namespace Shared
 
         private static void Init()
         {
-            _settingsPath = Path.Combine(Application.persistentDataPath, "settings.xml");
+            _settingsPath = Path.Combine(Application.persistentDataPath, "settings.json");
             _scoresPath = Path.Combine(Application.persistentDataPath, "scores.db");
-                
-            // todo: settings json instead of xml
-            Settings = File.Exists(_settingsPath) ? Serialization.ReadFromXmlFile<GameSettings>(_settingsPath) : new GameSettings();
+
+            Settings = File.Exists(_settingsPath) ? Serialization.ReadFromJsonFile<GameSettings>(_settingsPath) : new GameSettings();
             Scores = File.Exists(_scoresPath) ? Serialization.ReadFromBinaryFile<PlayerScores>(_scoresPath) : new PlayerScores();
         }
 
         public static void CommitSettings()
         {
-            Serialization.WriteToXmlFile(_settingsPath, Settings);
+            Serialization.WriteToJsonFile(_settingsPath, Settings);
         }
 
         // todo: make async or sth

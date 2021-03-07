@@ -1,74 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <difficulty>Advanced</difficulty>
-  <creator>dreamy ouchaco</creator>
-  <finishTimestamp>37</finishTimestamp>
-  <id>dc27791d-92cc-4ae7-bfbe-2ebd379bf566</id>
-  <words>
-    <BeatmapWord>
-      <beat>4</beat>
-      <text>s  nc  kdudsk</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>11.5</beat>
-      <text>ma  st  smattn</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>20</beat>
-      <text>xxxxxxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>28</beat>
-      <text>xxxxxxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>36.5</beat>
-      <text>uu</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>38</beat>
-      <text>xxxxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>44</beat>
-      <text>xxxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>48</beat>
-      <text>ttttt</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>52</beat>
-      <text>itb</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>56</beat>
-      <text>h  tm  jw k n kda s t ms</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>72</beat>
-      <text>s  gk  nk l l k r gws ms</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>88</beat>
-      <text>i  tm  dm n r a m  kknni</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>104</beat>
-      <text>i  em  tk s t i k ntu io</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-  </words>
-</Beatmap>
+{
+  "difficulty": "Advanced",
+  "creator": "dreamy ouchaco",
+  "finishTimestamp": 37,
+  "id": "dc27791d-92cc-4ae7-bfbe-2ebd379bf566",
+  "words": [
+    {
+      "beat": 4,
+      "text": "s  nc  kdudsk",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 11.5,
+      "text": "ma  st  smattn",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 20,
+      "text": "xxxxxxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 28,
+      "text": "xxxxxxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 36.5,
+      "text": "uu",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 38,
+      "text": "xxxxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 44,
+      "text": "xxxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 48,
+      "text": "ttttt",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 52,
+      "text": "itb",
+      "beatInterval": 1
+    },
+    {
+      "beat": 56,
+      "text": "h  tm  jw k n kda s t ms",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 72,
+      "text": "s  gk  nk l l k r gws ms",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 88,
+      "text": "i  tm  dm n r a m  kknni",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 104,
+      "text": "i  em  tk s t i k ntu io",
+      "beatInterval": 0.5
+    }
+  ],
+  "version": 1
+}

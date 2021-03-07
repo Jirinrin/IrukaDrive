@@ -1,31 +1,32 @@
 ﻿using System;
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
 using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Shared.Domain
 {
+    [Serializable]
     public class Song
     {
         public string title;
         public string artist;
         public string jacketPath;
-        [NonSerialized][XmlIgnore] [CanBeNull] public Texture2D jacket;
+        [NonSerialized][IgnoreDataMember] [CanBeNull] public Texture2D jacket;
         
         public string audioPath;
-        [NonSerialized][XmlIgnore] [CanBeNull] public AudioClip audio;
+        [NonSerialized][IgnoreDataMember] [CanBeNull] public AudioClip audio;
         
         public float bpm;
         public float beatOffset;
         [Range(2,4)] public int beatsPerBar = 4;
         public int barOffset;
         
-        [NonSerialized][XmlIgnore] [NotNull] public string folderPath;
-        [NonSerialized][XmlIgnore] [NotNull] public string filePath;
-        [NonSerialized][XmlIgnore] public string[] diffPaths; // Max 4?
+        [NonSerialized][IgnoreDataMember] [NotNull] public string folderPath;
+        [NonSerialized][IgnoreDataMember] [NotNull] public string filePath;
+        [NonSerialized][IgnoreDataMember] [NotNull] public string[] diffPaths; // Max 4?
         
         private float? _beatsPerSec;
-        public float BeatsPerSec => _beatsPerSec ??= bpm / 60f;
+        [IgnoreDataMember] public float BeatsPerSec => _beatsPerSec ??= bpm / 60f;
         
         public int version;
     }

@@ -1,149 +1,149 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <difficulty>Advanced</difficulty>
-  <creator>dreamy ouchaco</creator>
-  <finishTimestamp>70</finishTimestamp>
-  <id>fa7b652b-9e2c-4d7f-ad5f-beb4b545031b</id>
-  <words>
-    <BeatmapWord>
-      <beat>16</beat>
-      <text>xxxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>24</beat>
-      <text>xxxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>32.5</beat>
-      <text>zxcv</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>38.5</beat>
-      <text>nm</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>42.5</beat>
-      <text>ioiu</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>48</beat>
-      <text>1867</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>54</beat>
-      <text>;l</text>
-      <beatInterval>0.3333333</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>56.5</beat>
-      <text>sg</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>59</beat>
-      <text>h</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>64</beat>
-      <text>wrouwrouwrou</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>71</beat>
-      <text>yo</text>
-      <beatInterval>4</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>79</beat>
-      <text>ya</text>
-      <beatInterval>4</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>87</beat>
-      <text>yu</text>
-      <beatInterval>4</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>96.5</beat>
-      <text>np</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>100.5</beat>
-      <text>va</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>104.5</beat>
-      <text>do</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>108.5</beat>
-      <text>pp</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>111.5</beat>
-      <text>;</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>112.5</beat>
-      <text>t4</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>116.5</beat>
-      <text>so</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>120.5</beat>
-      <text> \</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>124.5</beat>
-      <text> o</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>128.5</beat>
-      <text> /</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>131.5</beat>
-      <text>w  e j</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>136.5</beat>
-      <text> x</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>139.5</beat>
-      <text>e rt</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>144</beat>
-      <text>`</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>147</beat>
-      <text> o ji</text>
-      <beatInterval>0.333333343</beatInterval>
-    </BeatmapWord>
-  </words>
-</Beatmap>
+{
+  "difficulty": "Advanced",
+  "creator": "dreamy ouchaco",
+  "finishTimestamp": 70,
+  "id": "fa7b652b-9e2c-4d7f-ad5f-beb4b545031b",
+  "words": [
+    {
+      "beat": 16,
+      "text": "xxxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 24,
+      "text": "xxxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 32.5,
+      "text": "zxcv",
+      "beatInterval": 1
+    },
+    {
+      "beat": 38.5,
+      "text": "nm",
+      "beatInterval": 1
+    },
+    {
+      "beat": 42.5,
+      "text": "ioiu",
+      "beatInterval": 1
+    },
+    {
+      "beat": 48,
+      "text": "1867",
+      "beatInterval": 1
+    },
+    {
+      "beat": 54,
+      "text": ";l",
+      "beatInterval": 0.3333333
+    },
+    {
+      "beat": 56.5,
+      "text": "sg",
+      "beatInterval": 1
+    },
+    {
+      "beat": 59,
+      "text": "h",
+      "beatInterval": 1
+    },
+    {
+      "beat": 64,
+      "text": "wrouwrouwrou",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 71,
+      "text": "yo",
+      "beatInterval": 4
+    },
+    {
+      "beat": 79,
+      "text": "ya",
+      "beatInterval": 4
+    },
+    {
+      "beat": 87,
+      "text": "yu",
+      "beatInterval": 4
+    },
+    {
+      "beat": 96.5,
+      "text": "np",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 100.5,
+      "text": "va",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 104.5,
+      "text": "do",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 108.5,
+      "text": "pp",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 111.5,
+      "text": ";",
+      "beatInterval": 1
+    },
+    {
+      "beat": 112.5,
+      "text": "t4",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 116.5,
+      "text": "so",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 120.5,
+      "text": " \\",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 124.5,
+      "text": " o",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 128.5,
+      "text": " /",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 131.5,
+      "text": "w  e j",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 136.5,
+      "text": " x",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 139.5,
+      "text": "e rt",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 144,
+      "text": "`",
+      "beatInterval": 1
+    },
+    {
+      "beat": 147,
+      "text": " o ji",
+      "beatInterval": 0.33333334
+    }
+  ],
+  "version": 1
+}

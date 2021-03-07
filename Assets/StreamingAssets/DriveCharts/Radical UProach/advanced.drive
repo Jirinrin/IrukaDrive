@@ -1,169 +1,169 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <difficulty>Advanced</difficulty>
-  <creator>dreamy ouchaco</creator>
-  <finishTimestamp>50</finishTimestamp>
-  <id>feb78fbe-83c4-4442-a34d-eb081a7dd166</id>
-  <words>
-    <BeatmapWord>
-      <beat>8</beat>
-      <text>xxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>12</beat>
-      <text>xxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>16</beat>
-      <text>xxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>20</beat>
-      <text>xxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>24</beat>
-      <text>xx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>27</beat>
-      <text>xxxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>32</beat>
-      <text>xxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>36</beat>
-      <text>xxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>40</beat>
-      <text>oooooooooooo</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>52</beat>
-      <text>nnknlnon</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>56</beat>
-      <text>oooooooooooo</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>68</beat>
-      <text>oj</text>
-      <isChord>true</isChord>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>69</beat>
-      <text>oj</text>
-      <isChord>true</isChord>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>70</beat>
-      <text>ij</text>
-      <isChord>true</isChord>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>71</beat>
-      <text>ij</text>
-      <isChord>true</isChord>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>72</beat>
-      <text>rrrrrrrrrrrr</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>84</beat>
-      <text>ddhbdjd</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>88</beat>
-      <text>iiiiiiiiiiii</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>100</beat>
-      <text>ijnb</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>112</beat>
-      <text>ijiji</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>114</beat>
-      <text>okoko</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>116</beat>
-      <text>ijiji</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>118</beat>
-      <text>okoko</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>120</beat>
-      <text>ojojojojojojojojojojojojojojoji</text>
-      <beatInterval>0.25</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>128</beat>
-      <text>xxx</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>130</beat>
-      <text>xxx</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>132</beat>
-      <text>xxx</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>134</beat>
-      <text>xxx</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>136</beat>
-      <text>a</text>
-      <beatInterval>2</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>137</beat>
-      <text>a</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>137.68</beat>
-      <text>a</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>139</beat>
-      <text>aaauu</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-  </words>
-</Beatmap>
+{
+  "difficulty": "Advanced",
+  "creator": "dreamy ouchaco",
+  "finishTimestamp": 50,
+  "id": "feb78fbe-83c4-4442-a34d-eb081a7dd166",
+  "words": [
+    {
+      "beat": 8,
+      "text": "xxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 12,
+      "text": "xxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 16,
+      "text": "xxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 20,
+      "text": "xxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 24,
+      "text": "xx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 27,
+      "text": "xxxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 32,
+      "text": "xxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 36,
+      "text": "xxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 40,
+      "text": "oooooooooooo",
+      "beatInterval": 1
+    },
+    {
+      "beat": 52,
+      "text": "nnknlnon",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 56,
+      "text": "oooooooooooo",
+      "beatInterval": 1
+    },
+    {
+      "beat": 68,
+      "text": "oj",
+      "isChord": true
+    },
+    {
+      "beat": 69,
+      "text": "oj",
+      "isChord": true
+    },
+    {
+      "beat": 70,
+      "text": "ij",
+      "isChord": true
+    },
+    {
+      "beat": 71,
+      "text": "ij",
+      "isChord": true
+    },
+    {
+      "beat": 72,
+      "text": "rrrrrrrrrrrr",
+      "beatInterval": 1
+    },
+    {
+      "beat": 84,
+      "text": "ddhbdjd",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 88,
+      "text": "iiiiiiiiiiii",
+      "beatInterval": 1
+    },
+    {
+      "beat": 100,
+      "text": "ijnb",
+      "beatInterval": 1
+    },
+    {
+      "beat": 112,
+      "text": "ijiji",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 114,
+      "text": "okoko",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 116,
+      "text": "ijiji",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 118,
+      "text": "okoko",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 120,
+      "text": "ojojojojojojojojojojojojojojoji",
+      "beatInterval": 0.25
+    },
+    {
+      "beat": 128,
+      "text": "xxx",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 130,
+      "text": "xxx",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 132,
+      "text": "xxx",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 134,
+      "text": "xxx",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 136,
+      "text": "a",
+      "beatInterval": 2
+    },
+    {
+      "beat": 137,
+      "text": "a",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 137.68,
+      "text": "a",
+      "beatInterval": 1
+    },
+    {
+      "beat": 139,
+      "text": "aaauu",
+      "beatInterval": 1
+    }
+  ],
+  "version": 1
+}

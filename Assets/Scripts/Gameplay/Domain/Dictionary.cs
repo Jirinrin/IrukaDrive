@@ -15,7 +15,7 @@ namespace Gameplay.Domain
             get
             {
                 if (_dictEn != null) return _dictEn;
-                _dictEn = Serialization.ReadFromXmlFile<Dict>(Path.Combine(Application.streamingAssetsPath, "Dict/dict_en.xml"));
+                _dictEn = Serialization.ReadFromJsonFile<Dict>(Path.Combine(Application.streamingAssetsPath, "Dict/dict_en.json"));
                 return _dictEn;
             }
         }

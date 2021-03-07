@@ -1,59 +1,59 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <difficulty>Advanced</difficulty>
-  <creator>dreamy ouchaco</creator>
-  <finishTimestamp xsi:nil="true" />
-  <id>c2ab39c6-b326-40ed-866f-f9dc862d6400</id>
-  <words>
-    <BeatmapWord>
-      <beat>4</beat>
-      <text>e</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>6</beat>
-      <text>aoi</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>10</beat>
-      <text>xxxxxxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>20</beat>
-      <text>b</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>22</beat>
-      <text>cjh</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>28</beat>
-      <text>poiuy</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>36</beat>
-      <text>ud</text>
-      <isChord>true</isChord>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>40</beat>
-      <text>_</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>44</beat>
-      <text>-</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>48</beat>
-      <text>d ddd ddd</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-  </words>
-</Beatmap>
+{
+  "difficulty": "Advanced",
+  "creator": "dreamy ouchaco",
+  "finishTimestamp": null,
+  "id": "c2ab39c6-b326-40ed-866f-f9dc862d6400",
+  "words": [
+    {
+      "beat": 4,
+      "text": "e",
+      "beatInterval": 1
+    },
+    {
+      "beat": 6,
+      "text": "aoi",
+      "beatInterval": 1
+    },
+    {
+      "beat": 10,
+      "text": "xxxxxxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 20,
+      "text": "b",
+      "beatInterval": 1
+    },
+    {
+      "beat": 22,
+      "text": "cjh",
+      "beatInterval": 1
+    },
+    {
+      "beat": 28,
+      "text": "poiuy",
+      "beatInterval": 1
+    },
+    {
+      "beat": 36,
+      "text": "ud",
+      "isChord": true
+    },
+    {
+      "beat": 40,
+      "text": "_",
+      "beatInterval": 1
+    },
+    {
+      "beat": 44,
+      "text": "-",
+      "beatInterval": 1
+    },
+    {
+      "beat": 48,
+      "text": "d ddd ddd",
+      "beatInterval": 0.5
+    }
+  ],
+  "version": 1
+}

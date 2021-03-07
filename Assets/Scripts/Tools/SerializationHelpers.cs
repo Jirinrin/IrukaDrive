@@ -53,7 +53,7 @@ namespace Tools
         private static void SaveBeatmapToFile(Beatmap beatmap, string path)
         {
             beatmap.SortWords();
-            Serialization.WriteToXmlFile(path, beatmap);
+            Serialization.WriteToJsonFile(path, beatmap);
 
             // todo: do some checking on overlapping words? Or do that in the editor?
         }
@@ -63,7 +63,7 @@ namespace Tools
         /// </summary>
         public static Beatmap LoadBeatmap(string filePath, Song song = null)
         {
-            var b = Serialization.ReadFromXmlFile<Beatmap>(filePath);
+            var b = Serialization.ReadFromJsonFile<Beatmap>(filePath);
             var dir = Path.GetDirectoryName(filePath);
                 
             b.song = song ?? LoadSong(dir);
@@ -97,18 +97,19 @@ namespace Tools
                     SaveBeatmapToFile(new Beatmap(), Path.Combine(folder, "beginner.drive"));
 
                 }, null, FileBrowser.PickMode.Folders,false,
-                Path.GetDirectoryName(beatmap.filePath), Path.GetFileName(beatmap.filePath), title: "Save beatmap");
+                Path.GetDirectoryName(beatmap.filePath), Path.GetFileName(beatmap.filePath), "Save beatmap");
         }
         public static void SaveSong(Song song)
         {
-            Serialization.WriteToXmlFile(song.filePath, song);
+            Serialization.WriteToJsonFile(song.filePath, song);
         }
 
         public static Song LoadSong(string folderPath)
         {
             var (diffs, ok) = SerializationHelperUtils.CheckSong(folderPath);
             if (!ok) return null;
-            
+
+            // todo: song in json
             var songFilePath = Path.Combine(folderPath, "song.xml");
             var s = Serialization.ReadFromXmlFile<Song>(songFilePath);
             s.filePath = songFilePath;

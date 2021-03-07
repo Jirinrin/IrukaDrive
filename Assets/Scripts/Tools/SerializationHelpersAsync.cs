@@ -49,7 +49,7 @@ namespace Tools
 
         public static async Task<Beatmap> LoadBeatmap(string filePath, Song song)
         {
-            var b = await Serialization.ReadFromXmlFileAsync<Beatmap>(filePath);
+            var b = await Serialization.ReadFromJsonFileAsync<Beatmap>(filePath);
 
             b.song = song;
             b.filePath = filePath;

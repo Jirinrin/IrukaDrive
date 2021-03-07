@@ -1,124 +1,124 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <difficulty>Advanced</difficulty>
-  <creator>dreamy ouchaco</creator>
-  <finishTimestamp>39</finishTimestamp>
-  <id>531804e3-8e5d-4585-9fe1-97bf22c3f6ec</id>
-  <words>
-    <BeatmapWord>
-      <beat>4</beat>
-      <text>xxxxxxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>12</beat>
-      <text>xxxxxxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>20</beat>
-      <text>xxxxxxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>28</beat>
-      <text>o i jihib i b</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>36</beat>
-      <text>xxxxxxxxxxxxx</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>44</beat>
-      <text>i j j  [  [</text>
-      <beatInterval>0.333333343</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>48</beat>
-      <text>' x z</text>
-      <beatInterval>0.333333343</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>50.5</beat>
-      <text>nn</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>52</beat>
-      <text>u h v  a  a</text>
-      <beatInterval>0.333333343</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>56</beat>
-      <text>xxxxxx</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>60</beat>
-      <text>d d f  v  v</text>
-      <beatInterval>0.333333343</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>64</beat>
-      <text>, / .</text>
-      <beatInterval>0.333333343</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>67</beat>
-      <text>xx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>69.5</beat>
-      <text>xx</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>71</beat>
-      <text>xxxxx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>76</beat>
-      <text>q w w  f  f</text>
-      <beatInterval>0.333333343</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>80</beat>
-      <text>g h h</text>
-      <beatInterval>0.333333343</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>83</beat>
-      <text>w</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>84</beat>
-      <text>y t t  2</text>
-      <beatInterval>0.333333343</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>87.5</beat>
-      <text>xxxxxx</text>
-      <beatInterval>0.5</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>92</beat>
-      <text>i j n  p  p</text>
-      <beatInterval>0.333333343</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>96</beat>
-      <text>o k n</text>
-      <beatInterval>0.333333343</beatInterval>
-    </BeatmapWord>
-    <BeatmapWord>
-      <beat>99</beat>
-      <text>xx</text>
-      <beatInterval>1</beatInterval>
-    </BeatmapWord>
-  </words>
-</Beatmap>
+{
+  "difficulty": "Advanced",
+  "creator": "dreamy ouchaco",
+  "finishTimestamp": 39,
+  "id": "531804e3-8e5d-4585-9fe1-97bf22c3f6ec",
+  "words": [
+    {
+      "beat": 4,
+      "text": "xxxxxxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 12,
+      "text": "xxxxxxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 20,
+      "text": "xxxxxxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 28,
+      "text": "o i jihib i b",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 36,
+      "text": "xxxxxxxxxxxxx",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 44,
+      "text": "i j j  [  [",
+      "beatInterval": 0.33333334
+    },
+    {
+      "beat": 48,
+      "text": "' x z",
+      "beatInterval": 0.33333334
+    },
+    {
+      "beat": 50.5,
+      "text": "nn",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 52,
+      "text": "u h v  a  a",
+      "beatInterval": 0.33333334
+    },
+    {
+      "beat": 56,
+      "text": "xxxxxx",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 60,
+      "text": "d d f  v  v",
+      "beatInterval": 0.33333334
+    },
+    {
+      "beat": 64,
+      "text": ", / .",
+      "beatInterval": 0.33333334
+    },
+    {
+      "beat": 67,
+      "text": "xx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 69.5,
+      "text": "xx",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 71,
+      "text": "xxxxx",
+      "beatInterval": 1
+    },
+    {
+      "beat": 76,
+      "text": "q w w  f  f",
+      "beatInterval": 0.33333334
+    },
+    {
+      "beat": 80,
+      "text": "g h h",
+      "beatInterval": 0.33333334
+    },
+    {
+      "beat": 83,
+      "text": "w",
+      "beatInterval": 1
+    },
+    {
+      "beat": 84,
+      "text": "y t t  2",
+      "beatInterval": 0.33333334
+    },
+    {
+      "beat": 87.5,
+      "text": "xxxxxx",
+      "beatInterval": 0.5
+    },
+    {
+      "beat": 92,
+      "text": "i j n  p  p",
+      "beatInterval": 0.33333334
+    },
+    {
+      "beat": 96,
+      "text": "o k n",
+      "beatInterval": 0.33333334
+    },
+    {
+      "beat": 99,
+      "text": "xx",
+      "beatInterval": 1
+    }
+  ],
+  "version": 1
+}
