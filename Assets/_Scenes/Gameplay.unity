@@ -390,7 +390,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278235903
+    rgba: 4281138944
   m_fontColor: {r: 0, g: 1, b: 0.17310214, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2383,9 +2383,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4617f198240a477cb952052cfc3ca199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barLinePrefab: {fileID: 270888843974027579, guid: 11a88c069afded0448e28caa817f4c29,
+  barLinePrefab: {fileID: 270888843974027579, guid: d9fe0b91881d6a845be8d3fc0a73810f,
     type: 3}
-  beatLinePrefab: {fileID: 270888843974027579, guid: 03744eeb777bf9c48a214bd4e78df0fc,
+  beatLinePrefab: {fileID: 270888843974027579, guid: 7eef0f133a6026644bf20fe4e41c9000,
     type: 3}
 --- !u!1001 &2052994494
 PrefabInstance:
