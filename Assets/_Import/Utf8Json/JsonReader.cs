@@ -764,13 +764,23 @@ namespace Utf8Json
                 if (bytes[offset++] != '\"') throw CreateParsingException("\"");
 
                 var from = offset;
+		int ii = 0;
 
                 for (int i = offset; i < bytes.Length; i++)
                 {
                     if (bytes[i] == (char)'\"')
                     {
+                        bool escaped = false;
                         // is escape?
-                        if (bytes[i - 1] == (char)'\\')
+                        {
+                            ii = i;
+                            while (bytes[--ii] == (char)'\\') //We already ensured that this span has leading "
+                            {
+                                escaped = !escaped;
+                            }
+                        }
+
+                        if (escaped)
                         {
                             continue;
                         }
@@ -1030,25 +1040,24 @@ namespace Utf8Json
 
         public void ReadNextBlock()
         {
-            ReadNextBlockCore(0);
-        }
+            var stack = 0;
 
-        void ReadNextBlockCore(int stack)
-        {
+            AGAIN:
             var token = GetCurrentJsonToken();
             switch (token)
             {
                 case JsonToken.BeginObject:
                 case JsonToken.BeginArray:
                     offset++;
-                    ReadNextBlockCore(stack + 1);
-                    break;
+                    stack++;
+                    goto AGAIN;
                 case JsonToken.EndObject:
                 case JsonToken.EndArray:
                     offset++;
-                    if ((stack - 1) != 0)
+                    stack--;
+                    if (stack != 0)
                     {
-                        ReadNextBlockCore(stack - 1);
+                        goto AGAIN;
                     }
                     break;
                 case JsonToken.True:
@@ -1066,7 +1075,7 @@ namespace Utf8Json
 
                     if (stack != 0)
                     {
-                        ReadNextBlockCore(stack);
+                        goto AGAIN;
                     }
                     break;
                 case JsonToken.None:
@@ -1195,7 +1204,7 @@ namespace Utf8Json
                 offset += 2;
                 for (int i = offset; i < bytes.Length; i++)
                 {
-                    if (bytes[i] == '\r' || bytes[i] == '\n')
+                    if (bytes[i] == '\r' || bytes[i] == '\n' || bytes[i] == '\0')
                     {
                         return i;
                     }
