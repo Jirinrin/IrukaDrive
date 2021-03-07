@@ -67,7 +67,7 @@ namespace Tools
             var (diffs, ok) = SerializationHelperUtils.CheckSong(folderPath);
             if (!ok) return null;
             
-            var songFilePath = Path.Combine(folderPath, "song.xml");
+            var songFilePath = Path.Combine(folderPath, "song.json");
             var s = await Serialization.ReadFromJsonFileAsync<Song>(songFilePath);
             s.filePath = songFilePath;
             s.folderPath = folderPath;
