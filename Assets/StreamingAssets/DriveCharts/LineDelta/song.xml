@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Song xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <title>[line:δ]</title>
-  <artist>nitro</artist>
-  <jacketPath>jacket.jpg</jacketPath>
-  <audioPath>linedelta.ogg</audioPath>
-  <bpm>155</bpm>
-  <beatOffset>0</beatOffset>
-  <beatsPerBar>4</beatsPerBar>
-  <barOffset>0</barOffset>
-  <version>1</version>
-</Song>
+{
+  "title": "[line:δ]",
+  "artist": "nitro",
+  "jacketPath": "jacket.jpg",
+  "audioPath": "linedelta.ogg",
+  "bpm": 155,
+  "beatOffset": 0,
+  "beatsPerBar": 4,
+  "barOffset": 0,
+  "version": 1
+}

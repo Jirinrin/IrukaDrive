@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Song xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <title>Sakura Fubuki</title>
-  <artist>Street</artist>
-  <jacketPath>cover.png</jacketPath>
-  <audioPath>song.ogg</audioPath>
-  <bpm>175</bpm>
-  <beatOffset>0</beatOffset>
-  <beatsPerBar>4</beatsPerBar>
-  <barOffset>0</barOffset>
-  <version>1</version>
-</Song>
+{
+  "title": "Sakura Fubuki",
+  "artist": "Street",
+  "jacketPath": "cover.png",
+  "audioPath": "song.ogg",
+  "bpm": 175,
+  "beatOffset": 0,
+  "beatsPerBar": 4,
+  "barOffset": 0,
+  "version": 1
+}

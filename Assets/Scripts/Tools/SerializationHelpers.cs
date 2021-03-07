@@ -109,9 +109,8 @@ namespace Tools
             var (diffs, ok) = SerializationHelperUtils.CheckSong(folderPath);
             if (!ok) return null;
 
-            // todo: song in json
             var songFilePath = Path.Combine(folderPath, "song.xml");
-            var s = Serialization.ReadFromXmlFile<Song>(songFilePath);
+            var s = Serialization.ReadFromJsonFile<Song>(songFilePath);
             s.filePath = songFilePath;
             s.folderPath = folderPath;
             s.diffPaths = diffs;

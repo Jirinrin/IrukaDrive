@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Song xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <title>Radical UP↑roach</title>
-  <artist>Schlaf</artist>
-  <jacketPath>cover.png</jacketPath>
-  <audioPath>Rad.ogg</audioPath>
-  <bpm>180</bpm>
-  <beatOffset>0</beatOffset>
-  <beatsPerBar>4</beatsPerBar>
-  <barOffset>0</barOffset>
-  <version>1</version>
-</Song>
+{
+  "title": "Radical UP↑roach",
+  "artist": "Schlaf",
+  "jacketPath": "cover.png",
+  "audioPath": "Rad.ogg",
+  "bpm": 180,
+  "beatOffset": 0,
+  "beatsPerBar": 4,
+  "barOffset": 0,
+  "version": 1
+}

@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Song xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <title>Sound Voltex Tutorial</title>
-  <artist>Sota Fujimori</artist>
-  <jacketPath>jacket.jpg</jacketPath>
-  <audioPath>0000 - Tutorial.mp3</audioPath>
-  <bpm>135</bpm>
-  <beatOffset>0.05</beatOffset>
-  <beatsPerBar>4</beatsPerBar>
-  <barOffset>0</barOffset>
-  <version>1</version>
-</Song>
+{
+  "title": "Sound Voltex Tutorial",
+  "artist": "Sota Fujimori",
+  "jacketPath": "jacket.jpg",
+  "audioPath": "0000 - Tutorial.mp3",
+  "bpm": 135,
+  "beatOffset": 0.05,
+  "beatsPerBar": 4,
+  "barOffset": 0,
+  "version": 1
+}
