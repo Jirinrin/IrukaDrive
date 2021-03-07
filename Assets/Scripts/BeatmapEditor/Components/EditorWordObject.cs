@@ -97,6 +97,12 @@ namespace BeatmapEditor.Components
             EditorTrackGestures.Instance.enabled = true;
         }
 
+        public void Delete()
+        {
+            word.Delete();
+            EditorTrack.Instance.RefreshBeatmap();
+        }
+
         private float DragXToBeatInterval(float dragDelta)
         {
             var index = Mathf.RoundToInt(Mathf.Clamp(_beatIntervalIndexBeforeDrag + dragDelta * DragXToIndexShift,

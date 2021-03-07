@@ -89,6 +89,13 @@ namespace BeatmapEditor.Domain
             EditorTrack.Instance.AddWord(_wordOnClipboard.CloneWord(_cursorPos));
         }
 
+        public void Delete()
+        {
+            if (_selectedWord == null) return;
+            _selectedWord.Delete();
+            _selectedWord = null;
+        }
+
         private void OnEnable()
         {
             EditorTrackViewState.OnZoom += UpdateCursorPos;

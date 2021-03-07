@@ -56,18 +56,21 @@ namespace BeatmapEditor.SingletonComponents
 
         private void OnCopy() => EditorTrackClipboard.Instance.Copy();
         private void OnPaste() => EditorTrackClipboard.Instance.Paste();
+        private void OnDelete() => EditorTrackClipboard.Instance.Delete();
 
         private void OnEnable()
         {
             EditorInputManager.Play += OnPlay;
             EditorInputManager.Copy += OnCopy;
             EditorInputManager.Paste += OnPaste;
+            EditorInputManager.Delete += OnDelete;
         }
         private void OnDisable()
         {
             EditorInputManager.Play -= OnPlay;
             EditorInputManager.Copy -= OnCopy;
             EditorInputManager.Paste -= OnPaste;
+            EditorInputManager.Delete -= OnDelete;
         }
     }
 }

@@ -20,5 +20,14 @@ namespace BeatmapEditor
         
         public static event Action Play;
         public void OnPlay() => Play?.Invoke();
+
+        public static event Action Delete;
+        public void OnDelete() => Delete?.Invoke();
+
+        public static event Action Undo;
+        public void OnUndo() => Undo?.Invoke();
+
+        public static event Action Redo;
+        public void OnRedo() => Redo?.Invoke();
     }
 }
