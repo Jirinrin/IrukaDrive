@@ -40,7 +40,9 @@ namespace BeatmapEditor
             {
                 GameManager.SetState(GameState.BeatmapEditor);
                 // Uncomment this for easy iterating
-                currentBeatmap = SerializationHelpers.LoadBeatmap($"{Application.streamingAssetsPath}/DriveCharts/SDVX Tutorial/2_advanced.drive");
+                var dir = $"{Application.streamingAssetsPath}/DriveCharts/SDVX Tutorial";
+                currentBeatmap = SerializationHelpers.LoadBeatmap($"{dir}/2_advanced.drive");
+                currentSong = SerializationHelpers.LoadSong(dir);
                 EditorTrack.Instance.LoadBeatmap(currentBeatmap);
             }
             else if (_inEditorPlay)
