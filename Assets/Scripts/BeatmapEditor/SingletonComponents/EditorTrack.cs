@@ -3,6 +3,7 @@ using Shared;
 using Shared.Domain;
 using Tools;
 using UnityEngine;
+using DG.Tweening;
 
 namespace BeatmapEditor.SingletonComponents
 {
@@ -102,18 +103,27 @@ namespace BeatmapEditor.SingletonComponents
 
         public void Pan(float deltaX)
         {
+            // Debug.Log($"pan by {deltaX}");
             viewState.Pan(deltaX);
             transform.localPosition = new Vector3(-viewState.panX, 0, 0);
             _shouldDraw = true;
         }
 
-        public void PanToBeat(float beat)
+        public void PanToBeat(float beat, bool tweened = false)
         {
             // Debug.Log($"pan to beat: {beat}. visible from {ScreenXToBeat(0)} to {ScreenXToBeat(containerRect.width)}");
             if (BeatIsVisible(beat)) return;
 
-            // todo: tween
-            viewState.SetPan(beat * viewState.beatSpacing - containerRect.width/2f);
+            var beatXCentered = beat * viewState.beatSpacing - containerRect.width / 2f;
+            if (tweened)
+                DOTween.To(() => viewState.panX, PanToX, beatXCentered, .4f);
+            else
+                PanToX(beatXCentered);
+        }
+
+        private void PanToX(float x)
+        {
+            viewState.SetPan(x);
             transform.localPosition = new Vector3(-viewState.panX, 0, 0);
             _shouldDraw = true;
         }

@@ -45,7 +45,7 @@ namespace BeatmapEditor.Domain
             BeatmapEditorManager.currentBeatmap = beatmapState.CloneState();
             EditorTrack.Instance.RefreshBeatmap();
             if (beat != null)
-                EditorTrack.Instance.PanToBeat(beat.Value);
+                EditorTrack.Instance.PanToBeat(beat.Value, true);
             // Debug.Log($"Undo => {HistoryStack.Count}; {BeatmapEditorManager.currentBeatmap.NotesCount}");
         }
 
@@ -58,7 +58,7 @@ namespace BeatmapEditor.Domain
             EditorTrack.Instance.RefreshBeatmap();
             WriteStateToHistory(beat);
             if (beat != null)
-                EditorTrack.Instance.PanToBeat(beat.Value);
+                EditorTrack.Instance.PanToBeat(beat.Value, true);
             // Debug.Log($"Redo => {RedoStack.Count}; {BeatmapEditorManager.currentBeatmap.NotesCount}");
         }
     }
