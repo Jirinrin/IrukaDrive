@@ -34,19 +34,23 @@ namespace BeatmapEditor
             GameManager.ToGameplay(currentBeatmap, currentSong.BeatsToSecs(beatTime), autoplay);
         }
 
+        private static async void LoadDummyBeatmapAsync()
+        {
+            var dir = $"{Application.streamingAssetsPath}/DriveCharts/Yuusha no Natsuyasumi";
+            currentSong = await SerializationHelpersAsync.LoadSong(dir);
+            currentBeatmap = await SerializationHelpersAsync.LoadBeatmap($"{dir}/advanced.drive", currentSong);
+            EditorTrack.Instance.LoadBeatmap(currentBeatmap);
+            EditorHistory.Reset();
+        }
+
         private void Start()
         {
             SetFunctional(true);
-            // For dev
             if (GameManager.State != GameState.BeatmapEditor)
             {
+                // For dev
                 GameManager.SetState(GameState.BeatmapEditor);
-                // Uncomment this for easy iterating
-                var dir = $"{Application.streamingAssetsPath}/DriveCharts/SDVX Tutorial";
-                currentBeatmap = SerializationHelpers.LoadBeatmap($"{dir}/2_advanced.drive");
-                currentSong = SerializationHelpers.LoadSong(dir);
-                EditorTrack.Instance.LoadBeatmap(currentBeatmap);
-                EditorHistory.Reset();
+                LoadDummyBeatmapAsync();
             }
             else if (_inEditorPlay)
             {
