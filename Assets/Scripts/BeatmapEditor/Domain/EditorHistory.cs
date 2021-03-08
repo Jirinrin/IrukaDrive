@@ -11,8 +11,8 @@ namespace BeatmapEditor.Domain
     {
         private const int MAX_HISTORY_STATES = 20;
 
-        private static readonly LinkedList<Beatmap> HistoryStack = new LinkedList<Beatmap>();
-        private static readonly LinkedList<Beatmap> RedoStack = new LinkedList<Beatmap>();
+        private static readonly LinkedList<(float?, Beatmap)> HistoryStack = new LinkedList<(float?, Beatmap)>();
+        private static readonly LinkedList<(float?, Beatmap)> RedoStack = new LinkedList<(float?, Beatmap)>();
 
         public static void Reset()
         {
@@ -20,16 +20,16 @@ namespace BeatmapEditor.Domain
             Record();
         }
 
-        public static void Record()
+        public static void Record(float? beatWhereItHappened = null)
         {
             RedoStack.Clear();
-            WriteStateToHistory();
+            WriteStateToHistory(beatWhereItHappened);
         }
 
-        private static void WriteStateToHistory()
+        private static void WriteStateToHistory(float? beatWhereItHappened)
         {
             // todo: async?
-            HistoryStack.AddFirst(BeatmapEditorManager.currentBeatmap.CloneState());
+            HistoryStack.AddFirst((beatWhereItHappened, BeatmapEditorManager.currentBeatmap.CloneState()));
             // Debug.Log($"Write state to history => {HistoryStack.Count}; {BeatmapEditorManager.currentBeatmap.NotesCount}");
             if (HistoryStack.Count > MAX_HISTORY_STATES)
                 HistoryStack.RemoveLast();
@@ -41,18 +41,24 @@ namespace BeatmapEditor.Domain
 
             RedoStack.AddFirst(HistoryStack.First());
             HistoryStack.RemoveFirst();
-            BeatmapEditorManager.currentBeatmap = HistoryStack.First().CloneState();
-            EditorTrack.Instance.RefreshBeatmap(false);
+            var (beat, beatmapState) = HistoryStack.First();
+            BeatmapEditorManager.currentBeatmap = beatmapState.CloneState();
+            EditorTrack.Instance.RefreshBeatmap();
+            if (beat != null)
+                EditorTrack.Instance.PanToBeat(beat.Value);
             // Debug.Log($"Undo => {HistoryStack.Count}; {BeatmapEditorManager.currentBeatmap.NotesCount}");
         }
 
         public static void Redo()
         {
             if (RedoStack.Count < 1) return;
-            BeatmapEditorManager.currentBeatmap = RedoStack.First();
+            var (beat, beatmapState) = RedoStack.First();
+            BeatmapEditorManager.currentBeatmap = beatmapState;
             RedoStack.RemoveFirst();
-            EditorTrack.Instance.RefreshBeatmap(false);
-            WriteStateToHistory();
+            EditorTrack.Instance.RefreshBeatmap();
+            WriteStateToHistory(beat);
+            if (beat != null)
+                EditorTrack.Instance.PanToBeat(beat.Value);
             // Debug.Log($"Redo => {RedoStack.Count}; {BeatmapEditorManager.currentBeatmap.NotesCount}");
         }
     }

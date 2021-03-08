@@ -17,12 +17,10 @@ namespace BeatmapEditor.SingletonComponents
 
         private bool _initted;
 
-        public void RefreshBeatmap(bool record = true)
+        public void RefreshBeatmap()
         {
             _notesRecycler.RefreshBeatmap();
             _shouldDraw = true;
-            if (record)
-                EditorHistory.Record();
         }
 
         public void OnEnable()
@@ -75,6 +73,9 @@ namespace BeatmapEditor.SingletonComponents
         public static float ScreenXToBeat(float screenX, float beatSnap = C.EditorBeatSnap) =>
             ((viewState.panX + screenX) / viewState.beatSpacing).RoundToNearest(beatSnap);
 
+        public bool BeatIsVisible(float b) =>
+            b > ScreenXToBeat(0) && b < ScreenXToBeat(containerRect.width);
+
         public void AddWord(BeatmapWord word)
         {
             BeatmapEditorManager.currentBeatmap.words.Add(word);
@@ -102,6 +103,17 @@ namespace BeatmapEditor.SingletonComponents
         public void Pan(float deltaX)
         {
             viewState.Pan(deltaX);
+            transform.localPosition = new Vector3(-viewState.panX, 0, 0);
+            _shouldDraw = true;
+        }
+
+        public void PanToBeat(float beat)
+        {
+            // Debug.Log($"pan to beat: {beat}. visible from {ScreenXToBeat(0)} to {ScreenXToBeat(containerRect.width)}");
+            if (BeatIsVisible(beat)) return;
+
+            // todo: tween
+            viewState.SetPan(beat * viewState.beatSpacing - containerRect.width/2f);
             transform.localPosition = new Vector3(-viewState.panX, 0, 0);
             _shouldDraw = true;
         }

@@ -104,12 +104,14 @@ namespace BeatmapEditor.Components
             else
                 word.Text = result;
 
+            EditorHistory.Record(word.Beat);
             EditorTrack.Instance.RefreshBeatmap();
         }
 
         public void Delete()
         {
             word.Delete();
+            EditorHistory.Record(word.Beat + word.BeatWidth/2f);
             EditorTrack.Instance.RefreshBeatmap();
         }
 
@@ -145,7 +147,9 @@ namespace BeatmapEditor.Components
                 Math.Abs(word.BeatInterval - C.BeatIntervalValues[_beatIntervalIndexBeforeDrag]) < C.FloatTolerance)
                 return;
 
+            var oldBeat = word.Beat;
             word.Beat = newBeat;
+            EditorHistory.Record((oldBeat + word.Beat) / 2f);
             EditorTrack.Instance.RefreshBeatmap();
         }
 

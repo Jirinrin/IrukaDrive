@@ -27,6 +27,12 @@ namespace BeatmapEditor.Domain
             panX = Mathf.Max(panX - deltaX, MinimumPan);
             OnPan?.Invoke();
         }
+
+        public void SetPan(float x)
+        {
+            panX = Mathf.Max(x, MinimumPan);
+            OnPan?.Invoke();
+        }
         
         public void Zoom(float delta, float screenPivotX)
         {
