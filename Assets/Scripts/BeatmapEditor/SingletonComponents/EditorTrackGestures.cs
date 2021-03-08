@@ -49,7 +49,7 @@ namespace BeatmapEditor.SingletonComponents
         public void OnPointerClick(PointerEventData eventData)
         {
             var x = eventData.position.x * ScreenToCanvas.Factor;
-            if (Keyboard.current.ctrlKey.isPressed)
+            if (Keyboard.current.altKey.isPressed && eventData.button == PointerEventData.InputButton.Left)
                 EditorTrack.Instance.CreateWord(x);
             else if (eventData.button == PointerEventData.InputButton.Left)
                 EditorTrackClipboard.Instance.SetCursor(x);
