@@ -41,8 +41,12 @@ namespace Tools
         public static void LoadSelectBeatmap(Action<Beatmap> onFinished, bool cache = false)
         {
             var dir = $"{Application.streamingAssetsPath}/DriveCharts";
-            FileBrowser.ShowLoadDialog(async p => 
-                    onFinished(cache ? await Cache.GetBeatmapAsync(p[0]) : await LoadBeatmap(p[0], await LoadSong(Path.GetDirectoryName(p[0])))),
+            FileBrowser.ShowLoadDialog(async p =>
+                onFinished(p[0].EndsWith(".drive")
+                    ? cache
+                        ? await Cache.GetBeatmapAsync(p[0])
+                        : await LoadBeatmap(p[0], await LoadSong(Path.GetDirectoryName(p[0])))
+                    : null),
                 () => onFinished(null),
                 FileBrowser.PickMode.Files,false, dir, title: "Select a drive chart"); // ext: "drive"
         }
