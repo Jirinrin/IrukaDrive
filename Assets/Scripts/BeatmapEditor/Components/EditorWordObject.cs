@@ -53,6 +53,12 @@ namespace BeatmapEditor.Components
 
         public void Edit()
         {
+            if (_inputting)
+            {
+                Debug.LogWarning("Tried to edit word while another word is already being edited!");
+                return;
+            }
+
             _activeInputField = Instantiate(inputFieldPrefab, transform);
             var inputX = IsChord ? 0 : word.BeatWidth / 2f * _beatSpacing;
             _activeInputField.transform.localPosition = new Vector3(inputX,-30f,0);
@@ -67,7 +73,7 @@ namespace BeatmapEditor.Components
             });
             
             _inputting = true;
-            EditorTrackGestures.Instance.enabled = false;
+            EditorInputManager.Instance.enabled = false;
         }
 
         // Handlers
@@ -77,17 +83,18 @@ namespace BeatmapEditor.Components
             if (_dragging || _inputting)
                 return;
             
-            if (Keyboard.current.altKey.isPressed)
-                EditorTrackClipboard.Instance.SelectWord(!Selected ? this : null);
-            else
+            if (Keyboard.current.ctrlKey.isPressed || Keyboard.current.shiftKey.isPressed || Keyboard.current.altKey.isPressed)
                 Edit();
+            else
+                EditorTrackClipboard.Instance.SelectWord(!Selected ? this : null);
         }
 
         public void OnSubmitWordType(string result)
         {
             Destroy(_activeInputField.gameObject);
+            _activeInputField = null;
             _inputting = false;
-            EditorTrackGestures.Instance.enabled = true;
+            EditorInputManager.Instance.enabled = true;
 
             if (result == word.Text)
                 return;

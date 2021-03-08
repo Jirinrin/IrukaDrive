@@ -1,5 +1,4 @@
 ﻿using BeatmapEditor.Domain;
-using Shared;
 using Tools;
 using Tools.Commons;
 using UnityEngine;
@@ -25,6 +24,11 @@ namespace BeatmapEditor.SingletonComponents
                     EditorTrack.Instance.Pan(eventData.delta.x * ScreenToCanvas.Factor * xFactor);
                 }
             }
+            else
+            {
+                var x = eventData.position.x * ScreenToCanvas.Factor;
+                EditorTrackClipboard.Instance.SetCursor(x);
+            }
         }
 
         private void OnMouseEnter()
@@ -49,34 +53,6 @@ namespace BeatmapEditor.SingletonComponents
                 EditorTrack.Instance.CreateWord(x);
             else if (eventData.button == PointerEventData.InputButton.Left)
                 EditorTrackClipboard.Instance.SetCursor(x);
-        }
-
-        private void OnPlay() => 
-            EditorTrack.Instance.PlayFromPoint(Input.mousePosition.x * ScreenToCanvas.Factor, !Keyboard.current.shiftKey.isPressed);
-
-        private void OnCopy() => EditorTrackClipboard.Instance.Copy();
-        private void OnPaste() => EditorTrackClipboard.Instance.Paste();
-        private void OnDelete() => EditorTrackClipboard.Instance.Delete();
-        private void OnUndo() => EditorHistory.Undo();
-        private void OnRedo() => EditorHistory.Redo();
-
-        private void OnEnable()
-        {
-            EditorInputManager.Play += OnPlay;
-            EditorInputManager.Copy += OnCopy;
-            EditorInputManager.Paste += OnPaste;
-            EditorInputManager.Delete += OnDelete;
-            EditorInputManager.Undo += OnUndo;
-            EditorInputManager.Redo += OnRedo;
-        }
-        private void OnDisable()
-        {
-            EditorInputManager.Play -= OnPlay;
-            EditorInputManager.Copy -= OnCopy;
-            EditorInputManager.Paste -= OnPaste;
-            EditorInputManager.Delete -= OnDelete;
-            EditorInputManager.Undo -= OnUndo;
-            EditorInputManager.Redo -= OnRedo;
         }
     }
 }

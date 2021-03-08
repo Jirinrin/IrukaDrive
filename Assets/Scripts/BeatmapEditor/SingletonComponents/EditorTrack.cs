@@ -80,9 +80,9 @@ namespace BeatmapEditor.SingletonComponents
             BeatmapEditorManager.currentBeatmap.SortWords();
             RefreshBeatmap();
         }
-        public void CreateWord(float screenX)
+        public void CreateWord(float screenXOrBeat, bool isBeat = false)
         {
-            var beat = ScreenXToBeat(screenX);
+            var beat = isBeat ? screenXOrBeat : ScreenXToBeat(screenXOrBeat);
             AddWord(new BeatmapWord(beat));
             _notesRecycler.EditWord(beat.BeatToIndex());
         }

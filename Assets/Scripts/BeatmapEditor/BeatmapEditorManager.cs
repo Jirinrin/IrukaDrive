@@ -24,7 +24,7 @@ namespace BeatmapEditor
             if (_isFunctional == isFunctional)
                 return;
             _isFunctional = isFunctional;
-            EditorTrackGestures.Instance.enabled = isFunctional;
+            EditorInputManager.Instance.enabled = isFunctional;
         }
 
         public void PlayBeatmapFrom(float beatTime, bool autoplay = true)
@@ -114,14 +114,5 @@ namespace BeatmapEditor
         }
 
         public void BackToMainMenu() => GameManager.ToMainMenu();
-
-        private void OnEnable()
-        {
-            EditorInputManager.Save += SaveBeatmap;
-        }
-        private void OnDisable()
-        {
-            EditorInputManager.Save -= SaveBeatmap;
-        }
     }
 }

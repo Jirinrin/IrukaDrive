@@ -97,6 +97,14 @@ namespace BeatmapEditor.Domain
             _selectedWord = null;
         }
 
+        public void Rename()
+        {
+            if (_selectedWord == null) return;
+            _selectedWord.Edit();
+        }
+
+        public void CreateWord() => EditorTrack.Instance.CreateWord(_cursorPos, true);
+
         private void OnEnable()
         {
             EditorTrackViewState.OnZoom += UpdateCursorPos;
