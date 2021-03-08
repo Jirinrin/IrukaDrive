@@ -28,7 +28,7 @@ namespace Gameplay.SingletonComponents
             Init();
 
             _notesRecycler.Init(words);
-            _sheet.InitSheet(beatmap);
+            _sheet.InitSheet(beatmap.song);
         
             UpdateProgress(0f);
         }

@@ -16,7 +16,7 @@ namespace Shared
         private RecyclerList<Line> _recyclerList1;
         private RecyclerList<Line> _recyclerList2;
 
-        private Beatmap _currentBeatmap;
+        private Song _currentSong;
         
         // Expected to be set from Init before calling base.Init
         protected Rect containerRect;
@@ -42,7 +42,7 @@ namespace Shared
             var startIndex = Mathf.CeilToInt(from / C.BeatIndexFactor) * C.BeatIndexFactorInt;
             for (var i = startIndex; i < to; i += C.BeatIndexFactorInt)
             {
-                var onBar = i % (_currentBeatmap.song.beatsPerBar * C.BeatIndexFactorInt) == _currentBeatmap.song.barOffset * C.BeatIndexFactorInt;
+                var onBar = i % (_currentSong.beatsPerBar * C.BeatIndexFactorInt) == _currentSong.barOffset * C.BeatIndexFactorInt;
                 if (isBar && onBar || !isBar && !onBar)
                     output.Add(i);
             }
@@ -60,7 +60,7 @@ namespace Shared
             return new[] {minBeat.BeatToIndex(), maxBeat.BeatToIndex()};
         }
 
-        public virtual void Init(Beatmap beatmap)
+        public virtual void Init(Song song)
         {
             if (!_initted)
             {
@@ -76,7 +76,7 @@ namespace Shared
                 _initted = true;
             }
             
-            _currentBeatmap = beatmap;
+            _currentSong = song;
 
             _recyclerList1 = new RecyclerList<Line>(CreateBarLine, InitLine, GetNewLineIndicesInWindowBar, GetCurrentWindow());
             _recyclerList2 = new RecyclerList<Line>(CreateBeatLine, InitLine, GetNewLineIndicesInWindowBeat, GetCurrentWindow());

@@ -53,7 +53,7 @@ namespace BeatmapEditor.SingletonComponents
             
             // todo: also refresh window?
             
-            _sheet.InitSheet(beatmap);
+            _sheet.InitSheet(beatmap.song);
             _sheet.DrawSheet(true); // todo: necessary?
 
             _waveform.LoadSong(beatmap.song);

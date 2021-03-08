@@ -9,9 +9,9 @@ namespace BeatmapEditor.SingletonComponents
     {
         private EditorSheetLineRecycler _sheetLines;
 
-        public void InitSheet(Beatmap beatmap)
+        public void InitSheet(Song song)
         {
-            EditorSheetLineRecycler.Instance.Init(beatmap);
+            EditorSheetLineRecycler.Instance.Init(song);
         }
 
         public void DrawSheet(bool updateSpacing) => _sheetLines.RefreshWindow(updateSpacing);

@@ -5,10 +5,10 @@ namespace BeatmapEditor.SingletonComponents
 {
     public class EditorSheetLineRecycler : SheetLineRecyclerBase
     {
-        public override void Init(Beatmap beatmap)
+        public override void Init(Song song)
         {
             containerRect = EditorTrack.Instance.containerRect;
-            base.Init(beatmap);
+            base.Init(song);
         }
 
         protected override float PanX => EditorTrack.viewState.panX;

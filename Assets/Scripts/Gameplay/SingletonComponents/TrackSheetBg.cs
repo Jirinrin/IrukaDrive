@@ -9,7 +9,7 @@ namespace Gameplay.SingletonComponents
     {
         private SheetLineRecycler _sheetLines;
 
-        public void InitSheet(Beatmap beatmap) => SheetLineRecycler.Instance.Init(beatmap);
+        public void InitSheet(Song song) => SheetLineRecycler.Instance.Init(song);
 
         public void Refresh() => _sheetLines.RefreshWindow();
 

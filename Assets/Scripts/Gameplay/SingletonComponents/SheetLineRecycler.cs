@@ -6,10 +6,10 @@ namespace Gameplay.SingletonComponents
 {
     public class SheetLineRecycler : SheetLineRecyclerBase
     {
-        public override void Init(Beatmap beatmap)
+        public override void Init(Song song)
         {
             containerRect = Track.Instance.containerRect;
-            base.Init(beatmap);
+            base.Init(song);
         }
 
         protected override float PanX => Track.viewState.panX;
