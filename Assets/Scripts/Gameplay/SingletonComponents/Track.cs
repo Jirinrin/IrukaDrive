@@ -69,8 +69,8 @@ namespace Gameplay.SingletonComponents
             //     obj.color = Color.white;
         }
 
-        private void ChangeCurrentChord(RuntimeWordObject obj) => obj.SetColor(Color.green);
-        private void UnmarkCurrentChord() => _currentWordObj.SetColor(Color.white);
+        private void ChangeCurrentChord(RuntimeWordObject obj) => obj.SetColor(C.CharColorHighlight);
+        private void UnmarkCurrentChord() => _currentWordObj.SetColor(C.CharColorDefault);
         private void UnmarkCurrentChord(IEnumerable<NoteResult> _) => UnmarkCurrentChord(); 
 
         private void ChangeCurrentChar(int? charIndex)
@@ -80,7 +80,7 @@ namespace Gameplay.SingletonComponents
             
             if (charIndex == null)
             {
-                _currentWordObj.charObjRefs.Last().obj.color = Color.white;
+                _currentWordObj.charObjRefs.Last().obj.color = C.CharColorDefault;
                 return;
             }
 
@@ -89,9 +89,9 @@ namespace Gameplay.SingletonComponents
             if (index >= _currentWordObj.charObjRefs.Count)
                 return;
         
-            _currentWordObj.charObjRefs[index].obj.color = Color.green;
+            _currentWordObj.charObjRefs[index].obj.color = C.CharColorHighlight;
             if (index > 0)
-                _currentWordObj.charObjRefs[index-1].obj.color = Color.white;
+                _currentWordObj.charObjRefs[index-1].obj.color = C.CharColorDefault;
         }
 
         public void ForceRefresh()

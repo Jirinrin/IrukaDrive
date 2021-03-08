@@ -12,7 +12,7 @@ namespace Shared.Domain
     {
         public string title;
         public string artist;
-        public string jacketPath; // todo: rename to jacketFile
+        public string jacketPath; // todo: rename to jacketFile////
         [NonSerialized][IgnoreDataMember] [CanBeNull] public Texture2D jacket; // todo: also fetch lazily async
 
         public string audioPath; // todo: rename to audioFile

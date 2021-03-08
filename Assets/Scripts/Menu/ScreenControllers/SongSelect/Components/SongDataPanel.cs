@@ -12,7 +12,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
 {
     public class SongDataPanel : MonoBehaviour
     {
-        private static readonly Color TextColorSelected = Color.green;
+        private static readonly Color TextColorSelected = C.CharColorHighlight;
         private static readonly Color TextColorUnselected = new Color(0f, 0.5f, 0f);
 
         [SerializeField] private TitleText songTitleText;

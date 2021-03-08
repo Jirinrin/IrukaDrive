@@ -25,5 +25,8 @@ namespace Shared
         public const float TimingWindowPerfectSec = TimingWindowPerfect/1000f; // ms
         public const float TimingWindowGood = 140; // ms
         public const float TimingWindowGoodSec = TimingWindowGood/1000f;
+
+        public static readonly Color CharColorDefault = Color.gray;
+        public static readonly Color CharColorHighlight = Color.green;
     }
 }

@@ -31,7 +31,7 @@ namespace BeatmapEditor.Components
             set
             {
                 _selected = value;
-                SetColor(_selected ? Color.green : Color.white);
+                SetColor(_selected ? C.CharColorHighlight : C.CharColorDefault);
             }
         }
 

@@ -101,7 +101,7 @@ namespace Shared.Domain
         
         public void Cleanup()
         {
-            obj.color = Color.white;
+            obj.color = C.CharColorDefault;
             obj = null;
             note = null;
             gameObject.SetActive(false);
