@@ -2,10 +2,10 @@
 <Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <title>Hello, Shooters!</title>
   <artist>R.M.</artist>
-  <jacketPath>helloshooters.jpg</jacketPath>
+  <jacketFile>helloshooters.jpg</jacketFile>
   <difficulty>Advanced</difficulty>
   <creator>dreamy ouchaco</creator>
-  <audioPath>helloshooters.ogg</audioPath>
+  <audioFile>helloshooters.ogg</audioFile>
   <bpm>150</bpm>
   <beatOffset>0</beatOffset>
   <beatsPerBar>4</beatsPerBar>

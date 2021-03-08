@@ -1,8 +1,8 @@
 {
   "title": "Shinchoku dou desu ka",
   "artist": "sumijun feat.ななひら",
-  "jacketPath": "cover.png",
-  "audioPath": "Shinchoku dou desu ka.ogg",
+  "jacketFile": "cover.png",
+  "audioFile": "Shinchoku dou desu ka.ogg",
   "bpm": 199,
   "beatOffset": 0,
   "beatsPerBar": 4,

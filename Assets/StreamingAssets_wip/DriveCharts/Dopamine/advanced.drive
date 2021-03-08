@@ -2,10 +2,10 @@
 <Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <title>Dopamine</title>
   <artist>U1 overground</artist>
-  <jacketPath>cover.png</jacketPath>
+  <jacketFile>cover.png</jacketFile>
   <difficulty>Advanced</difficulty>
   <creator>dreamy ouchaco</creator>
-  <audioPath>Dopamine160.ogg</audioPath>
+  <audioFile>Dopamine160.ogg</audioFile>
   <bpm>200</bpm>
   <beatOffset>0</beatOffset>
   <beatsPerBar>4</beatsPerBar>

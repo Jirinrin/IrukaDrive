@@ -1,8 +1,8 @@
 {
   "title": "Sound Voltex Tutorial",
   "artist": "Sota Fujimori",
-  "jacketPath": "jacket.jpg",
-  "audioPath": "0000 - Tutorial.mp3",
+  "jacketFile": "jacket.jpg",
+  "audioFile": "0000 - Tutorial.mp3",
   "bpm": 135,
   "beatOffset": 0.05,
   "beatsPerBar": 4,

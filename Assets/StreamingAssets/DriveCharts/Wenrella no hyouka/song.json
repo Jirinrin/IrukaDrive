@@ -1,8 +1,8 @@
 {
   "title": "Wenrella no Hyouka [WIP]",
   "artist": "Cororo",
-  "jacketPath": "cover.png",
-  "audioPath": "wenrella.mp3",
+  "jacketFile": "cover.png",
+  "audioFile": "wenrella.mp3",
   "bpm": 200,
   "beatOffset": 0.05,
   "beatsPerBar": 4,

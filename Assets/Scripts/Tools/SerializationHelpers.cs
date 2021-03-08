@@ -109,7 +109,7 @@ namespace Tools
             s.folderPath = folderPath;
             s.diffs = diffs;
             
-            s.jacket = LoadImage(Path.Combine(folderPath, s.jacketPath));
+            s.jacket = LoadImage(Path.Combine(folderPath, s.jacketFile));
 
             return s;
         }

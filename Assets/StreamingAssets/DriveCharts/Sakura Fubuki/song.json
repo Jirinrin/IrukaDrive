@@ -1,8 +1,8 @@
 {
   "title": "Sakura Fubuki",
   "artist": "Street",
-  "jacketPath": "cover.png",
-  "audioPath": "song.ogg",
+  "jacketFile": "cover.png",
+  "audioFile": "song.ogg",
   "bpm": 175,
   "beatOffset": 0,
   "beatsPerBar": 4,

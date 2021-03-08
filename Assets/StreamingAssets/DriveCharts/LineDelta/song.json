@@ -1,8 +1,8 @@
 {
   "title": "[line:δ]",
   "artist": "nitro",
-  "jacketPath": "jacket.jpg",
-  "audioPath": "linedelta.ogg",
+  "jacketFile": "jacket.jpg",
+  "audioFile": "linedelta.ogg",
   "bpm": 155,
   "beatOffset": 0,
   "beatsPerBar": 4,

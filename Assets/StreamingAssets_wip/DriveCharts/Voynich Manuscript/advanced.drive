@@ -2,10 +2,10 @@
 <Beatmap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <title>Voynich:Manuscript</title>
   <artist>かゆき</artist>
-  <jacketPath>cover.png</jacketPath>
+  <jacketFile>cover.png</jacketFile>
   <difficulty>Advanced</difficulty>
   <creator>dreamy ouchaco</creator>
-  <audioPath>VoynichManuscript.mp3</audioPath>
+  <audioFile>VoynichManuscript.mp3</audioFile>
   <bpm>164</bpm>
   <beatOffset>0.41</beatOffset>
   <beatsPerBar>4</beatsPerBar>

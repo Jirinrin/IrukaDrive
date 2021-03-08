@@ -1,8 +1,8 @@
 {
   "title": "Radical UP↑roach",
   "artist": "Schlaf",
-  "jacketPath": "cover.png",
-  "audioPath": "Rad.ogg",
+  "jacketFile": "cover.png",
+  "audioFile": "Rad.ogg",
   "bpm": 180,
   "beatOffset": 0,
   "beatsPerBar": 4,

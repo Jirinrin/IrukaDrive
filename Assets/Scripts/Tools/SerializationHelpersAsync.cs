@@ -77,8 +77,8 @@ namespace Tools
             s.folderPath = folderPath;
             s.diffs = diffs;
 
-            if (s.jacketPath != null)
-                s.jacket = await LoadImage(Path.Combine(folderPath, s.jacketPath));
+            if (s.jacketFile != null)
+                s.jacket = await LoadImage(Path.Combine(folderPath, s.jacketFile));
             
             return s;
         }

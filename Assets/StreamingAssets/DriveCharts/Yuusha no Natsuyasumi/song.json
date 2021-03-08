@@ -1,8 +1,8 @@
 {
   "title": "Yuusha no Natsuyasumi",
   "artist": "Verdammt",
-  "jacketPath": "cover.png",
-  "audioPath": "yuusha.ogg",
+  "jacketFile": "cover.png",
+  "audioFile": "yuusha.ogg",
   "bpm": 167,
   "beatOffset": 0,
   "beatsPerBar": 4,

@@ -22,7 +22,7 @@ namespace BeatmapEditor.SingletonComponents
             var clip = await song.Audio;
 
             // todo: something if mp3?? (Because then the samples array simply gets filled with 0s) (or we can just ignore mp3 haha, this is a bonus feature after all)
-            if (!clip || song.audioPath.EndsWith(".mp3"))
+            if (!clip || song.audioFile.EndsWith(".mp3"))
             {
                 _active = false;
                 return;
