@@ -32,6 +32,10 @@ namespace BeatmapEditor
         public void OnRedo() => IE(EditorHistory.Redo);
 
         private void OnEnable() => EditorTrackGestures.Instance.enabled = true;
-        private void OnDisable() => EditorTrackGestures.Instance.enabled = false;
+        private void OnDisable()
+        {
+            if (EditorTrackGestures.Instance == null) return;
+            EditorTrackGestures.Instance.enabled = false;
+        }
     }
 }
