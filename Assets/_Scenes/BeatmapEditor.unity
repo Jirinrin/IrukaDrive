@@ -794,7 +794,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830584, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PlaySong
+      value: ListenSong
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830584, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -1174,6 +1174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bce709c29f7755d4896e2d0c54f66fca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  listenSongBtnText: {fileID: 991492492}
 --- !u!114 &749098173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1335,6 +1336,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11eaf6c4286d74e4c8e48b11f224a570, type: 3}
+--- !u!114 &991492492 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2743387031121635658, guid: 11eaf6c4286d74e4c8e48b11f224a570,
+    type: 3}
+  m_PrefabInstance: {fileID: 697555760}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1113194651
 GameObject:
   m_ObjectHideFlags: 0

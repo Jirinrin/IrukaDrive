@@ -2,15 +2,17 @@ using BeatmapEditor.Domain;
 using BeatmapEditor.SingletonComponents;
 using Shared;
 using Shared.Domain;
+using TMPro;
 using Tools;
 using Tools.Commons;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace BeatmapEditor
 {
     public class BeatmapEditorManager : Singleton<BeatmapEditorManager>
     {
+        [SerializeField] private TextMeshProUGUI listenSongBtnText;
+
         public static Song currentSong;
         public static Beatmap currentBeatmap;
 
@@ -97,12 +99,18 @@ namespace BeatmapEditor
             EditorHistory.Reset();
         }
 
-        public void PlaySong()
+        public void ListenSong()
         {
             if (!SongManager.Instance.IsPlaying)
+            {
                 SongManager.Instance.LoadSong(currentSong, tickOnBeat: true);
+                listenSongBtnText.text = "Stop";
+            }
             else
+            {
                 SongManager.Instance.Stop();
+                listenSongBtnText.text = "Listen";
+            }
         }
 
         public void BackToMainMenu() => GameManager.ToMainMenu();
