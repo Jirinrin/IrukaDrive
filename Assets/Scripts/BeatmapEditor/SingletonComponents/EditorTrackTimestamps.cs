@@ -22,7 +22,7 @@ namespace BeatmapEditor.SingletonComponents
             item.transform.localPosition = new Vector3(BeatSpacing * index.IndexToBeat(), 0, 0);
             var beatTime = Mathf.RoundToInt(index / C.BeatIndexFactor);
             var secTime = _currentSong.BeatsToSecs(beatTime);
-            item.text = $"{Mathf.FloorToInt(secTime / 60f):D1}:{Mathf.FloorToInt(secTime % 60):D2}.{Mathf.RoundToInt((secTime % 1) * 10):D1}";
+            item.text = $"{Mathf.FloorToInt(secTime / 60f):D1}:{Mathf.FloorToInt(secTime % 60):D2}.{Mathf.FloorToInt((secTime % 1) * 10):D1}";
         }
 
         // コピペ from SheetLineRecyclerBase
