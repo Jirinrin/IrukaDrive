@@ -12,6 +12,7 @@ namespace BeatmapEditor.SingletonComponents
     {
         private EditorTrackNotesRecycler _notesRecycler;
         private EditorTrackSheetBg _sheet;
+        private EditorWaveform _waveform;
 
         private bool _shouldDraw;
         private bool _zoomed;
@@ -28,6 +29,7 @@ namespace BeatmapEditor.SingletonComponents
         {
             _notesRecycler = EditorTrackNotesRecycler.Instance;
             _sheet = EditorTrackSheetBg.Instance;
+            _waveform = EditorWaveform.Instance;
         }
 
         protected override void Init()
@@ -53,6 +55,8 @@ namespace BeatmapEditor.SingletonComponents
             
             _sheet.InitSheet(beatmap);
             _sheet.DrawSheet(true); // todo: necessary?
+
+            _waveform.LoadSong(beatmap.song);
 
             Pan(0f);
             Zoom(0f, 0f);
