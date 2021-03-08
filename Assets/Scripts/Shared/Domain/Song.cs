@@ -29,7 +29,8 @@ namespace Shared.Domain
 
         private float? _beatsPerSec;
         [IgnoreDataMember] public float BeatsPerSec => _beatsPerSec ??= bpm / 60f;
-        
+        [IgnoreDataMember] public bool HasValidAudio => File.Exists(Path.Combine(folderPath, audioFile));
+
         public int version;
     }
 }

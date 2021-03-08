@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Shared.Domain;
 using SimpleFileBrowser;
 using UnityEngine;
@@ -20,12 +20,22 @@ namespace Tools
             return await Task.Run(() => File.ReadAllBytes(filePath));
         }
         
+        [ItemCanBeNull]
         public static async Task<AudioClip> LoadAudio(string filePath)
         {
-            var req = UnityWebRequestMultimedia.GetAudioClip($"file://{filePath}", SerializationHelperUtils.GetAudioType(Path.GetExtension(filePath)));
-            await req.SendWebRequest();
-            var clip = DownloadHandlerAudioClip.GetContent(req);
-            return clip;
+            try
+            {
+                var req = UnityWebRequestMultimedia.GetAudioClip($"file://{filePath}",
+                    SerializationHelperUtils.GetAudioType(Path.GetExtension(filePath)));
+                await req.SendWebRequest();
+                var clip = DownloadHandlerAudioClip.GetContent(req);
+                return clip;
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning(e);
+                return null;
+            }
         }
         
         private static async Task<Texture2D> LoadImage(string filePath)
@@ -57,8 +67,10 @@ namespace Tools
 
             b.song = song;
             b.filePath = filePath;
-            b.jacket = b.jacketFileOverride != null
-                ? await LoadImage(Path.Combine(Path.GetDirectoryName(filePath)!, b.jacketFileOverride)) 
+
+            var jacketFileOverridePath = b.jacketFileOverride == null ? null : Path.Combine(Path.GetDirectoryName(filePath)!, b.jacketFileOverride);
+            b.jacket = jacketFileOverridePath != null && File.Exists(jacketFileOverridePath)
+                ? await LoadImage(jacketFileOverridePath)
                 : b.song.jacket;
 
             return b;
@@ -66,6 +78,7 @@ namespace Tools
         
         // SONG STUFF
 
+        [ItemCanBeNull]
         public static async Task<Song> LoadSong(string folderPath)
         {
             var (diffs, ok) = SerializationHelperUtils.CheckSong(folderPath);
@@ -77,9 +90,12 @@ namespace Tools
             s.folderPath = folderPath;
             s.diffs = diffs;
 
-            if (s.jacketFile != null)
-                s.jacket = await LoadImage(Path.Combine(folderPath, s.jacketFile));
-            
+            var jacketPath = Path.Combine(folderPath, s.jacketFile);
+            if (s.jacketFile != null && File.Exists(jacketPath))
+                s.jacket = await LoadImage(jacketPath);
+            else
+                Debug.LogWarning($"Song \"{folderPath}\" has no (valid) jacket file");
+
             return s;
         }
     }

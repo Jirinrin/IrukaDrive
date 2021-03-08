@@ -29,7 +29,9 @@ namespace BeatmapEditor
 
         public void PlayBeatmapFrom(float beatTime, bool autoplay = true)
         {
-            // todo: somehow keep this scene loaded in background
+            if (!currentSong.HasValidAudio)
+                return;
+            // todo: somehow keep this scene loaded in background...?
             _inEditorPlay = true;
             GameManager.ToGameplay(currentBeatmap, currentSong.BeatsToSecs(beatTime), autoplay);
         }
@@ -107,6 +109,11 @@ namespace BeatmapEditor
         {
             if (!SongManager.Instance.IsPlaying)
             {
+                if (!currentSong.HasValidAudio)
+                {
+                    Debug.LogWarning("Please add a valid audio file");
+                    return;
+                }
                 await SongManager.Instance.LoadSong(currentSong, tickOnBeat: true);
                 listenSongBtnText.text = "Stop";
             }

@@ -42,15 +42,24 @@ namespace Shared
         {
             if (Songs.Any())
                 return;
-            
+
+            // todo: find nested song folders etc
             var songs = Directory.GetDirectories($"{Application.streamingAssetsPath}/DriveCharts");
             foreach (var songFolder in songs)
             {
                 var songFolderPath = Path.Combine(BeatmapPath, songFolder);
 
                 var s = await GetSongAsync(songFolderPath);
-                if (s != null)
-                    Songs.Add(s);                
+
+                if (!s.HasValidAudio)
+                {
+                    Debug.LogWarning($"Song \"{songFolderPath}\" has no (valid) audio file");
+                    continue;
+                }
+                if (s == null)
+                    continue;
+
+                Songs.Add(s);
             }
         }
     }
