@@ -120,9 +120,6 @@ namespace BeatmapEditor.Components
             return C.BeatIntervalValues[index];
         }
 
-        private float GetEditorBeatSnap() => 
-            Keyboard.current.shiftKey.isPressed ? (Keyboard.current.altKey.isPressed ? C.EditorBeatSnapSuperFine : C.EditorBeatSnapFine) : C.EditorBeatSnap;
-
         public void OnDrag(PointerEventData eventData)
         {
             if (!_dragging)
@@ -130,7 +127,7 @@ namespace BeatmapEditor.Components
             
             _dragDelta += eventData.delta.x * ScreenToCanvas.Factor;
             if (_dragType == DragType.MoveWord)
-                transform.localPosition = new Vector3(_xBeforeDrag + _dragDelta.RoundToNearest(_beatSpacing*GetEditorBeatSnap()), 0, 0);
+                transform.localPosition = new Vector3(_xBeforeDrag + _dragDelta.RoundToNearest(_beatSpacing*EditorUtils.GetEditorBeatSnap()), 0, 0);
             else if (!IsChord)
                 UpdateBeatInterval(DragXToBeatInterval(_dragDelta));
                 
@@ -143,7 +140,7 @@ namespace BeatmapEditor.Components
             
             _dragging = false;
 
-            var newBeat = (transform.localPosition.x / _beatSpacing).RoundToNearest(GetEditorBeatSnap());
+            var newBeat = (transform.localPosition.x / _beatSpacing).RoundToNearest(EditorUtils.GetEditorBeatSnap());
             if (Math.Abs(word.Beat - newBeat) < C.FloatTolerance &&
                 Math.Abs(word.BeatInterval - C.BeatIntervalValues[_beatIntervalIndexBeforeDrag]) < C.FloatTolerance)
                 return;

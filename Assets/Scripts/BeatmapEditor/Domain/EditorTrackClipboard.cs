@@ -50,7 +50,7 @@ namespace BeatmapEditor.Domain
         
         public void SetCursor(float screenX)
         {
-            _cursorPos = EditorTrack.ScreenXToBeat(screenX);
+            _cursorPos = EditorTrack.ScreenXToBeat(screenX, EditorUtils.GetEditorBeatSnap());
             UpdateCursorPos();
         }
         

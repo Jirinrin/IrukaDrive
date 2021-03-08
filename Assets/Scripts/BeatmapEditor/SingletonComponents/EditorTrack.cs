@@ -72,7 +72,8 @@ namespace BeatmapEditor.SingletonComponents
         
         // Stuff responding to gestures
 
-        public static float ScreenXToBeat(float screenX) => ((viewState.panX + screenX) / viewState.beatSpacing).RoundToNearest(C.EditorBeatSnap);
+        public static float ScreenXToBeat(float screenX, float beatSnap = C.EditorBeatSnap) =>
+            ((viewState.panX + screenX) / viewState.beatSpacing).RoundToNearest(beatSnap);
 
         public void AddWord(BeatmapWord word)
         {
