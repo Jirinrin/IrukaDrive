@@ -12,6 +12,7 @@ namespace BeatmapEditor.SingletonComponents
     {
         private EditorTrackNotesRecycler _notesRecycler;
         private EditorTrackSheetBg _sheet;
+        private EditorTrackTimestamps _timestamps;
         private EditorWaveform _waveform;
 
         private bool _shouldDraw;
@@ -29,6 +30,7 @@ namespace BeatmapEditor.SingletonComponents
         {
             _notesRecycler = EditorTrackNotesRecycler.Instance;
             _sheet = EditorTrackSheetBg.Instance;
+            _timestamps = EditorTrackTimestamps.Instance;
             _waveform = EditorWaveform.Instance;
         }
 
@@ -56,6 +58,9 @@ namespace BeatmapEditor.SingletonComponents
             _sheet.InitSheet(beatmap.song);
             _sheet.DrawSheet(true); // todo: necessary?
 
+            _timestamps.Init(beatmap.song);
+            _timestamps.RefreshWindow(true);
+
             _waveform.LoadSong(beatmap.song);
 
             Pan(0f);
@@ -69,6 +74,7 @@ namespace BeatmapEditor.SingletonComponents
                 _shouldDraw = false;
                 _notesRecycler.RefreshWindow(_zoomed);
                 _sheet.DrawSheet(_zoomed);
+                _timestamps.RefreshWindow(_zoomed);
                 _zoomed = false;
             }
         }
@@ -136,6 +142,7 @@ namespace BeatmapEditor.SingletonComponents
         {
             _notesRecycler.Cleanup();
             _sheet.Cleanup();
+            _timestamps.Cleanup();
         }
     }
 }

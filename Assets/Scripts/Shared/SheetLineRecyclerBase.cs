@@ -27,15 +27,6 @@ namespace Shared
         private void InitLine(Line item, int index) =>
             item.transform.localPosition = new Vector3(BeatSpacing * index.IndexToBeat(), 0, 0);
 
-        private void UpdateLinesSpacing(RecyclerList<Line> list)
-        {
-            foreach (var index in list.visibleItemsLookup.Keys)
-            {
-                // todo: somehow make the accuracy smoother than 1/BeatIndexFactor again here
-                list.visibleItemsLookup[index].transform.localPosition = new Vector3(BeatSpacing * index.IndexToBeat(), 0, 0);
-            }
-        }
-
         private List<int> GetNewLineIndicesInWindow(int from, int to, bool isBar)
         {
             var output = new List<int>();
@@ -80,6 +71,15 @@ namespace Shared
 
             _recyclerList1 = new RecyclerList<Line>(CreateBarLine, InitLine, GetNewLineIndicesInWindowBar, GetCurrentWindow());
             _recyclerList2 = new RecyclerList<Line>(CreateBeatLine, InitLine, GetNewLineIndicesInWindowBeat, GetCurrentWindow());
+        }
+
+        private void UpdateLinesSpacing(RecyclerList<Line> list)
+        {
+            foreach (var index in list.visibleItemsLookup.Keys)
+            {
+                // todo: somehow make the accuracy smoother than 1/BeatIndexFactor again here
+                list.visibleItemsLookup[index].transform.localPosition = new Vector3(BeatSpacing * index.IndexToBeat(), 0, 0);
+            }
         }
 
         public void RefreshWindow(bool updateSpacing = false)
