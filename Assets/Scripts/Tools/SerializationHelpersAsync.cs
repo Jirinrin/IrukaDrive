@@ -12,6 +12,8 @@ namespace Tools
 {
     public static class SerializationHelpersAsync
     {
+        private static readonly string DriveChartsDir = $"{Application.streamingAssetsPath}/DriveCharts";
+
         private static async Task<byte[]> LoadFile(string filePath)
         {
             // var req = new UnityWebRequest($"file://{filePath}");
@@ -50,7 +52,6 @@ namespace Tools
 
         public static void LoadSelectBeatmap(Action<Beatmap> onFinished, bool cache = false)
         {
-            var dir = $"{Application.streamingAssetsPath}/DriveCharts";
             FileBrowser.ShowLoadDialog(async p =>
                 onFinished(p[0].EndsWith(".drive")
                     ? cache
@@ -58,7 +59,7 @@ namespace Tools
                         : await LoadBeatmap(p[0], await LoadSong(Path.GetDirectoryName(p[0])))
                     : null),
                 () => onFinished(null),
-                FileBrowser.PickMode.Files,false, dir, title: "Select a drive chart"); // ext: "drive"
+                FileBrowser.PickMode.Files,false, DriveChartsDir, title: "Select a drive chart"); // ext: "drive"
         }
 
         public static async Task<Beatmap> LoadBeatmap(string filePath, Song song)
@@ -97,6 +98,52 @@ namespace Tools
                 Debug.LogWarning($"Song \"{folderPath}\" has no (valid) jacket file");
 
             return s;
+        }
+
+        public static void NewSong(Action<Beatmap> onFinished)
+        {
+            FileBrowser.ShowSaveDialog(p =>
+                {
+                    var folder = p[0];
+                    if (Directory.Exists(folder))
+                    {
+                        Debug.LogWarning($"{folder} already exists");
+                        onFinished(null);
+                    }
+                    Directory.CreateDirectory(folder);
+                    var s = new Song(folder);
+                    SerializationHelpers.SaveSong(s);
+                    var b = new Beatmap(Path.Combine(folder, "beginner.drive"), s);
+                    SerializationHelpers.SaveBeatmap(b);
+                    onFinished(b);
+                },
+                () => onFinished(null), FileBrowser.PickMode.Files,false,
+                DriveChartsDir, "NewSong", "Create song");
+        }
+
+        public static void NewBeatmap(Song song, Action<Beatmap> onFinished)
+        {
+            if (song == null)
+                return;
+
+            FileBrowser.ShowSaveDialog(p =>
+                {
+                    var fileName = p[0];
+                    if (!fileName.EndsWith(".drive"))
+                        fileName += ".drive";
+
+                    if (File.Exists(fileName))
+                    {
+                        Debug.LogWarning($"{fileName} already exists");
+                        onFinished(null);
+                    }
+
+                    var b = new Beatmap(Path.Combine(song.folderPath, fileName), song);
+                    SerializationHelpers.SaveBeatmap(b);
+                    onFinished(b);
+                }, () => onFinished(null),
+                FileBrowser.PickMode.Files,false,
+                song.folderPath, "newchart", "Create drive chart");
         }
     }
 }

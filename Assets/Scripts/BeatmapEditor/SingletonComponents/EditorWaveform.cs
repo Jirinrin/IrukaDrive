@@ -19,6 +19,7 @@ namespace BeatmapEditor.SingletonComponents
 
         public async void LoadSong(Song song)
         {
+            if (song == null) return;
             var clip = await song.Audio;
 
             // todo: something if mp3?? (Because then the samples array simply gets filled with 0s) (or we can just ignore mp3 haha, this is a bonus feature after all)
@@ -30,7 +31,7 @@ namespace BeatmapEditor.SingletonComponents
 
             _currentSong = song;
 
-            // it's important to multiply by the number of channels!
+            // It's important to multiply by the number of channels!
             var samplesPerBeat = (clip.samples * clip.channels) / (clip.length * song.BeatsPerSec);
             _beatsPerSample = 1f / samplesPerBeat;
 

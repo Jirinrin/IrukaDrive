@@ -1,3 +1,4 @@
+using System;
 using BeatmapEditor.Domain;
 using BeatmapEditor.SingletonComponents;
 using Shared;
@@ -77,18 +78,28 @@ namespace BeatmapEditor
         }
         
         // Called from Load button
-        public void LoadBeatmap()
+        public void LoadBeatmap() => WithLoadBeatmap(b => SerializationHelpersAsync.LoadSelectBeatmap(b));
+        public void NewSong() => WithLoadBeatmap(SerializationHelpersAsync.NewSong);
+        public void NewBeatmap() => WithLoadBeatmap(b => SerializationHelpersAsync.NewBeatmap(currentSong, b));
+
+        private void WithLoadBeatmap(Action<Action<Beatmap>> loader)
+        {
+            EditorInputManager.Instance.enabled = false;
+            loader(b =>
+            {
+                OnLoadBeatmap(b);
+                EditorInputManager.Instance.enabled = true;
+            });
+        }
+        private void OnLoadBeatmap(Beatmap b)
         {
             if (currentBeatmap != null)
                 ResetEditor();
-            
-            SerializationHelpersAsync.LoadSelectBeatmap(b =>
-            {
-                currentBeatmap = b ?? currentBeatmap;
-                currentSong = currentBeatmap.song;
-                EditorTrack.Instance.LoadBeatmap(currentBeatmap);
-                SetFunctional(true);
-            });
+
+            currentBeatmap = b ?? currentBeatmap;
+            currentSong = currentBeatmap.song;
+            EditorTrack.Instance.LoadBeatmap(currentBeatmap);
+            SetFunctional(true);
         }
 
         private async void ReloadBeatmap()

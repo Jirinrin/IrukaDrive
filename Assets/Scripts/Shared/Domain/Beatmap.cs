@@ -23,7 +23,7 @@ namespace Shared.Domain
         
         // Cosmetic stuff
         [CanBeNull] public string jacketFileOverride;
-        [NonSerialized][IgnoreDataMember] public Texture2D jacket;
+        [NonSerialized][IgnoreDataMember] public Texture2D jacket; // todo: load async lazy (like song.jacket)
 
         // Useful metadata
         public float? finishTimestamp; // You can specify this to have a beatmap end before the song file ends
@@ -42,6 +42,13 @@ namespace Shared.Domain
         public Beatmap()
         {
             id = Guid.NewGuid();
+            words = new List<BeatmapWord>();
+        }
+
+        public Beatmap(string filePath, Song s) : this()
+        {
+            this.filePath = filePath;
+            song = s;
         }
 
         // Methods

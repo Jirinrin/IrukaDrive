@@ -71,28 +71,6 @@ namespace Tools
 
         // SONG STUFF
 
-        public static void NewSong(Beatmap beatmap, Action<string> onSuccess)
-        {
-            FileBrowser.ShowSaveDialog(p =>
-                {
-                    var folder = p[0];
-                    if (Directory.Exists(folder))
-                    {
-                        Debug.LogWarning($"{folder} already exists");
-                        return;
-                    }
-                    Directory.CreateDirectory(folder);
-                    var s = new Song
-                    {
-                        folderPath = folder,
-                        filePath = Path.Combine(folder, "song.json"),
-                    };
-                    SaveSong(s);
-                    SaveBeatmapToFile(new Beatmap(), Path.Combine(folder, "beginner.drive"));
-
-                }, null, FileBrowser.PickMode.Folders,false,
-                Path.GetDirectoryName(beatmap.filePath), Path.GetFileName(beatmap.filePath), "Save beatmap");
-        }
         public static void SaveSong(Song song)
         {
             Serialization.WriteToJsonFile(song.filePath, song);

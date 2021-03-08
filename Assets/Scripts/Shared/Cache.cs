@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Shared.Domain;
 using Tools;
 using UnityEngine;
@@ -30,8 +31,10 @@ namespace Shared
         }
 
         private static readonly Dictionary<string, AudioClip> AudioLookup = new Dictionary<string, AudioClip>();
+        [ItemCanBeNull]
         public static async Task<AudioClip> GetAudioAsync(string path)
         {
+            if (path == null) return null;
             if (!AudioLookup.ContainsKey(path))
                 AudioLookup[path] = await SerializationHelpersAsync.LoadAudio(path);
             return AudioLookup[path];
