@@ -17,10 +17,12 @@ namespace BeatmapEditor.SingletonComponents
         private float _beatsPerSample;
         private Song _currentSong;
 
-        public void LoadSong(Song song)
+        public async void LoadSong(Song song)
         {
+            var clip = await song.Audio;
+
             // todo: something if mp3?? (Because then the samples array simply gets filled with 0s) (or we can just ignore mp3 haha, this is a bonus feature after all)
-            if (!song.audio || song.audioPath.EndsWith(".mp3"))
+            if (!clip || song.audioPath.EndsWith(".mp3"))
             {
                 _active = false;
                 return;
@@ -29,13 +31,13 @@ namespace BeatmapEditor.SingletonComponents
             _currentSong = song;
 
             // it's important to multiply by the number of channels!
-            var samplesPerBeat = (song.audio.samples * song.audio.channels) / (song.audio.length * song.BeatsPerSec);
+            var samplesPerBeat = (clip.samples * clip.channels) / (clip.length * song.BeatsPerSec);
             _beatsPerSample = 1f / samplesPerBeat;
 
             _active = true;
 
-            var samples = new float[song.audio.samples * song.audio.channels];
-            song.audio.GetData(samples, 0);
+            var samples = new float[clip.samples * clip.channels];
+            clip.GetData(samples, 0);
 
             _samples = samples.Where((s, i) => i % EveryHowManySamples == 0).ToList();
         }

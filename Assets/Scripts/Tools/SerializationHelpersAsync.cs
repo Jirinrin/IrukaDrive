@@ -20,7 +20,7 @@ namespace Tools
             return await Task.Run(() => File.ReadAllBytes(filePath));
         }
         
-        private static async Task<AudioClip> LoadAudio(string filePath)
+        public static async Task<AudioClip> LoadAudio(string filePath)
         {
             var req = UnityWebRequestMultimedia.GetAudioClip($"file://{filePath}", SerializationHelperUtils.GetAudioType(Path.GetExtension(filePath)));
             await req.SendWebRequest();
@@ -76,9 +76,7 @@ namespace Tools
             s.filePath = songFilePath;
             s.folderPath = folderPath;
             s.diffs = diffs;
-            
-            if (s.audioPath != null)
-                s.audio = await LoadAudio(Path.Combine(folderPath, s.audioPath));            
+
             if (s.jacketPath != null)
                 s.jacket = await LoadImage(Path.Combine(folderPath, s.jacketPath));
             

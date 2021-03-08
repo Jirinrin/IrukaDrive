@@ -13,12 +13,6 @@ namespace Tools
             return File.ReadAllBytes(filePath);
         }
         
-        private static AudioClip LoadAudio(string filePath)
-        {
-            var clip = NAudioPlayer.FromMp3Data(LoadFile(filePath));
-            return clip;
-        }
-        
         private static Texture2D LoadImage(string filePath)
         {
             var texture = new Texture2D(2, 2);
@@ -115,7 +109,6 @@ namespace Tools
             s.folderPath = folderPath;
             s.diffs = diffs;
             
-            s.audio = LoadAudio(Path.Combine(folderPath, s.audioPath));
             s.jacket = LoadImage(Path.Combine(folderPath, s.jacketPath));
 
             return s;

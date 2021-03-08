@@ -50,12 +50,12 @@ namespace Gameplay
                 PrepGameplay(SerializationHelpers.LoadBeatmap($"{Application.streamingAssetsPath}/DriveCharts/SDVX Tutorial/2_advanced.drive"), autoplay: false);
             }
 
-            LoadBeatmap();
+            LoadCurrentBeatmap();
         }
 
-        public void LoadBeatmap()
+        private async void LoadCurrentBeatmap()
         {
-            SongManager.Instance.LoadSong(CurrentBeatmap.song, BeatmapStartTime);
+            await SongManager.Instance.LoadSong(CurrentBeatmap.song, BeatmapStartTime);
         
             Track.Instance.InitTrack(CurrentBeatmap, RuntimeWords);
         
@@ -147,7 +147,7 @@ namespace Gameplay
         {
             if (!beatmapStarted)
                 return;
-        
+
             CheckNextWord();
             if (_currentWord.CheckPassedNote(SongManager.Instance.songPosBeats))
                 OnNote?.Invoke();

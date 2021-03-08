@@ -53,7 +53,7 @@ namespace Menu.ScreenControllers.SongSelect
         }
 
         private void SelectSongSimple(Song song) => SelectSong(song);
-        private void SelectSong(Song song, bool selectAnyway = false)
+        private async void SelectSong(Song song, bool selectAnyway = false)
         {
             if (_selectedSong?.folderPath == song.folderPath && !selectAnyway)
                 return;
@@ -64,7 +64,7 @@ namespace Menu.ScreenControllers.SongSelect
             _cardsLookup[_selectedSong.folderPath].SetSelected(true);
             songDataPanel.SetSong(song);
             // todo: allow beatmap to specify where preview should start or something
-            SongManager.Instance.PlaySong(song.audio, 45f);
+            SongManager.Instance.PlaySong(await song.Audio, 45f);
         }
 
         private void SelectDiff(SongDifficulty diff)

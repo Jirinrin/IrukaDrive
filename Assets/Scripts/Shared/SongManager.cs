@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Shared.Domain;
 using Tools;
 using Tools.Commons;
@@ -24,6 +25,8 @@ namespace Shared
 
         public bool IsPlaying => _audioSource.isPlaying;
 
+        private bool _loading;
+
         private bool _songFinished;
 
         private bool _tickOnBeat;
@@ -39,19 +42,22 @@ namespace Shared
             _audioSource.time = startTime;
             _audioSource.Play();
         }
-        public void LoadSong(Song song, float startTime = 0f, bool tickOnBeat = false, float? finishTimestamp = null)
+        public async Task LoadSong(Song song, float startTime = 0f, bool tickOnBeat = false, float? finishTimestamp = null)
         {
+            _loading = true;
             _tickOnBeat = tickOnBeat;
             
+            var clip = await song.Audio;
             _currentSong = song;
-            songLength = finishTimestamp ?? song.audio.length;
-            _audioSource.clip = _currentSong.audio;
+            songLength = finishTimestamp ?? clip.length;
+            _audioSource.clip = clip;
 
             _songFinished = false;
             _audioSource.time = startTime;
             _audioSource.Play();
             UpdateSongState();
             OnSongStarted?.Invoke();
+            _loading = false;
         }
 
         public void Stop()
@@ -77,7 +83,7 @@ namespace Shared
         
         private void Update()
         {
-            if (_currentSong == null)
+            if (_currentSong == null || _loading)
                 return;
 
             UpdateSongState();
@@ -91,6 +97,9 @@ namespace Shared
 
         private void TickOnBeat()
         {
+            if (!_audioSource.isPlaying)
+                return;
+
             var beatNew = SongPosBeatsFloored;
             if (beatNew == _prevSongPosBeatsRounded)
                 return;

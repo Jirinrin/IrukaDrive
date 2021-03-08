@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Shared
 {
+    // todo: evict old items when taking too much memory
     public static class Cache
     {
         private static readonly string BeatmapPath = $"{Application.streamingAssetsPath}/DriveCharts";
@@ -26,6 +27,14 @@ namespace Shared
             if (!SongsLookup.ContainsKey(folderPath))
                 SongsLookup[folderPath] = await SerializationHelpersAsync.LoadSong(folderPath);
             return SongsLookup[folderPath];
+        }
+
+        private static readonly Dictionary<string, AudioClip> AudioLookup = new Dictionary<string, AudioClip>();
+        public static async Task<AudioClip> GetAudioAsync(string path)
+        {
+            if (!AudioLookup.ContainsKey(path))
+                AudioLookup[path] = await SerializationHelpersAsync.LoadAudio(path);
+            return AudioLookup[path];
         }
 
         public static readonly List<Song> Songs = new List<Song>();

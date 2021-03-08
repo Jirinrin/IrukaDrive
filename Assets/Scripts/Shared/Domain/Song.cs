@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -10,11 +12,11 @@ namespace Shared.Domain
     {
         public string title;
         public string artist;
-        public string jacketPath;
-        [NonSerialized][IgnoreDataMember] [CanBeNull] public Texture2D jacket;
-        
-        public string audioPath;
-        [NonSerialized][IgnoreDataMember] [CanBeNull] public AudioClip audio;
+        public string jacketPath; // todo: rename to jacketFile
+        [NonSerialized][IgnoreDataMember] [CanBeNull] public Texture2D jacket; // todo: also fetch lazily async
+
+        public string audioPath; // todo: rename to audioFile
+        [IgnoreDataMember] public Task<AudioClip> Audio => Cache.GetAudioAsync(Path.Combine(folderPath, audioPath));
         
         public float bpm;
         public float beatOffset;

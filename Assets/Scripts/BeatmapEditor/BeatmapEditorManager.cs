@@ -103,11 +103,11 @@ namespace BeatmapEditor
             EditorHistory.Reset();
         }
 
-        public void ListenSong()
+        public async void ListenSong()
         {
             if (!SongManager.Instance.IsPlaying)
             {
-                SongManager.Instance.LoadSong(currentSong, tickOnBeat: true);
+                await SongManager.Instance.LoadSong(currentSong, tickOnBeat: true);
                 listenSongBtnText.text = "Stop";
             }
             else
