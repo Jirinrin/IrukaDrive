@@ -34,7 +34,5 @@ namespace Tools
         
         public static float SecToBeats(this Song s, float seconds) => (seconds - s.beatOffset) * s.BeatsPerSec;
         public static float BeatsToSecs(this Song s, float beats) => beats / s.BeatsPerSec + s.beatOffset;
-        
-        public static void SortWords(this Beatmap b) => b.words = b.words.OrderBy(word => word.beat).ToList();
     }
 }

@@ -21,7 +21,9 @@ namespace BeatmapEditor
 
         private void OnPlay() =>
             IE(() => EditorTrack.Instance.PlayFromPoint(Input.mousePosition.x * ScreenToCanvas.Factor, !Keyboard.current.shiftKey.isPressed));
-        
+        private void OnToStart() => IE(() => EditorTrack.Instance.PanToBeat(0, true));
+        private void OnToEnd() => IE(() => EditorTrack.Instance.PanToBeat(BeatmapEditorManager.currentBeatmap.LastBeat, true));
+
         public void OnCopy() => IE(EditorTrackClipboard.Instance.Copy);
         public void OnPaste() => IE(EditorTrackClipboard.Instance.Paste);
         public void OnDelete() => IE(EditorTrackClipboard.Instance.Delete);

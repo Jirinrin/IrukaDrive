@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
+using Tools;
 using UnityEngine;
 
 namespace Shared.Domain
@@ -36,18 +37,21 @@ namespace Shared.Domain
         // Getters
         [IgnoreDataMember] public int NotesCount => words.Aggregate(0, (acc, w) => acc + w.text.Length);
         [IgnoreDataMember] public float BeatsPerSec => song.BeatsPerSec;
+        [IgnoreDataMember] public float LastBeat => words.Last().LastBeat();
 
         public Beatmap()
         {
             id = Guid.NewGuid();
         }
 
+        // Methods
         public Beatmap CloneState()
         {
             var clone = (Beatmap) MemberwiseClone();
             clone.words = words.Select(w => w.Clone()).ToList();
             return clone;
         }
+        public void SortWords() => words = words.OrderBy(word => word.beat).ToList();
     }
 
     [Serializable]

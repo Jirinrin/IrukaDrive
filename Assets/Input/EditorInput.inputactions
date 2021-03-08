@@ -76,6 +76,22 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "ToStart",
+                    "type": "Button",
+                    "id": "782fbbde-0790-4e60-90ca-a21845b99eda",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ToEnd",
+                    "type": "Button",
+                    "id": "18df86ec-7eb6-4977-adf3-7c406e4c66da",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -307,6 +323,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "NewWord",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "db00c4d6-3d7f-459a-b364-4f2a6f06736f",
+                    "path": "<Keyboard>/home",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e9ad6b6b-ca06-459a-a8ff-fca07306069a",
+                    "path": "<Keyboard>/end",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToEnd",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
