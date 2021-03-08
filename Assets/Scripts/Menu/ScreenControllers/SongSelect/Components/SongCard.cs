@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 using Shared.Domain;
 using TMPro;
 using Tools;
@@ -21,8 +22,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
         public void SetSelected(bool selected)
         {
             _selected = selected;
-            // todo: tween
-            panel.color = panel.color.SetAlpha(selected ? .1f : .05f);
+            panel.DOColor(panel.color.SetAlpha(selected ? .1f : .05f), .5f);
         }
         
         public void Init(Song song, Action<Song> onSelect)
