@@ -61,7 +61,7 @@ namespace BeatmapEditor.SingletonComponents
 
         protected void AddFile(Action<string> setter, string folderPath, Func<string, bool> extValidator = null)
         {
-            FileBrowser.ShowLoadDialog(async p =>
+            FileBrowser.ShowLoadDialog(p =>
                 {
                     var path = p[0];
                     var ext = Path.GetExtension(path);
