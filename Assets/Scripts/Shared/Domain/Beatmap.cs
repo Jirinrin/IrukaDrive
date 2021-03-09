@@ -66,7 +66,7 @@ namespace Shared.Domain
     {
         [NonSerialized][IgnoreDataMember] public string filePath;
 
-        public string creator;
+        public string creator = "";
         public Difficulty difficulty;
         [CanBeNull] public string difficultyNameOverride;
 

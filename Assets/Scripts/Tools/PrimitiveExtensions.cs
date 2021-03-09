@@ -21,6 +21,8 @@ namespace Tools
         public static Color SetAlpha(this Color c, float alpha) => new Color(c.r, c.g, c.b, alpha);
 
         public static Match Match(this string s, string pattern) => Regex.Match(s, pattern);
+        public static bool IsNullOrEmpty(this string s) => string.IsNullOrEmpty(s);
+        public static string OrNull(this string s) => s.IsNullOrEmpty() ? null : s;
 
         public static string Capitalize(this string s) => s.Length <= 1 
             ? s.ToUpper() 

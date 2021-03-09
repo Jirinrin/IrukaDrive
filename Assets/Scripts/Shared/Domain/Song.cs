@@ -21,14 +21,13 @@ namespace Shared.Domain
         public float bpm = 120f;
         public float beatOffset;
         [Range(2,4)] public int beatsPerBar = 4;
-        public int barOffset;
+        [Range(0,3)] public int barOffset;
         
         [NonSerialized][IgnoreDataMember] [NotNull] public string folderPath;
         [NonSerialized][IgnoreDataMember] [NotNull] public string filePath;
         [NonSerialized][IgnoreDataMember] [NotNull] public SongDifficulty[] diffs = new SongDifficulty[0]; // Max 4?
 
-        private float? _beatsPerSec;
-        [IgnoreDataMember] public float BeatsPerSec => _beatsPerSec ??= bpm / 60f;
+        [IgnoreDataMember] public float BeatsPerSec => bpm / 60f;
         [IgnoreDataMember] public bool HasValidAudio => audioFile != null && File.Exists(Path.Combine(folderPath, audioFile));
 
         public int version = 1;

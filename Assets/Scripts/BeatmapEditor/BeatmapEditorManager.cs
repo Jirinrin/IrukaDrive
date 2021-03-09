@@ -69,6 +69,7 @@ namespace BeatmapEditor
         public void SaveBeatmap()
         {
             SerializationHelpers.SaveBeatmap(currentBeatmap);
+            SerializationHelpers.SaveSong(currentSong);
             // todo: display some message that it succeeded
         }
         public void SaveBeatmapAs()
@@ -106,6 +107,11 @@ namespace BeatmapEditor
         {
             // todo: also reload song?
             currentBeatmap = await SerializationHelpersAsync.LoadBeatmap(currentBeatmap.filePath, currentSong);
+            RefreshBeatmap();
+        }
+
+        public void RefreshBeatmap()
+        {
             ResetEditor();
             EditorTrack.Instance.LoadBeatmap(currentBeatmap, true);
         }

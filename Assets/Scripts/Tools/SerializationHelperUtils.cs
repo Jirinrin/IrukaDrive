@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Shared.Domain;
 using UnityEngine;
 
@@ -26,6 +27,8 @@ namespace Tools
                     return AudioType.UNKNOWN;
             }
         }
+
+        public static readonly Regex ImageExtensionRegex = new Regex(@"^(?:jpg|png)$");
 
         public static (SongDifficulty[] diffPaths, bool ok) CheckSong(string folderPath)
         {
