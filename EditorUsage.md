@@ -13,7 +13,7 @@
 ## Controls
 - Navigation
   - `rightclick+drag↔` to pan
-    - hold `alt` to pan quickly!
+    - hold `Alt` to pan quickly!
   - `shift+rightclick+drag↕` to zoom
   - `Home`/`End` to go to the start/end of your chart
 - Playtesting
@@ -21,7 +21,7 @@
   - `Shift+Spacebar` to start playtest in manual play
   - While in playtest, press `Escape` to exit
 - Click somewhere in empty space to put your cursor there
-  - `Tab`/`N` to make a new word (or `Alt+click`ing in empty space also works)
+  - `Tab`/`N` to make a new word (or `Ctrl+Shift+click`ing in empty space also works)
   - `Ctrl+V` to paste (in case)
 - Click a word to select it
   - `Ctrl+C` to copy
@@ -29,7 +29,9 @@
   - `Del` to delete the word (or removing all letters and submitting also works)
 - Dragging on a word
   - Normally drag on a word to move it
+    - Move by ¼th beats by holding `Shift` and move smoothly (1/100th beats) by holding `Shift+Alt`. (This also goes for moving the cursor)
   - Drag with right mouse button to change its beat spacing
+    - This switches between these amounts of beats: `{.125, 1/6, .25, 1/3, .5, 1, 2, 4}`
 - Special stuff when editing words:
   - _Chord_: start the word with `[[`
   - _Randomly generated English word of length_: make a word consisting entirely of the letter `x`
