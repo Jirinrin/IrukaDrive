@@ -25,7 +25,6 @@ namespace Menu
         private static readonly int HoverKey = Animator.StringToHash("Hover");
 
         [SerializeField] private Color textColor = Color.green;
-        [SerializeField] private Color textHoverColor = Color.white;
 
         private Button _button;
         private TextMeshProUGUI _text;
@@ -39,7 +38,7 @@ namespace Menu
             _hoverT = newT;
             var tt = _hoverT * HoverDur;
             var a = Interp.BlinkDownUp(.01f, .05f, tt) * Interp.BlinkDownUp(.13f, .05f, tt) * Interp.BlinkDownUp(.35f, .01f, tt);
-            _text.color = Color.Lerp(textColor, textHoverColor, _hoverT).SetAlpha(a);
+            _text.color = textColor.SetAlpha(a);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
