@@ -13,6 +13,12 @@ namespace BeatmapEditor.SingletonComponents
     {
         [SerializeField] private TMP_InputField inputFieldPrefab = null;
 
+        protected override void InitCharObj(CharObject charObj, ParsedChar ch)
+        {
+            base.InitCharObj(charObj, ch);
+            charObj.obj.color = C.CharColorDefaultEditor;
+        }
+
         protected override void InitWord(ObjWidthItem item)
         {
             item.obj.inputFieldPrefab = inputFieldPrefab;

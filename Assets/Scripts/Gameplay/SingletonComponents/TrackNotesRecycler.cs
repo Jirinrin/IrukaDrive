@@ -14,7 +14,7 @@ namespace Gameplay.SingletonComponents
         protected override void InitCharObj(CharObject charObj, RuntimeChar ch)
         {
             base.InitCharObj(charObj, ch);
-            charObj.obj.color = C.CharColorDefault;
+            charObj.obj.color = C.CharColorDefaultGameplay;
         }
 
         protected override void InitWord(ObjWidthItem item)

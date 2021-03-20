@@ -26,7 +26,9 @@ namespace Shared
         public const float TimingWindowGood = 140; // ms
         public const float TimingWindowGoodSec = TimingWindowGood/1000f;
 
-        public static readonly Color CharColorDefault = Color.gray;
+        public static readonly Color CharColorDefaultGameplay = new Color(.5f,.5f,.5f);
+        public static readonly Color CharColorDefaultEditor = Color.white;
+        public static Color CharColorDefault => GameManager.State == GameState.BeatmapEditor ? CharColorDefaultEditor : CharColorDefaultGameplay;
         public static readonly Color CharColorHighlight = Color.green;
 
         public static readonly string DriveChartsDirPath = $"{Application.streamingAssetsPath}/DriveCharts";
