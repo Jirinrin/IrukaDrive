@@ -23,6 +23,7 @@ namespace Shared
         }
         
         private static readonly Dictionary<string, Song> SongsLookup = new Dictionary<string, Song>();
+        [ItemCanBeNull]
         public static async Task<Song> GetSongAsync(string folderPath)
         {
             if (!SongsLookup.ContainsKey(folderPath))
@@ -46,24 +47,38 @@ namespace Shared
             if (Songs.Any())
                 return;
 
-            // todo: find nested song folders etc
-            var songs = Directory.GetDirectories($"{Application.streamingAssetsPath}/DriveCharts");
-            foreach (var songFolder in songs)
+            await LoadSongsInFolder(BeatmapPath);
+        }
+
+        private static async Task LoadSongsInFolder(string folderPath)
+        {
+            if (File.Exists($"{folderPath}/song.json"))
             {
-                var songFolderPath = Path.Combine(BeatmapPath, songFolder);
-
-                var s = await GetSongAsync(songFolderPath);
-
-                if (!s.HasValidAudio)
-                {
-                    Debug.LogWarning($"Song \"{songFolderPath}\" has no (valid) audio file");
-                    continue;
-                }
-                if (s == null)
-                    continue;
-
-                Songs.Add(s);
+                await LoadSong(folderPath);
+                return;
             }
+
+            var dirNames = Directory.GetDirectories(folderPath);
+            if (!dirNames.Any())
+                Debug.LogWarning($"Folder \"{folderPath}\" is not a song and has no songs");
+            else
+                foreach (var d in dirNames)
+                    await LoadSongsInFolder(Path.Combine(folderPath, d));
+        }
+
+        private static async Task LoadSong(string songFolderPath)
+        {
+            var s = await GetSongAsync(songFolderPath);
+
+            if (s == null)
+                return;
+            if (!s.HasValidAudio)
+            {
+                Debug.LogWarning($"Song \"{songFolderPath}\" has no (valid) audio file");
+                return;
+            }
+
+            Songs.Add(s);
         }
     }
 }
