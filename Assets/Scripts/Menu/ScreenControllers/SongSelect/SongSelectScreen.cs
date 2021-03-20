@@ -97,7 +97,7 @@ namespace Menu.ScreenControllers.SongSelect
 
         public void ToGameplay() =>
             // Use this for easy dev
-            // GameManager.ToGameplay(SerializationHelpers.LoadBeatmap( $"{Application.streamingAssetsPath}/DriveCharts/SDVX Tutorial/2_advanced.drive"));
+            // GameManager.ToGameplay(SerializationHelpers.LoadBeatmap( $"{Application.streamingAssetsPath}/DriveCharts/OfficialCharts/SDVX Tutorial/2_advanced.drive"));
             SerializationHelpersAsync.LoadSelectBeatmap(b => GameManager.ToGameplay(b), true);
 
         public async void ToGameplay(string pathInBeatmapsFolder)

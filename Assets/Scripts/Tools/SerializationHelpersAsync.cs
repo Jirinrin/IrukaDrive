@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Shared;
 using Shared.Domain;
 using SimpleFileBrowser;
 using UnityEngine;
@@ -12,8 +13,6 @@ namespace Tools
 {
     public static class SerializationHelpersAsync
     {
-        private static readonly string DriveChartsDir = $"{Application.streamingAssetsPath}/DriveCharts";
-
         private static async Task<byte[]> LoadFile(string filePath)
         {
             // var req = new UnityWebRequest($"file://{filePath}");
@@ -59,7 +58,7 @@ namespace Tools
                         : await LoadBeatmap(p[0], await LoadSong(Path.GetDirectoryName(p[0])))
                     : null),
                 () => onFinished(null),
-                FileBrowser.PickMode.Files,false, DriveChartsDir, title: "Select a drive chart"); // ext: "drive"
+                FileBrowser.PickMode.Files,false, C.DriveChartsDirPath, title: "Select a drive chart"); // ext: "drive"
         }
 
         public static async Task<Beatmap> LoadBeatmap(string filePath, Song song)
@@ -118,7 +117,7 @@ namespace Tools
                     onFinished(b);
                 },
                 () => onFinished(null), FileBrowser.PickMode.Files,false,
-                DriveChartsDir, "NewSong", "Create song");
+                C.DriveChartsDirPath, "NewSong", "Create song");
         }
 
         public static void NewBeatmap(Song song, Action<Beatmap> onFinished)

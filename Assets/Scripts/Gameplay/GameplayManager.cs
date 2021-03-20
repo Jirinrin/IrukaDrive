@@ -47,7 +47,7 @@ namespace Gameplay
             if (GameManager.State != GameState.Gameplay)
             {
                 GameManager.SetState(GameState.Gameplay);
-                PrepGameplay(SerializationHelpers.LoadBeatmap($"{Application.streamingAssetsPath}/DriveCharts/SDVX Tutorial/2_advanced.drive"), autoplay: false);
+                PrepGameplay(SerializationHelpers.LoadBeatmap($"{Application.streamingAssetsPath}/DriveCharts/OfficialCharts/SDVX Tutorial/2_advanced.drive"), autoplay: false);
             }
 
             LoadCurrentBeatmap();

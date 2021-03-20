@@ -28,5 +28,7 @@ namespace Shared
 
         public static readonly Color CharColorDefault = Color.gray;
         public static readonly Color CharColorHighlight = Color.green;
+
+        public static readonly string DriveChartsDirPath = $"{Application.streamingAssetsPath}/DriveCharts";
     }
 }

@@ -12,8 +12,6 @@ namespace Shared
     // todo: evict old items when taking too much memory
     public static class Cache
     {
-        private static readonly string BeatmapPath = $"{Application.streamingAssetsPath}/DriveCharts";
-
         private static readonly Dictionary<string, Beatmap> BeatmapsLookup = new Dictionary<string, Beatmap>();
         public static async Task<Beatmap> GetBeatmapAsync(string path)
         {
@@ -47,7 +45,7 @@ namespace Shared
             if (Songs.Any())
                 return;
 
-            await LoadSongsInFolder(BeatmapPath);
+            await LoadSongsInFolder(C.DriveChartsDirPath);
         }
 
         private static async Task LoadSongsInFolder(string folderPath)
