@@ -39,7 +39,7 @@ namespace Tools
             }
         }
         
-        private static async Task<Texture2D> LoadImage(string filePath)
+        public static async Task<Texture2D> LoadImage(string filePath)
         {
             var texture = new Texture2D(2, 2);
             var f = await LoadFile(filePath);
@@ -68,11 +68,6 @@ namespace Tools
             b.song = song;
             b.filePath = filePath;
 
-            var jacketFileOverridePath = b.jacketFileOverride == null ? null : Path.Combine(Path.GetDirectoryName(filePath)!, b.jacketFileOverride);
-            b.jacket = jacketFileOverridePath != null && File.Exists(jacketFileOverridePath)
-                ? await LoadImage(jacketFileOverridePath)
-                : b.song.jacket;
-
             return b;
         }
         
@@ -90,11 +85,8 @@ namespace Tools
             s.folderPath = folderPath;
             s.diffs = diffs;
 
-            var jacketPath = Path.Combine(folderPath, s.jacketFile);
-            if (s.jacketFile != null && File.Exists(jacketPath))
-                s.jacket = await LoadImage(jacketPath);
-            else
-                Debug.LogWarning($"Song \"{folderPath}\" has no (valid) jacket file");
+            foreach (var d in s.diffs)
+                d.song = s;
 
             return s;
         }

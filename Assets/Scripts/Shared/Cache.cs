@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Shared
 {
-    // todo: evict old items when taking too much memory
+    // todo: Change out for proper LRU caches with a memory cap (Unity probably has something ready)
     public static class Cache
     {
         private static readonly Dictionary<string, Beatmap> BeatmapsLookup = new Dictionary<string, Beatmap>();
@@ -37,6 +37,16 @@ namespace Shared
             if (!AudioLookup.ContainsKey(path))
                 AudioLookup[path] = await SerializationHelpersAsync.LoadAudio(path);
             return AudioLookup[path];
+        }
+
+        private static readonly Dictionary<string, Texture2D> ImageLookup = new Dictionary<string, Texture2D>();
+        [ItemCanBeNull]
+        public static async Task<Texture2D> GetImageAsync(string path)
+        {
+            if (path == null) return null;
+            if (!ImageLookup.ContainsKey(path))
+                ImageLookup[path] = await SerializationHelpersAsync.LoadImage(path);
+            return ImageLookup[path];
         }
 
         public static readonly List<Song> Songs = new List<Song>();

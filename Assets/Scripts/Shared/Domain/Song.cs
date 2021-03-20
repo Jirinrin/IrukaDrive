@@ -12,11 +12,16 @@ namespace Shared.Domain
     {
         public string title = "";
         public string artist = "";
+
         public string jacketFile;
-        [NonSerialized][IgnoreDataMember] [CanBeNull] public Texture2D jacket; // todo: also fetch lazily async
+        [IgnoreDataMember] [ItemCanBeNull]
+        public Task<Texture2D> Jacket =>
+            Cache.GetImageAsync(jacketFile == null ? null : Path.Combine(folderPath, jacketFile));
 
         public string audioFile;
-        [IgnoreDataMember] [ItemCanBeNull] public Task<AudioClip> Audio => Cache.GetAudioAsync(audioFile == null ? null : Path.Combine(folderPath, audioFile));
+        [IgnoreDataMember] [ItemCanBeNull]
+        public Task<AudioClip> Audio =>
+            Cache.GetAudioAsync(audioFile == null ? null : Path.Combine(folderPath, audioFile));
         
         public float bpm = 120f;
         public float beatOffset;

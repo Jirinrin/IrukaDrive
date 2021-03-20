@@ -58,13 +58,8 @@ namespace Tools
         public static Beatmap LoadBeatmap(string filePath, Song song = null)
         {
             var b = Serialization.ReadFromJsonFile<Beatmap>(filePath);
-            var dir = Path.GetDirectoryName(filePath);
-                
-            b.song = song ?? LoadSong(dir);
+            b.song = song ?? LoadSong(Path.GetDirectoryName(filePath));
             b.filePath = filePath;
-            b.jacket = b.jacketFileOverride != null
-                ? LoadImage(Path.Combine(dir!, b.jacketFileOverride)) 
-                : b.song.jacket;
 
             return b;
         }
@@ -86,8 +81,9 @@ namespace Tools
             s.filePath = songFilePath;
             s.folderPath = folderPath;
             s.diffs = diffs;
-            
-            s.jacket = LoadImage(Path.Combine(folderPath, s.jacketFile));
+
+            foreach (var d in s.diffs)
+                d.song = s;
 
             return s;
         }

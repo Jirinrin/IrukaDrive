@@ -39,10 +39,10 @@ namespace Menu.ScreenControllers.SongSelect.Components
         private async void SetDiffDataAsync(SongDifficulty diff)
         {
             SetHighscores(new int[0]);
-            var beatmap = await Cache.GetBeatmapAsync(diff.filePath);
-            var topScores = Local.Scores[beatmap.id].Reverse().Take(highscoreTexts.Length).Select(s => s.Score).ToArray();
-            diffCreatorText.text = beatmap.creator;
+            var topScores = Local.Scores[diff.id].Reverse().Take(highscoreTexts.Length).Select(s => s.Score).ToArray();
+            diffCreatorText.text = diff.creator;
             SetHighscores(topScores);
+            jacketImage.texture = await diff.Jacket;
         }
 
         private void ChooseDiff(int index)
@@ -74,7 +74,6 @@ namespace Menu.ScreenControllers.SongSelect.Components
             _song = song;
             songTitleText.Text = song.title;
             songArtistText.text = song.artist;
-            jacketImage.texture = song.jacket;
             for (var i = 0; i < diffButtons.Length; i++)
             {
                 var btn = diffButtons[i];

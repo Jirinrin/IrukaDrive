@@ -63,8 +63,11 @@ namespace Menu.ScreenControllers.SongSelect
             _selectedSong = song;
             _cardsLookup[_selectedSong.folderPath].SetSelected(true);
             songDataPanel.SetSong(song);
-            // todo: allow beatmap to specify where preview should start or something
-            SongManager.Instance.PlaySong(await song.Audio, 45f);
+
+            // todo: allow beatmap to specify where preview should start or something?
+            var clip = await song.Audio;
+            if (clip)
+                SongManager.Instance.PlaySong(clip, clip.length * .4f);
         }
 
         private void SelectDiff(SongDifficulty diff)
