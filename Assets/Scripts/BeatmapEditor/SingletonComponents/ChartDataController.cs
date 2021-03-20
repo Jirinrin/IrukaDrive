@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Shared.Domain;
@@ -30,7 +30,8 @@ namespace BeatmapEditor.SingletonComponents
             creatorField.onValidateInput += ValidateInput(50);
             difficultyNameOverrideField.onValueChanged.AddListener(v => B.difficultyNameOverride = v.OrNull());
             difficultyNameOverrideField.onValidateInput += ValidateInput(10);
-            finishTimestampField.onValueChanged.AddListener(IfNotEmpty(v => B.finishTimestamp = float.Parse(v)));
+
+            finishTimestampField.onValueChanged.AddListener(v => B.finishTimestamp = v.IsNullOrEmpty() ? (float?) null : float.Parse(v));
             finishTimestampField.onValidateInput += ValidateInput(6, FloatRegex);
 
             jacketFileOverrideButton.onClick.AddListener(() => AddFile(p =>
