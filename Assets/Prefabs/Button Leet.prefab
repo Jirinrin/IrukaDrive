@@ -75,7 +75,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280549120
+    rgba: 4278250751
   m_fontColor: {r: 0, g: 1, b: 0.13757372, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -147,6 +147,8 @@ GameObject:
   - component: {fileID: 2743387031813830586}
   - component: {fileID: 2743387031813830585}
   - component: {fileID: 2743387031813830584}
+  - component: {fileID: 5219259606124265939}
+  - component: {fileID: 6530454841258004785}
   m_Layer: 5
   m_Name: Button Leet
   m_TagString: Untagged
@@ -233,11 +235,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0, g: 1, b: 0.15586257, a: 0}
-    m_HighlightedColor: {r: 0, g: 1, b: 0.21875882, a: 0.13333334}
-    m_PressedColor: {r: 0, g: 1, b: 0.16215563, a: 0.27058825}
-    m_SelectedColor: {r: 0, g: 1, b: 0.32225704, a: 0}
-    m_DisabledColor: {r: 0, g: 1, b: 0.30938816, a: 0}
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0.30588236}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0.56078434}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 0.84313726}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -268,3 +270,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5219259606124265939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2743387031813830590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4d3b02f6b9cbf845a72110d00201579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textColor: {r: 0, g: 1, b: 0, a: 1}
+  textHoverColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!95 &6530454841258004785
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2743387031813830590}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2a39437d082a44645952d7b871388e82, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
