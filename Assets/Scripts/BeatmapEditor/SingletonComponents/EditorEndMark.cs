@@ -1,5 +1,4 @@
 using Shapes;
-using Shared.Domain;
 using Tools;
 using Tools.Commons;
 using UnityEngine;

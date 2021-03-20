@@ -23,7 +23,7 @@ namespace Shared.Domain
 
         public TWord word;
         
-        protected float _beatSpacing;
+        protected float beatSpacing;
 
         public bool IsChord => word.IsChord;
 
@@ -40,19 +40,19 @@ namespace Shared.Domain
             }
             else
                 foreach (var charObj in charObjRefs)
-                    charObj.transform.localPosition = new Vector3(_beatSpacing * charObj.note.beat, 0, 0);
+                    charObj.transform.localPosition = new Vector3(beatSpacing * charObj.note.beat, 0, 0);
         }
 
         public void Init(List<CharObject> charObjRefs, float beatSpacing)
         {
             this.charObjRefs = charObjRefs;
-            _beatSpacing = beatSpacing;
+            this.beatSpacing = beatSpacing;
             RefreshWord();
         }
 
         public void UpdateSpacing(float newSpacing)
         {
-            _beatSpacing = newSpacing;
+            beatSpacing = newSpacing;
             RefreshWord();
         }
 
