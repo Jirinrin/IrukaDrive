@@ -36,12 +36,6 @@ namespace BeatmapEditor.Domain
             UpdateCursorPos();
         }
 
-        private void Update()
-        {
-            if (_initted)
-                _cursorLine.DashOffset = Time.time;
-        }
-
         private void UpdateCursorPos()
         {
             if (!_initted) return;

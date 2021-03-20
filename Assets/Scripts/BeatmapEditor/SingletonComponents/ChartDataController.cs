@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Shared.Domain;
@@ -26,12 +26,18 @@ namespace BeatmapEditor.SingletonComponents
 
             difficultyDropdown.options = new List<TMP_Dropdown.OptionData>(Enum.GetValues(typeof(Difficulty)).Cast<Difficulty>().Select(d => new TMP_Dropdown.OptionData(d.ToString())));
             difficultyDropdown.onValueChanged.AddListener(v => B.difficulty = (Difficulty) v);
+
             creatorField.onValueChanged.AddListener(v => B.creator = v);
             creatorField.onValidateInput += ValidateInput(50);
+
             difficultyNameOverrideField.onValueChanged.AddListener(v => B.difficultyNameOverride = v.OrNull());
             difficultyNameOverrideField.onValidateInput += ValidateInput(10);
 
-            finishTimestampField.onValueChanged.AddListener(v => B.finishTimestamp = v.IsNullOrEmpty() ? (float?) null : float.Parse(v));
+            finishTimestampField.onValueChanged.AddListener(v =>
+            {
+                B.finishTimestamp = v.IsNullOrEmpty() ? (float?) null : float.Parse(v);
+                EditorEndMark.Instance.UpdatePos();
+            });
             finishTimestampField.onValidateInput += ValidateInput(6, FloatRegex);
 
             jacketFileOverrideButton.onClick.AddListener(() => AddFile(p =>

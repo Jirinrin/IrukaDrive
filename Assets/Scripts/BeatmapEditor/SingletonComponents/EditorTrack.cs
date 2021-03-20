@@ -38,6 +38,7 @@ namespace BeatmapEditor.SingletonComponents
         {
             base.Init();
             EditorTrackClipboard.Instance.Init();
+            EditorEndMark.Instance.Init();
             _initted = true;
         }
 
@@ -62,6 +63,7 @@ namespace BeatmapEditor.SingletonComponents
             _timestamps.RefreshWindow(true);
 
             _waveform.LoadSong(beatmap.song);
+            EditorEndMark.Instance.UpdatePos();
 
             Pan(0f);
             Zoom(0f, 0f);
