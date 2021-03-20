@@ -55,7 +55,7 @@ namespace Gameplay
 
         private async void LoadCurrentBeatmap()
         {
-            await SongManager.Instance.LoadSong(CurrentBeatmap.song, BeatmapStartTime);
+            await SongManager.Instance.LoadSong(CurrentBeatmap.song, BeatmapStartTime, false, CurrentBeatmap.finishTimestamp);
         
             Track.Instance.InitTrack(CurrentBeatmap, RuntimeWords);
         
