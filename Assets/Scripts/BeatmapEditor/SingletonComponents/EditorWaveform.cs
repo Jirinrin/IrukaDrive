@@ -60,6 +60,9 @@ namespace BeatmapEditor.SingletonComponents
             var xPerSample = _beatsPerSample * EditorTrack.viewState.beatSpacing * EveryHowManySamples;
             var samplesPerX = 1f / xPerSample;
             var sampleOffset = Mathf.FloorToInt(Mathf.Max(samplesPerX * (EditorTrack.viewState.panX - xOffset), 0));
+            if (sampleOffset >= _samples.Count)
+                return;
+
             var numberOfSamples = Mathf.FloorToInt(Mathf.Min(samplesPerX * EditorTrack.Instance.containerRect.width, Mathf.Max(_samples.Count - sampleOffset, 0f)));
 
             using var p = new PolylinePath();
