@@ -32,6 +32,8 @@ namespace BeatmapEditor.SingletonComponents
             _quad.B = new Vector3(50, quadY, 0);
             _quad.C = new Vector3(50, -quadY, 0);
             _quad.D = new Vector3(0, -quadY, 0);
+
+            _initted = true;
         }
 
         public async void UpdatePos()
