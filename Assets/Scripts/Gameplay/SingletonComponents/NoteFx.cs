@@ -42,7 +42,7 @@ namespace Gameplay.SingletonComponents
 
             obj.text.text = c.ToString();
             obj.StartAnim(result);
-            obj.OnFinish = () => _characterAnimObjPool.Add(obj);
+            obj.onFinish = () => _characterAnimObjPool.Add(obj);
         }
 
         private void Awake()

@@ -9,6 +9,7 @@ using UnityEngine;
 namespace BeatmapEditor.Domain
 {
     // todo: on init of a word that was selected it should look selected
+    // todo: use actual clipboard?
     public class EditorTrackClipboard : Singleton<EditorTrackClipboard>
     {
         [SerializeField] private Line cursorLinePrefab = null;

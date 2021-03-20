@@ -15,7 +15,7 @@ namespace Gameplay.Components
         public void AnimationFinished()
         {
             gameObject.SetActive(false);
-            OnFinish?.Invoke();
+            onFinish?.Invoke();
         }
 
         public void Awake()
@@ -31,6 +31,6 @@ namespace Gameplay.Components
             _anim.SetInteger(PlayAnimKey, (int) result);
         }
 
-        public Action OnFinish;
+        public Action onFinish;
     }
 }
