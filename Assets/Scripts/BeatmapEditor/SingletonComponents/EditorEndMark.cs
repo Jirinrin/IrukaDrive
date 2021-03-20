@@ -1,3 +1,4 @@
+using BeatmapEditor.Domain;
 using Shapes;
 using Tools;
 using Tools.Commons;
@@ -41,6 +42,15 @@ namespace BeatmapEditor.SingletonComponents
                 return;
 
             transform.localPosition = new Vector3(EditorTrack.viewState.beatSpacing * b.song.SecToBeats(length.Value), 0, 0);
+        }
+
+        private void OnEnable()
+        {
+            EditorTrackViewState.OnZoom += UpdatePos;
+        }
+        private void OnDisable()
+        {
+            EditorTrackViewState.OnZoom -= UpdatePos;
         }
     }
 }
