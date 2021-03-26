@@ -12,7 +12,6 @@ namespace BeatmapEditor.Domain
         
         public new float panX = MinimumPan;
         public new float beatSpacing = DefaultBeatSpacing;
-        
 
         public EditorTrackViewState() => Init();
 

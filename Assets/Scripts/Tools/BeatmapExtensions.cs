@@ -29,9 +29,6 @@ namespace Tools
         public static IEnumerable<RuntimeChar> GetNotes(this IEnumerable<RuntimeWord> words) =>
             words.SelectMany(word => word.CharNotes);
 
-        public static IEnumerable<NoteResult> GetResults(this RuntimeWord word) =>
-            word.CharNotes.Select(cn => cn.result ?? NoteResult.Miss);
-        
         public static float SecToBeats(this Song s, float seconds) => (seconds - s.beatOffset) * s.BeatsPerSec;
         public static float BeatsToSecs(this Song s, float beats) => beats / s.BeatsPerSec + s.beatOffset;
     }

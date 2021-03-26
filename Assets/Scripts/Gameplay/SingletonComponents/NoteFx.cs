@@ -1,7 +1,10 @@
-﻿using Gameplay.Components;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Gameplay.Components;
 using Gameplay.Domain;
 using Shared;
 using TMPro;
+using Tools;
 using Tools.Commons;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,13 +39,24 @@ namespace Gameplay.SingletonComponents
             _tapCircleScale = MaxCircleScale;
         }
 
-        private void OnHit(char c, NoteResult result, float? timing)
+        private void OnHit(RuntimeChar c) => OnHit(c, 0);
+        private void OnHit(RuntimeChar c, float yOffset)
         {
             var obj = _characterAnimObjPool.Request();
 
-            obj.text.text = c.ToString();
-            obj.StartAnim(result);
+            obj.text.text = c.result == NoteResult.WrongChar ? c.wrongChar.ToString() : c.character.ToString();
+            obj.StartAnim(c.result);
             obj.onFinish = () => _characterAnimObjPool.Add(obj);
+            obj.transform.localPosition = new Vector3(0, yOffset, 0);
+        }
+
+        private void OnHitChord(IEnumerable<RuntimeChar> chars)
+        {
+            var charsArr = chars.ToArray();
+            var char0Offset = (charsArr.Length-1) / 2f;
+            foreach (var (c, i) in charsArr.WithIndex())
+                if (c.result != NoteResult.Miss)
+                    OnHit(c, (char0Offset - i) * C.ChordDefaultHeightDiff);
         }
 
         private void Awake()
@@ -71,12 +85,14 @@ namespace Gameplay.SingletonComponents
         {
             GameplayManager.OnNote += Pulse;
             GameplayManager.OnHit += OnHit;
+            GameplayManager.OnHitChord += OnHitChord;
             InputManager.OnChar += OnTap;
         }
         private void OnDisable()
         {
             GameplayManager.OnNote -= Pulse;
             GameplayManager.OnHit -= OnHit;
+            GameplayManager.OnHitChord -= OnHitChord;
             InputManager.OnChar -= OnTap;
         }
     }

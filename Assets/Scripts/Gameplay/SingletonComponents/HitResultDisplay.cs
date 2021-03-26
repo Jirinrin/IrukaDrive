@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Gameplay.Domain;
 using TMPro;
 using UnityEngine;
@@ -40,7 +41,7 @@ namespace Gameplay.SingletonComponents
             _anim.SetInteger(HitResultKey, -1);
         }
 
-        private ChordResult ChordResultsToDisplayIndex(IEnumerable<NoteResult> results)
+        private static ChordResult ChordResultsToDisplayIndex(IEnumerable<NoteResult> results)
         {
             var wrongFound = false;
             var goodFound = false;
@@ -56,8 +57,8 @@ namespace Gameplay.SingletonComponents
             return goodFound ? ChordResult.AllGood : ChordResult.AllPerfect;
         }
         
-        private void OnHit(char c, NoteResult result, float? _) => OnHitResult((int) result);
-        private void OnHitChord(IEnumerable<NoteResult> results) => OnHitResult((int) ChordResultsToDisplayIndex(results));
+        private void OnHit(RuntimeChar c) => OnHitResult((int) c.result);
+        private void OnHitChord(IEnumerable<RuntimeChar> chars) => OnHitResult((int) ChordResultsToDisplayIndex(chars.Select(c => c.result)));
         private void OnMiss() => OnHitResult((int) NoteResult.Miss);
         
         private void OnEnable()

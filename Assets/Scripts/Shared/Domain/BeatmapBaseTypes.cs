@@ -17,8 +17,6 @@ namespace Shared.Domain
         where TWord : ParsedWord<TChar>
         where TChar : ParsedChar // todo: a way to infer this?
     {
-        private const float ChordDefaultHeightDiff = 30;
-        
         [CanBeNull] public List<CharObject> charObjRefs;
 
         public TWord word;
@@ -36,7 +34,7 @@ namespace Shared.Domain
             {
                 var char0Offset = (charObjRefs.Count-1) / 2f;
                 foreach (var (charObj, i) in charObjRefs.WithIndex())
-                    charObj.transform.localPosition = new Vector3(0, (char0Offset - i) * ChordDefaultHeightDiff, 0);
+                    charObj.transform.localPosition = new Vector3(0, (char0Offset - i) * C.ChordDefaultHeightDiff, 0);
             }
             else
                 foreach (var charObj in charObjRefs)

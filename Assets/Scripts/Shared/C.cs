@@ -32,5 +32,9 @@ namespace Shared
         public static readonly Color CharColorHighlight = Color.green;
 
         public static readonly string DriveChartsDirPath = $"{Application.streamingAssetsPath}/DriveCharts";
+
+        public const float ChordDefaultHeightDiff = 30;
+
+        public const char CustomSpaceChar = '⎵';
     }
 }

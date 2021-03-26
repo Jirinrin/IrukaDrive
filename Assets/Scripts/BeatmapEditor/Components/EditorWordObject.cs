@@ -69,7 +69,7 @@ namespace BeatmapEditor.Components
             _activeInputField.onValueChanged.AddListener(s =>
             {
                 if (Keyboard.current.shiftKey.isPressed && s.EndsWith(" "))
-                    _activeInputField.SetTextWithoutNotify(s.Substring(0, s.Length - 1) + "⎵");
+                    _activeInputField.SetTextWithoutNotify(s.Substring(0, s.Length - 1) + C.CustomSpaceChar);
             });
             
             _inputting = true;

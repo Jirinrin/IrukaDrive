@@ -37,7 +37,7 @@ namespace Gameplay.SingletonComponents
             if (_beatmapResult != null)
                 resultsTextBox.text = string.Join(Environment.NewLine,
                     "Results:",
-                    string.Join(", ", _beatmapResult.Where(n => n.result != null).Select(note => 
+                    string.Join(", ", _beatmapResult.Where(n => n.result != NoteResult.Null).Select(note =>
                         $"[{note.result} - {note.resultTiming}]"
                     )),
                     "Max Combo:",

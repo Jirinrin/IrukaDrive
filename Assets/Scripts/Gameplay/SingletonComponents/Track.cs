@@ -71,7 +71,7 @@ namespace Gameplay.SingletonComponents
 
         private void ChangeCurrentChord(RuntimeWordObject obj) => obj.SetColor(C.CharColorHighlight);
         private void UnmarkCurrentChord() => _currentWordObj.SetColor(C.CharColorDefaultGameplay);
-        private void UnmarkCurrentChord(IEnumerable<NoteResult> _) => UnmarkCurrentChord(); 
+        private void UnmarkCurrentChord(IEnumerable<RuntimeChar> _) => UnmarkCurrentChord();
 
         private void ChangeCurrentChar(int? charIndex)
         {

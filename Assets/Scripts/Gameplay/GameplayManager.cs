@@ -119,19 +119,24 @@ namespace Gameplay
             {
                 if (_currentWord.IsChord)
                 {
-                    var wasHit = _currentWord.WasHit;
-                    _currentWord.FinishChord(SetNoteResult);
-                    if (wasHit)
-                        OnHitChord?.Invoke(_currentWord.GetResults());
-                    else
-                        OnMissChord?.Invoke();
+                    if (!_currentWord.Finished)
+                    {
+                        _currentWord.FinishChord();
+                        OnChordFinished(_currentWord);
+                    }
                     _currentNoteMissThreshold = null;
                 }
                 else
                 {
-                    SetNoteResult(_currentWord.currentInputChar, NoteResult.Miss);
-                    OnMiss?.Invoke();
-                    AdvanceCharInWord();
+                    if (_currentWord.currentInputChar == null)
+                        Debug.LogWarning("Current input char should not be null");
+                    else
+                    {
+                        _currentWord.currentInputChar.result = NoteResult.Miss;
+                        displayScore.AddNoteResult(_currentWord.currentInputChar.result);
+                        OnMiss?.Invoke();
+                        AdvanceCharInWord();
+                    }
                 }
             }
             
@@ -169,61 +174,51 @@ namespace Gameplay
 
         private void OnChar(char character)
         {
-            if (character == ' ') character = '⎵';
+            if (character == ' ') character = C.CustomSpaceChar;
             
             if (_currentWord.Finished)
                 return;
 
             var beatTiming = SongManager.Instance.songPosBeats - _currentWord.CurrentBeat;
             var timingMs = beatTiming / CurrentBeatmap.BeatsPerSec * 1000;
-            var timingMsAbs = Math.Abs(timingMs);
-            
-            var timingResult = timingMsAbs < C.TimingWindowPerfect 
-                ? NoteResult.HitPerfect 
-                : timingMs < 0 ? NoteResult.HitEarly : NoteResult.HitLate;
 
-            if (timingMsAbs > C.TimingWindowGood)
+            if (Math.Abs(timingMs) > C.TimingWindowGood)
                 return;
             
             if (_currentWord.IsChord)
             {
-                var (hit, c, finished) = _currentWord.HitOnChord(character);
-                if (hit)
-                    SetNoteResult(c, timingResult);
-                else
-                    SetNoteResult(c, NoteResult.WrongChar);
-                
+                var finished = _currentWord.HitOnChord(character, timingMs);
                 if (finished)
-                {
-                    OnHitChord?.Invoke(_currentWord.GetResults());
-                    if (_lastWordReached)
-                        beatmapFinished = true;
-                    _currentNoteMissThreshold = null;
-                }
+                    OnChordFinished(_currentWord);
             }
             else
             {
-                var (hit, c) = _currentWord.HitOnWord(character);
-                
-                if (hit)
-                {
-                    c.resultTiming = timingMs;
-                    SetNoteResult(c, timingResult);
-                    OnHit?.Invoke(c.character, timingResult, beatTiming);
-                }
-                else
-                {
-                    SetNoteResult(c, NoteResult.WrongChar);
-                    OnHit?.Invoke(character, NoteResult.WrongChar, null);
-                }
+                var c = _currentWord.HitOnWord(character, timingMs);
+                displayScore.AddNoteResult(c.result);
+                OnHit?.Invoke(c);
                 AdvanceCharInWord();
             }
         }
 
-        private void SetNoteResult(RuntimeChar note, NoteResult result)
+        private void OnChordFinished(RuntimeWord word)
         {
-            note.result = result;
-            displayScore.AddNoteResult(result);
+            if (!word.IsChord)
+            {
+                Debug.LogWarning($"This word isn't even a chord! {word.text}");
+                return;
+            }
+
+            var wasHit = _currentWord.WasHit;
+            if (wasHit)
+                OnHitChord?.Invoke(_currentWord.CharNotes);
+            else
+                OnMissChord?.Invoke();
+            foreach (var ch in _currentWord.CharNotes)
+                displayScore.AddNoteResult(ch.result);
+
+            _currentNoteMissThreshold = null;
+            if (_lastWordReached)
+                beatmapFinished = true;
         }
 
         private void AdvanceCharInWord()
@@ -280,8 +275,8 @@ namespace Gameplay
         }
 
         public static event Action OnNote;
-        public static event Action<char, NoteResult, float?> OnHit; // Pass in char, note result, timing
-        public static event Action<IEnumerable<NoteResult>> OnHitChord;
+        public static event Action<RuntimeChar> OnHit;
+        public static event Action<IEnumerable<RuntimeChar>> OnHitChord;
         public static event Action OnMiss;
         public static event Action OnMissChord;
         public static event Action<float> OnChangeCurrentWord; // Pass in beat

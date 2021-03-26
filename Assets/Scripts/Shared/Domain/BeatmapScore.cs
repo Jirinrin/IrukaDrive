@@ -31,9 +31,7 @@ namespace Shared.Domain
             
             foreach (var note in notes)
             {
-                if (note.result == null)
-                    Debug.LogError("Found null note in results");
-                AddNoteResult(note.result ?? NoteResult.Miss);
+                AddNoteResult(note.result);
 
                 if (note.result == NoteResult.WrongChar || note.result == NoteResult.Miss)
                     comboCounter = 0;
@@ -61,6 +59,9 @@ namespace Shared.Domain
                 case NoteResult.Miss:
                 case NoteResult.WrongChar:
                     misses++;
+                    break;
+                case NoteResult.Null:
+                    Debug.LogWarning("Got null note result");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(noteResult), noteResult, null);
