@@ -123,12 +123,6 @@ namespace Gameplay.Domain
 
         public void FinishChord()
         {
-            if (Finished)
-            {
-                Debug.LogWarning($"Tried to finish already finished chord: {text}");
-                return;
-            }
-
             _inputNoteIndex = CharNotes.Count;
             var chordWrongIndex = -1;
 

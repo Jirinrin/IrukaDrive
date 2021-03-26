@@ -120,10 +120,7 @@ namespace Gameplay
                 if (_currentWord.IsChord)
                 {
                     if (!_currentWord.Finished)
-                    {
-                        _currentWord.FinishChord();
                         OnChordFinished(_currentWord);
-                    }
                     _currentNoteMissThreshold = null;
                 }
                 else
@@ -207,6 +204,8 @@ namespace Gameplay
                 Debug.LogWarning($"This word isn't even a chord! {word.text}");
                 return;
             }
+
+            word.FinishChord();
 
             var wasHit = _currentWord.WasHit;
             if (wasHit)
