@@ -10,6 +10,7 @@ using UnityEngine;
 namespace Shared
 {
     // todo: Change out for proper LRU caches with a memory cap (Unity probably has something ready)
+    // todo: lock when already loading something
     public static class Cache
     {
         private static readonly Dictionary<string, Beatmap> BeatmapsLookup = new Dictionary<string, Beatmap>();

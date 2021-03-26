@@ -43,10 +43,10 @@ namespace BeatmapEditor.SingletonComponents
             if (length == null)
                 return;
 
-            Debug.Log("yo1 " + EditorTrack.viewState);
-            Debug.Log("yo1 " + EditorTrack.viewState.beatSpacing);
-            Debug.Log("yo1 " + length);
-            Debug.Log("yo2 " + b.song.SecToBeats(1));
+            // Debug.Log("yo1 " + EditorTrack.viewState);
+            // Debug.Log("yo1 " + EditorTrack.viewState.beatSpacing);
+            // Debug.Log("yo1 " + length);
+            // Debug.Log("yo2 " + b.song.SecToBeats(1));
             transform.localPosition = new Vector3(EditorTrack.viewState.beatSpacing * b.song.SecToBeats(length.Value), 0, 0);
         }
 
