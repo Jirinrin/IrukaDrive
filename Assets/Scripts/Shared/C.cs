@@ -34,6 +34,7 @@ namespace Shared
         public static readonly string DriveChartsDirPath = $"{Application.streamingAssetsPath}/DriveCharts";
 
         public const float ChordDefaultHeightDiff = 30;
+        public const int MaxChordSize = 5;
 
         public const char CustomSpaceChar = '⎵';
     }

@@ -47,9 +47,10 @@ namespace Tools
         private static void SaveBeatmapToFile(Beatmap beatmap, string path)
         {
             beatmap.SortWords();
-            Serialization.WriteToJsonFile(path, beatmap);
-
-            // todo: do some checking on overlapping words? Or do that in the editor?
+            var valRes = BeatmapValidation.ValidateBeatmap(beatmap);
+            OnBeatmapValidation?.Invoke(valRes);
+            if (valRes.IsValid)
+                Serialization.WriteToJsonFile(path, beatmap);
         }
         
         /// <summary>
@@ -87,5 +88,7 @@ namespace Tools
 
             return s;
         }
+
+        public static event Action<BeatmapValidation.ValidationResult> OnBeatmapValidation;
     }
 }

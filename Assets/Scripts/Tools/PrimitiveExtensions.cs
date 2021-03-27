@@ -27,5 +27,7 @@ namespace Tools
         public static string Capitalize(this string s) => s.Length <= 1 
             ? s.ToUpper() 
             : char.ToUpper(s[0]) + s.Substring(1);
+
+        public static bool IsEmpty<T>(this List<T> l) => l.Count == 0;
     }
 }
