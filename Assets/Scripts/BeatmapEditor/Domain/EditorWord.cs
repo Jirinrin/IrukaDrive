@@ -1,7 +1,7 @@
 ﻿using System.Linq;
+using Shared;
 using Shared.Domain;
 using Tools;
-using UnityEngine;
 
 namespace BeatmapEditor.Domain
 {
@@ -15,7 +15,8 @@ namespace BeatmapEditor.Domain
             get => _word.isChord ? $"[[{_word.text}" : _word.text;
             set
             {
-                var chordMatch = value.Match(@"^\[\[(.+)$");
+                // Readable regex: /^\[\[(.{0,5})/
+                var chordMatch = value.Match($@"^\[\[(.{{1,{C.MaxChordSize}}})");
                 // todo: also do such a thing for random word of length? e.g. {3} like syntax
                 _word.isChord = chordMatch.Success;
                 _word.text = _word.isChord ? chordMatch.Groups[1].Value : value;
