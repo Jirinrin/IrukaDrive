@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Shared.Domain;
@@ -20,34 +22,60 @@ namespace Shared
                 BeatmapsLookup[path] = await SerializationHelpersAsync.LoadBeatmap(path, await GetSongAsync(Path.GetDirectoryName(path)));
             return BeatmapsLookup[path];
         }
+
+        [ItemCanBeNull]
+        private static async Task<T> GetAsyncLocked<T>(SemaphoreSlim lck, Func<Task<T>> getter)
+        {
+            await lck.WaitAsync();
+            try
+            {
+                return await getter();
+            }
+            finally
+            {
+                lck.Release();
+            }
+        }
         
+        private static readonly SemaphoreSlim SongLock = new SemaphoreSlim(1, 1);
         private static readonly Dictionary<string, Song> SongsLookup = new Dictionary<string, Song>();
         [ItemCanBeNull]
-        public static async Task<Song> GetSongAsync(string folderPath)
+        public static Task<Song> GetSongAsync(string folderPath)
         {
-            if (!SongsLookup.ContainsKey(folderPath))
-                SongsLookup[folderPath] = await SerializationHelpersAsync.LoadSong(folderPath);
-            return SongsLookup[folderPath];
+            return GetAsyncLocked(SongLock, async () =>
+            {
+                if (!SongsLookup.ContainsKey(folderPath))
+                    SongsLookup[folderPath] = await SerializationHelpersAsync.LoadSong(folderPath);
+                return SongsLookup[folderPath];
+            });
         }
 
+        private static readonly SemaphoreSlim AudioLock = new SemaphoreSlim(1, 1);
         private static readonly Dictionary<string, AudioClip> AudioLookup = new Dictionary<string, AudioClip>();
         [ItemCanBeNull]
-        public static async Task<AudioClip> GetAudioAsync(string path)
+        public static Task<AudioClip> GetAudioAsync(string path)
         {
             if (path == null) return null;
-            if (!AudioLookup.ContainsKey(path))
-                AudioLookup[path] = await SerializationHelpersAsync.LoadAudio(path);
-            return AudioLookup[path];
+            return GetAsyncLocked(AudioLock, async () =>
+            {
+                if (!AudioLookup.ContainsKey(path))
+                    AudioLookup[path] = await SerializationHelpersAsync.LoadAudio(path);
+                return AudioLookup[path];
+            });
         }
 
+        private static readonly SemaphoreSlim ImageLock = new SemaphoreSlim(1, 1);
         private static readonly Dictionary<string, Texture2D> ImageLookup = new Dictionary<string, Texture2D>();
         [ItemCanBeNull]
-        public static async Task<Texture2D> GetImageAsync(string path)
+        public static Task<Texture2D> GetImageAsync(string path)
         {
             if (path == null) return null;
-            if (!ImageLookup.ContainsKey(path))
-                ImageLookup[path] = await SerializationHelpersAsync.LoadImage(path);
-            return ImageLookup[path];
+            return GetAsyncLocked(ImageLock, async () =>
+            {
+                if (!ImageLookup.ContainsKey(path))
+                    ImageLookup[path] = await SerializationHelpersAsync.LoadImage(path);
+                return ImageLookup[path];
+            });
         }
 
         public static readonly List<Song> Songs = new List<Song>();
