@@ -16,20 +16,25 @@ namespace BeatmapEditor.SingletonComponents
     {
         [NonSerialized] public bool opened;
         [NonSerialized] protected Rect rect;
-        private int _direction;
+        private Vector3 _shownPos;
+        private Vector3 _hiddenPos;
 
-        protected void Start(int direction)
+        protected void Init(int direction, bool directionIsX = true)
         {
-            _direction = direction;
+            _shownPos = transform.localPosition;
             rect = GetComponent<RectTransform>().rect;
-            transform.localPosition = new Vector3(rect.width*_direction, 0, 0);
+            _hiddenPos = _shownPos + (directionIsX
+                ? new Vector3(rect.width * direction, 0, 0)
+                : new Vector3(0,rect.height * direction, 0));
+            transform.localPosition = _hiddenPos;
         }
 
         public void ToggleOpened() => ToggleOpened(true);
         public virtual void ToggleOpened(bool triggerInputManager)
         {
             opened = !opened;
-            transform.DOLocalMoveX(opened ? 0 : rect.width*_direction, 1);
+            transform.DOLocalMove(opened ? _shownPos : _hiddenPos, 1);
+
             if (opened)
                 EditorInputManager.Instance.enabled = false;
             else if (triggerInputManager)

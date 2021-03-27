@@ -24,7 +24,7 @@ namespace BeatmapEditor.SingletonComponents
 
         private void Start()
         {
-            Start(-1);
+            Init(-1);
 
             titleField.onValueChanged.AddListener(v => S.title = v);
             titleField.onValidateInput += ValidateInput(100);
@@ -51,6 +51,8 @@ namespace BeatmapEditor.SingletonComponents
             {
                 if (ChartDataController.Instance.opened)
                     ChartDataController.Instance.ToggleOpened(false);
+                if (HelpScreenController.Instance.opened)
+                    HelpScreenController.Instance.ToggleOpened(false);
 
                 titleField.text = S.title;
                 artistField.text = S.artist;

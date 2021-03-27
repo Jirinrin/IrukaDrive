@@ -22,7 +22,7 @@ namespace BeatmapEditor.SingletonComponents
 
         private void Start()
         {
-            Start(1);
+            Init(1);
 
             difficultyDropdown.options = new List<TMP_Dropdown.OptionData>(Enum.GetValues(typeof(Difficulty)).Cast<Difficulty>().Select(d => new TMP_Dropdown.OptionData(d.ToString())));
             difficultyDropdown.onValueChanged.AddListener(v => B.difficulty = (Difficulty) v);
@@ -59,6 +59,8 @@ namespace BeatmapEditor.SingletonComponents
             {
                 if (SongDataController.Instance.opened)
                     SongDataController.Instance.ToggleOpened(false);
+                if (HelpScreenController.Instance.opened)
+                    HelpScreenController.Instance.ToggleOpened(false);
 
                 difficultyDropdown.value = (int) B.difficulty;
                 creatorField.text = B.creator;
