@@ -19,6 +19,8 @@ namespace Tools
             => self.Select((item, index) => (item, index));
         
         public static Color SetAlpha(this Color c, float alpha) => new Color(c.r, c.g, c.b, alpha);
+        public static Color SetRGB(this Color c, float r, float g, float b) => new Color(r, g, b, c.a);
+        public static void Deconstruct(this Color c, out float r, out float g, out float b) { r = c.r; g = c.g; b = c.b; }
 
         public static Match Match(this string s, string pattern) => Regex.Match(s, pattern);
         public static bool IsNullOrEmpty(this string s) => string.IsNullOrEmpty(s);

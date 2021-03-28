@@ -148,7 +148,6 @@ GameObject:
   - component: {fileID: 2743387031813830585}
   - component: {fileID: 2743387031813830584}
   - component: {fileID: 5219259606124265939}
-  - component: {fileID: 6530454841258004785}
   m_Layer: 5
   m_Name: Button Leet
   m_TagString: Untagged
@@ -283,23 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textColor: {r: 0, g: 1, b: 0, a: 1}
-  textHoverColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!95 &6530454841258004785
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2743387031813830590}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2a39437d082a44645952d7b871388e82, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  rgbCycleTimeSeconds: 1
+  ambientGlow: 0
+  ambientGlowSpeed: 1
+  ambientGlowAmpl: 0.4

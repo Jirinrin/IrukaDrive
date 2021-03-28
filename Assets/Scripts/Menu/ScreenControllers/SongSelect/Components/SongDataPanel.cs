@@ -18,11 +18,9 @@ namespace Menu.ScreenControllers.SongSelect.Components
         [SerializeField] private TitleText songTitleText;
         [SerializeField] private TextMeshProUGUI songArtistText;
         [SerializeField] private RawImage jacketImage;
-        [SerializeField] private Button[] diffButtons;
+        [SerializeField] private LeetButton[] diffButtons;
         [SerializeField] private TextMeshProUGUI[] highscoreTexts;
         [SerializeField] private TextMeshProUGUI diffCreatorText;
-
-        private TextMeshProUGUI[] _diffButtonTexts;
 
         private Song _song;
 
@@ -45,14 +43,18 @@ namespace Menu.ScreenControllers.SongSelect.Components
             jacketImage.texture = await diff.Jacket;
         }
 
+        private void ToggleBtn(LeetButton btn, bool selected)
+        {
+            btn.SetColor(selected ? TextColorSelected : TextColorUnselected);
+            diffButtons[_selectedDiffIndex].ambientGlowSpeed = selected ? 5f : 2.5f;
+        }
+
         private void ChooseDiff(int index)
         {
             if (_selectedDiffIndex != index)
-            {
-                _diffButtonTexts[_selectedDiffIndex].color = TextColorUnselected;
-                _selectedDiffIndex = index;
-            }
-            _diffButtonTexts[index].color = TextColorSelected;
+                ToggleBtn(diffButtons[_selectedDiffIndex], false);
+            _selectedDiffIndex = index;
+            ToggleBtn(diffButtons[index], true);
 
             SetDiffDataAsync(_song.diffs[index]);
             OnChooseDiff?.Invoke(_song.diffs[index]);
@@ -60,12 +62,10 @@ namespace Menu.ScreenControllers.SongSelect.Components
 
         private void OnEnable()
         {
-            _diffButtonTexts = new TextMeshProUGUI[diffButtons.Length];
             foreach (var (btn, i) in diffButtons.WithIndex())
             {
-                btn.onClick.AddListener(() => ChooseDiff(i));
-                _diffButtonTexts[i] = btn.GetComponentInChildren<TextMeshProUGUI>();
-                _diffButtonTexts[i].color = TextColorUnselected;
+                btn.OnClick.AddListener(() => ChooseDiff(i));
+                ToggleBtn(btn, false);
             }
         }
 
@@ -77,16 +77,15 @@ namespace Menu.ScreenControllers.SongSelect.Components
             for (var i = 0; i < diffButtons.Length; i++)
             {
                 var btn = diffButtons[i];
-                var txt = _diffButtonTexts[i];
                 if (i >= song.diffs.Length)
                 {
-                    btn.interactable = false;
-                    txt.text = "";
+                    btn.SetInteractable(false);
+                    btn.SetText("");
                     continue;
                 }
 
-                btn.interactable = true;
-                txt.text = song.diffs[i].DifficultyName.ToUpper();
+                btn.SetInteractable(true);
+                btn.SetText(song.diffs[i].DifficultyName.ToUpper());
             }
             
             ChooseDiff(0);

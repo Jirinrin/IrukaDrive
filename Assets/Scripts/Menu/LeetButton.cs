@@ -9,68 +9,88 @@ using UnityEngine.UI;
 namespace Menu
 {
     [RequireComponent(typeof(Button))]
-    [RequireComponent(typeof(Animator))]
-    public class LeetButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class LeetButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-        private const float HoverDur = .4f;
-        private static readonly AnimationCurve BlinkCurve = new AnimationCurve(
-            new Keyframe(0f, 1f),
-            new Keyframe(.06f, 0f),
-            new Keyframe(.06f, 1f),
-            new Keyframe(.16f, 0f),
-            new Keyframe(.16f, 1f),
-            new Keyframe(.34f, 0f),
-            new Keyframe(.34f, 1f)
-            );
-        private static readonly int HoverKey = Animator.StringToHash("Hover");
-
+        // todo: on change this in editor view, also change it in the underlying text child
         [SerializeField] private Color textColor = Color.green;
+        [SerializeField] [Min(.1f)] private float rgbCycleTimeSeconds = 1.5f;
+        [SerializeField] private bool ambientGlow;
+        public float ambientGlowSpeed = 5f;
+        [SerializeField] [Range(0f,1f)] private float ambientGlowAmpl = .2f;
 
         private Button _button;
         private TextMeshProUGUI _text;
-        private Animator _anim;
 
         private bool _hovering;
-        private float _hoverT;
 
-        private void HoverTransition(float newT)
-        {
-            _hoverT = newT;
-            var tt = _hoverT * HoverDur;
-            var a = Interp.BlinkDownUp(.01f, .05f, tt) * Interp.BlinkDownUp(.13f, .05f, tt) * Interp.BlinkDownUp(.35f, .01f, tt);
-            _text.color = textColor.SetAlpha(a);
-        }
+        public Button.ButtonClickedEvent OnClick => _button.onClick;
+        public void SetInteractable(bool val) => _button.interactable = val;
+        public void SetColor(Color col) => _text.color = textColor = col;
+        public void SetText(string txt) => _text.text = txt;
 
         public void OnPointerEnter(PointerEventData eventData)
         {
             _hovering = true;
             // Cursor.SetCursor()
-            _hoverT = 0f;
-            DOTween.To(() => _hoverT, HoverTransition, 1f, HoverDur)
-                .OnComplete(() => _anim.SetBool(HoverKey, _hovering));
+
+            DoAlphaAnim(.4f, tt => Interp.BlinkDownUp(.01f, .05f, tt) * Interp.BlinkDownUp(.13f, .05f, tt) * Interp.BlinkDownUp(.35f, .01f, tt));
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             _hovering = false;
-            _text.color = textColor;
-            _anim.SetBool(HoverKey, false);
-            // t = 1f;
-            // _text.DOColor(textColor, HoverDur);
-            // DOTween.To(() => t, HoverTransition, 0f, HoverDur);
+            _text.DOColor(textColor, .3f);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            DoAlphaAnim(.3f, tt => Interp.BlinkDownUp(.01f, .05f, tt) * Interp.BlinkDownUp(.09f, .05f, tt));
+        }
+
+        private void DoAlphaAnim(float dur, Func<float, float> fn)
+        {
+            var t = 0f;
+            void BlinkTr(float newT)
+            {
+                t = newT;
+                var tt = t * dur;
+                var a = fn(tt);
+                _text.color = _text.color.SetAlpha(a);
+            }
+
+            DOTween.To(() => t, BlinkTr, 1f, dur);
+        }
+
+        private void Update()
+        {
+            if (ambientGlow && !_hovering && _button.interactable)
+                _text.color = _text.color.SetAlpha((Mathf.Sin(Time.time*ambientGlowSpeed)*.5f-.5f)*ambientGlowAmpl+1f);
+
+            if (_hovering)
+            {
+                var t = Time.time / rgbCycleTimeSeconds % 1;
+                var (r,g,b) = Color.HSVToRGB(t,1,1);
+                _text.color = _text.color.SetRGB(r, g, b);
+            }
         }
 
         private void OnDisable()
         {
             _text.color = textColor;
+            _hovering = false;
         }
         private void OnEnable()
         {
             _text = GetComponentInChildren<TextMeshProUGUI>();
             _text.color = textColor;
             _button = GetComponent<Button>();
-            _anim = GetComponent<Animator>();
-            _anim.SetBool(HoverKey, false);
         }
+
+        // private static readonly AnimationCurve BlinkCurve = new AnimationCurve(
+        //     new Keyframe(0f, 1f),
+        //     new Keyframe(.06f, 0f), new Keyframe(.06f, 1f),
+        //     new Keyframe(.16f, 0f), new Keyframe(.16f, 1f),
+        //     new Keyframe(.34f, 0f), new Keyframe(.34f, 1f)
+        //     );
     }
 }
