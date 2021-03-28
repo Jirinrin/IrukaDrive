@@ -54,6 +54,9 @@ namespace BeatmapEditor.SingletonComponents
                 if (HelpScreenController.Instance.opened)
                     HelpScreenController.Instance.ToggleOpened(false);
 
+                if (S == null)
+                    return;
+
                 titleField.text = S.title;
                 artistField.text = S.artist;
                 bpmField.text = S.bpm.ToString(CultureInfo.InvariantCulture);

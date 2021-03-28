@@ -61,7 +61,7 @@ namespace BeatmapEditor.SingletonComponents
                         new Vector3(BeatSpacing * index.IndexToBeat(), 0, 0);
         }
 
-        public void Cleanup() => _recyclerList.Destroy();
+        public void Cleanup() => _recyclerList?.Destroy();
 
         private static float BeatSpacing => EditorTrack.viewState.beatSpacing;
     }
