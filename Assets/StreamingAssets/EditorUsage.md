@@ -38,6 +38,7 @@
   - A word can have spaces -- these will just count as beats where you don't have to input anything in gameplay
   - Use `Shift+Space` to type the `⎵` character -- this counts as a `Spacebar` character to input in gameplay
 - `Ctrl+Z`/`Ctrl+Y` to undo/redo
+- `Ctrl+S` to save
 
 ## Misc info
 - The fancy visualisation of the audio file in the editor isn't active for MP3 files. Well, OGG files are better anyway `¯\_(ツ)_/¯`
