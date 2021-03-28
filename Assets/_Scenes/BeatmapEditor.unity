@@ -123,42 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &51485746
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 51485747}
-  m_Layer: 5
-  m_Name: Sliding Area
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &51485747
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51485746}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1064109951}
-  m_Father: {fileID: 190901575}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -20}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &69448548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -219,7 +183,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -546,132 +510,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 175039718}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &190901574
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 190901575}
-  - component: {fileID: 190901578}
-  - component: {fileID: 190901577}
-  - component: {fileID: 190901576}
-  m_Layer: 5
-  m_Name: Scrollbar Horizontal
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &190901575
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190901574}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 51485747}
-  m_Father: {fileID: 240973026}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 20}
-  m_Pivot: {x: 0, y: 0}
---- !u!114 &190901576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190901574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a4db7a114972834c8e4117be1d82ba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1064109952}
-  m_HandleRect: {fileID: 1064109951}
-  m_Direction: 0
-  m_Value: 0
-  m_Size: 1
-  m_NumberOfSteps: 0
-  m_OnValueChanged:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &190901577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190901574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &190901578
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190901574}
-  m_CullTransparentMesh: 1
 --- !u!1 &198771013
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,7 +769,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -1062,7 +900,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2123999423}
-  - {fileID: 190901575}
   - {fileID: 863310606}
   m_Father: {fileID: 1238577333}
   m_RootOrder: 3
@@ -1084,7 +921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Content: {fileID: 613577209}
+  m_Content: {fileID: 781656410}
   m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
@@ -1093,9 +930,9 @@ MonoBehaviour:
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 1
   m_Viewport: {fileID: 2123999423}
-  m_HorizontalScrollbar: {fileID: 190901576}
+  m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 863310607}
-  m_HorizontalScrollbarVisibility: 2
+  m_HorizontalScrollbarVisibility: 1
   m_VerticalScrollbarVisibility: 2
   m_HorizontalScrollbarSpacing: -3
   m_VerticalScrollbarSpacing: -3
@@ -1115,7 +952,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.68235296}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1293,6 +1130,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1640535282}
     m_Modifications:
+    - target: {fileID: 6984015467819398916, guid: 3cacf46f6a6f9294a86b17127301a294,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 56b16e7b90b1f264a9120a6f1d93c229,
+        type: 2}
+    - target: {fileID: 6984015467819398916, guid: 3cacf46f6a6f9294a86b17127301a294,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2087597299237238584, guid: 56b16e7b90b1f264a9120a6f1d93c229,
+        type: 2}
     - target: {fileID: 6984015469222188948, guid: 3cacf46f6a6f9294a86b17127301a294,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1901,12 +1750,12 @@ RectTransform:
   m_Children:
   - {fileID: 1455245080}
   m_Father: {fileID: 1103937725}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &431848742
 MonoBehaviour:
@@ -1929,11 +1778,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_NormalColor: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
+    m_HighlightedColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
+    m_PressedColor: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
+    m_SelectedColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
+    m_DisabledColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1952,7 +1801,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 875443348}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.7619
+  m_Size: 0.50424093
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1970,14 +1819,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: b9c5fedc997f125448c4d8be2fc43bcd, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2648,7 +2497,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1257651335}
+  - {fileID: 1770763758}
   m_Father: {fileID: 1103937725}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2797,42 +2646,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3c55f689914d2ba707f682aa76f6a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &613577208
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 613577209}
-  m_Layer: 5
-  m_Name: Content
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &613577209
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613577208}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 781656410}
-  m_Father: {fileID: 2123999423}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 300}
-  m_Pivot: {x: 0, y: 1}
 --- !u!1 &672170373
 GameObject:
   m_ObjectHideFlags: 0
@@ -2867,7 +2680,7 @@ RectTransform:
   - {fileID: 818961391}
   - {fileID: 1238577333}
   m_Father: {fileID: 2073380153}
-  m_RootOrder: 1
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2932,8 +2745,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingLayerID: 1286408073
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!1001 &697555760
 PrefabInstance:
@@ -2990,7 +2803,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -3260,7 +3073,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -28.699951, y: 56.559998}
+  m_AnchoredPosition: {x: -28.699982, y: 56.559998}
   m_SizeDelta: {x: -199.21, y: 77.37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &707228179
@@ -3432,7 +3245,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -3526,132 +3339,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11eaf6c4286d74e4c8e48b11f224a570, type: 3}
---- !u!1 &722097686
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 722097687}
-  - component: {fileID: 722097690}
-  - component: {fileID: 722097689}
-  - component: {fileID: 722097688}
-  m_Layer: 5
-  m_Name: Scrollbar Horizontal
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &722097687
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 722097686}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1557118710}
-  m_Father: {fileID: 1103937725}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 20}
-  m_Pivot: {x: 0, y: 0}
---- !u!114 &722097688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 722097686}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a4db7a114972834c8e4117be1d82ba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1615962280}
-  m_HandleRect: {fileID: 1615962279}
-  m_Direction: 0
-  m_Value: 0
-  m_Size: 1
-  m_NumberOfSteps: 0
-  m_OnValueChanged:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &722097689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 722097686}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &722097690
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 722097686}
-  m_CullTransparentMesh: 1
 --- !u!1 &749098168
 GameObject:
   m_ObjectHideFlags: 0
@@ -3778,8 +3465,9 @@ GameObject:
   - component: {fileID: 781656413}
   - component: {fileID: 781656412}
   - component: {fileID: 781656411}
+  - component: {fileID: 781656414}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3794,16 +3482,16 @@ RectTransform:
   m_GameObject: {fileID: 781656409}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000485, y: 1.0000485, z: 1.0000485}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 613577209}
+  m_Father: {fileID: 2123999423}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -10, y: -10}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 5, y: 0}
+  m_SizeDelta: {x: -10, y: 0}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &781656411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3816,22 +3504,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb87846e43a704469d9be7ef4faa09a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Source: "## Get started\r\n- Click `[New Song]`. This creates a new song for you
-    and a beginner drive chart to go along with it.\r\n- Go to `[Song data]`\r\n 
-    - Most important: `[Select Audio]` and set the BPM of the song\r\n  - You may
-    need to do some additional tweaking to get the beats matched up with your song:
-    for this you can use the `[Beat Offset]` field, and the `[Listen]` button in
-    the bottom right can help you with quickly tweaking this until it's just right\r\n 
-    - (And you can set more metadata of the song and chart in the Song Data and Chart
-    Data menus)\r\n- Place your first word with `Tab`\r\n- See with `Spacebar` how
-    it plays! And press `Escape` to go back\n\n## Misc info\r\n- The fancy visualisation
-    of the audio file in the editor isn't active for MP3 files. Well, OGG files are
-    better anyway `\xAF\\_(\u30C4)_/\xAF`\r\n- Behind the scenes, a `song` has a
-    folder with a `song.json` for shared data, and one or multiple `.drive` files,
-    which are the difficulties. When loading a drive chart, you have to pick one
-    of these `.drive` files.\r\n- The `[Reload]` button relentlessly reloads the
-    currently opened drive chart, discarding all changes made since the last time
-    you `[Save]`d. Tread with care!"
+  _Source: "### \u3000\n## Get started\r\n- Click `[New Song]`. This creates a new
+    song for you and a beginner drive chart to go along with it.\r\n- Go to `[Song
+    data]`\r\n  - Most important: `[Select Audio]` and set the BPM of the song\r\n 
+    - You may need to do some additional tweaking to get the beats matched up with
+    your song: for this you can use the `[Beat Offset]` field, and the `[Listen]`
+    button in the bottom right can help you with quickly tweaking this until it's
+    just right\r\n  - (And you can set more metadata of the song and chart in the
+    Song Data and Chart Data menus)\r\n- Place your first word with `Tab`\r\n- See
+    with `Spacebar` how it plays! And press `Escape` to go back\n\n## Misc info\r\n-
+    The fancy visualisation of the audio file in the editor isn't active for MP3
+    files. Well, OGG files are better anyway `\xAF\\_(\u30C4)_/\xAF`\r\n- Behind
+    the scenes, a `song` has a folder with a `song.json` for shared data, and one
+    or multiple `.drive` files, which are the difficulties. When loading a drive
+    chart, you have to pick one of these `.drive` files.\r\n- The `[Reload]` button
+    relentlessly reloads the currently opened drive chart, discarding all changes
+    made since the last time you `[Save]`d. Tread with care!\n### \u3000"
   RenderSettings:
     Bold:
       RenderBold: 1
@@ -3844,12 +3532,12 @@ MonoBehaviour:
       UseCustomFont: 0
       FontAssetPathRelativeToResources: 
       DrawOverlay: 1
-      OverlayColor: {r: 0, g: 0, b: 0, a: 0.36862746}
-      OverlayPaddingPixels: 30
+      OverlayColor: {r: 1, g: 1, b: 1, a: 0.23529412}
+      OverlayPaddingPixels: 25
       ManuallySetCharacterSpacing: 0
       CharacterSpacing: 0.69
       AddSeparationSpacing: 1
-      SeparationSpacing: 0.3
+      SeparationSpacing: 0.2
     Lists:
       RenderUnorderedLists: 0
       RenderOrderedLists: 1
@@ -3871,17 +3559,17 @@ MonoBehaviour:
         Underline: 1
         Case: 0
         VerticalSpacing: 0.7
-      - Size: 1.3
-        Bold: 1
-        Underline: 1
-        Case: 0
-        VerticalSpacing: 0.3
-      - Size: 1.5
+      - Size: 1.4
         Bold: 1
         Underline: 0
         Case: 0
-        VerticalSpacing: 0
-      - Size: 1.3
+        VerticalSpacing: 0.3
+      - Size: 0
+        Bold: 1
+        Underline: 0
+        Case: 0
+        VerticalSpacing: 0.4
+      - Size: 1
         Bold: 1
         Underline: 0
         Case: 0
@@ -3906,44 +3594,44 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<voffset=0.3em><u><b><size=1.3em>Get started</size></b></u></voffset>\r\n-
-    Click <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">[New Song]</mark><space=0.3em>.
-    This creates a new song for you and a beginner drive chart to go along with it.\r\n-
-    Go to <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">[Song data]</mark><space=0.3em>\r\n 
-    - Most important: <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">[Select
-    Audio]</mark><space=0.3em> and set the BPM of the song\r\n  - You may need to
-    do some additional tweaking to get the beats matched up with your song: for this
-    you can use the <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">[Beat Offset]</mark><space=0.3em>
-    field, and the <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">[Listen]</mark><space=0.3em>
+  m_text: "<voffset=0.4em><b><size=0em>\u3000</size></b></voffset>\r\n<voffset=0.3em><b><size=1.4em>Get
+    started</size></b></voffset>\r\n- Click <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">[New
+    Song]</mark><space=0.2em>. This creates a new song for you and a beginner drive
+    chart to go along with it.\r\n- Go to <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">[Song
+    data]</mark><space=0.2em>\r\n  - Most important: <space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">[Select Audio]</mark><space=0.2em> and set the BPM of the
+    song\r\n  - You may need to do some additional tweaking to get the beats matched
+    up with your song: for this you can use the <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">[Beat
+    Offset]</mark><space=0.2em> field, and the <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">[Listen]</mark><space=0.2em>
     button in the bottom right can help you with quickly tweaking this until it's
     just right\r\n  - (And you can set more metadata of the song and chart in the
-    Song Data and Chart Data menus)\r\n- Place your first word with <space=0.3em><mark=#0000005E
-    padding=\"30,30,0,0\">Tab</mark><space=0.3em>\r\n- See with <space=0.3em><mark=#0000005E
-    padding=\"30,30,0,0\">Spacebar</mark><space=0.3em> how it plays! And press <space=0.3em><mark=#0000005E
-    padding=\"30,30,0,0\">Escape</mark><space=0.3em> to go back\r\n\r\n<voffset=0.3em><u><b><size=1.3em>Misc
-    info</size></b></u></voffset>\r\n- The fancy visualisation of the audio file
-    in the editor isn't active for MP3 files. Well, OGG files are better anyway <space=0.3em><mark=#0000005E
-    padding=\"30,30,0,0\">\xAF_(\u30C4)_/\xAF</mark><space=0.3em>\r\n- Behind the
-    scenes, a <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">song</mark><space=0.3em>
-    has a folder with a <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">song.json</mark><space=0.3em>
-    for shared data, and one or multiple <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">.drive</mark><space=0.3em>
+    Song Data and Chart Data menus)\r\n- Place your first word with <space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">Tab</mark><space=0.2em>\r\n- See with <space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">Spacebar</mark><space=0.2em> how it plays! And press <space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">Escape</mark><space=0.2em> to go back\r\n\r\n<voffset=0.3em><b><size=1.4em>Misc
+    info</size></b></voffset>\r\n- The fancy visualisation of the audio file in the
+    editor isn't active for MP3 files. Well, OGG files are better anyway <space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">\xAF_(\u30C4)_/\xAF</mark><space=0.2em>\r\n- Behind the
+    scenes, a <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">song</mark><space=0.2em>
+    has a folder with a <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">song.json</mark><space=0.2em>
+    for shared data, and one or multiple <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">.drive</mark><space=0.2em>
     files, which are the difficulties. When loading a drive chart, you have to pick
-    one of these <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">.drive</mark><space=0.3em>
-    files.\r\n- The <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">[Reload]</mark><space=0.3em>
+    one of these <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">.drive</mark><space=0.2em>
+    files.\r\n- The <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">[Reload]</mark><space=0.2em>
     button relentlessly reloads the currently opened drive chart, discarding all
-    changes made since the last time you <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">[Save]</mark><space=0.3em>d.
-    Tread with care!\r\n"
+    changes made since the last time you <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">[Save]</mark><space=0.2em>d.
+    Tread with care!\r\n<voffset=0.4em><b><size=0em>\u3000</size></b></voffset>\r\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 300a50a884833404aa192b17c8af7ed5, type: 2}
-  m_sharedMaterial: {fileID: -4405838203629987715, guid: 300a50a884833404aa192b17c8af7ed5,
+  m_fontAsset: {fileID: 11400000, guid: 56b16e7b90b1f264a9120a6f1d93c229, type: 2}
+  m_sharedMaterial: {fileID: -2087597299237238584, guid: 56b16e7b90b1f264a9120a6f1d93c229,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3960,8 +3648,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 11
+  m_fontSizeBase: 11
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4010,6 +3698,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781656409}
   m_CullTransparentMesh: 1
+--- !u!114 &781656414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781656409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &810180083
 GameObject:
   m_ObjectHideFlags: 0
@@ -4196,12 +3898,12 @@ RectTransform:
   m_Children:
   - {fileID: 1721242492}
   m_Father: {fileID: 240973026}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &863310607
 MonoBehaviour:
@@ -4224,11 +3926,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_NormalColor: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
+    m_HighlightedColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
+    m_PressedColor: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
+    m_SelectedColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
+    m_DisabledColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -4247,7 +3949,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1073456216}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.7619
+  m_Size: 0.66956925
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4265,14 +3967,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: b9c5fedc997f125448c4d8be2fc43bcd, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4345,7 +4047,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -4474,7 +4176,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &875443349
 MonoBehaviour:
@@ -4496,7 +4198,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 90bee1ddeeef38a4f860f96b5510c136, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4933,81 +4635,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1039737882}
   m_CullTransparentMesh: 1
---- !u!1 &1064109950
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1064109951}
-  - component: {fileID: 1064109953}
-  - component: {fileID: 1064109952}
-  m_Layer: 5
-  m_Name: Handle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1064109951
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1064109950}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 51485747}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1064109952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1064109950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1064109953
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1064109950}
-  m_CullTransparentMesh: 1
 --- !u!1 &1073456215
 GameObject:
   m_ObjectHideFlags: 0
@@ -5043,7 +4670,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1073456217
 MonoBehaviour:
@@ -5065,7 +4692,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 90bee1ddeeef38a4f860f96b5510c136, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5384,7 +5011,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 582495956}
-  - {fileID: 722097687}
   - {fileID: 431848741}
   m_Father: {fileID: 1238577333}
   m_RootOrder: 2
@@ -5406,7 +5032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Content: {fileID: 1257651335}
+  m_Content: {fileID: 1770763758}
   m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
@@ -5415,7 +5041,7 @@ MonoBehaviour:
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 1
   m_Viewport: {fileID: 582495956}
-  m_HorizontalScrollbar: {fileID: 722097688}
+  m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 431848742}
   m_HorizontalScrollbarVisibility: 2
   m_VerticalScrollbarVisibility: 2
@@ -5437,7 +5063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.68235296}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5772,7 +5398,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -49.950012}
+  m_AnchoredPosition: {x: 0, y: -49.950043}
   m_SizeDelta: {x: 0, y: -99.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1238577334
@@ -5962,42 +5588,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1239610873}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1257651334
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1257651335}
-  m_Layer: 5
-  m_Name: Content
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1257651335
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1257651334}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1770763758}
-  m_Father: {fileID: 582495956}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 300}
-  m_Pivot: {x: 0, y: 1}
 --- !u!1001 &1277551104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6058,7 +5648,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -6177,6 +5767,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1640535282}
     m_Modifications:
+    - target: {fileID: 6984015467819398916, guid: 3cacf46f6a6f9294a86b17127301a294,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 56b16e7b90b1f264a9120a6f1d93c229,
+        type: 2}
+    - target: {fileID: 6984015467819398916, guid: 3cacf46f6a6f9294a86b17127301a294,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2087597299237238584, guid: 56b16e7b90b1f264a9120a6f1d93c229,
+        type: 2}
     - target: {fileID: 6984015469222188948, guid: 3cacf46f6a6f9294a86b17127301a294,
         type: 3}
       propertyPath: m_Pivot.x
@@ -6396,7 +5998,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -6796,7 +6398,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -6924,7 +6526,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -20}
+  m_SizeDelta: {x: 0, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1486463320
 GameObject:
@@ -7186,42 +6788,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1498338528}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1557118709
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1557118710}
-  m_Layer: 5
-  m_Name: Sliding Area
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1557118710
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1557118709}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1615962279}
-  m_Father: {fileID: 722097687}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -20}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1575086257
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7293,7 +6859,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -7453,7 +7019,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -7553,81 +7119,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1608319854}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1615962278
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1615962279}
-  - component: {fileID: 1615962281}
-  - component: {fileID: 1615962280}
-  m_Layer: 5
-  m_Name: Handle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1615962279
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1615962278}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1557118710}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1615962280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1615962278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1615962281
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1615962278}
-  m_CullTransparentMesh: 1
 --- !u!1 &1640535278
 GameObject:
   m_ObjectHideFlags: 0
@@ -7822,7 +7313,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -20}
+  m_SizeDelta: {x: 0, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1770763757
 GameObject:
@@ -7836,8 +7327,9 @@ GameObject:
   - component: {fileID: 1770763760}
   - component: {fileID: 1770763759}
   - component: {fileID: 1770763761}
+  - component: {fileID: 1770763762}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7852,16 +7344,16 @@ RectTransform:
   m_GameObject: {fileID: 1770763757}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99996513, y: 0.99996513, z: 0.99996513}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1257651335}
+  m_Father: {fileID: 582495956}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -10, y: -10}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 5, y: 0}
+  m_SizeDelta: {x: -10, y: 0}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &1770763759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7882,54 +7374,55 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "- Navigation\r\n  - <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">rightclick+drag\u2194</mark><space=0.3em>
-    to pan\r\n    - hold <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">Alt</mark><space=0.3em>
-    to pan quickly!\r\n  - <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">shift+rightclick+drag\u2195</mark><space=0.3em>
-    to zoom\r\n  - <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">Home</mark><space=0.3em>/<space=0.3em><mark=#0000005E
-    padding=\"30,30,0,0\">End</mark><space=0.3em> to go to the start/end of your
-    chart\r\n- Playtesting\r\n  - <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">Spacebar</mark><space=0.3em>
-    to start playtest from your mouse pointer position in autoplay\r\n  - <space=0.3em><mark=#0000005E
-    padding=\"30,30,0,0\">Shift+Spacebar</mark><space=0.3em> to start playtest in
-    manual play\r\n  - While in playtest, press <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">Escape</mark><space=0.3em>
-    to exit\r\n- Click somewhere in empty space to put your cursor there\r\n  - <space=0.3em><mark=#0000005E
-    padding=\"30,30,0,0\">Tab</mark><space=0.3em>/<space=0.3em><mark=#0000005E padding=\"30,30,0,0\">N</mark><space=0.3em>
-    to make a new word (or <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">Ctrl+Shift+click</mark><space=0.3em>ing
-    in empty space also works)\r\n  - <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">Ctrl+V</mark><space=0.3em>
-    to paste (in case)\r\n- Click a word to select it\r\n  - <space=0.3em><mark=#0000005E
-    padding=\"30,30,0,0\">Ctrl+C</mark><space=0.3em> to copy\r\n  - <space=0.3em><mark=#0000005E
-    padding=\"30,30,0,0\">F2</mark><space=0.3em>/<space=0.3em><mark=#0000005E padding=\"30,30,0,0\">R</mark><space=0.3em>
-    to edit the word (or <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">Alt+click</mark><space=0.3em>ing
-    it also works) => <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">Enter</mark><space=0.3em>/<space=0.3em><mark=#0000005E
-    padding=\"30,30,0,0\">Escape</mark><space=0.3em> to submit\r\n  - <space=0.3em><mark=#0000005E
-    padding=\"30,30,0,0\">Del</mark><space=0.3em> to delete the word (or removing
+  m_text: "<voffset=0.4em><b><size=0em>\u3000</size></b></voffset>\r\n- Navigation\r\n 
+    - <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">rightclick+drag\u2194</mark><space=0.2em>
+    to pan\r\n    - hold <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">Alt</mark><space=0.2em>
+    to pan quickly!\r\n  - <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">shift+rightclick+drag\u2195</mark><space=0.2em>
+    to zoom\r\n  - <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">Home</mark><space=0.2em>/<space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">End</mark><space=0.2em> to go to the start/end of your
+    chart\r\n- Playtesting\r\n  - <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">Spacebar</mark><space=0.2em>
+    to start playtest from your mouse pointer position in autoplay\r\n  - <space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">Shift+Spacebar</mark><space=0.2em> to start playtest in
+    manual play\r\n  - While in playtest, press <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">Escape</mark><space=0.2em>
+    to exit\r\n- Click somewhere in empty space to put your cursor there\r\n  - <space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">Tab</mark><space=0.2em>/<space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">N</mark><space=0.2em>
+    to make a new word (or <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">Ctrl+Shift+click</mark><space=0.2em>ing
+    in empty space also works)\r\n  - <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">Ctrl+V</mark><space=0.2em>
+    to paste (in case)\r\n- Click a word to select it\r\n  - <space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">Ctrl+C</mark><space=0.2em> to copy\r\n  - <space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">F2</mark><space=0.2em>/<space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">R</mark><space=0.2em>
+    to edit the word (or <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">Alt+click</mark><space=0.2em>ing
+    it also works) => <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">Enter</mark><space=0.2em>/<space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">Escape</mark><space=0.2em> to submit\r\n  - <space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">Del</mark><space=0.2em> to delete the word (or removing
     all letters and submitting also works)\r\n- Dragging on a word\r\n  - Normally
-    drag on a word to move it\r\n    - Move by \xBCth beats by holding <space=0.3em><mark=#0000005E
-    padding=\"30,30,0,0\">Shift</mark><space=0.3em> and move smoothly (1/100th beats)
-    by holding <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">Shift+Alt</mark><space=0.3em>.
+    drag on a word to move it\r\n    - Move by \xBCth beats by holding <space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">Shift</mark><space=0.2em> and move smoothly (1/100th beats)
+    by holding <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">Shift+Alt</mark><space=0.2em>.
     (This also goes for moving the cursor)\r\n  - Drag with right mouse button to
     change its beat spacing\r\n    - This switches between these amounts of beats:
-    <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">{.125, 1/6, .25, 1/3, .5,
-    1, 2, 4}</mark><space=0.3em>\r\n- Special stuff when editing words:\r\n  - _Chord_:
-    start the word with <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">[[</mark><space=0.3em>\r\n 
+    <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">{.125, 1/6, .25, 1/3, .5,
+    1, 2, 4}</mark><space=0.2em>\r\n- Special stuff when editing words:\r\n  - _Chord_:
+    start the word with <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">[[</mark><space=0.2em>\r\n 
     - _Randomly generated English word of length_: make a word consisting entirely
-    of the letter <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">x</mark><space=0.3em>\r\n 
+    of the letter <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">x</mark><space=0.2em>\r\n 
     - A word can have spaces -- these will just count as beats where you don't have
-    to input anything in gameplay\r\n  - Use <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">Shift+Space</mark><space=0.3em>
-    to type the <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">\u23B5</mark><space=0.3em>
-    character -- this counts as a <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">Spacebar</mark><space=0.3em>
-    character to input in gameplay\r\n- <space=0.3em><mark=#0000005E padding=\"30,30,0,0\">Ctrl+Z</mark><space=0.3em>/<space=0.3em><mark=#0000005E
-    padding=\"30,30,0,0\">Ctrl+Y</mark><space=0.3em> to undo/redo\r\n"
+    to input anything in gameplay\r\n  - Use <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">Shift+Space</mark><space=0.2em>
+    to type the <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">\u23B5</mark><space=0.2em>
+    character -- this counts as a <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">Spacebar</mark><space=0.2em>
+    character to input in gameplay\r\n- <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">Ctrl+Z</mark><space=0.2em>/<space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">Ctrl+Y</mark><space=0.2em> to undo/redo\r\n<voffset=0.4em><b><size=0em>\u3000</size></b></voffset>\r\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 300a50a884833404aa192b17c8af7ed5, type: 2}
-  m_sharedMaterial: {fileID: -4405838203629987715, guid: 300a50a884833404aa192b17c8af7ed5,
+  m_fontAsset: {fileID: 11400000, guid: 56b16e7b90b1f264a9120a6f1d93c229, type: 2}
+  m_sharedMaterial: {fileID: -2087597299237238584, guid: 56b16e7b90b1f264a9120a6f1d93c229,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -7946,8 +7439,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 11
+  m_fontSizeBase: 11
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8008,10 +7501,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb87846e43a704469d9be7ef4faa09a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Source: "- Navigation\r\n  - `rightclick+drag\u2194` to pan\r\n    - hold `Alt`
-    to pan quickly!\r\n  - `shift+rightclick+drag\u2195` to zoom\r\n  - `Home`/`End`
-    to go to the start/end of your chart\r\n- Playtesting\r\n  - `Spacebar` to start
-    playtest from your mouse pointer position in autoplay\r\n  - `Shift+Spacebar`
+  _Source: "### \u3000\n- Navigation\r\n  - `rightclick+drag\u2194` to pan\r\n   
+    - hold `Alt` to pan quickly!\r\n  - `shift+rightclick+drag\u2195` to zoom\r\n 
+    - `Home`/`End` to go to the start/end of your chart\r\n- Playtesting\r\n  - `Spacebar`
+    to start playtest from your mouse pointer position in autoplay\r\n  - `Shift+Spacebar`
     to start playtest in manual play\r\n  - While in playtest, press `Escape` to
     exit\r\n- Click somewhere in empty space to put your cursor there\r\n  - `Tab`/`N`
     to make a new word (or `Ctrl+Shift+click`ing in empty space also works)\r\n 
@@ -8028,7 +7521,7 @@ MonoBehaviour:
     `x`\r\n  - A word can have spaces -- these will just count as beats where you
     don't have to input anything in gameplay\r\n  - Use `Shift+Space` to type the
     `\u23B5` character -- this counts as a `Spacebar` character to input in gameplay\r\n-
-    `Ctrl+Z`/`Ctrl+Y` to undo/redo"
+    `Ctrl+Z`/`Ctrl+Y` to undo/redo\n### \u3000"
   RenderSettings:
     Bold:
       RenderBold: 1
@@ -8041,12 +7534,12 @@ MonoBehaviour:
       UseCustomFont: 0
       FontAssetPathRelativeToResources: 
       DrawOverlay: 1
-      OverlayColor: {r: 0, g: 0, b: 0, a: 0.36862746}
-      OverlayPaddingPixels: 30
+      OverlayColor: {r: 1, g: 1, b: 1, a: 0.23529412}
+      OverlayPaddingPixels: 25
       ManuallySetCharacterSpacing: 0
       CharacterSpacing: 0.69
       AddSeparationSpacing: 1
-      SeparationSpacing: 0.3
+      SeparationSpacing: 0.2
     Lists:
       RenderUnorderedLists: 0
       RenderOrderedLists: 1
@@ -8068,21 +7561,35 @@ MonoBehaviour:
         Underline: 1
         Case: 0
         VerticalSpacing: 0.7
-      - Size: 1.3
+      - Size: 1.4
         Bold: 1
-        Underline: 1
+        Underline: 0
         Case: 0
         VerticalSpacing: 0.3
-      - Size: 1.5
+      - Size: 0
         Bold: 1
         Underline: 0
         Case: 0
-        VerticalSpacing: 0
+        VerticalSpacing: 0.4
       - Size: 1.3
         Bold: 1
         Underline: 0
         Case: 0
         VerticalSpacing: 0
+--- !u!114 &1770763762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1770763757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &1873359974
 GameObject:
   m_ObjectHideFlags: 0
@@ -8647,7 +8154,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 594867329}
-  - {fileID: 672170374}
   - {fileID: 215767563}
   - {fileID: 1142660507}
   - {fileID: 210410178}
@@ -8659,6 +8165,7 @@ RectTransform:
   - {fileID: 1402995783}
   - {fileID: 1277551105}
   - {fileID: 1575086258}
+  - {fileID: 672170374}
   - {fileID: 707228178}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -8873,7 +8380,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 613577209}
+  - {fileID: 781656410}
   m_Father: {fileID: 240973026}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9008,7 +8515,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -9245,6 +8752,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Difficulty
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904883740265388615, guid: 810bb51066f84df4eabbf7fa3e0d23f3,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904883740265388615, guid: 810bb51066f84df4eabbf7fa3e0d23f3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 810bb51066f84df4eabbf7fa3e0d23f3, type: 3}
