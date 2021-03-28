@@ -6,8 +6,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Menu
+namespace Menu.Components
 {
+    // todo: make this directly extend Button?
     [RequireComponent(typeof(Button))]
     public class LeetButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
@@ -23,10 +24,10 @@ namespace Menu
 
         private bool _hovering;
 
-        public Button.ButtonClickedEvent OnClick => _button.onClick;
+        public Button.ButtonClickedEvent OnClick => (_button ??= GetComponent<Button>()).onClick;
         public void SetInteractable(bool val) => _button.interactable = val;
-        public void SetColor(Color col) => _text.color = textColor = col;
-        public void SetText(string txt) => _text.text = txt;
+        public void SetColor(Color col) => (_text ??= GetComponentInChildren<TextMeshProUGUI>()).color = textColor = col;
+        public void SetText(string txt) => (_text ??= GetComponentInChildren<TextMeshProUGUI>()).text = txt;
 
         public void OnPointerEnter(PointerEventData eventData)
         {

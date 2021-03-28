@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Menu.Components;
 using Shared;
 using Shared.Domain;
 using TMPro;
@@ -13,7 +14,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
     public class SongDataPanel : MonoBehaviour
     {
         private static readonly Color TextColorSelected = C.CharColorHighlight;
-        private static readonly Color TextColorUnselected = new Color(0f, 0.5f, 0f);
+        private static readonly Color TextColorUnselected = new Color(0f, 0.3f, 0f);
 
         [SerializeField] private TitleText songTitleText;
         [SerializeField] private TextMeshProUGUI songArtistText;
@@ -46,7 +47,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
         private void ToggleBtn(LeetButton btn, bool selected)
         {
             btn.SetColor(selected ? TextColorSelected : TextColorUnselected);
-            diffButtons[_selectedDiffIndex].ambientGlowSpeed = selected ? 5f : 2.5f;
+            diffButtons[_selectedDiffIndex].ambientGlowSpeed = selected ? 7f : 3f;
         }
 
         private void ChooseDiff(int index)
