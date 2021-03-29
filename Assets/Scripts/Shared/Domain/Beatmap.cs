@@ -28,7 +28,9 @@ namespace Shared.Domain
         public int version = 1;
 
         // Getters
-        [IgnoreDataMember] public int NotesCount => words.Aggregate(0, (acc, w) => acc + w.text.Length);
+        [IgnoreDataMember] public int NotesCount => words.Aggregate(0,
+            (acc, w) => acc + w.text.Replace(" ", "").Length);
+
         [IgnoreDataMember] public float BeatsPerSec => song.BeatsPerSec;
         [IgnoreDataMember] public float LastBeat => words.Last().LastBeat();
 
