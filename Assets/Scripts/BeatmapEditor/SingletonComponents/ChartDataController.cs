@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Shared.Domain;
 using TMPro;
@@ -33,9 +34,17 @@ namespace BeatmapEditor.SingletonComponents
             difficultyNameOverrideField.onValueChanged.AddListener(v => B.difficultyNameOverride = v.OrNull());
             difficultyNameOverrideField.onValidateInput += ValidateInput(10);
 
-            finishTimestampField.onValueChanged.AddListener(v =>
+            finishTimestampField.onValueChanged.AddListener(async v =>
             {
-                B.finishTimestamp = v.IsNullOrEmpty() ? (float?) null : float.Parse(v);
+                var val = v.IsNullOrEmpty() ? (float?) null : float.Parse(v);
+                if (val != null)
+                {
+                    var clampedVal = Mathf.Clamp(val.Value, 0f, (await B.song.Audio)?.length ?? 10000);
+                    if (clampedVal > val || clampedVal < val)
+                        finishTimestampField.text = clampedVal.ToString(CultureInfo.InvariantCulture);
+                    val = clampedVal;
+                }
+                B.finishTimestamp = val;
                 EditorEndMark.Instance.UpdatePos();
             });
             finishTimestampField.onValidateInput += ValidateInput(6, FloatRegex);
