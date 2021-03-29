@@ -98,7 +98,7 @@ namespace BeatmapEditor
                 ResetEditor();
 
             currentBeatmap = b ?? currentBeatmap;
-            currentSong = currentBeatmap.song;
+            currentSong = currentBeatmap?.song;
             EditorTrack.Instance.LoadBeatmap(currentBeatmap);
             SetFunctional(true);
         }
