@@ -39,6 +39,9 @@ namespace BeatmapEditor.SingletonComponents
                 EditorInputManager.Instance.enabled = false;
             else if (triggerInputManager)
                 EditorInputManager.Instance.enabled = true;
+
+            if (triggerInputManager)
+                DataController.TriggerToggleMenu(opened);
         }
 
         private void Close()
@@ -104,5 +107,17 @@ namespace BeatmapEditor.SingletonComponents
 
         private void OnEnable() => InputManager.PressBack += Close;
         private void OnDisable() => InputManager.PressBack -= Close;
+    }
+
+    public static class DataController
+    {
+        private static bool _opened;
+        public static void TriggerToggleMenu(bool opened)
+        {
+            if (_opened == opened) return;
+            _opened = opened;
+            OnToggleMenu?.Invoke(_opened);
+        }
+        public static event Action<bool> OnToggleMenu;
     }
 }

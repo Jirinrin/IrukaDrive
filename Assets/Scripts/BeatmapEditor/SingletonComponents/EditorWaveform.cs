@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Shapes;
 using Shared.Domain;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace BeatmapEditor.SingletonComponents
         private const int EveryHowManySamples = 300;
 
         private bool _active;
+        private float _opacity;
 
         private List<float> _samples;
         private float _beatsPerSample;
@@ -20,6 +22,7 @@ namespace BeatmapEditor.SingletonComponents
         public async void LoadSong(Song song)
         {
             if (song == null) return;
+            OpacityTransition(0, .2f);
             var clip = await song.Audio;
 
             // todo: something if mp3?? (Because then the samples array simply gets filled with 0s) (or we can just ignore mp3 haha, this is a bonus feature after all)
@@ -36,6 +39,7 @@ namespace BeatmapEditor.SingletonComponents
             _beatsPerSample = 1f / samplesPerBeat;
 
             _active = true;
+            OpacityTransition(1, .5f);
 
             var samples = new float[clip.samples * clip.channels];
             clip.GetData(samples, 0);
@@ -58,6 +62,7 @@ namespace BeatmapEditor.SingletonComponents
                 Draw.LineThickness = .02f;
                 Draw.Color = new Color(.3f,.3f,.3f);
                 Draw.PolylineJoins = PolylineJoins.Round;
+                Draw.Opacity = _opacity;
 
                 var xOffset = _currentSong.beatOffset * _currentSong.BeatsPerSec * EditorTrack.viewState.beatSpacing * -1;
 
@@ -74,6 +79,27 @@ namespace BeatmapEditor.SingletonComponents
                 p.AddPoints(points);
                 Draw.Polyline(p);
             }
+        }
+
+        private void OpacityTransition(float op, float dur, float delay = 0) =>
+            DOTween.To(() => _opacity, o => _opacity = o, op, dur).SetDelay(delay);
+
+        // todo: find a way to simply show the waveform behind the menu...
+        private void OnToggleMenu(bool menuOpened)
+        {
+            OpacityTransition(menuOpened ? 0 : 1, menuOpened ? .5f : 1f, menuOpened ? 0 : .5f);
+        }
+
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            DataController.OnToggleMenu += OnToggleMenu;
+        }
+
+        public override void OnDisable()
+        {
+            base.OnDisable();
+            DataController.OnToggleMenu -= OnToggleMenu;
         }
     }
 }
