@@ -253,7 +253,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 37.935
+      value: 37.934998
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -1801,7 +1801,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 875443348}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.35098144
+  m_Size: 0.7995172
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2883,12 +2883,12 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -61.06
+      value: -61.059998
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 28.72499
+      value: 28.724976
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -3340,7 +3340,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -56.475
+      value: -56.475006
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -3534,7 +3534,7 @@ MonoBehaviour:
     Song Data and Chart Data menus)\r\n- Place your first word with `Tab`\r\n- See
     with `Spacebar` how it plays! And press `Escape` to go back\n\n## Misc info\r\n-
     The fancy visualisation of the audio file in the editor isn't active for MP3
-    files. Well, OGG files are better anyway `\xAF\\_(\u30C4)_/\xAF`\r\n- Behind
+    files. Well, OGG files are better anyway `\xAF\\\\_(\u30C4)_/\xAF`\r\n- Behind
     the scenes, a `song` has a folder with a `song.json` for shared data, and one
     or multiple `.drive` files, which are the difficulties. When loading a drive
     chart, you have to pick one of these `.drive` files.\r\n- The `[Reload]` button
@@ -3631,7 +3631,7 @@ MonoBehaviour:
     padding=\"25,25,0,0\">Escape</mark><space=0.2em> to go back\r\n\r\n<voffset=0.3em><b><size=1.4em>Misc
     info</size></b></voffset>\r\n- The fancy visualisation of the audio file in the
     editor isn't active for MP3 files. Well, OGG files are better anyway <space=0.2em><mark=#FFFFFF3C
-    padding=\"25,25,0,0\">\xAF_(\u30C4)_/\xAF</mark><space=0.2em>\r\n- Behind the
+    padding=\"25,25,0,0\">\xAF\\_(\u30C4)_/\xAF</mark><space=0.2em>\r\n- Behind the
     scenes, a <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">song</mark><space=0.2em>
     has a folder with a <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">song.json</mark><space=0.2em>
     for shared data, and one or multiple <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">.drive</mark><space=0.2em>
@@ -3968,8 +3968,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1073456217}
   m_HandleRect: {fileID: 1073456216}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.47598812
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5753,7 +5753,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -56.250023
+      value: -56.25003
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -6503,7 +6503,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -56.699997
+      value: -56.700012
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -6964,7 +6964,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -28.550003
+      value: -28.549988
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -7119,12 +7119,12 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -63.7
+      value: -63.700012
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -56.250023
+      value: -56.25003
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
@@ -8626,7 +8626,7 @@ PrefabInstance:
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 56.996994
+      value: 56.99701
       objectReference: {fileID: 0}
     - target: {fileID: 2743387031813830591, guid: 11eaf6c4286d74e4c8e48b11f224a570,
         type: 3}
