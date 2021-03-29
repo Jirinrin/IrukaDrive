@@ -11,7 +11,7 @@ namespace Shapes {
 	[CanEditMultipleObjects]
 	public class PolylineEditor : ShapeRendererEditor {
 
-		SerializedProperty propPolyPoints = null;
+		SerializedProperty propPoints = null;
 		SerializedProperty propGeometry = null;
 		SerializedProperty propJoins = null;
 		SerializedProperty propClosed = null;
@@ -29,10 +29,9 @@ namespace Shapes {
 		public override void OnEnable() {
 			base.OnEnable();
 
-			pointList = new ReorderableList( serializedObject, propPolyPoints, true, true, true, true ) {
+			pointList = new ReorderableList( serializedObject, propPoints, true, true, true, true ) {
 				drawElementCallback = DrawPointElement,
-				drawHeaderCallback = PointListHeader,
-				onChangedCallback = ( x ) => UpdateMesh()
+				drawHeaderCallback = PointListHeader
 			};
 
 			if( pointList.count > MANY_POINTS ) {
@@ -42,8 +41,6 @@ namespace Shapes {
 
 			scenePointEditor = new ScenePointEditor( this ) { hasEditThicknessMode = true, hasEditColorMode = true };
 		}
-
-		void UpdateMesh() => targets.Cast<Polyline>().ForEach( x => x.UpdateMesh( force: true ) );
 
 		public override void OnInspectorGUI() {
 			base.BeginProperties();
@@ -62,15 +59,14 @@ namespace Shapes {
 
 			scenePointEditor.GUIEditButton( "Edit Points in Scene" );
 
-			if( base.EndProperties() )
-				UpdateMesh();
+			base.EndProperties();
 		}
 
 		void OnSceneGUI() {
 			Polyline p = target as Polyline;
 			scenePointEditor.useFlatThicknessHandles = p.Geometry == PolylineGeometry.Flat2D;
 			scenePointEditor.hasEditThicknessMode = p.ThicknessSpace == ThicknessSpace.Meters;
-			bool changed = scenePointEditor.DoSceneHandles( p.Closed, p, p.PolyPoints, p.transform, p.Thickness, p.Color );
+			bool changed = scenePointEditor.DoSceneHandles( p.Closed, p, p.points, p.transform, p.Thickness, p.Color );
 			if( changed )
 				p.UpdateMesh( force: true );
 		}
@@ -96,7 +92,7 @@ namespace Shapes {
 		void DrawPointElement( Rect r, int i, bool isActive, bool isFocused ) {
 			r.yMin += 1;
 			r.yMax -= 2;
-			SerializedProperty prop = propPolyPoints.GetArrayElementAtIndex( i );
+			SerializedProperty prop = propPoints.GetArrayElementAtIndex( i );
 			SerializedProperty pPoint = prop.FindPropertyRelative( nameof(PolylinePoint.point) );
 			SerializedProperty pThickness = prop.FindPropertyRelative( nameof(PolylinePoint.thickness) );
 			SerializedProperty pColor = prop.FindPropertyRelative( nameof(PolylinePoint.color) );

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using UnityEngine;
 
@@ -46,6 +45,7 @@ namespace Shapes {
 		public string methodCallStr;
 		public string methodSigDefault = null;
 		public string[] targetArgNames;
+		public string desc;
 
 		public string FullMethodSig {
 			get {
@@ -58,7 +58,11 @@ namespace Shapes {
 
 		public Param( string methodSigParam, params string[] targetArgNames ) {
 			this.methodSigDefault = null;
-			if( methodSigParam.Contains( "=" ) ) // this means we have a default value
+			if( methodSigParam.Contains( "//" ) ) // this means we have a param description, extract it
+				( methodSigParam, this.desc ) = methodSigParam.Split( new[] { "//" }, StringSplitOptions.None ).Select( x => x.Trim() ).ToArray();
+			else
+				Debug.Log( $"Missing param description: {methodSigParam}" );
+			if( methodSigParam.Contains( "=" ) ) // this means we have a default value, extract it
 				( methodSigParam, this.methodSigDefault ) = methodSigParam.Split( '=' ).Select( x => x.Trim() ).ToArray(); // this is fine don't judge me okay
 			// methodSigParam is in the form "Vector3 start" now
 			( this.methodSigType, this.methodSigName ) = methodSigParam.Split( ' ' ).Select( x => x.Trim() ).ToArray();

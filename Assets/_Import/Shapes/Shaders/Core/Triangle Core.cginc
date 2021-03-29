@@ -5,9 +5,9 @@
 #pragma target 3.0
 
 UNITY_INSTANCING_BUFFER_START(Props)
-UNITY_DEFINE_INSTANCED_PROP( float4, _Color)
-UNITY_DEFINE_INSTANCED_PROP( float4, _ColorB)
-UNITY_DEFINE_INSTANCED_PROP( float4, _ColorC)
+UNITY_DEFINE_INSTANCED_PROP( half4, _Color)
+UNITY_DEFINE_INSTANCED_PROP( half4, _ColorB)
+UNITY_DEFINE_INSTANCED_PROP( half4, _ColorC)
 UNITY_DEFINE_INSTANCED_PROP( float3, _A)
 UNITY_DEFINE_INSTANCED_PROP( float3, _B)
 UNITY_DEFINE_INSTANCED_PROP( float3, _C)
@@ -18,8 +18,8 @@ struct VertexInput {
     UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 struct VertexOutput {
-    float4 pos : SV_POSITION;
-    float4 color : TEXCOORD0;
+    half4 pos : SV_POSITION;
+    half4 color : TEXCOORD0;
     UNITY_VERTEX_INPUT_INSTANCE_ID
     UNITY_VERTEX_OUTPUT_STEREO
 };
@@ -30,14 +30,14 @@ VertexOutput vert (VertexInput v) {
     UNITY_TRANSFER_INSTANCE_ID(v, o);
     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
     
-    float4 colorA = UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
-    float4 colorB = UNITY_ACCESS_INSTANCED_PROP(Props, _ColorB);
-    float4 colorC = UNITY_ACCESS_INSTANCED_PROP(Props, _ColorC);
+    half4 colorA = UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
+    half4 colorB = UNITY_ACCESS_INSTANCED_PROP(Props, _ColorB);
+    half4 colorC = UNITY_ACCESS_INSTANCED_PROP(Props, _ColorC);
     o.color = colorA * v.vertex.x + colorB * v.vertex.y + colorC * v.vertex.z;
     
-    float3 a = UNITY_ACCESS_INSTANCED_PROP(Props, _A);
-    float3 b = UNITY_ACCESS_INSTANCED_PROP(Props, _B);
-    float3 c = UNITY_ACCESS_INSTANCED_PROP(Props, _C);
+    half3 a = UNITY_ACCESS_INSTANCED_PROP(Props, _A);
+    half3 b = UNITY_ACCESS_INSTANCED_PROP(Props, _B);
+    half3 c = UNITY_ACCESS_INSTANCED_PROP(Props, _C);
     v.vertex.xyz = a * v.vertex.x + b * v.vertex.y + c * v.vertex.z;
     o.pos = UnityObjectToClipPos( v.vertex );
     

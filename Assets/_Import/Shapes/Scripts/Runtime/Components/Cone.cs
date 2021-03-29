@@ -48,9 +48,10 @@ namespace Shapes {
 			length = Mathf.Max( 0f, length );
 		}
 
+		public override bool HasDetailLevels => true;
 		public override bool HasScaleModes => false;
 		protected override Material[] GetMaterials() => new[] { ShapesMaterialUtils.matCone[BlendMode] };
-		protected override Mesh GetInitialMeshAsset() => fillCap ? ShapesMeshUtils.ConeMesh : ShapesMeshUtils.ConeMeshUncapped;
+		protected override Mesh GetInitialMeshAsset() => fillCap ? ShapesMeshUtils.ConeMesh[(int)detailLevel] : ShapesMeshUtils.ConeMeshUncapped[(int)detailLevel];
 
 		protected override Bounds GetBounds() {
 			if( sizeSpace != ThicknessSpace.Meters )

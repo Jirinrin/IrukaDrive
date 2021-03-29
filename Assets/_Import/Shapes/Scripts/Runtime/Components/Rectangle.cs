@@ -98,6 +98,7 @@ namespace Shapes {
 			set => SetFloatNow( ShapesMaterialUtils.propThickness, thickness = Mathf.Max( 0f, value ) );
 		}
 
+		public override bool HasDetailLevels => false;
 		void UpdateRectPositioningNow() => SetVector4Now( ShapesMaterialUtils.propRect, GetPositioningRect() );
 		void UpdateRectPositioning() => SetVector4( ShapesMaterialUtils.propRect, GetPositioningRect() );
 

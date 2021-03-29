@@ -49,17 +49,17 @@ namespace Shapes {
 			get => color;
 			set => SetColorNow( ShapesMaterialUtils.propColor, color = value );
 		}
-		[SerializeField] [ColorUsage( true, ShapesConfig.USE_HDR_COLOR_PICKERS )] Color colorOuterStart = Color.white;
+		[SerializeField] [ShapesColorField( true )] Color colorOuterStart = Color.white;
 		public Color ColorOuterStart {
 			get => colorOuterStart;
 			set => SetColorNow( ShapesMaterialUtils.propColorOuterStart, colorOuterStart = value );
 		}
-		[SerializeField] [ColorUsage( true, ShapesConfig.USE_HDR_COLOR_PICKERS )] Color colorInnerEnd = Color.white;
+		[SerializeField] [ShapesColorField( true )] Color colorInnerEnd = Color.white;
 		public Color ColorInnerEnd {
 			get => colorInnerEnd;
 			set => SetColorNow( ShapesMaterialUtils.propColorInnerEnd, colorInnerEnd = value );
 		}
-		[SerializeField] [ColorUsage( true, ShapesConfig.USE_HDR_COLOR_PICKERS )] Color colorOuterEnd = Color.white;
+		[SerializeField] [ShapesColorField( true )] Color colorOuterEnd = Color.white;
 		public Color ColorOuterEnd {
 			get => colorOuterEnd;
 			set => SetColorNow( ShapesMaterialUtils.propColorOuterEnd, colorOuterEnd = value );
@@ -92,6 +92,12 @@ namespace Shapes {
 				SetColor( ShapesMaterialUtils.propColorInnerEnd, colorInnerEnd = value );
 				SetColorNow( ShapesMaterialUtils.propColorOuterEnd, colorOuterEnd = value );
 			}
+		}
+
+		[SerializeField] DiscGeometry geometry = DiscGeometry.Flat2D;
+		public DiscGeometry Geometry {
+			get => geometry;
+			set => SetIntNow( ShapesMaterialUtils.propAlignment, (int)( geometry = value ) );
 		}
 
 		// in-editor serialized field, suppressing "assigned but unused field" warning
@@ -140,6 +146,13 @@ namespace Shapes {
 			set => SetIntNow( ShapesMaterialUtils.propRoundCaps, (int)( arcEndCaps = value ) );
 		}
 		[SerializeField] bool matchDashSpacingToSize = true;
+		public bool MatchDashSpacingToSize {
+			get => matchDashSpacingToSize;
+			set {
+				matchDashSpacingToSize = value;
+				SetAllDashValues( now: true );
+			}
+		}
 		[SerializeField] bool dashed = false;
 		public bool Dashed {
 			get => dashed;
@@ -148,7 +161,6 @@ namespace Shapes {
 				SetAllDashValues( now: true );
 			}
 		}
-
 		[SerializeField] DashStyle dashStyle = DashStyle.DefaultDashStyleRing;
 		public float DashSize {
 			get => dashStyle.size;
@@ -186,24 +198,13 @@ namespace Shapes {
 			get => dashStyle.type;
 			set => SetIntNow( ShapesMaterialUtils.propDashType, (int)( dashStyle.type = value ) );
 		}
-
-		void SetAllDashValues( bool now ) {
-			float netDashSize = dashStyle.GetNetAbsoluteSize( dashed, thickness );
-			if( Dashed ) {
-				SetFloat( ShapesMaterialUtils.propDashSpacing, GetNetDashSpacing() );
-				SetFloat( ShapesMaterialUtils.propDashOffset, dashStyle.offset );
-				SetInt( ShapesMaterialUtils.propDashSpace, (int)dashStyle.space );
-				SetInt( ShapesMaterialUtils.propDashType, (int)dashStyle.type );
-				SetInt( ShapesMaterialUtils.propDashSnap, (int)dashStyle.snap );
-			}
-
-			if( now )
-				SetFloatNow( ShapesMaterialUtils.propDashSize, netDashSize );
-			else
-				SetFloat( ShapesMaterialUtils.propDashSize, netDashSize );
+		public float DashShapeModifier {
+			get => dashStyle.shapeModifier;
+			set => SetFloatNow( ShapesMaterialUtils.propDashShapeModifier, dashStyle.shapeModifier = value );
 		}
 
 		protected override void SetAllMaterialProperties() {
+			SetInt( ShapesMaterialUtils.propAlignment, (int)geometry );
 			SetFloat( ShapesMaterialUtils.propRadius, radius );
 			SetInt( ShapesMaterialUtils.propRadiusSpace, (int)radiusSpace );
 			SetFloat( ShapesMaterialUtils.propThickness, thickness );
@@ -237,11 +238,9 @@ namespace Shapes {
 			SetAllDashValues( now: false );
 		}
 
-		float GetNetDashSpacing() {
-			if( matchDashSpacingToSize && DashSpace == DashSpace.FixedCount )
-				return 0.5f;
-			return matchDashSpacingToSize ? dashStyle.GetNetAbsoluteSize( dashed, thickness ) : dashStyle.GetNetAbsoluteSpacing( dashed, thickness );
-		}
+		void SetAllDashValues( bool now ) => SetAllDashValues( dashStyle, Dashed, matchDashSpacingToSize, thickness, setType: true, now );
+		float GetNetDashSpacing() => GetNetDashSpacing( dashStyle, dashed, matchDashSpacingToSize, thickness );
+		public override bool HasDetailLevels => false;
 
 		#if UNITY_EDITOR
 		protected override void ShapeClampRanges() {

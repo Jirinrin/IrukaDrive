@@ -24,10 +24,11 @@ namespace Shapes {
 			SetInt( ShapesMaterialUtils.propSizeSpace, (int)sizeSpace );
 		}
 
+		public override bool HasDetailLevels => false;
 		public override bool HasScaleModes => false;
 		protected override void ShapeClampRanges() => size = Vector3.Max( default, size );
 		protected override Material[] GetMaterials() => new[] { ShapesMaterialUtils.matCuboid[BlendMode] };
-		protected override Mesh GetInitialMeshAsset() => ShapesMeshUtils.CuboidMesh;
+		protected override Mesh GetInitialMeshAsset() => ShapesMeshUtils.CuboidMesh[0];
 
 		protected override Bounds GetBounds() {
 			if( sizeSpace != ThicknessSpace.Meters )

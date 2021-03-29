@@ -24,10 +24,11 @@ namespace Shapes {
 			SetInt( ShapesMaterialUtils.propRadiusSpace, (int)radiusSpace );
 		}
 
+		public override bool HasDetailLevels => true;
 		public override bool HasScaleModes => false;
 		protected override void ShapeClampRanges() => radius = Mathf.Max( 0f, radius );
 		protected override Material[] GetMaterials() => new[] { ShapesMaterialUtils.matSphere[BlendMode] };
-		protected override Mesh GetInitialMeshAsset() => ShapesMeshUtils.SphereMesh;
+		protected override Mesh GetInitialMeshAsset() => ShapesMeshUtils.SphereMesh[(int)detailLevel];
 
 		protected override Bounds GetBounds() {
 			if( radiusSpace != ThicknessSpace.Meters )

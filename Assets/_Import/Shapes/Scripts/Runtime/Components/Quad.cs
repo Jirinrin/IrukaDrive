@@ -177,17 +177,17 @@ namespace Shapes {
 			get => color;
 			set => SetColorNow( ShapesMaterialUtils.propColor, color = value );
 		}
-		[SerializeField] [ColorUsage( true, ShapesConfig.USE_HDR_COLOR_PICKERS )] Color colorB = Color.white;
+		[SerializeField] [ShapesColorField( true )] Color colorB = Color.white;
 		public Color ColorB {
 			get => colorB;
 			set => SetColorNow( ShapesMaterialUtils.propColorB, colorB = value );
 		}
-		[SerializeField] [ColorUsage( true, ShapesConfig.USE_HDR_COLOR_PICKERS )] Color colorC = Color.white;
+		[SerializeField] [ShapesColorField( true )] Color colorC = Color.white;
 		public Color ColorC {
 			get => colorC;
 			set => SetColorNow( ShapesMaterialUtils.propColorC, colorC = value );
 		}
-		[SerializeField] [ColorUsage( true, ShapesConfig.USE_HDR_COLOR_PICKERS )] Color colorD = Color.white;
+		[SerializeField] [ShapesColorField( true )] Color colorD = Color.white;
 		public Color ColorD {
 			get => colorD;
 			set => SetColorNow( ShapesMaterialUtils.propColorD, colorD = value );
@@ -230,8 +230,9 @@ namespace Shapes {
 			}
 		}
 
+		public override bool HasDetailLevels => false;
 		public override bool HasScaleModes => false;
-		protected override Mesh GetInitialMeshAsset() => ShapesMeshUtils.QuadMesh;
+		protected override Mesh GetInitialMeshAsset() => ShapesMeshUtils.QuadMesh[0];
 		protected override Material[] GetMaterials() => new[] { ShapesMaterialUtils.matQuad[BlendMode] };
 
 		protected override Bounds GetBounds() {

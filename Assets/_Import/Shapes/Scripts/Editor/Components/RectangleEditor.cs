@@ -19,7 +19,7 @@ namespace Shapes {
 		SerializedProperty propThickness = null;
 
 		SceneRectEditor rectEditor;
-		
+
 		public override void OnEnable() {
 			base.OnEnable();
 			rectEditor = new SceneRectEditor( this );
@@ -37,7 +37,7 @@ namespace Shapes {
 
 			using( new EditorGUILayout.HorizontalScope() ) {
 				EditorGUILayout.PrefixLabel( "Type" );
-				ShapesUI.DrawTypeSwitchButtons( propType, ShapesAssets.RectTypeButtonContents, 20 );
+				ShapesUI.DrawTypeSwitchButtons( propType, UIAssets.RectTypeButtonContents );
 			}
 
 			EditorGUILayout.PropertyField( propPivot );
@@ -60,6 +60,7 @@ namespace Shapes {
 				EditorGUILayout.PropertyField( propCornerRadiusMode, new GUIContent( "Radius Mode" ) );
 				CornerRadiusProperties();
 			}
+
 			rectEditor.GUIEditButton();
 
 			base.EndProperties();

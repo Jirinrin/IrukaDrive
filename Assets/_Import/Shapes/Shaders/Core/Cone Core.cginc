@@ -34,7 +34,7 @@ VertexOutput vert(VertexInput v) {
     int sizeSpace = UNITY_ACCESS_INSTANCED_PROP(Props, _SizeSpace);
     float3 center = LocalToWorldPos( float3( 0, 0, 0 ) );
     float3 camRight = CameraToWorldVec( float3( 1, 0, 0 ) );
-     
+    
 	LineWidthData widthDataLength = GetScreenSpaceWidthDataSimple( center, camRight, lengthTarget, sizeSpace );
 	float length = widthDataLength.thicknessMeters;
 	

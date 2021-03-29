@@ -41,7 +41,7 @@ namespace Shapes {
 					File.WriteAllText( path, shaderContents );
 				}
 			}
-			
+
 			// update the current shader state
 			ShapesImportState.Instance.currentShaderRP = currentRP;
 			EditorUtility.SetDirty( ShapesImportState.Instance );
@@ -80,21 +80,22 @@ namespace Shapes {
 						string savePath = $"{ShapesIO.GeneratedMaterialsFolder}/{fullMaterialName}.mat";
 						Material mat = AssetDatabase.LoadAssetAtPath<Material>( savePath );
 
-						void TrySetKeywords() {
+						void TrySetKeywordsAndDefaultProperties() {
 							if( keywords != null ) {
 								foreach( string keyword in keywords )
 									mat.EnableKeyword( keyword );
 							}
+							ShapesMaterials.ApplyDefaultGlobalProperties( mat );
 						}
 
 						if( mat != null ) {
 							EditorUtility.SetDirty( mat );
 							mat.hideFlags = HideFlags.HideInInspector;
-							TrySetKeywords();
+							TrySetKeywordsAndDefaultProperties();
 						} else {
 							Debug.Log( "creating material " + savePath );
 							mat = new Material( shader ) { enableInstancing = true, hideFlags = HideFlags.HideInInspector };
-							TrySetKeywords();
+							TrySetKeywordsAndDefaultProperties();
 							AssetDatabase.CreateAsset( mat, savePath );
 						}
 

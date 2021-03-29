@@ -44,22 +44,20 @@ namespace Shapes {
 
 		public override void OnInspectorGUI() {
 			SerializedObject so = serializedObject;
-			base.BeginProperties( showColor: false );
+			
+			// show detail edit
+			bool showDetailEdit = targets.OfType<Line>().Any( x => x.Geometry == LineGeometry.Volumetric3D );
+			base.BeginProperties( showColor: false,  canEditDetailLevel: showDetailEdit );
 
 			bool updateGeometry = false;
-
 			EditorGUI.BeginChangeCheck();
 			EditorGUILayout.PropertyField( propGeometry, new GUIContent( "Geometry" ) );
 			if( EditorGUI.EndChangeCheck() )
 				updateGeometry = true;
-
-			// shape (positions & thickness)
-			ShapesUI.BeginGroup();
 			EditorGUILayout.PropertyField( propStart );
 			EditorGUILayout.PropertyField( propEnd );
 			ShapesUI.FloatInSpaceField( propThickness, propThicknessSpace );
 			scenePointEditor.GUIEditButton( "Edit Points in Scene" );
-			ShapesUI.EndGroup();
 
 			// style (color, caps, dashes)
 			ShapesUI.BeginGroup();
@@ -76,7 +74,7 @@ namespace Shapes {
 
 			using( new EditorGUILayout.HorizontalScope() ) {
 				EditorGUILayout.PrefixLabel( "End Caps" );
-				if( ShapesUI.DrawTypeSwitchButtons( propEndCaps, ShapesAssets.LineCapButtonContents, 20 ) )
+				if( ShapesUI.DrawTypeSwitchButtons( propEndCaps, UIAssets.LineCapButtonContents ) )
 					updateGeometry = true;
 			}
 

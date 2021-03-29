@@ -36,8 +36,15 @@ namespace Shapes {
 		protected void SetEditMode( bool on ) {
 			if( IsEditing == on ) return;
 			IsEditing = on;
-			if( on )
+			if( on ) {
+				#if UNITY_2019_1_OR_NEWER
+				// turn on gizmos if they're off (global gizmo enabled state was added in 2019.1)
+				if( SceneView.lastActiveSceneView != null )
+					SceneView.lastActiveSceneView.drawGizmos = true;
+				#endif
 				Tools.current = Tool.None;
+			}
+
 			SceneView.RepaintAll();
 		}
 

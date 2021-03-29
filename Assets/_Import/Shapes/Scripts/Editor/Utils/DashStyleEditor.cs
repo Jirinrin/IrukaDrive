@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 
 namespace Shapes {
@@ -15,6 +12,7 @@ namespace Shapes {
 		SerializedProperty propOffset;
 		SerializedProperty propSpacing;
 		SerializedProperty propSnap;
+		SerializedProperty propShapeModifier;
 
 		SerializedProperty propDashed;
 		SerializedProperty propGeometry; // line only
@@ -50,76 +48,60 @@ namespace Shapes {
 			propOffset = propDashSettings.FindPropertyRelative( "offset" );
 			propSpacing = propDashSettings.FindPropertyRelative( "spacing" );
 			propSnap = propDashSettings.FindPropertyRelative( "snap" );
+			propShapeModifier = propDashSettings.FindPropertyRelative( "shapeModifier" );
 		}
 
 		public void DrawProperties() {
-			/*using( new EditorGUILayout.HorizontalScope() ) {
-				EditorGUILayout.PropertyField( propDashed );
-				using( new EditorGUI.DisabledGroupScope( propDashed.boolValue == false ) ) {
-					ShapesUI.PropertyLabelWidth( propDashSize, "size", 30, GUILayout.Width( 60 ) );
+			bool enableDashControls = propDashed.boolValue == false;
+			EditorGUILayout.PropertyField( propDashed );
 
-					bool smol = Screen.width < 300;
-					string label = smol ? "ofs" : "offset";
-					int labelWidth = Screen.width < 300 ? 20 : 40;
-					ShapesUI.PropertyLabelWidth( propDashOffset, label, labelWidth, GUILayout.Width( 80 ) );
-					GUILayout.Label( " " );
-				}
-			}*/
-
-			//using( ShapesUI.TempLabelWidth( 75 ) ) {
-				bool enableDashControls = propDashed.boolValue == false;
-
-			
-				EditorGUILayout.PropertyField( propDashed );
-
-				using( new EditorGUI.DisabledScope( enableDashControls ) ) {
-					using( var chChk = new EditorGUI.ChangeCheckScope() ) {
-						EditorGUILayout.PropertyField( propSpace, new GUIContent( "Length Space" ) );
-						if( chChk.changed && propSpace.enumValueIndex == DashSpace.FixedCount.GetIndex() ) {
-							// todo: might want to do per-instance fixup of this, it's a lil wonky
-							// but you know what, the world is wonky
-							// converts from dash+space to count + space ratio
-							float period = propSpacing.floatValue + propSize.floatValue;
-							propSpacing.floatValue = propSpacing.floatValue / period;
-						}
+			using( new EditorGUI.DisabledScope( enableDashControls ) ) {
+				using( var chChk = new EditorGUI.ChangeCheckScope() ) {
+					EditorGUILayout.PropertyField( propSpace, new GUIContent( "Length Space" ) );
+					if( chChk.changed && propSpace.enumValueIndex == DashSpace.FixedCount.GetIndex() ) {
+						// todo: might want to do per-instance fixup of this, it's a lil wonky
+						// but you know what, the world is wonky
+						// converts from dash+space to count + space ratio
+						float period = propSpacing.floatValue + propSize.floatValue;
+						propSpacing.floatValue = propSpacing.floatValue / period;
 					}
-					EditorGUILayout.PropertyField( propSnap );
 				}
 
-				bool displayInCountRatioMode = propSpace.hasMultipleDifferentValues == false && propSpace.enumValueIndex == DashSpace.FixedCount.GetIndex();
-				using( new EditorGUI.DisabledScope( enableDashControls ) ) {
-					using( ShapesUI.Horizontal ) {
-						// size field
-						using( var chchk = new EditorGUI.ChangeCheckScope() ) {
-							string sizeLabel = displayInCountRatioMode ? "Count" : "Size";
-							EditorGUILayout.PropertyField( propSize, new GUIContent( sizeLabel ) );
-							//ShapesUI.PropertyFieldWidth( propSize, sizeLabel, 32 );
-							if( chchk.changed )
-								propSize.floatValue = Mathf.Max( 0.0001f, propSize.floatValue );
-						}
+				EditorGUILayout.PropertyField( propSnap );
+			}
 
-
-						// link button
-						bool mixedLinkStates = dashSizeLinked.hasMultipleDifferentValues;
-						using( var chchk = new EditorGUI.ChangeCheckScope() ) {
-							bool newVal = GUILayout.Toggle( mixedLinkStates ? false : dashSizeLinked.boolValue, mixedLinkStates ? "—" : "=", EditorStyles.miniButton, GUILayout.Width( 22 ) );
-							if( chchk.changed )
-								dashSizeLinked.boolValue = newVal;
-						}
+			bool displayInCountRatioMode = propSpace.hasMultipleDifferentValues == false && propSpace.enumValueIndex == DashSpace.FixedCount.GetIndex();
+			using( new EditorGUI.DisabledScope( enableDashControls ) ) {
+				using( ShapesUI.Horizontal ) {
+					// size field
+					using( var chchk = new EditorGUI.ChangeCheckScope() ) {
+						string sizeLabel = displayInCountRatioMode ? "Count" : "Size";
+						EditorGUILayout.PropertyField( propSize, new GUIContent( sizeLabel ) );
+						//ShapesUI.PropertyFieldWidth( propSize, sizeLabel, 32 );
+						if( chchk.changed )
+							propSize.floatValue = Mathf.Max( 0.0001f, propSize.floatValue );
 					}
 
-
-					using( ShapesUI.Horizontal ) {
-						DrawSpacingGUI( displayInCountRatioMode );
+					// link button
+					bool mixedLinkStates = dashSizeLinked.hasMultipleDifferentValues;
+					using( var chchk = new EditorGUI.ChangeCheckScope() ) {
+						bool newVal = GUILayout.Toggle( mixedLinkStates ? false : dashSizeLinked.boolValue, mixedLinkStates ? "—" : "=", EditorStyles.miniButton, GUILayout.Width( 22 ) );
+						if( chchk.changed )
+							dashSizeLinked.boolValue = newVal;
 					}
+				}
 
-					using( ShapesUI.Horizontal ) {
-						EditorGUILayout.PropertyField( propOffset );
-						GUILayout.FlexibleSpace();
-					}
 
-					DrawStyleGUI();
-				//}
+				using( ShapesUI.Horizontal ) {
+					DrawSpacingGUI( displayInCountRatioMode );
+				}
+
+				using( ShapesUI.Horizontal ) {
+					EditorGUILayout.PropertyField( propOffset );
+					GUILayout.FlexibleSpace();
+				}
+
+				DrawStyleGUI();
 			}
 		}
 
@@ -128,15 +110,19 @@ namespace Shapes {
 			if( canSetStyle ) {
 				using( new EditorGUILayout.HorizontalScope() ) {
 					EditorGUILayout.PrefixLabel( "Style" );
-					ShapesUI.DrawTypeSwitchButtons( propType, ShapesAssets.LineDashButtonContents, 20 );
+					ShapesUI.DrawTypeSwitchButtons( propType, UIAssets.LineDashButtonContents );
 				}
+
+				bool canEditStyle = propShapeModifier.hasMultipleDifferentValues || ( (DashType)propType.enumValueIndex ).HasModifier();
+				using( new EditorGUI.DisabledScope( canEditStyle == false ) )
+					EditorGUILayout.PropertyField( propShapeModifier );
 			} else { // this else is only applicable for lines
 				using( new EditorGUI.DisabledScope( true ) ) {
 					using( new EditorGUILayout.HorizontalScope() ) {
 						EditorGUILayout.PrefixLabel( new GUIContent( "Style", "3D lines support basic dashes only" ) );
-						GUILayout.Toggle( true, ShapesAssets.LineDashButtonContents[0], ShapesUI.GetMiniButtonStyle( 0, 3 ), GUILayout.MinHeight( 20 ) );
-						GUILayout.Toggle( false, ShapesAssets.LineDashButtonContents[1], ShapesUI.GetMiniButtonStyle( 1, 3 ), GUILayout.MinHeight( 20 ) );
-						GUILayout.Toggle( false, ShapesAssets.LineDashButtonContents[2], ShapesUI.GetMiniButtonStyle( 2, 3 ), GUILayout.MinHeight( 20 ) );
+						GUILayout.Toggle( true, UIAssets.LineDashButtonContents[0], ShapesUI.GetMiniButtonStyle( 0, 3 ), GUILayout.MinHeight( 20 ) );
+						GUILayout.Toggle( false, UIAssets.LineDashButtonContents[1], ShapesUI.GetMiniButtonStyle( 1, 3 ), GUILayout.MinHeight( 20 ) );
+						GUILayout.Toggle( false, UIAssets.LineDashButtonContents[2], ShapesUI.GetMiniButtonStyle( 2, 3 ), GUILayout.MinHeight( 20 ) );
 					}
 				}
 			}

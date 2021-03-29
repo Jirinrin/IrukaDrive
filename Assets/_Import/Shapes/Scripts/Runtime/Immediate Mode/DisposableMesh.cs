@@ -7,32 +7,48 @@ namespace Shapes {
 
 	public class DisposableMesh : IDisposable {
 
-		// mesh states
+		static int activeMeshCount;
+		public static int ActiveMeshCount => activeMeshCount;
+
 		protected Mesh mesh;
 		protected bool meshDirty = false;
-		protected bool hasSetFirstPoint;
 		bool hasMesh = false; // used to detect if mesh needs to update on the fly on draw
 
-		protected void OnSetFirstDataPoint() {
-			hasSetFirstPoint = true;
-			mesh = new Mesh() { hideFlags = HideFlags.DontSave };
-			hasMesh = true;
+		protected void EnsureMeshExists() {
+			if( hasMesh == false || mesh == null ) {
+				mesh = new Mesh { hideFlags = HideFlags.DontSave };
+				activeMeshCount++;
+				hasMesh = true;
+			}
 		}
 
 		public void Dispose() {
-			if( hasSetFirstPoint )
-				mesh.DestroyBranched();
+			if( hasMesh ) {
+				if( DrawCommand.IsAddingDrawCommandsToBuffer ) // we need to keep the mesh around in the draw command, so, don't destroy it just yet
+					DrawCommand.CurrentWritingCommandBuffer.cachedAssets.Add( mesh );
+				else
+					mesh.DestroyBranched();
+
+				activeMeshCount--;
+				hasMesh = false;
+			}
+		}
+
+		protected void ClearMesh() {
+			if( hasMesh )
+				mesh.Clear();
 		}
 
 		protected virtual bool ExternallyDirty() => false;
 		protected virtual void UpdateMesh() => _ = 0;
-		
+
 		protected bool EnsureMeshIsReadyToRender( out Mesh outMesh, Action updateMesh ) {
 			if( hasMesh == false ) {
 				// no mesh exists because no points were added
 				outMesh = null;
 				return false;
 			}
+
 			updateMesh();
 			outMesh = mesh;
 			return hasMesh;

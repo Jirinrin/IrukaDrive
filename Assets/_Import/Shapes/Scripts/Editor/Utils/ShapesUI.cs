@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEditor;
-using Object = System.Object;
 
 // Shapes © Freya Holmér - https://twitter.com/FreyaHolmer/
 // Website & Documentation - https://acegikmo.com/shapes/
@@ -69,15 +68,24 @@ namespace Shapes {
 		public static void ShowColorPicker( Action<Color> colorChangedCallback, Color col ) {
 			Type colorPickerType = EditorAssembly.GetType( "UnityEditor.ColorPicker", throwOnError: true );
 			MethodInfo showColorPicker = colorPickerType.GetMethod( "Show", BindingFlags.Static | BindingFlags.Public, Type.DefaultBinder, CallingConventions.Any, new Type[] { typeof(Action<Color>), typeof(Color), typeof(bool), typeof(bool) }, null );
-			showColorPicker.Invoke( null, new object[] { colorChangedCallback, col, true, ShapesConfig.USE_HDR_COLOR_PICKERS } );
+			bool hdr = ShapesConfig.Instance.useHdrColorPickers;
+			showColorPicker.Invoke( null, new object[] { colorChangedCallback, col, true, hdr } );
 		}
 
 
-		public static bool DrawTypeSwitchButtons( SerializedProperty enumProp, GUIContent[] guiContent, int height = 32 ) {
-			bool[] multiselectPressedState = enumProp.TryGetMultiselectPressedStates();
+		public static bool DrawTypeSwitchButtons( SerializedProperty prop, GUIContent[] guiContent, int[] indexOverride = null, int height = 20 ) {
+			int GetEntryCount() {
+				switch( prop.propertyType ) {
+					case SerializedPropertyType.Enum:    return prop.enumNames.Length;
+					case SerializedPropertyType.Integer: return indexOverride.Length;
+					default:                             throw new IndexOutOfRangeException( "no, illegal >:I" );
+				}
+			}
+
+			bool[] multiselectPressedState = prop.TryGetMultiselectPressedStates( indexOverride, GetEntryCount() );
 
 			bool changed = false;
-			SerializedObject so = enumProp.serializedObject;
+			SerializedObject so = prop.serializedObject;
 			bool multiselect = so.isEditingMultipleObjects;
 
 			EditorGUI.BeginChangeCheck();
@@ -89,14 +97,14 @@ namespace Shapes {
 				if( multiselect )
 					btnState = multiselectPressedState[index];
 				else
-					btnState = index == enumProp.enumValueIndex && enumProp.hasMultipleDifferentValues == false;
+					btnState = index == prop.GetIntValue( indexOverride ) && prop.hasMultipleDifferentValues == false;
 				bool btnStateNew = GUILayout.Toggle( btnState, guiContent[index], style, buttonLayout );
 
 				bool pressedInMultiselect = multiselect && btnState != btnStateNew;
 				bool pressedInSingleselect = multiselect == false && btnStateNew && btnState == false;
 
 				if( pressedInMultiselect || pressedInSingleselect ) {
-					enumProp.enumValueIndex = index;
+					prop.SetIntValue( index, indexOverride );
 					changed = true;
 				}
 			}
@@ -125,6 +133,14 @@ namespace Shapes {
 				// unit suffix
 				GUILayout.Label( unit.Suffix(), layout );
 			}
+		}
+
+		public static void DrawAngleSwitchButtons( SerializedProperty prop ) {
+			GUILayout.BeginHorizontal();
+			EditorGUILayout.PrefixLabel( " " );
+			GUIContent[] angLabels = ( Screen.width < 300 ) ? UIAssets.AngleUnitButtonContentsShort : UIAssets.AngleUnitButtonContents;
+			ShapesUI.DrawTypeSwitchButtons( prop, angLabels, null, 15 );
+			GUILayout.EndHorizontal();
 		}
 
 		public static void EnumToggleProperty( SerializedProperty enumProp, string label ) {
@@ -159,6 +175,11 @@ namespace Shapes {
 			}
 
 			public void Dispose() => GUI.color = temporaryColors.Pop();
+		}
+
+		public class GroupScope : IDisposable {
+			public GroupScope() => BeginGroup();
+			public void Dispose() => EndGroup();
 		}
 
 		public static TemporaryLabelWidth TempLabelWidth( float width ) => new TemporaryLabelWidth( width );
@@ -203,6 +224,7 @@ namespace Shapes {
 		static TemporaryColor TempColor( Color color ) => new TemporaryColor( color );
 		public static EditorGUILayout.HorizontalScope Horizontal => new EditorGUILayout.HorizontalScope();
 		public static EditorGUILayout.VerticalScope Vertical => new EditorGUILayout.VerticalScope();
+		public static GroupScope Group => new GroupScope();
 		static EditorGUI.DisabledScope EnabledIf( bool enabled ) => new EditorGUI.DisabledScope( enabled == false );
 
 		public static void PosColorField( string label, SerializedProperty pos, SerializedProperty col, bool colorEnabled = true, bool positionEnabled = true ) {
@@ -218,6 +240,17 @@ namespace Shapes {
 				PosColorField( label, pos, col, colorEnabled );
 			else
 				PosColorFieldPosOff( label, offDisplayPos, col, colorEnabled );
+		}
+
+		public static bool CenteredButton( GUIContent content ) {
+			bool pressed = false;
+			using( Horizontal ) {
+				GUILayout.FlexibleSpace();
+				pressed = GUILayout.Button( content, GUILayout.ExpandWidth( false ) );
+				GUILayout.FlexibleSpace();
+			}
+
+			return pressed;
 		}
 
 		public static void PosColorField( Rect rect, SerializedProperty pos, SerializedProperty col, bool colorEnabled = true ) {
@@ -295,6 +328,50 @@ namespace Shapes {
 				hasPrefabOverride ? BoldPopupStyle : EditorStyles.popup,
 				hasPrefabOverride ? EditorStyles.boldLabel : EditorStyles.label
 			} );
+		}
+
+		static Rect enumRect = default;
+
+		// presumes enum is of int type
+		public static void SortedEnumPopup<T>( GUIContent label, SerializedProperty prop, string[] enumLabels = null ) where T : Enum {
+			FieldInfo[] fields = typeof(T).GetFields()
+				.Where( fi => fi.IsStatic )
+				.OrderBy( fi => fi.MetadataToken )
+				.ToArray();
+			int[] displayOrder = fields.Select( x => Convert.ToInt32( (T)x.GetValue( null ) ) ).ToArray();
+			if( enumLabels == null )
+				enumLabels = fields.Select( x => ( (T)x.GetValue( null ) ).GetDescription() ).ToArray();
+			int[] valuesSorted = (int[])Enum.GetValues( typeof(T) );
+			int currentValue = valuesSorted[prop.enumValueIndex]; // enum index to value
+			int displayIndex = Array.IndexOf( displayOrder, currentValue ); // value to display index
+
+			void SetPropertyValue( int newDisplayIndex ) {
+				int newValue = displayOrder[newDisplayIndex]; // display index to value
+				prop.enumValueIndex = Array.IndexOf( valuesSorted, newValue ); // value to enum index
+				prop.serializedObject.ApplyModifiedProperties();
+			}
+
+			using( Horizontal ) {
+				EditorGUILayout.PrefixLabel( label );
+				if( GUILayout.Button( prop.hasMultipleDifferentValues ? "-" : enumLabels[displayIndex].Replace( "_", "" ), EditorStyles.popup ) ) {
+					GenericMenu menu = new GenericMenu();
+					for( int i = 0; i < enumLabels.Length; i++ ) {
+						string displayName = enumLabels[i];
+						bool addSeparator = displayName.EndsWith( "_" );
+						if( addSeparator )
+							displayName = displayName.Substring( 0, displayName.Length - 1 );
+						int j = i;
+						menu.AddItem( new GUIContent( displayName ), prop.hasMultipleDifferentValues == false && i == displayIndex, () => SetPropertyValue( j ) );
+						if( addSeparator )
+							menu.AddSeparator( string.Empty );
+					}
+
+					menu.DropDown( enumRect );
+				}
+
+				if( Event.current.type == EventType.Repaint )
+					enumRect = GUILayoutUtility.GetLastRect();
+			}
 		}
 
 

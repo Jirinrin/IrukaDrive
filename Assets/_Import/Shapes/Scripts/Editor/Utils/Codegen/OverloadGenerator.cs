@@ -30,15 +30,19 @@ namespace Shapes {
 		}
 
 	}
-	
+
 	class OverloadGenerator {
 		public string overloadName;
+		public string objectName;
+		public string summary;
 		public TargetMethodCall targetCall;
 		public List<IParamSelector> paramSelectors = new List<IParamSelector>();
 		public Dictionary<string, string> constAssigns = new Dictionary<string, string>();
 
-		public OverloadGenerator( string overloadName, TargetMethodCall targetCall ) {
+		public OverloadGenerator( string overloadName, TargetMethodCall targetCall, string summary ) {
+			this.summary = summary;
 			this.overloadName = overloadName;
+			this.objectName = overloadName; // default to this! though not always applicable
 			this.targetCall = targetCall;
 		}
 
@@ -53,9 +57,8 @@ namespace Shapes {
 		}
 
 		public void GenerateAndAppend( List<string> lines ) => lines.AddRange( GenerateOverloads( paramSelectors.ToArray() ) );
-		
+
 		List<string> GenerateOverloads( params IParamSelector[] overloadParams ) {
-			
 			int totalVariants = overloadParams.Product( o => o.Variants ); // calc variant count
 			Debug.Log( $"Gen: {totalVariants} {overloadName} variants" );
 
@@ -85,25 +88,31 @@ namespace Shapes {
 		}
 
 		string GetOverloadStr( List<Param> overloadParams ) {
+			// docs
+			string inlineDocs = $"/// <summary>{summary}</summary>";
+
+			// actual function
 			string overloadParamsStr = string.Join( ", ", overloadParams.Select( p => p.FullMethodSig ) );
 
 			string callParams = "";
 			foreach( TargetArg arg in targetCall.args ) {
 				Param overloadParam = overloadParams.FirstOrDefault( p => p.targetArgNames.Contains( arg.name ) );
-				if( overloadParam != null ) // see if we have an overload param
+				if( overloadParam != null ) { // see if we have an overload param
 					callParams += overloadParam.methodCallStr;
-				else if( constAssigns.ContainsKey( arg.name ) ) // see if we have any constant arguments
-					callParams += constAssigns[arg.name]; 
+					inlineDocs += $"<param name=\"{overloadParam.methodSigName}\">{overloadParam.desc.Replace( "[OBJECTNAME]", objectName.ToLower() )}</param>";
+				} else if( constAssigns.ContainsKey( arg.name ) ) // see if we have any constant arguments
+					callParams += constAssigns[arg.name];
 				else if( arg.HasDefault ) // see if we have a default value
 					callParams += arg.@default;
 				else // else default to error :c
 					callParams += $"<color=#f00>[MISSING {arg.name}]</color>";
+
 				callParams += ", ";
 			}
 
 			callParams = callParams.Substring( 0, callParams.Length - 2 ); // remove last comma
 
-			return $"\t\tpublic static void {overloadName}( {overloadParamsStr} ) => {targetCall.name}( {callParams} );";
+			return $"\t\t{inlineDocs}\n\t\tpublic static void {overloadName}( {overloadParamsStr} ) => {targetCall.name}( {callParams} );";
 		}
 
 

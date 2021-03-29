@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEditor;
 
 // Shapes © Freya Holmér - https://twitter.com/FreyaHolmer/
@@ -14,6 +15,7 @@ namespace Shapes {
 		SerializedProperty propColorOuterStart = null;
 		SerializedProperty propColorInnerEnd = null;
 		SerializedProperty propColorOuterEnd = null;
+		SerializedProperty propGeometry = null;
 		SerializedProperty propAngRadiansStart = null;
 		SerializedProperty propAngRadiansEnd = null;
 		SerializedProperty propAngUnitInput = null;
@@ -43,6 +45,8 @@ namespace Shapes {
 		public override void OnInspectorGUI() {
 			base.BeginProperties( showColor: false );
 
+			EditorGUILayout.PropertyField( propGeometry );
+
 			// Color properties
 			EditorGUILayout.PropertyField( propColorMode );
 			switch( (Disc.DiscColorMode)propColorMode.enumValueIndex ) {
@@ -67,7 +71,7 @@ namespace Shapes {
 
 			using( new EditorGUILayout.HorizontalScope() ) {
 				EditorGUILayout.PrefixLabel( "Type" );
-				ShapesUI.DrawTypeSwitchButtons( propType, ShapesAssets.DiscTypeButtonContents, 20 );
+				ShapesUI.DrawTypeSwitchButtons( propType, UIAssets.DiscTypeButtonContents );
 			}
 
 			DiscType selectedType = (DiscType)propType.enumValueIndex;
@@ -83,8 +87,10 @@ namespace Shapes {
 			using( new EditorGUI.DisabledScope( canEditInSceneView == false ) )
 				discEditor.GUIEditButton();
 
+			bool hasDashablesInSelection = targets.Any( x => ( x as Disc ).HasThickness );
 			ShapesUI.BeginGroup();
-			dashEditor.DrawProperties();
+			using( new EditorGUI.DisabledScope( hasDashablesInSelection == false ) )
+				dashEditor.DrawProperties();
 			ShapesUI.EndGroup();
 
 			base.EndProperties();
@@ -97,14 +103,9 @@ namespace Shapes {
 			using( new EditorGUI.DisabledScope( selectedType.HasSector() == false && serializedObject.isEditingMultipleObjects == false ) ) {
 				ShapesUI.AngleProperty( propAngRadiansStart, "Angle start", propAngUnitInput, angLabelLayout );
 				ShapesUI.AngleProperty( propAngRadiansEnd, "Angle end", propAngUnitInput, angLabelLayout );
-				GUILayout.BeginHorizontal();
-				EditorGUILayout.PrefixLabel( " " );
-				GUIContent[] angLabels = ( Screen.width < 300 ) ? ShapesAssets.AngleUnitButtonContentsShort : ShapesAssets.AngleUnitButtonContents;
-				ShapesUI.DrawTypeSwitchButtons( propAngUnitInput, angLabels, 15 );
-				GUILayout.EndHorizontal();
+				ShapesUI.DrawAngleSwitchButtons(propAngUnitInput);
 			}
 		}
-
 
 	}
 

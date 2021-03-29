@@ -6,18 +6,23 @@
 
 UNITY_INSTANCING_BUFFER_START(Props)
 UNITY_DEFINE_INSTANCED_PROP(int, _ScaleMode)
-UNITY_DEFINE_INSTANCED_PROP(float4, _Color)
+UNITY_DEFINE_INSTANCED_PROP(half4, _Color)
 UNITY_DEFINE_INSTANCED_PROP(float4, _PointStart)
 UNITY_DEFINE_INSTANCED_PROP(float4, _PointEnd)
-UNITY_DEFINE_INSTANCED_PROP(float, _Thickness)
+UNITY_DEFINE_INSTANCED_PROP(half, _Thickness)
 UNITY_DEFINE_INSTANCED_PROP(int, _ThicknessSpace)
-UNITY_DEFINE_INSTANCED_PROP(float, _DashSize)
-UNITY_DEFINE_INSTANCED_PROP(float, _DashOffset)
+UNITY_DEFINE_INSTANCED_PROP(half, _DashSize)
+UNITY_DEFINE_INSTANCED_PROP(half, _DashOffset)
 UNITY_DEFINE_INSTANCED_PROP(int, _Alignment)
 UNITY_INSTANCING_BUFFER_END(Props)
 
 #define ALIGNMENT_FLAT 0
 #define ALIGNMENT_BILLBOARD 1
+
+#define IP_nrmCoordLat intp0.x
+#define IP_nrmCoordLong intp0.y
+#define IP_radius intp0.z
+#define IP_pxCoverage intp0.w
  
 struct VertexInput {
     UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -29,20 +34,11 @@ struct VertexInput {
 };
 struct VertexOutput {
     float4 pos : SV_POSITION;
-    float4 color : TEXCOORD0;
-    float pxCoverage : TEXCOORD1;
-    float3 uv0 : TEXCOORD2;
-    float radius : TEXCOORD3;
-    #ifdef DASHED
-        float dashCoord : TEXCOORD4;
-    #endif
-    #if defined(CAP_ROUND) || defined(CAP_SQUARE)
-        float coordLongStart : TEXCOORD4;
-        float coordLongEnd : TEXCOORD5;
-    #endif
+    half4 color : TEXCOORD0;
+    half4 intp0 : TEXCOORD1;
     #if defined(IS_JOIN_MESH) && defined(JOIN_ROUND)
-        float3 worldPos : TEXCOORD6;
-        float3 origin : TEXCOORD7;
+        float3 worldPos : TEXCOORD2;
+        float3 origin : TEXCOORD3;
     #endif
     UNITY_VERTEX_INPUT_INSTANCE_ID
     UNITY_VERTEX_OUTPUT_STEREO
@@ -84,86 +80,88 @@ VertexOutput vert (VertexInput v) {
     float3 pt = 0;
     float3 ptPrev = 0;
     float3 ptNext = 0;
-    float3 dirToCam = 0;
+    half3 dirToCam = 0;
     switch( alignment ){
-        case ALIGNMENT_FLAT:
+        case ALIGNMENT_FLAT: {
             // local space
             pt = float3( v.vertex.xy, 0 );
             ptWorld = LocalToWorldPos( pt );
             ptPrev = float3( v.uv1.xy, 0 );
             ptNext = float3( v.uv2.xy, 0 );
-        break;
-        case ALIGNMENT_BILLBOARD:
+            break;
+        }
+        case ALIGNMENT_BILLBOARD: {
             pt = LocalToWorldPos( v.vertex.xyz );
             ptWorld = pt;
             ptPrev = LocalToWorldPos( v.uv1 );
             ptNext = LocalToWorldPos( v.uv2 );
             dirToCam = DirectionToNearPlanePos( pt );
-        break;
+            break;
+        }
     }
     
 
     // tangents & normals
-    float3 tangentPrev = normalize( pt - ptPrev );
-    float3 tangentNext = normalize( ptNext - pt );
-    float3 normalPrev = 0;
-    float3 normalNext = 0;
+    half3 tangentPrev = normalize( pt - ptPrev );
+    half3 tangentNext = normalize( ptNext - pt );
+    half3 normalPrev = 0;
+    half3 normalNext = 0;
     switch( alignment ){
-        case ALIGNMENT_FLAT:
+        case ALIGNMENT_FLAT: {
             // local space
-            normalPrev = float3( tangentPrev.y, -tangentPrev.x, 0 );
-            normalNext = float3( tangentNext.y, -tangentNext.x, 0 );
-        break;
-        case ALIGNMENT_BILLBOARD:
+            normalPrev = half3( tangentPrev.y, -tangentPrev.x, 0 );
+            normalNext = half3( tangentNext.y, -tangentNext.x, 0 );
+            break;
+        }
+        case ALIGNMENT_BILLBOARD: {
             // world space
             normalPrev = normalize(cross( dirToCam, tangentPrev ));
             normalNext = normalize(cross( dirToCam, tangentNext ));
-        break;
+            break;
+        }
     }
-    
-    
     
     int scaleMode = UNITY_ACCESS_INSTANCED_PROP(Props, _ScaleMode);
     half uniformScale = GetUniformScale();
 	half scaleThickness = scaleMode == SCALE_MODE_UNIFORM ? 1 : 1.0/uniformScale;
     
     // thickness stuff
-    float thickness = UNITY_ACCESS_INSTANCED_PROP(Props, _Thickness) * v.uv0.w * scaleThickness; // global thickness * per-point thickness * transform scaling
+    half thickness = UNITY_ACCESS_INSTANCED_PROP(Props, _Thickness) * v.uv0.w * scaleThickness; // global thickness * per-point thickness * transform scaling
     
     // radius calc
     int thicknessSpace = UNITY_ACCESS_INSTANCED_PROP(Props, _ThicknessSpace);
-	float3 camRight = CameraToWorldVec( float3( 1, 0, 0 ) );
+	half3 camRight = CameraToWorldVec( half3( 1, 0, 0 ) );
 	LineWidthData widthData = GetScreenSpaceWidthData( ptWorld, camRight, thickness, thicknessSpace );
-	o.pxCoverage = widthData.thicknessPixelsTarget;
-	float vertexRadius = widthData.thicknessMeters * 0.5;
+	o.IP_pxCoverage = widthData.thicknessPixelsTarget / scaleThickness; // hack: this is a lil weird honestly - I think we're mixing local vs world somehere before this
+	half vertexRadius = widthData.thicknessMeters * 0.5;
 	#if LOCAL_ANTI_ALIASING_QUALITY > 0
-        float paddingWorldSpace = (0.5 * AA_PADDING_PX / widthData.pxPerMeter);
+        half paddingWorldSpace = (0.5 * AA_PADDING_PX / widthData.pxPerMeter);
         bool isEndpoint = abs(v.uv0.z) > 0;
-        float endpointExtrude = isEndpoint ? paddingWorldSpace : 0;
+        half endpointExtrude = isEndpoint ? paddingWorldSpace : 0;
     #else
-        float endpointExtrude = 0;
+        half endpointExtrude = 0;
     #endif
-    o.radius = vertexRadius / widthData.aaPaddingScale; // actual radius of the visuals
+    o.IP_radius = vertexRadius / widthData.aaPaddingScale; // actual radius of the visuals
 
     // miter point calc
-    float turnDirection = sign(dot( tangentPrev, normalNext ));
+    half turnDirection = sign(dot( tangentPrev, normalNext ));
     #if defined(IS_JOIN_MESH) // only draw joins
-        float tSide = (-turnDirection*v.uv0.y + 1)/2;
-        float tExtVsMiter = (v.uv0.x + 1)/2;
-        float3 normalPrevFlip = turnDirection*normalPrev;
-        float3 normalNextFlip = turnDirection*normalNext;
-        float3 sideExtrudeDir = lerp( normalPrevFlip, normalNextFlip, tSide );
-        float3 centerNormalDir = normalize( normalPrevFlip + normalNextFlip );
-        float3 miterDir;
-        float miterLength;
+        half tSide = (-turnDirection*v.uv0.y + 1)/2;
+        half tExtVsMiter = (v.uv0.x + 1)/2;
+        half3 normalPrevFlip = turnDirection*normalPrev;
+        half3 normalNextFlip = turnDirection*normalNext;
+        half3 sideExtrudeDir = lerp( normalPrevFlip, normalNextFlip, tSide );
+        half3 centerNormalDir = normalize( normalPrevFlip + normalNextFlip );
+        half3 miterDir;
+        half miterLength;
         GetMiterOffset( /*out*/ miterDir, /*out*/ miterLength, sideExtrudeDir, centerNormalDir, vertexRadius );
-        float3 miterOffset = miterDir * miterLength;
-        float3 vertOffset = lerp( miterOffset, sideExtrudeDir * vertexRadius, tExtVsMiter ) * abs(v.uv0.x);
+        half3 miterOffset = miterDir * miterLength;
+        half3 vertOffset = lerp( miterOffset, sideExtrudeDir * vertexRadius, tExtVsMiter ) * abs(v.uv0.x);
         float3 vertPos = pt + vertOffset;
     #else // only draw line segments
     
-        float3 miterDir;
-        float miterLength;
+        half3 miterDir;
+        half miterLength;
         
         // all these boys use proper miters
         #if defined(JOIN_MITER) || defined(JOIN_ROUND) || defined(JOIN_BEVEL) 
@@ -180,9 +178,9 @@ VertexOutput vert (VertexInput v) {
         #endif
         
         
-        float3 scaledMiterNormal = miterDir * miterLength;
+        half3 scaledMiterNormal = miterDir * miterLength;
         #if defined(JOIN_ROUND) || defined(JOIN_BEVEL)
-            float3 extrude = lerp(normalPrev, normalNext, (v.uv0.y + 1)/2 ) * vertexRadius;
+            half3 extrude = lerp(normalPrev, normalNext, (v.uv0.y + 1)/2 ) * vertexRadius;
             extrude = lerp( extrude, scaledMiterNormal, (-v.uv0.x*turnDirection + 1)/2 );
             float3 vertPos = pt + extrude * v.uv0.x;
         #else
@@ -190,7 +188,7 @@ VertexOutput vert (VertexInput v) {
         #endif
         #if LOCAL_ANTI_ALIASING_QUALITY > 0
             vertPos += tangentPrev * endpointExtrude * v.uv0.z; // is 0 if not an endpoint
-            float distToPrev = distance(pt, ptPrev);
+            half distToPrev = distance(pt, ptPrev);
             v.uv0.z *= (distToPrev + endpointExtrude)/(distToPrev); // ratio for extrude dist compensation 
         #endif
     #endif
@@ -202,26 +200,22 @@ VertexOutput vert (VertexInput v) {
 
     o.color = GammaCorrectVertexColorsIfNeeded(v.color) * UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
 
-    o.uv0 = v.uv0;
-    
     // todo: this causes *bad things* with anti-aliasing
     // it's complicated - this doesn't work due to how barycentric interpolation skews coordinates.
     // just scaling the UVs overscales those skew regions leading to dents in the AA region
-    o.uv0.x *= widthData.aaPaddingScale; // scale compensate for fading
+    o.IP_nrmCoordLat = v.uv0.x * widthData.aaPaddingScale; // scale compensate for fading
+    o.IP_nrmCoordLong = v.uv0.z;
 
     //float depth = unity_ObjectToWorld[2][3];
     switch( alignment ){
-        case ALIGNMENT_FLAT:
-            // world space
+        case ALIGNMENT_FLAT: {
             o.pos = LocalToClipPos( float4( vertPos, 1 ) );
-        break;
-        case ALIGNMENT_BILLBOARD:
+            break;
+        }
+        case ALIGNMENT_BILLBOARD: {
             o.pos = WorldToClipPos( float4( vertPos, 1 ) );
-        
-            /*// view space
-            vertPos.z = originalClipSpacePos.z;
-            o.pos = float4( vertPos, originalClipSpacePos.w );*/
-        break;
+            break;
+        }
     }
     
     return o;
@@ -230,27 +224,24 @@ VertexOutput vert (VertexInput v) {
 FRAG_OUTPUT_V4 frag( VertexOutput i ) : SV_Target {
     UNITY_SETUP_INSTANCE_ID(i);
     
-    // debug padding
+    // debug padding 
     // float2 paddingDebug = abs(float2( i.uv0.x, i.uv0.z )) >= 1 ? 1 : 0;
     //return ShapesOutput( float4(uv,0,1), shape_mask );
-    
-    float shape_mask = 1;
+    half shape_mask = 1;
     
     // Round joins
     #if defined(IS_JOIN_MESH) && defined(JOIN_ROUND)
-        shape_mask = SdfToMask( distance( i.worldPos, i.origin ) / i.radius, 1 );
+        shape_mask = SdfToMask( distance( i.worldPos, i.origin ) / i.IP_radius, 1 );
     #endif
         
 	// used for line segments and bevel joins
 	#if LOCAL_ANTI_ALIASING_QUALITY > 0 && ( defined(IS_JOIN_MESH) == false || (defined(IS_JOIN_MESH) && defined(JOIN_BEVEL)) )
-        float maskEdges = GetLineLocalAA( i.uv0.x, i.pxCoverage );
-        float maskEdgesCap = GetLineLocalAA( i.uv0.z, i.pxCoverage );
+        half maskEdges = GetLineLocalAA( i.IP_nrmCoordLat, i.IP_pxCoverage );
+        half maskEdgesCap = GetLineLocalAA( i.IP_nrmCoordLong, i.IP_pxCoverage );
         shape_mask = min( shape_mask, min( maskEdges, maskEdgesCap ) );
     #endif
-    
-    
-    
-    shape_mask *= saturate( i.pxCoverage );
+
+    shape_mask *= saturate( i.IP_pxCoverage );
     
     return ShapesOutput( i.color, shape_mask );
     

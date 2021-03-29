@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using UnityEngine;
+using UnityEngine.Serialization;
 
 // Shapes © Freya Holmér - https://twitter.com/FreyaHolmer/
 // Website & Documentation - https://acegikmo.com/shapes/
@@ -11,12 +9,17 @@ namespace Shapes {
 
 	[ExecuteInEditMode]
 	[AddComponentMenu( "Shapes/Polygon" )]
-	public class Polygon : ShapeRenderer {
+	public class Polygon : ShapeRendererFillable {
 
 		#if UNITY_EDITOR
-		public List<Vector2> PolyPoints => polyPoints;
+		[Obsolete( "Please use " + nameof(points) + " instead - this one is deprecated", error: true )]
+		public List<Vector2> PolyPoints => points;
 		#endif
-		[SerializeField] List<Vector2> polyPoints = new List<Vector2>() {
+
+		/// <summary>
+		/// <remarks>IMPORTANT: if you modify this list, you need to set meshOutOfDate to true, otherwise your changes won't apply</remarks> 
+		/// </summary>
+		[FormerlySerializedAs( "polyPoints" )] [SerializeField] public List<Vector2> points = new List<Vector2>() {
 			new Vector2( 1f, 0f ),
 			new Vector2( 0.5f, 0.86602545f ),
 			new Vector2( -0.5f, 0.8660254f ),
@@ -35,98 +38,36 @@ namespace Shapes {
 			}
 		}
 
-		// global color fill gradient shenanigans
-		#if UNITY_EDITOR
-		public ShapeFill Fill => fill;
-		#endif
-		[SerializeField] ShapeFill fill = new ShapeFill();
-		[SerializeField] bool useFill = false;
-		int FillTypeShaderInt => useFill ? fill.GetShaderFillModeInt() : ShapeFill.FILL_NONE;
-		public bool UseFill {
-			get => useFill;
-			set {
-				useFill = value;
-				SetIntNow( ShapesMaterialUtils.propFillType, FillTypeShaderInt );
-			}
-		}
-		public FillType FillType {
-			get => fill.type;
-			set {
-				fill.type = value;
-				SetIntNow( ShapesMaterialUtils.propFillType, FillTypeShaderInt );
-			}
-		}
-		public FillSpace FillSpace {
-			get => fill.space;
-			set => SetIntNow( ShapesMaterialUtils.propFillSpace, (int)( fill.space = value ) );
-		}
-		public Vector3 FillRadialOrigin {
-			get => fill.radialOrigin;
-			set {
-				fill.radialOrigin = value;
-				SetVector4Now( ShapesMaterialUtils.propFillStart, fill.GetShaderStartVector() );
-			}
-		}
-		public float FillRadialRadius {
-			get => fill.radialRadius;
-			set {
-				fill.radialRadius = value;
-				SetVector4Now( ShapesMaterialUtils.propFillStart, fill.GetShaderStartVector() );
-			}
-		}
-		public Vector3 FillLinearStart {
-			get => fill.linearStart;
-			set {
-				fill.linearStart = value;
-				SetVector4Now( ShapesMaterialUtils.propFillStart, fill.GetShaderStartVector() );
-			}
-		}
-		public Vector3 FillLinearEnd {
-			get => fill.linearEnd;
-			set => SetVector3Now( ShapesMaterialUtils.propFillEnd, fill.linearEnd = value );
-		}
-		public Color FillColorStart {
-			get => fill.colorStart;
-			set => SetColorNow( ShapesMaterialUtils.propColor, fill.colorStart = value );
-		}
-		public Color FillColorEnd {
-			get => fill.colorEnd;
-			set => SetColorNow( ShapesMaterialUtils.propColorEnd, fill.colorEnd = value );
-		}
-
-
-		public int Count => polyPoints.Count;
+		public int Count => points.Count;
 		public Vector2 this[ int i ] {
-			get => polyPoints[i];
+			get => points[i];
 			set {
-				polyPoints[i] = value;
+				points[i] = value;
 				meshOutOfDate = true;
 			}
 		}
 
 		public void SetPointPosition( int index, Vector2 position ) {
 			if( index < 0 || index >= Count ) throw new IndexOutOfRangeException();
-			polyPoints[index] = position;
+			points[index] = position;
 			meshOutOfDate = true;
 		}
 
 		public void SetPoints( IEnumerable<Vector2> points ) {
-			this.polyPoints.Clear();
+			this.points.Clear();
 			AddPoints( points );
 		}
 
 		public void AddPoints( IEnumerable<Vector2> points ) {
-			polyPoints.AddRange( points );
+			this.points.AddRange( points );
 			meshOutOfDate = true;
 		}
 
 		public void AddPoint( Vector2 point ) {
-			polyPoints.Add( point );
+			points.Add( point );
 			meshOutOfDate = true;
 		}
 
-		// todo: move this to base class?
-		bool meshOutOfDate = true;
 		protected override bool UseCamOnPreCull => true;
 
 		protected override void CamOnPreCull() {
@@ -136,31 +77,21 @@ namespace Shapes {
 			}
 		}
 
-		protected override void SetAllMaterialProperties() {
-			// only uses base properties
-			if( useFill ) {
-				SetInt( ShapesMaterialUtils.propFillSpace, (int)fill.space );
-				SetVector4( ShapesMaterialUtils.propFillStart, fill.GetShaderStartVector() );
-				SetVector3( ShapesMaterialUtils.propFillEnd, fill.linearEnd );
-				SetColor( ShapesMaterialUtils.propColor, fill.colorStart );
-				SetColor( ShapesMaterialUtils.propColorEnd, fill.colorEnd );
-			}
-
-			SetInt( ShapesMaterialUtils.propFillType, FillTypeShaderInt );
-		}
+		protected override void SetAllMaterialProperties() => SetFillProperties();
 
 		public override bool HasScaleModes => false;
+		public override bool HasDetailLevels => false;
 		protected override Material[] GetMaterials() => new[] { ShapesMaterialUtils.matPolygon[BlendMode] };
 		protected override MeshUpdateMode MeshUpdateMode => MeshUpdateMode.SelfGenerated;
 
-		protected override void GenerateMesh() => ShapesMeshGen.GenPolygonMesh( Mesh, polyPoints, triangulation );
+		protected override void GenerateMesh() => ShapesMeshGen.GenPolygonMesh( Mesh, points, triangulation );
 
 		protected override Bounds GetBounds() {
-			if( polyPoints.Count < 2 )
+			if( points.Count < 2 )
 				return default;
 			Vector3 min = Vector3.one * float.MaxValue;
 			Vector3 max = Vector3.one * float.MinValue;
-			foreach( Vector3 pt in polyPoints ) {
+			foreach( Vector3 pt in points ) {
 				min = Vector3.Min( min, pt );
 				max = Vector3.Max( max, pt );
 			}

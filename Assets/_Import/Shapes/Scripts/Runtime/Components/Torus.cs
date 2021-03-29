@@ -41,8 +41,9 @@ namespace Shapes {
 			thickness = Mathf.Max( 0f, thickness );
 		}
 
+		public override bool HasDetailLevels => true;
 		protected override Material[] GetMaterials() => new[] { ShapesMaterialUtils.matTorus[BlendMode] };
-		protected override Mesh GetInitialMeshAsset() => ShapesMeshUtils.TorusMesh;
+		protected override Mesh GetInitialMeshAsset() => ShapesMeshUtils.TorusMesh[(int)detailLevel];
 
 		protected override Bounds GetBounds() {
 			if( radiusSpace != ThicknessSpace.Meters )

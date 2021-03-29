@@ -8,7 +8,7 @@ namespace Shapes {
 	[Serializable]
 	public struct PolylinePoint {
 		public Vector3 point;
-		[ColorUsage( true, ShapesConfig.USE_HDR_COLOR_PICKERS )] public Color color;
+		[ShapesColorField( true )] public Color color;
 		public float thickness;
 
 		public static PolylinePoint Lerp( PolylinePoint a, PolylinePoint b, float t ) =>

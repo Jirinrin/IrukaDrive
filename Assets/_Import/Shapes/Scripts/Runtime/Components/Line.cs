@@ -46,7 +46,7 @@ namespace Shapes {
 			get => color;
 			set => SetColorNow( ShapesMaterialUtils.propColor, color = value );
 		}
-		[SerializeField] [ColorUsage( true, ShapesConfig.USE_HDR_COLOR_PICKERS )] Color colorEnd = Color.white;
+		[SerializeField] [ShapesColorField( true )] Color colorEnd = Color.white;
 		public Color ColorEnd {
 			get => colorEnd;
 			set => SetColorNow( ShapesMaterialUtils.propColorEnd, colorEnd = value );
@@ -84,6 +84,13 @@ namespace Shapes {
 			}
 		}
 		[SerializeField] bool matchDashSpacingToSize = true;
+		public bool MatchDashSpacingToSize {
+			get => matchDashSpacingToSize;
+			set {
+				matchDashSpacingToSize = value;
+				SetAllDashValues( now: true );
+			}
+		}
 		[SerializeField] bool dashed = false;
 		public bool Dashed {
 			get => dashed;
@@ -92,7 +99,6 @@ namespace Shapes {
 				SetAllDashValues( now: true );
 			}
 		}
-
 		[SerializeField] DashStyle dashStyle = DashStyle.DefaultDashStyleLine;
 		public float DashSize {
 			get => dashStyle.size;
@@ -130,23 +136,13 @@ namespace Shapes {
 			get => dashStyle.type;
 			set => SetIntNow( ShapesMaterialUtils.propDashType, (int)( dashStyle.type = value ) );
 		}
-
-		void SetAllDashValues( bool now ) {
-			float netDashSize = dashStyle.GetNetAbsoluteSize( dashed, thickness );
-			if( Dashed ) {
-				SetFloat( ShapesMaterialUtils.propDashSpacing, GetNetDashSpacing() );
-				SetFloat( ShapesMaterialUtils.propDashOffset, dashStyle.offset );
-				SetInt( ShapesMaterialUtils.propDashSpace, (int)dashStyle.space );
-				SetInt( ShapesMaterialUtils.propDashSnap, (int)dashStyle.snap );
-				if( Geometry != LineGeometry.Volumetric3D )
-					SetInt( ShapesMaterialUtils.propDashType, (int)dashStyle.type ); // only applicable to non-3D lines
-			}
-
-			if( now )
-				SetFloatNow( ShapesMaterialUtils.propDashSize, netDashSize );
-			else
-				SetFloat( ShapesMaterialUtils.propDashSize, netDashSize );
+		public float DashShapeModifier {
+			get => dashStyle.shapeModifier;
+			set => SetFloatNow( ShapesMaterialUtils.propDashShapeModifier, dashStyle.shapeModifier = value );
 		}
+
+		void SetAllDashValues( bool now ) => SetAllDashValues( dashStyle, Dashed, matchDashSpacingToSize, thickness, Geometry != LineGeometry.Volumetric3D, now );
+		float GetNetDashSpacing() => GetNetDashSpacing( dashStyle, dashed, matchDashSpacingToSize, thickness );
 
 		protected override void SetAllMaterialProperties() {
 			SetVector3( ShapesMaterialUtils.propPointStart, start );
@@ -158,11 +154,6 @@ namespace Shapes {
 			SetAllDashValues( now: false );
 		}
 
-		float GetNetDashSpacing() {
-			if( matchDashSpacingToSize && DashSpace == DashSpace.FixedCount )
-				return 0.5f;
-			return matchDashSpacingToSize ? dashStyle.GetNetAbsoluteSize( dashed, thickness ) : dashStyle.GetNetAbsoluteSpacing( dashed, thickness );
-		}
 
 		protected override Bounds GetBounds() {
 			// presume 0 world space padding when pixels or noots are used
@@ -173,7 +164,8 @@ namespace Shapes {
 		}
 
 		protected override Material[] GetMaterials() => new[] { ShapesMaterialUtils.GetLineMat( geometry, endCaps )[BlendMode] };
-		protected override Mesh GetInitialMeshAsset() => ShapesMeshUtils.GetLineMesh( geometry, endCaps );
+		protected override Mesh GetInitialMeshAsset() => ShapesMeshUtils.GetLineMesh( geometry, endCaps, detailLevel );
+		public override bool HasDetailLevels => true;
 
 		protected override void ShapeClampRanges() {
 			thickness = Mathf.Max( 0, thickness );

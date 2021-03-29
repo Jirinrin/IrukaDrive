@@ -1,7 +1,5 @@
 ﻿using System;
-using System.ComponentModel.Design;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 // Shapes © Freya Holmér - https://twitter.com/FreyaHolmer/
 // Website & Documentation - https://acegikmo.com/shapes/
@@ -10,6 +8,16 @@ namespace Shapes {
 	public static class ShapesMaterialUtils {
 
 		// properties
+		public static readonly int propZTest = Shader.PropertyToID( "_ZTest" ); // used for all shapes
+		public static readonly int propZTestTMP = Shader.PropertyToID( "unity_GUIZTestMode" ); // TMP only
+		public static readonly int propZOffsetFactor = Shader.PropertyToID( "_ZOffsetFactor" ); // used for all shapes
+		public static readonly int propZOffsetUnits = Shader.PropertyToID( "_ZOffsetUnits" ); // used for all shapes
+		public static readonly int propStencilComp = Shader.PropertyToID( "_StencilComp" ); // used for all shapes
+		public static readonly int propStencilOpPass = Shader.PropertyToID( "_StencilOpPass" ); // used for all shapes
+		public static readonly int propStencilID = Shader.PropertyToID( "_StencilID" ); // used for all shapes
+		public static readonly int propStencilIDTMP = Shader.PropertyToID( "_Stencil" ); // TMP only
+		public static readonly int propStencilReadMask = Shader.PropertyToID( "_StencilReadMask" ); // used for all shapes
+		public static readonly int propStencilWriteMask = Shader.PropertyToID( "_StencilWriteMask" ); // used for all shapes
 		public static readonly int propColor = Shader.PropertyToID( "_Color" ); // used for all shapes
 		public static readonly int propScaleMode = Shader.PropertyToID( "_ScaleMode" ); // polyline, lines, discs, rectangle, torus
 		public static readonly int propColorEnd = Shader.PropertyToID( "_ColorEnd" ); // line, & polygon fill
@@ -29,6 +37,10 @@ namespace Shapes {
 		public static readonly int propRadius = Shader.PropertyToID( "_Radius" ); // disc, cone, sphere
 		public static readonly int propCornerRadii = Shader.PropertyToID( "_CornerRadii" ); // rect
 		public static readonly int propLength = Shader.PropertyToID( "_Length" ); // cone
+		public static readonly int propHollow = Shader.PropertyToID( "_Hollow" ); // regular polygon
+		public static readonly int propSides = Shader.PropertyToID( "_Sides" ); // regular polygon
+		public static readonly int propAng = Shader.PropertyToID( "_Angle" ); // regular polygon
+		public static readonly int propRoundness = Shader.PropertyToID( "_Roundness" ); // regular polygon
 		public static readonly int propAngStart = Shader.PropertyToID( "_AngleStart" ); // disc sectors
 		public static readonly int propAngEnd = Shader.PropertyToID( "_AngleEnd" ); // disc sectors
 		public static readonly int propRoundCaps = Shader.PropertyToID( "_RoundCaps" ); // arcs
@@ -41,10 +53,11 @@ namespace Shapes {
 		public static readonly int propDashType = Shader.PropertyToID( "_DashType" ); // line, arc, ring
 		public static readonly int propDashSpace = Shader.PropertyToID( "_DashSpace" ); // line, arc, ring
 		public static readonly int propDashSnap = Shader.PropertyToID( "_DashSnap" ); // line, arc, ring
+		public static readonly int propDashShapeModifier = Shader.PropertyToID( "_DashShapeModifier" ); // line, arc, ring
 		public static readonly int propSize = Shader.PropertyToID( "_Size" ); // cuboid
 		public static readonly int propSizeSpace = Shader.PropertyToID( "_SizeSpace" ); // cuboid
-		public static readonly int propAlignment = Shader.PropertyToID( "_Alignment" ); // line, todo: polyline
-		
+		public static readonly int propAlignment = Shader.PropertyToID( "_Alignment" ); // line, disc todo: polyline
+
 		public static readonly int propFillType = Shader.PropertyToID( "_FillType" ); // polygon (so far), -1 = no fill (unlike the enum)
 		public static readonly int propFillStart = Shader.PropertyToID( "_FillStart" ); // polygon (so far), .w is radius if we're radial
 		public static readonly int propFillEnd = Shader.PropertyToID( "_FillEnd" ); // polygon (so far), endpoint of linear gradient
@@ -66,6 +79,7 @@ namespace Shapes {
 		public static readonly ShapesMaterials matCuboid = new ShapesMaterials( "Cuboid" );
 		public static readonly ShapesMaterials matTorus = new ShapesMaterials( "Torus" );
 		public static readonly ShapesMaterials matPolygon = new ShapesMaterials( "Polygon" );
+		public static readonly ShapesMaterials matRegularPolygon = new ShapesMaterials( "Regular Polygon" );
 
 		static readonly ShapesMaterials[ /*cap*/] matsLine = {
 			new ShapesMaterials( "Line 2D" ),

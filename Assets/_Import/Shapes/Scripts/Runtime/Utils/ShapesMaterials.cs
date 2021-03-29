@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 // Shapes © Freya Holmér - https://twitter.com/FreyaHolmer/
 // Website & Documentation - https://acegikmo.com/shapes/
@@ -10,7 +11,6 @@ namespace Shapes {
 
 		const bool USE_INSTANCING = true;
 		public const string SHAPES_SHADER_PATH_PREFIX = "Shapes/";
-
 
 
 		readonly Material[] materials;
@@ -28,11 +28,27 @@ namespace Shapes {
 			if( keywords != null && keywords.Length > 0 ) {
 				keywordsSuffix = $" [{string.Join( "][", keywords )}]";
 			}
+
 			return $"{shaderName} {blendModeSuffix}{keywordsSuffix}";
 		}
 
+		public static void ApplyDefaultGlobalProperties( Material mat ) {
+			// set default properties
+			mat.SetInt( ShapesMaterialUtils.propZTest, (int)CompareFunction.LessEqual );
+			mat.SetFloat( ShapesMaterialUtils.propZOffsetFactor, 0f );
+			mat.SetInt( ShapesMaterialUtils.propZOffsetUnits, 0 );
+		}
+
+		static Material CreateShapesMaterial( Shader shader, HideFlags hideFlags, params string[] keywords ) {
+			Material mat = new Material( shader ) { hideFlags = hideFlags, enableInstancing = USE_INSTANCING };
+			if( keywords != null )
+				foreach( string keyword in keywords )
+					mat.EnableKeyword( keyword );
+			ApplyDefaultGlobalProperties( mat );
+			return mat;
+		}
+
 		static Material InitMaterial( string shaderName, string blendModeSuffix, params string[] keywords ) {
-			
 			#if UNITY_EDITOR
 			// in editor, we want to use the material *assets*, not create any materials
 			string path = $"{ShapesIO.GeneratedMaterialsFolder}/{GetMaterialName( shaderName, blendModeSuffix, keywords )}.mat";
@@ -40,6 +56,7 @@ namespace Shapes {
 			if( mat == null )
 				Debug.LogWarning( "Failed to load material " + path );
 			return mat;
+
 			#else
 				// in builds, we want to create them
 				shaderName = SHAPES_SHADER_PATH_PREFIX + shaderName + " " + blendModeSuffix;
@@ -49,11 +66,7 @@ namespace Shapes {
 					return null;
 				}
 
-				Material mat = new Material( shaderObj ) { hideFlags = HideFlags.HideAndDontSave, enableInstancing = USE_INSTANCING };
-				if( keywords != null )
-					foreach( string keyword in keywords )
-						mat.EnableKeyword( keyword );
-				return mat;
+				return CreateShapesMaterial( shaderObj, HideFlags.HideAndDontSave, keywords );
 			#endif
 		}
 

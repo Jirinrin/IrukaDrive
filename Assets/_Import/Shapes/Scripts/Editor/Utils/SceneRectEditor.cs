@@ -120,6 +120,7 @@ namespace Shapes {
 							Handles.DrawLine( innerCornerGizmoSpace, cornerGizmoSpace + gizDirs[i].a * radiusGizmoSpace );
 							Handles.DrawLine( innerCornerGizmoSpace, cornerGizmoSpace + gizDirs[i].b * radiusGizmoSpace );
 						}
+
 						Handles.DrawLine( innerCornerGizmoSpace, innerCornerGizmoSpace - ( gizDirs[i].a + gizDirs[i].b ) * radiusGizmoSpace / Mathf.Sqrt( 2 ) );
 
 						//Handles.DrawWireDisc( cornerGizmoSpace + (gizDirs[i].a + gizDirs[i].b ) * radiusGizmoSpace, Vector3.forward, prevRadius );

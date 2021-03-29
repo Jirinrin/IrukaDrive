@@ -1,7 +1,6 @@
-﻿using Shapes;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace _Import.Shapes.Samples.Assets.Scripts {
+namespace Shapes {
 
 	public class AmmoBar : MonoBehaviour {
 

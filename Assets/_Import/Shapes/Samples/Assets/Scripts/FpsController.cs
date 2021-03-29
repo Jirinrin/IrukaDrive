@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
-using Shapes;
 using UnityEngine;
+using UnityEngine.Rendering;
 
-namespace _Import.Shapes.Samples.Assets.Scripts {
+namespace Shapes {
 
 	[Serializable]
 	public class Decayer {
@@ -25,7 +25,7 @@ namespace _Import.Shapes.Samples.Assets.Scripts {
 	}
 
 	[ExecuteAlways]
-	public class FpsController : MonoBehaviour {
+	public class FpsController : ImmediateModeShapeDrawer {
 
 		// components
 		public Transform head;
@@ -52,6 +52,38 @@ namespace _Import.Shapes.Samples.Assets.Scripts {
 		[Header( "Animation" )] [Range( 0f, 0.3f )] public float fireSidebarRadiusPunchAmount = 0.1f;
 		public AnimationCurve shakeAnimX = AnimationCurve.Constant( 0, 1, 0 );
 		public AnimationCurve shakeAnimY = AnimationCurve.Constant( 0, 1, 0 );
+
+		void Awake() {
+			if( Application.isPlaying == false )
+				return;
+			InputFocus = true;
+			StartCoroutine( FixedSteps() );
+		}
+
+		// called by the ImmediateModeShapeDrawer base type
+		public override void DrawShapes( Camera cam ) {
+			if( cam != this.cam ) // only draw in the player camera
+				return;
+
+			using( Draw.Command( cam ) ) {
+				Draw.ZTest = CompareFunction.Always; // to make sure it draws on top of everything like a HUD
+				Draw.Matrix = crosshairTransform.localToWorldMatrix; // draw it in the space of crosshairTransform
+				Draw.BlendMode = ShapesBlendMode.Transparent;
+				Draw.LineGeometry = LineGeometry.Flat2D;
+				crosshair.DrawCrosshair();
+				float radiusPunched = ammoBarRadius + fireSidebarRadiusPunchAmount * crosshair.fireDecayer.value;
+				ammoBar.DrawBar( this, radiusPunched );
+				chargeBar.DrawBar( this, radiusPunched );
+				compass.DrawCompass( head.transform.forward );
+			}
+		}
+
+		IEnumerator FixedSteps() {
+			while( true ) {
+				FixedUpdateManual();
+				yield return new WaitForSeconds( 0.01f ); // 100 fps
+			}
+		}
 
 		public static void DrawRoundedArcOutline( Vector2 origin, float radius, float thickness, float outlineThickness, float angStart, float angEnd ) {
 			// inner / outer
@@ -83,40 +115,6 @@ namespace _Import.Shapes.Samples.Assets.Scripts {
 				Cursor.visible = !value;
 			}
 		}
-
-		void Awake() {
-			if( Application.isPlaying == false )
-				return;
-			InputFocus = true;
-			StartCoroutine( FixedSteps() );
-		}
-
-		IEnumerator FixedSteps() {
-			while( true ) {
-				FixedUpdateManual();
-				yield return new WaitForSeconds( 0.01f ); // 100 fps
-			}
-		}
-
-		void OnEnable() => Camera.onPostRender += DrawShapes;
-		void OnDisable() => Camera.onPostRender -= DrawShapes;
-
-		void DrawShapes( Camera cam ) {
-			if( cam != this.cam )
-				return;
-
-			Draw.Matrix = crosshairTransform.localToWorldMatrix;
-			Draw.BlendMode = ShapesBlendMode.Transparent;
-			Draw.LineGeometry = LineGeometry.Flat2D;
-
-			crosshair.DrawCrosshair();
-
-			float radiusPunched = ammoBarRadius + fireSidebarRadiusPunchAmount * crosshair.fireDecayer.value;
-			ammoBar.DrawBar( this, radiusPunched );
-			chargeBar.DrawBar( this, radiusPunched );
-			compass.DrawCompass( head.transform.forward );
-		}
-
 
 		void FixedUpdateManual() {
 			if( Application.isPlaying == false )

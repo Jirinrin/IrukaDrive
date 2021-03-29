@@ -6,15 +6,16 @@
 
 UNITY_INSTANCING_BUFFER_START(Props)
 UNITY_DEFINE_INSTANCED_PROP(int, _ScaleMode)
-UNITY_DEFINE_INSTANCED_PROP(float4, _Color)
-UNITY_DEFINE_INSTANCED_PROP(float4, _ColorEnd)
+UNITY_DEFINE_INSTANCED_PROP(half4, _Color)
+UNITY_DEFINE_INSTANCED_PROP(half4, _ColorEnd)
 UNITY_DEFINE_INSTANCED_PROP(float3, _PointStart)
 UNITY_DEFINE_INSTANCED_PROP(float3, _PointEnd)
 UNITY_DEFINE_INSTANCED_PROP(half, _Thickness)
 UNITY_DEFINE_INSTANCED_PROP(int, _ThicknessSpace)
 UNITY_DEFINE_INSTANCED_PROP(int, _DashType)
 UNITY_DEFINE_INSTANCED_PROP(half, _DashSize)
-UNITY_DEFINE_INSTANCED_PROP(float, _DashOffset)
+UNITY_DEFINE_INSTANCED_PROP(half, _DashShapeModifier)
+UNITY_DEFINE_INSTANCED_PROP(half, _DashOffset)
 UNITY_DEFINE_INSTANCED_PROP(half, _DashSpacing)
 UNITY_DEFINE_INSTANCED_PROP(int, _DashSpace)
 UNITY_DEFINE_INSTANCED_PROP(int, _DashSnap)
@@ -24,19 +25,22 @@ UNITY_INSTANCING_BUFFER_END(Props)
 #define ALIGNMENT_FLAT 0
 #define ALIGNMENT_BILLBOARD 1
 
+#define IP_dash_coord intp0.x
+#define IP_dash_spacePerPeriod intp0.y
+#define IP_dash_thicknessPerPeriod intp0.z
+#define IP_pxCoverage intp0.w
+#define IP_uv0 intp1.xy
+#define IP_tColor intp1.z
+#define IP_capLengthRatio intp1.w
+
 struct VertexInput {
 	float4 vertex : POSITION;
 	UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 struct VertexOutput {
 	float4 pos : SV_POSITION;
-	float tColor : TEXCOORD0;
-	//#if defined(CAP_ROUND) || defined(CAP_SQUARE)
-		float2 uv0 : TEXCOORD1;
-		half capLengthRatio : TEXCOORD2;
-	//#endif
-	half pxCoverage : TEXCOORD3;
-	LineDashData dashData : TEXCOORD4;
+	half4 intp0 : TEXCOORD0;
+	half4 intp1 : TEXCOORD1;
 	UNITY_VERTEX_INPUT_INSTANCE_ID
 	UNITY_VERTEX_OUTPUT_STEREO
 };
@@ -47,8 +51,8 @@ VertexOutput vert(VertexInput v) {
 	UNITY_TRANSFER_INSTANCE_ID(v, o);
 	UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-    float3 aLocal = UNITY_ACCESS_INSTANCED_PROP(Props, _PointStart);
-    float3 bLocal = UNITY_ACCESS_INSTANCED_PROP(Props, _PointEnd);
+    half3 aLocal = UNITY_ACCESS_INSTANCED_PROP(Props, _PointStart);
+    half3 bLocal = UNITY_ACCESS_INSTANCED_PROP(Props, _PointEnd);
     int alignment = UNITY_ACCESS_INSTANCED_PROP(Props, _Alignment);
     aLocal.z *= saturate(alignment); // flatten Z if _Alignment == ALIGNMENT_FLAT
     bLocal.z *= saturate(alignment);
@@ -56,20 +60,26 @@ VertexOutput vert(VertexInput v) {
 	float3 b = LocalToWorldPos( bLocal );
 	float3 vertOrigin = v.vertex.y < 0 ? a : b;
 
-	float lineLengthVisual;
-	float3 tangent;
+	half lineLengthVisual;
+	half3 tangent;
 	GetDirMag(b - a, /*out*/ tangent, /*out*/ lineLengthVisual);
 
-    float3 normal = 0;
+    half3 normal;
     switch( alignment ){
-        case ALIGNMENT_FLAT:
+        case ALIGNMENT_FLAT: {
             half3 localZ = normalize( half3( UNITY_MATRIX_M[0].z, UNITY_MATRIX_M[1].z, UNITY_MATRIX_M[2].z ) );
             normal = cross( tangent, localZ );
-        break;
-        case ALIGNMENT_BILLBOARD:
-            float3 camForward = -DirectionToNearPlanePos( vertOrigin );
-            normal = normalize(cross(tangent,camForward));
-        break;
+			break;
+	    }
+        case ALIGNMENT_BILLBOARD: {
+            half3 camForward = -DirectionToNearPlanePos( vertOrigin );
+            normal = normalize(cross(tangent,camForward));   
+			break;
+        }
+    	default: {
+			normal = 0;
+        	break;
+	    }
     }
     
     int scaleMode = UNITY_ACCESS_INSTANCED_PROP(Props, _ScaleMode);
@@ -84,15 +94,15 @@ VertexOutput vert(VertexInput v) {
 	int thicknessSpace = UNITY_ACCESS_INSTANCED_PROP(Props, _ThicknessSpace);
 	LineWidthData widthData = GetScreenSpaceWidthData( vertOrigin, normal, thickness, thicknessSpace );
 	
-	o.uv0 = v.vertex;
+	o.IP_uv0 = v.vertex;
 	half verticalPaddingTotal = AA_PADDING_PX / widthData.pxPerMeter;
 	
 	#if LOCAL_ANTI_ALIASING_QUALITY > 0
-	    o.uv0.x *= widthData.aaPaddingScale; // scale compensate width
-	    o.uv0.y *= (lineLengthVisual + verticalPaddingTotal ) / lineLengthVisual; // scale compensate height
+	    o.IP_uv0.x *= widthData.aaPaddingScale; // scale compensate width
+	    o.IP_uv0.y *= (lineLengthVisual + verticalPaddingTotal ) / lineLengthVisual; // scale compensate height
 	#endif
 	
-	o.pxCoverage = widthData.thicknessPixelsTarget;
+	o.IP_pxCoverage = widthData.thicknessPixelsTarget;
 	half radiusVtx = widthData.thicknessMeters / 2;
 	
 	#if defined(CAP_ROUND) || defined(CAP_SQUARE)
@@ -111,7 +121,7 @@ VertexOutput vert(VertexInput v) {
     #else
         half endToEndLength = lineLengthVisual;
     #endif
-    o.capLengthRatio = (2*radiusVisuals)/endToEndLength;
+    o.IP_capLengthRatio = (2*radiusVisuals)/endToEndLength;
     
 	// dashes
 	half dashSizeInput = UNITY_ACCESS_INSTANCED_PROP(Props, _DashSize);
@@ -125,8 +135,10 @@ VertexOutput vert(VertexInput v) {
         half projDist = dot( tangent, vertPos - a ); // distance along line
         half dashSize = UNITY_ACCESS_INSTANCED_PROP(Props, _DashSize) * scaleDashes;
         half dashSpacing = UNITY_ACCESS_INSTANCED_PROP(Props, _DashSpacing) * scaleSpacing;
-        o.dashData = GetDashCoordinates( dashSize, dashSpacing, projDist,  lineLengthVisual, 2*radiusVisuals, thicknessSpace, widthData.pxPerMeter, dashOffset, dashSpace, snap );
-        
+		LineDashData dashData = GetDashCoordinates( dashSize, dashSpacing, projDist, lineLengthVisual, 2*radiusVisuals, thicknessSpace, widthData.pxPerMeter, dashOffset, dashSpace, snap ); 
+		o.IP_dash_coord = dashData.coord;
+		o.IP_dash_spacePerPeriod = dashData.spacePerPeriod;
+		o.IP_dash_thicknessPerPeriod = dashData.thicknessPerPeriod; 
 	}
 	
 	
@@ -134,9 +146,9 @@ VertexOutput vert(VertexInput v) {
 	#if defined(CAP_ROUND) || defined(CAP_SQUARE)
 	    half k = 2 * radiusVtx / lineLengthVisual + 1;
         half m = -radiusVtx / lineLengthVisual;
-        o.tColor = k * (v.vertex.y/2+0.5) + m;
+        o.IP_tColor = k * (v.vertex.y/2+0.5) + m;
     #else
-	    o.tColor = v.vertex.y/2+0.5;
+	    o.IP_tColor = v.vertex.y/2+0.5;
 	#endif
 
 	o.pos = WorldToClipPos( vertPos.xyz );
@@ -149,34 +161,39 @@ FRAG_OUTPUT_V4 frag( VertexOutput i ) : SV_Target {
 	
 	float4 colorStart = UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
     float4 colorEnd = UNITY_ACCESS_INSTANCED_PROP(Props, _ColorEnd);
-	float4 shape_color = lerp(colorStart, colorEnd, saturate( i.tColor ) ); // lerp(i.coord);
+	float4 shape_color = lerp(colorStart, colorEnd, saturate( i.IP_tColor ) );
 
 	half shape_mask = 1;
 	
 	// edge masking
 	#if LOCAL_ANTI_ALIASING_QUALITY > 0
-	    half maskEdges = GetLineLocalAA( i.uv0.x, i.pxCoverage );
+	    half maskEdges = GetLineLocalAA( i.IP_uv0.x, i.IP_pxCoverage );
 		shape_mask = min( shape_mask, maskEdges );
 	#endif
 	
     // cap masking
 	#ifdef CAP_ROUND
-		half2 uv = i.uv0.xy;
+		half2 uv = i.IP_uv0.xy;
 		uv = abs(uv);
-		uv.y = (uv.y-1)/i.capLengthRatio + 1;
+		uv.y = (uv.y-1)/i.IP_capLengthRatio + 1;
 		half maskRound = StepAA(length(max(0,uv)),1);
-		half useMaskRound = saturate(i.pxCoverage/2); // only use LineLocalAA when very thin
+		half useMaskRound = saturate(i.IP_pxCoverage/2); // only use LineLocalAA when very thin
 		shape_mask = min( shape_mask, lerp( 1, maskRound, useMaskRound)); 
 	#else
 	    // if cap == square or no caps, also do uv.y masking for caps
 	    #if LOCAL_ANTI_ALIASING_QUALITY > 0
-	        shape_mask = min( shape_mask, GetLineLocalAA( i.uv0.y, i.pxCoverage ) );
+	        shape_mask = min( shape_mask, GetLineLocalAA( i.IP_uv0.y, i.IP_pxCoverage ) );
 	    #endif
 	#endif
 
     int dashType = UNITY_ACCESS_INSTANCED_PROP(Props, _DashType);
-	ApplyDashMask( /*inout*/ shape_mask, i.dashData, i.uv0.x, dashType );
+	half dashModifier = UNITY_ACCESS_INSTANCED_PROP(Props, _DashShapeModifier);
+	LineDashData dashData;
+	dashData.coord = i.IP_dash_coord;
+	dashData.spacePerPeriod = i.IP_dash_spacePerPeriod;
+	dashData.thicknessPerPeriod = i.IP_dash_thicknessPerPeriod;
+	ApplyDashMask( /*inout*/ shape_mask, dashData, i.IP_uv0.x, dashType, dashModifier );
     
-	shape_mask *= saturate( i.pxCoverage );
+	shape_mask *= saturate( i.IP_pxCoverage );
 	return ShapesOutput( shape_color, shape_mask );
 }

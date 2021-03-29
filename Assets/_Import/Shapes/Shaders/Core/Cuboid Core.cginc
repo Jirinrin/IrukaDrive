@@ -17,7 +17,7 @@ struct VertexInput {
 };
 struct VertexOutput {
 	float4 pos : SV_POSITION;
-	float pxCoverage : TEXCOORD0;
+	half pxCoverage : TEXCOORD0;
 	UNITY_VERTEX_INPUT_INSTANCE_ID
 	UNITY_VERTEX_OUTPUT_STEREO
 };
@@ -35,16 +35,16 @@ VertexOutput vert(VertexInput v) {
     float3 center = LocalToWorldPos( float3( 0, 0, 0 ) );
     float3 camRight = CameraToWorldVec( float3( 1, 0, 0 ) );
 	LineWidthData widthData = GetScreenSpaceWidthDataSimple( center, camRight, 1, radiusSpace );
-    float radius = widthData.thicknessMeters * 0.5;
+    half radius = widthData.thicknessMeters * 0.5;
     o.pxCoverage = widthData.thicknessPixelsTarget;
     
-	float3 localPos = v.vertex.xyz * size.xyz * radius;
+	half3 localPos = v.vertex.xyz * size.xyz * radius;
 	o.pos = LocalToClipPos( localPos );
 	return o;
 }
 
 FRAG_OUTPUT_V4 frag( VertexOutput i ) : SV_Target {
 	UNITY_SETUP_INSTANCE_ID(i);
-	float4 color = UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
+	half4 color = UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
 	return ShapesOutput( color, saturate( i.pxCoverage ) ); 
 }

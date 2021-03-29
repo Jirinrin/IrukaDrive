@@ -6,30 +6,30 @@
 
 UNITY_INSTANCING_BUFFER_START(Props)
 UNITY_DEFINE_INSTANCED_PROP(int, _ScaleMode)
-UNITY_DEFINE_INSTANCED_PROP(float4, _Color)
-UNITY_DEFINE_INSTANCED_PROP(float4, _Rect)
+UNITY_DEFINE_INSTANCED_PROP(half4, _Color)
+UNITY_DEFINE_INSTANCED_PROP(half4, _Rect)
 #ifdef CORNER_RADIUS
-    UNITY_DEFINE_INSTANCED_PROP(float4, _CornerRadii)
+    UNITY_DEFINE_INSTANCED_PROP(half4, _CornerRadii)
 #endif
 #ifdef BORDERED
-    UNITY_DEFINE_INSTANCED_PROP(float, _Thickness)
+    UNITY_DEFINE_INSTANCED_PROP(half, _Thickness)
 #endif
 UNITY_INSTANCING_BUFFER_END(Props)
 
+
+#define IP_uv0 intp0.xy
+#define IP_nrmCoord intp0.zw
+#define IP_rect intp1
+
 struct VertexInput {
     float4 vertex : POSITION;
-    float2 uv0 : TEXCOORD0;
 	UNITY_VERTEX_INPUT_INSTANCE_ID
-}; 
+};
 struct VertexOutput {
     float4 pos : SV_POSITION;
     #if defined(BORDERED) || defined(CORNER_RADIUS)
-        float2 uv0 : TEXCOORD0;
-        fixed2 nrmCoord : TEXCOORD1;
-        float2 size : TEXCOORD2;
-    #endif
-    #if defined(BORDERED) || defined(CORNER_RADIUS)
-        half scaleThickness : TEXCOORD3;
+        half4 intp0 : TEXCOORD0;
+        half4 intp1 : TEXCOORD1;
     #endif
 	UNITY_VERTEX_INPUT_INSTANCE_ID
 	UNITY_VERTEX_OUTPUT_STEREO
@@ -41,25 +41,27 @@ VertexOutput vert (VertexInput v) {
 	UNITY_TRANSFER_INSTANCE_ID(v, o);
 	UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 	
-	float4 rect = UNITY_ACCESS_INSTANCED_PROP(Props, _Rect);
+	half4 rect = UNITY_ACCESS_INSTANCED_PROP(Props, _Rect);
 	
 	#if defined(BORDERED) || defined(CORNER_RADIUS)
-	    o.nrmCoord = v.vertex.xy;
+	    o.IP_nrmCoord = v.vertex.xy;
 	#endif
-	
+
 	#if defined(BORDERED) || defined(CORNER_RADIUS)
         int scaleMode = UNITY_ACCESS_INSTANCED_PROP(Props, _ScaleMode);
-        half uniformScale = GetUniformScale();
-        o.scaleThickness = scaleMode == SCALE_MODE_UNIFORM ? 1 : 1.0/uniformScale;
+		half2 objScale = GetObjectScaleXY();
+		half2 rectScale = scaleMode == SCALE_MODE_UNIFORM ? 1 : objScale;
+		half uniformScale = (objScale.x + objScale.y)/2;
+		rect *= rectScale.xyxy;
+		o.IP_rect = rect;
     #endif
 	
-	v.vertex.xy = Remap( float2(-1, -1), float2(1, 1), rect.xy, rect.xy + rect.zw, v.vertex );
+	v.vertex.xy = Remap( half2(-1, -1), half2(1, 1), rect.xy, rect.xy + rect.zw, v.vertex );
 	
     #if defined(BORDERED) || defined(CORNER_RADIUS)
-        o.uv0 = v.vertex.xy;
-        o.size = rect.zw;
+        o.IP_uv0 = v.vertex.xy;
+		v.vertex.xy /= rectScale;
     #endif
-    
     o.pos = UnityObjectToClipPos( v.vertex );
     return o;
 }
@@ -67,46 +69,48 @@ VertexOutput vert (VertexInput v) {
 FRAG_OUTPUT_V4 frag( VertexOutput i ) : SV_Target {
 	UNITY_SETUP_INSTANCE_ID(i);
 	
-	float4 rect = UNITY_ACCESS_INSTANCED_PROP(Props, _Rect);
-	float2 rectCenter = rect.xy + rect.zw/2;
+	//half4 rect = UNITY_ACCESS_INSTANCED_PROP(Props, _Rect);
+	#if defined(BORDERED) || defined(CORNER_RADIUS)
+	half2 rectCenter = i.IP_rect.xy + i.IP_rect.zw/2;
+	#endif
 	
 	#ifdef CORNER_RADIUS
-	    float4 cornerRadii = UNITY_ACCESS_INSTANCED_PROP(Props, _CornerRadii);
-	    fixed2 sgn = sign(i.nrmCoord);
+	    half4 cornerRadii = UNITY_ACCESS_INSTANCED_PROP(Props, _CornerRadii);
+	    fixed2 sgn = sign(i.IP_nrmCoord);
         int rComp = sgn.x-0.5*sgn.x*sgn.y+1.5; // thanks @khyperia <3
-	    float cornerRadius = cornerRadii[rComp];
-	    float maxRadius = min(i.size.x, i.size.y) / 2;
+	    half cornerRadius = cornerRadii[rComp];
+	    half maxRadius = min(i.IP_rect.z, i.IP_rect.w) / 2;
 	    cornerRadius = min( cornerRadius, maxRadius );
     #endif
 	
 	
 	// base sdf
 	#ifdef CORNER_RADIUS
-        float2 indentBoxSize = (rect.zw - cornerRadius.xx*2);
-        float boxSdf = SdfBox( i.uv0.xy - rectCenter, indentBoxSize/2 ) - cornerRadius;
+        half2 indentBoxSize = (i.IP_rect.zw - cornerRadius.xx*2);
+        half boxSdf = SdfBox( i.IP_uv0.xy - rectCenter, indentBoxSize/2 ) - cornerRadius;
     #elif defined(BORDERED)
-        float boxSdf = SdfBox( i.uv0.xy - rectCenter, rect.zw/2 );
+        half boxSdf = SdfBox( i.IP_uv0.xy - rectCenter, i.IP_rect.zw/2 );
     #endif
     
     // apply border to sdf
     #ifdef BORDERED
-	    float thickness = UNITY_ACCESS_INSTANCED_PROP(Props, _Thickness) * i.scaleThickness;
-        float halfthick = thickness / 2;
+	    half thickness = UNITY_ACCESS_INSTANCED_PROP(Props, _Thickness);
+        half halfthick = thickness / 2;
 	    #if LOCAL_ANTI_ALIASING_QUALITY > 0
-            float boxSdfPd = PD( boxSdf ); // todo: this has minor artifacts on inner corners, might want to separate masks by axis
+            half boxSdfPd = PD( boxSdf ); // todo: this has minor artifacts on inner corners, might want to separate masks by axis
             boxSdf = abs(boxSdf + halfthick) - halfthick;
-            float shape_mask = 1.0-StepThresholdPD( boxSdf, boxSdfPd );
+            half shape_mask = 1.0-StepThresholdPD( boxSdf, boxSdfPd );
         #else
             boxSdf = abs(boxSdf + halfthick) - halfthick;
-            float shape_mask = 1-StepAA(boxSdf);
+            half shape_mask = 1-StepAA(boxSdf);
         #endif
     #elif defined(CORNER_RADIUS)
-        float shape_mask = 1.0-StepAA( boxSdf );
+        half shape_mask = 1.0-StepAA( boxSdf );
     #else
-        float shape_mask = 1;
+        half shape_mask = 1;
     #endif
     	
-	float4 shape_color = UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
+	half4 shape_color = UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
 	
 	return ShapesOutput( shape_color, shape_mask );
 }

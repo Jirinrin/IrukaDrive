@@ -63,6 +63,9 @@ float2 Rotate( float2 v, float ang ){
 inline half2 AngToDir( half ang ){
     return half2(cos(ang),sin(ang));
 }
+inline half DirToAng( half2 dir ){
+    return atan2( dir.y, dir.x );
+}
 inline float2 Rotate90Left( in float2 v ){
 	return float2( -v.y, v.x );
 }
@@ -200,6 +203,20 @@ inline float SdfBox( float2 coord, float2 size ) {
     return length(max(0,q)) + min(0,max(q.x,q.y));
 }
 
+
+// The MIT License (for the function below)
+// Copyright © 2018 Inigo Quilez
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// (modified to align with a vertex on the right, have constants as inputs and using some of my helper functions)
+float SdfNgon( half tauOverN, half apothem, half halfSideLength, half angOffset, half2 p ) {
+    half halfAng = tauOverN/2;
+    half pAng = DirToAng(p)-halfAng-angOffset;
+    half bn = tauOverN*floor( (pAng+halfAng)/tauOverN );
+    half2 cs = AngToDir(bn+halfAng+angOffset);
+    p = mul(p, half2x2(cs.x,-cs.y,cs.y,cs.x));
+    return length(p-half2(apothem,clamp(p.y,-halfSideLength,halfSideLength)))*sign(p.x-apothem);
+}
+
 // smoothing and tweening
 inline float Smooth( float x ) { // Cubic
 	return x * x * (3.0 - 2.0 * x);
@@ -249,7 +266,11 @@ inline float3 LocalToWorldPos( in float3 localPos ){
 }
 inline float3 LocalToViewVec( in float3 localVec ){
     return mul( (float3x3)UNITY_MATRIX_MV, localVec ).xyz; // Unity stop warning about this pls this is valid :c
-}*/ 
+}*/
+
+inline float3 WorldToLocalVec( in float3 worldVec ) {
+    return mul((float3x3)unity_WorldToObject, worldVec);
+}
 inline float3 LocalToWorldVec( in float3 localVec ){
     return mul( (float3x3)UNITY_MATRIX_M, localVec ); 
 }
@@ -278,15 +299,15 @@ inline float NootsToPixels( in float noots ){
 inline float PixelsToNoots( in float pixels ){
     return (NOOTS_ACROSS_SCREEN * pixels) / min( _ScreenParams.x, _ScreenParams.y );
 }
-inline float3 GetCameraForwardDirection(){
-    return CameraToWorldVec( float3(0,0,1) );
-}
 
 // camera stuff
 inline bool IsOrthographic(){
     return unity_OrthoParams.w == 1;
 }
-inline float3 DirectionToNearPlanePos( float3 pt ){
+inline float3 GetCameraForwardDirection(){
+    return CameraToWorldVec( float3(0,0,1) );
+}
+inline half3 DirectionToNearPlanePos( float3 pt ){
     if( IsOrthographic() ){
         return -GetCameraForwardDirection();
     } else {
@@ -303,6 +324,13 @@ inline half3 GetObjectScale(){
         length( half3( m[0][2], m[1][2], m[2][2] ) )
     );
 }
+inline half2 GetObjectScaleXY(){
+    half3x3 m = (half3x3)UNITY_MATRIX_M;
+    return half2(
+        length( half3( m[0][0], m[1][0], m[2][0] ) ),
+        length( half3( m[0][1], m[1][1], m[2][1] ) )
+    );
+}
 inline half GetUniformScale(){
     half3 s = GetObjectScale();
 	return ( s.x + s.y + s.z ) / 3;
@@ -316,18 +344,22 @@ inline void ConvertToPixelThickness( float3 vertOrigin, float3 normal, float thi
 	
 	// figure out target width in pixels
 	switch( thicknessSpace ){
-	    case THICKN_SPACE_METERS:
+	    case THICKN_SPACE_METERS: {
 	        pxWidth = thickness*pxPerMeter; // this specifically should not have the + extraWidth
 	        break;
-	    case THICKN_SPACE_PIXELS:
+	    }
+	    case THICKN_SPACE_PIXELS: {
 	        pxWidth = thickness;
 	        break;
-        case THICKN_SPACE_NOOTS:
+	    }
+        case THICKN_SPACE_NOOTS: {
             pxWidth = NootsToPixels( thickness );
             break;
-        default:
+        }
+        default: {
             pxWidth = 0;
             break;
+        }
     }
 }
 
@@ -379,18 +411,18 @@ struct LineDashData{
 	#define AA_PADDING_PX 2
 #endif
 
-inline void GetPaddingData( float thicknessPixelsTarget, out float aaPaddingScale, out float pxWidthVert ){
+inline void GetPaddingData( half thicknessPixelsTarget, out half aaPaddingScale, out half pxWidthVert ){
     // for vertex width, we need to clamp at 1px wide to prevent wandering ants and we don't want ants now do we
     pxWidthVert = max( 1, thicknessPixelsTarget+AA_PADDING_PX);
     aaPaddingScale = pxWidthVert / max( VERY_SMOL, thicknessPixelsTarget ); // how much extra we got from the padding, as a multiplier
 }
 
 
-inline LineWidthData GetScreenSpaceWidthData( float3 vertOrigin, float3 normal, float thickness, int thicknessSpace ){
+inline LineWidthData GetScreenSpaceWidthData( float3 vertOrigin, half3 normal, half thickness, int thicknessSpace ){
     LineWidthData data;
     ConvertToPixelThickness( vertOrigin, normal, thickness, thicknessSpace, /*out*/ data.pxPerMeter, /*out*/ data.thicknessPixelsTarget );
 	
-	float pxWidthVert;
+	half pxWidthVert;
 	GetPaddingData( data.thicknessPixelsTarget, /*out*/ data.aaPaddingScale, /*out*/ pxWidthVert );
 	
 	// when using pixel size, scale to match pixels
@@ -399,17 +431,17 @@ inline LineWidthData GetScreenSpaceWidthData( float3 vertOrigin, float3 normal, 
     return data;
 }
 
-inline LineWidthData GetScreenSpaceWidthDataSimple( float3 vertOrigin, float3 normal, float thickness, int thicknessSpace ){
+inline LineWidthData GetScreenSpaceWidthDataSimple( float3 vertOrigin, half3 normal, half thickness, int thicknessSpace ){
     LineWidthData data;
     ConvertToPixelThickness( vertOrigin, normal, thickness, thicknessSpace, /*out*/ data.pxPerMeter, /*out*/ data.thicknessPixelsTarget );
-    float pxWidthVert = max( 1, data.thicknessPixelsTarget );
+    half pxWidthVert = max( 1, data.thicknessPixelsTarget );
     data.aaPaddingScale = 1; 
 	data.thicknessMeters = pxWidthVert / data.pxPerMeter; // clamps at 1px wide, then converts to meters
     return data;
 }
 
 // this works in normalized space, repeating integers for every period
-inline void ApplyDashMask( inout half shape_mask, LineDashData dashData, half coordAcross, int type ){
+inline void ApplyDashMask( inout half shape_mask, LineDashData dashData, half coordAcross, int type, half dashModifier ){
     
     half spacePerPeriod = dashData.spacePerPeriod;
 
@@ -423,7 +455,7 @@ inline void ApplyDashMask( inout half shape_mask, LineDashData dashData, half co
         half2 coord = half2( coordAcross, dashData.coord );
         
         if( type == DASH_TYPE_ANGLED )
-            coord.y += 0.5*coord.x*thicknessPerPeriod; // 45° angle skewing        
+            coord.y += 0.5*coord.x*thicknessPerPeriod*dashModifier; // 45° angle skewing        
 		half dashSdf = abs(frac(coord.y) * 2 - 1); // triangle wave
 		dashSdf = InverseLerp( spacePerPeriod, 1, dashSdf ); // convert to SDF matching dash ratio
 		

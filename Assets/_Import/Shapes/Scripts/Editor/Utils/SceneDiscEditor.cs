@@ -34,38 +34,104 @@ namespace Shapes {
 			}
 		}
 
-		Color GetHandleColor( Disc disc ) => ShapesHandles.GetHandleColor( GetAvgDiscColor( disc ) );
+		Color GetHandleColor( ShapeRenderer shape ) {
+			if( shape is Disc disc )
+				return ShapesHandles.GetHandleColor( GetAvgDiscColor( disc ) );
+			return shape.Color;
+		}
 
-		public bool DoSceneHandles( Disc disc ) {
+		static ShapeRenderer currentSceneShape;
+
+		static ThicknessSpace RadiusSpace {
+			get {
+				switch( currentSceneShape ) {
+					case Disc d:            return d.RadiusSpace;
+					case RegularPolygon rp: return rp.RadiusSpace;
+					default:                return default;
+				}
+			}
+		}
+
+		static ThicknessSpace ThicknessSpace {
+			get {
+				switch( currentSceneShape ) {
+					case Disc d:            return d.ThicknessSpace;
+					case RegularPolygon rp: return rp.ThicknessSpace;
+					default:                return default;
+				}
+			}
+		}
+
+		static bool HasThickness {
+			get {
+				switch( currentSceneShape ) {
+					case Disc d:            return d.HasThickness;
+					case RegularPolygon rp: return rp.Hollow;
+					default:                return default;
+				}
+			}
+		}
+
+		static float Thickness {
+			get {
+				switch( currentSceneShape ) {
+					case Disc d:            return d.Thickness;
+					case RegularPolygon rp: return rp.Thickness;
+					default:                return default;
+				}
+			}
+			set {
+				if( currentSceneShape is Disc d ) d.Thickness = value;
+				else if( currentSceneShape is RegularPolygon rp ) rp.Thickness = value;
+			}
+		}
+
+		static float Radius {
+			get {
+				switch( currentSceneShape ) {
+					case Disc d:            return d.Radius;
+					case RegularPolygon rp: return rp.Radius;
+					default:                return default;
+				}
+			}
+			set {
+				if( currentSceneShape is Disc d ) d.Radius = value;
+				else if( currentSceneShape is RegularPolygon rp ) rp.Radius = value;
+			}
+		}
+
+
+		public bool DoSceneHandles( ShapeRenderer shape ) {
 			if( IsEditing == false )
 				return false;
-			if( disc.RadiusSpace != ThicknessSpace.Meters )
+			currentSceneShape = shape;
+			if( RadiusSpace != ThicknessSpace.Meters )
 				return false;
 
 			bool holdingShift = ( Event.current.modifiers & EventModifiers.Shift ) != 0;
 			bool editInnerOuterRadius = holdingShift;
 
 			// set up matrix
-			Vector3 rootDir = disc.transform.right;
-			Vector3 discNormal = disc.transform.forward;
+			Vector3 rootDir = shape.transform.right;
+			Vector3 discNormal = shape.transform.forward;
 			Quaternion rot = Quaternion.LookRotation( rootDir, discNormal );
-			Matrix4x4 mtx = Matrix4x4.TRS( disc.transform.position, rot, Vector3.one ); // todo: scale?
+			Matrix4x4 mtx = Matrix4x4.TRS( shape.transform.position, rot, Vector3.one ); // todo: scale?
 
-			using( new Handles.DrawingScope( GetHandleColor( disc ), mtx ) ) {
+			using( new Handles.DrawingScope( GetHandleColor( shape ), mtx ) ) {
 				// thickness handles
-				if( disc.HasThickness && disc.ThicknessSpace == ThicknessSpace.Meters ) {
+				if( HasThickness && ThicknessSpace == ThicknessSpace.Meters ) {
 					using( var chchk = new EditorGUI.ChangeCheckScope() ) {
-						arcHandleThicknessOuter.radius = disc.Radius + disc.Thickness * 0.5f;
+						arcHandleThicknessOuter.radius = Radius + Thickness * 0.5f;
 						arcHandleThicknessOuter.DrawHandle();
 						if( chchk.changed ) {
-							Undo.RecordObject( disc, "edit disc" );
+							Undo.RecordObject( shape, "edit disc" );
 							if( editInnerOuterRadius ) {
-								float prevInnerRadius = disc.Radius - disc.Thickness * 0.5f;
+								float prevInnerRadius = Radius - Thickness * 0.5f;
 								float newOuterRadius = arcHandleThicknessOuter.radius;
-								disc.Radius = ( prevInnerRadius + newOuterRadius ) / 2;
-								disc.Thickness = newOuterRadius - prevInnerRadius;
+								Radius = ( prevInnerRadius + newOuterRadius ) / 2;
+								Thickness = newOuterRadius - prevInnerRadius;
 							} else {
-								disc.Thickness = ( arcHandleThicknessOuter.radius - disc.Radius ) * 2;
+								Thickness = ( arcHandleThicknessOuter.radius - Radius ) * 2;
 							}
 						}
 					}
@@ -73,14 +139,14 @@ namespace Shapes {
 					// inner radius
 					if( editInnerOuterRadius ) {
 						using( var chchk = new EditorGUI.ChangeCheckScope() ) {
-							arcHandleThicknessInner.radius = disc.Radius - disc.Thickness * 0.5f;
+							arcHandleThicknessInner.radius = Radius - Thickness * 0.5f;
 							arcHandleThicknessInner.DrawHandle();
 							if( chchk.changed ) {
-								Undo.RecordObject( disc, "edit disc" );
-								float prevOuterRadius = disc.Radius + disc.Thickness * 0.5f;
+								Undo.RecordObject( shape, "edit disc" );
+								float prevOuterRadius = Radius + Thickness * 0.5f;
 								float newInnerRadius = arcHandleThicknessInner.radius;
-								disc.Radius = ( newInnerRadius + prevOuterRadius ) / 2;
-								disc.Thickness = prevOuterRadius - newInnerRadius;
+								Radius = ( newInnerRadius + prevOuterRadius ) / 2;
+								Thickness = prevOuterRadius - newInnerRadius;
 							}
 						}
 					}
@@ -88,37 +154,39 @@ namespace Shapes {
 
 				// radius handle
 				using( var chchk = new EditorGUI.ChangeCheckScope() ) {
-					arcHandleRadius.radius = disc.Radius;
+					arcHandleRadius.radius = Radius;
 					arcHandleRadius.DrawHandle();
 					if( chchk.changed ) {
-						Undo.RecordObject( disc, "edit disc radius" );
-						disc.Radius = arcHandleRadius.radius;
+						Undo.RecordObject( shape, "edit disc radius" );
+						Radius = arcHandleRadius.radius;
 					}
 				}
 
 
 				// angle handles
-				if( disc.HasSector && editInnerOuterRadius == false ) {
-					arcHandleEnd.angle = disc.AngRadiansEnd * Mathf.Rad2Deg;
-					arcHandleStart.angle = disc.AngRadiansStart * Mathf.Rad2Deg;
+				if( shape is Disc disc ) {
+					if( disc.HasSector && editInnerOuterRadius == false ) {
+						arcHandleEnd.angle = disc.AngRadiansEnd * Mathf.Rad2Deg;
+						arcHandleStart.angle = disc.AngRadiansStart * Mathf.Rad2Deg;
 
-					foreach( ArcHandle arcHandle in new[] { arcHandleStart, arcHandleEnd } ) {
-						float radius = disc.Radius;
-						if( disc.ThicknessSpace == ThicknessSpace.Meters && disc.HasThickness )
-							radius += disc.Thickness / 2f;
-						arcHandle.radius = radius;
-						arcHandle.wireframeColor = Color.clear;
-						arcHandle.radiusHandleSizeFunction = pos => 0f; // no radius handle
+						foreach( ArcHandle arcHandle in new[] { arcHandleStart, arcHandleEnd } ) {
+							float radius = Radius;
+							if( ThicknessSpace == ThicknessSpace.Meters && HasThickness )
+								radius += Thickness / 2f;
+							arcHandle.radius = radius;
+							arcHandle.wireframeColor = Color.clear;
+							arcHandle.radiusHandleSizeFunction = pos => 0f; // no radius handle
 
-						using( var chchk = new EditorGUI.ChangeCheckScope() ) {
-							arcHandle.DrawHandle();
-							if( chchk.changed ) {
-								Undo.RecordObject( disc, "edit disc angle" );
-								//disc.Radius = arcHandle.radius;
-								if( arcHandle == arcHandleEnd )
-									disc.AngRadiansEnd = arcHandle.angle * Mathf.Deg2Rad;
-								else
-									disc.AngRadiansStart = arcHandle.angle * Mathf.Deg2Rad;
+							using( var chchk = new EditorGUI.ChangeCheckScope() ) {
+								arcHandle.DrawHandle();
+								if( chchk.changed ) {
+									Undo.RecordObject( shape, "edit disc angle" );
+									//disc.Radius = arcHandle.radius;
+									if( arcHandle == arcHandleEnd )
+										disc.AngRadiansEnd = arcHandle.angle * Mathf.Deg2Rad;
+									else
+										disc.AngRadiansStart = arcHandle.angle * Mathf.Deg2Rad;
+								}
 							}
 						}
 					}

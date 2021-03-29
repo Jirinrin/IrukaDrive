@@ -11,7 +11,7 @@ namespace Shapes {
 	[CanEditMultipleObjects]
 	public class PolygonEditor : ShapeRendererEditor {
 
-		SerializedProperty propPolyPoints = null;
+		SerializedProperty propPoints = null;
 		SerializedProperty propTriangulation = null;
 		SerializedProperty propFill = null;
 		SerializedProperty propUseFill = null;
@@ -30,10 +30,9 @@ namespace Shapes {
 			fillEditor = new SceneFillEditor( this, propFill, propUseFill );
 			scenePointEditor = new ScenePointEditor( this );
 
-			pointList = new ReorderableList( serializedObject, propPolyPoints, true, true, true, true ) {
+			pointList = new ReorderableList( serializedObject, propPoints, true, true, true, true ) {
 				drawElementCallback = DrawPointElement,
-				drawHeaderCallback = PointListHeader,
-				onChangedCallback = ( x ) => UpdateMesh()
+				drawHeaderCallback = PointListHeader
 			};
 
 			if( pointList.count > MANY_POINTS ) {
@@ -41,8 +40,6 @@ namespace Shapes {
 				showPointList = false;
 			}
 		}
-
-		void UpdateMesh() => targets.Cast<Polygon>().ForEach( x => x.UpdateMesh( force: true ) );
 
 		public override void OnInspectorGUI() {
 			base.BeginProperties();
@@ -59,15 +56,14 @@ namespace Shapes {
 				pointList.DoLayoutList();
 			scenePointEditor.GUIEditButton( "Edit Points in Scene" );
 
-			if( base.EndProperties() || changed )
-				UpdateMesh();
+			base.EndProperties();
 		}
 
 
 		void OnSceneGUI() {
 			Polygon p = target as Polygon;
 			bool changed = fillEditor.DoSceneHandles( p.UseFill, p, p.Fill, p.transform );
-			changed |= scenePointEditor.DoSceneHandles( closed: true, p, p.PolyPoints, p.transform );
+			changed |= scenePointEditor.DoSceneHandles( closed: true, p, p.points, p.transform );
 			if( changed ) {
 				p.UpdateMesh( true );
 				p.UpdateAllMaterialProperties();
@@ -80,7 +76,7 @@ namespace Shapes {
 		void DrawPointElement( Rect r, int i, bool isActive, bool isFocused ) {
 			r.yMin += 1;
 			r.yMax -= 2;
-			SerializedProperty prop = propPolyPoints.GetArrayElementAtIndex( i );
+			SerializedProperty prop = propPoints.GetArrayElementAtIndex( i );
 			EditorGUI.PropertyField( r, prop, GUIContent.none );
 		}
 
