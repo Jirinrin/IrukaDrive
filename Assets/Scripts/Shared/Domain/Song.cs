@@ -35,7 +35,7 @@ namespace Shared.Domain
         [IgnoreDataMember] public float BeatsPerSec => bpm / 60f;
         [IgnoreDataMember] public bool HasValidAudio => audioFile != null && File.Exists(Path.Combine(folderPath, audioFile));
 
-        [NonSerialized] public int wheelIndex;
+        [NonSerialized][IgnoreDataMember] public int wheelIndex;
 
         public int version = 1;
 
