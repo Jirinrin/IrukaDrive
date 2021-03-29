@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -85,6 +85,41 @@ namespace Shared
                 return;
 
             await LoadSongsInFolder(C.DriveChartsDirPath);
+
+            foreach (var (s, i) in songs.WithIndex())
+                s.wheelIndex = i;
+        }
+
+        // public static async Task RefreshSongs()
+        // {
+        //
+        // }
+
+        public enum SortMethod
+        {
+            Title,
+            Artist,
+            FolderPath,
+        }
+
+        public static void SortSongs(SortMethod method = SortMethod.Title)
+        {
+            Func<Song, string> sorter;
+            switch (method)
+            {
+                case SortMethod.Artist:
+                    sorter = s => s.artist;
+                    break;
+                case SortMethod.FolderPath:
+                    sorter = s => s.folderPath;
+                    break;
+                case SortMethod.Title:
+                default:
+                    sorter = s => s.title;
+                    break;
+            }
+
+            songs = songs.OrderBy(sorter).ToList();
 
             foreach (var (s, i) in songs.WithIndex())
                 s.wheelIndex = i;
