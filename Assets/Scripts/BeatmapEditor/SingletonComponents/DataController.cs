@@ -50,7 +50,7 @@ namespace BeatmapEditor.SingletonComponents
                 ToggleOpened(true);
         }
 
-        protected static readonly Regex FloatRegex = new Regex(@"^(?:\d+)(?:\.\d*)?$");
+        protected static readonly Regex FloatRegex = new Regex(@"^\d+(?:\.\d*)?$|^\.\d+$");
         protected static readonly Regex IntRegex = new Regex(@"^\d+$");
         protected static TMP_InputField.OnValidateInput ValidateInput(int maxLength = 200, Regex mustMatch = null)
         {
@@ -104,6 +104,15 @@ namespace BeatmapEditor.SingletonComponents
                 setter(v);
                 BeatmapEditorManager.Instance.RefreshBeatmap();
             };
+
+        protected void DisableShortcutsDuringInput(params TMP_InputField[] fields)
+        {
+            foreach (var field in fields)
+            {
+                field.onSelect.AddListener(_ => InputManager.Instance.enabled = false);
+                field.onEndEdit.AddListener(_ => InputManager.Instance.enabled = true);
+            }
+        }
 
         private void OnEnable() => InputManager.PressBack += Close;
         private void OnDisable() => InputManager.PressBack -= Close;

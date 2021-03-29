@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Shared.Domain;
@@ -50,6 +50,8 @@ namespace BeatmapEditor.SingletonComponents
                 B.jacketFileOverride = null;
                 jacketFileOverrideResetButton.gameObject.SetActive(false);
             });
+
+            DisableShortcutsDuringInput(creatorField, difficultyNameOverrideField, finishTimestampField);
         }
 
         public override void ToggleOpened(bool t)

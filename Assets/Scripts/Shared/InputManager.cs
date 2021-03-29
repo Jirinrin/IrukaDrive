@@ -10,12 +10,18 @@ namespace Shared
     [RequireComponent(typeof(PlayerInput))]
     public class InputManager : Singleton<InputManager>
     {
+        // 略 for IfEnabled
+        private void IE(Action todo)
+        {
+            if (enabled) todo();
+        }
+
         public static event Action PressConfirm;
         public static event Action PressBack;
         public static event Action<char> OnChar;
 
-        public void OnConfirm() => PressConfirm?.Invoke();
-        public void OnBack() => PressBack?.Invoke();
+        public void OnConfirm() => IE(() => PressConfirm?.Invoke());
+        public void OnBack() => IE(() => PressBack?.Invoke());
 
         public void OnEnable()
         {
@@ -29,7 +35,8 @@ namespace Shared
 
         public void OnKeyboardEvent(char character)
         {
-            OnChar?.Invoke(character);
+            if (enabled)
+                OnChar?.Invoke(character);
         }
     }
 }

@@ -42,6 +42,8 @@ namespace BeatmapEditor.SingletonComponents
             beatsPerBarField.onValidateInput += ValidateInput(1, new Regex(@"[2-4]"));
             barOffsetField.onValueChanged.AddListener(IfNotEmpty(SetWithRefresh((string v) => S.barOffset = int.Parse(v))));
             barOffsetField.onValidateInput += ValidateInput(1, new Regex(@"[0-3]"));
+
+            DisableShortcutsDuringInput(titleField, artistField, bpmField, beatOffsetField, beatsPerBarField, barOffsetField);
         }
 
         public override void ToggleOpened(bool t)
