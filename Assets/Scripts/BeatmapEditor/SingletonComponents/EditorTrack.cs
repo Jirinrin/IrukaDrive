@@ -31,7 +31,7 @@ namespace BeatmapEditor.SingletonComponents
             _notesRecycler = EditorTrackNotesRecycler.Instance;
             _sheet = EditorTrackSheetBg.Instance;
             _timestamps = EditorTrackTimestamps.Instance;
-            _waveform = EditorWaveform.Instance;
+            _waveform = GetComponentInChildren<EditorWaveform>();
         }
 
         protected override void Init()

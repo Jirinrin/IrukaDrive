@@ -1693,7 +1693,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 402142874}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 43100795730674332, guid: a3d1f56cebf202c448b6fb479f61a9dc, type: 2}
 --- !u!114 &402142878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1709,6 +1709,15 @@ MonoBehaviour:
   blendMode: 1
   scaleMode: 0
   color: {r: 1, g: 0, b: 0, a: 1}
+  detailLevel: 2
+  zTest: 4
+  zOffsetFactor: 0
+  zOffsetUnits: 0
+  stencilComp: 8
+  stencilOpPass: 0
+  stencilRefID: 0
+  stencilReadMask: 255
+  stencilWriteMask: 255
   colorMode: 2
   a: {x: 0, y: 110, z: 0}
   b: {x: 50, y: 110, z: 0}
@@ -3083,7 +3092,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -28.699982, y: 56.559998}
+  m_AnchoredPosition: {x: -28.699951, y: 56.559998}
   m_SizeDelta: {x: -199.21, y: 77.37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &707228179
@@ -6368,6 +6377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   containerRectTransform: {fileID: 594867329}
+  waveform: {fileID: 1415300517}
 --- !u!1001 &1429408842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8676,7 +8686,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6111274755630273519}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 43100795730674332, guid: a3d1f56cebf202c448b6fb479f61a9dc, type: 2}
 --- !u!1001 &4904883740839004565
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9019,6 +9029,15 @@ MonoBehaviour:
   blendMode: 1
   scaleMode: 0
   color: {r: 1, g: 1, b: 1, a: 1}
+  detailLevel: 2
+  zTest: 4
+  zOffsetFactor: 0
+  zOffsetUnits: 0
+  stencilComp: 8
+  stencilOpPass: 0
+  stencilRefID: 0
+  stencilReadMask: 255
+  stencilWriteMask: 255
   geometry: 1
   colorMode: 0
   colorEnd: {r: 1, g: 1, b: 1, a: 1}
@@ -9036,6 +9055,7 @@ MonoBehaviour:
     size: 18
     offset: 0
     spacing: 5
+    shapeModifier: 1
 --- !u!222 &8503700937253476609
 CanvasRenderer:
   m_ObjectHideFlags: 0

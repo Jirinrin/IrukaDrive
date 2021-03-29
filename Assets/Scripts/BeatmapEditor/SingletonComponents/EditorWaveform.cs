@@ -2,12 +2,12 @@
 using System.Linq;
 using Shapes;
 using Shared.Domain;
-using Tools.Commons;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace BeatmapEditor.SingletonComponents
 {
-    public class EditorWaveform : Singleton<EditorWaveform>
+    public class EditorWaveform : ImmediateModeShapeDrawer
     {
         private const int EveryHowManySamples = 300;
 
@@ -43,35 +43,37 @@ namespace BeatmapEditor.SingletonComponents
             _samples = samples.Where((s, i) => i % EveryHowManySamples == 0).ToList();
         }
 
-        private void DrawWaveform(Camera cam)
+        public override void DrawShapes(Camera cam)
         {
-            if (!_active)
-                return;
+            base.DrawShapes(cam);
+            using (Draw.Command(cam))
+            {
+                if (!_active)
+                    return;
 
-            Draw.Matrix = transform.localToWorldMatrix;
-            Draw.BlendMode = ShapesBlendMode.Transparent;
-            Draw.LineGeometry = LineGeometry.Flat2D;
-            Draw.LineThickness = .02f;
-            Draw.Color = new Color(.3f,.3f,.3f);
-            Draw.PolylineJoins = PolylineJoins.Round;
+                Draw.Matrix = transform.localToWorldMatrix;
+                Draw.BlendMode = ShapesBlendMode.Transparent;
+                // Draw.ZTest = CompareFunction.Less;
+                Draw.LineGeometry = LineGeometry.Flat2D;
+                Draw.LineThickness = .02f;
+                Draw.Color = new Color(.3f,.3f,.3f);
+                Draw.PolylineJoins = PolylineJoins.Round;
 
-            var xOffset = _currentSong.beatOffset * _currentSong.BeatsPerSec * EditorTrack.viewState.beatSpacing * -1;
+                var xOffset = _currentSong.beatOffset * _currentSong.BeatsPerSec * EditorTrack.viewState.beatSpacing * -1;
 
-            var xPerSample = _beatsPerSample * EditorTrack.viewState.beatSpacing * EveryHowManySamples;
-            var samplesPerX = 1f / xPerSample;
-            var sampleOffset = Mathf.FloorToInt(Mathf.Max(samplesPerX * (EditorTrack.viewState.panX - xOffset), 0));
-            if (sampleOffset >= _samples.Count)
-                return;
+                var xPerSample = _beatsPerSample * EditorTrack.viewState.beatSpacing * EveryHowManySamples;
+                var samplesPerX = 1f / xPerSample;
+                var sampleOffset = Mathf.FloorToInt(Mathf.Max(samplesPerX * (EditorTrack.viewState.panX - xOffset), 0));
+                if (sampleOffset >= _samples.Count)
+                    return;
 
-            var numberOfSamples = Mathf.FloorToInt(Mathf.Min(samplesPerX * EditorTrack.Instance.containerRect.width, Mathf.Max(_samples.Count - sampleOffset, 0f)));
+                var numberOfSamples = Mathf.FloorToInt(Mathf.Min(samplesPerX * EditorTrack.Instance.containerRect.width, Mathf.Max(_samples.Count - sampleOffset, 0f)));
 
-            using var p = new PolylinePath();
-            var points = _samples.GetRange(sampleOffset, numberOfSamples).Select((s, i) => new PolylinePoint(new Vector2(xPerSample*(i+sampleOffset) + xOffset, s * 30f)));
-            p.AddPoints(points);
-            Draw.Polyline(p);
+                using var p = new PolylinePath();
+                var points = _samples.GetRange(sampleOffset, numberOfSamples).Select((s, i) => new PolylinePoint(new Vector3(xPerSample*(i+sampleOffset) + xOffset, s * 30f, 20f)));
+                p.AddPoints(points);
+                Draw.Polyline(p);
+            }
         }
-
-        private void OnEnable() => Camera.onPostRender += DrawWaveform;
-        private void OnDisable() => Camera.onPostRender -= DrawWaveform;
     }
 }
