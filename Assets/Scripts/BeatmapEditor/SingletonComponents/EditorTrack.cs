@@ -44,12 +44,12 @@ namespace BeatmapEditor.SingletonComponents
 
         public void LoadBeatmap(Beatmap beatmap, bool keepViewState = false)
         {
-            if (!keepViewState)
-                viewState = new EditorTrackViewState();
-            viewState?.Init();
-            
             if (!_initted)
                 Init();
+
+            if (!keepViewState)
+                viewState = new EditorTrackViewState();
+            viewState?.Init(beatmap.song, containerRect.width);
 
             _notesRecycler.Init();
             

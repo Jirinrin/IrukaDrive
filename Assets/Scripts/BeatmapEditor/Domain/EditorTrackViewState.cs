@@ -1,5 +1,6 @@
 ﻿using System;
 using Shared.Domain;
+using Tools;
 using UnityEngine;
 
 namespace BeatmapEditor.Domain
@@ -13,21 +14,23 @@ namespace BeatmapEditor.Domain
         public new float panX = MinimumPan;
         public new float beatSpacing = DefaultBeatSpacing;
 
-        public void Init()
+        private float _maxPanBeat = 10000f;
+        private float _screenWidth;
+
+        public async void Init(Song song, float screenWidth)
         {
             OnPan?.Invoke();
             OnZoom?.Invoke();
+            _maxPanBeat = 10000f;
+            _maxPanBeat = song.SecToBeats((await song.Audio)?.length ?? 10000f);
+            _screenWidth = screenWidth;
         }
 
-        public void Pan(float deltaX)
-        {
-            panX = Mathf.Max(panX - deltaX, MinimumPan);
-            OnPan?.Invoke();
-        }
+        public void Pan(float deltaX) => SetPan(panX - deltaX);
 
         public void SetPan(float x)
         {
-            panX = Mathf.Max(x, MinimumPan);
+            panX = Mathf.Clamp(x, MinimumPan, _maxPanBeat*beatSpacing - _screenWidth + 100f);
             OnPan?.Invoke();
         }
         

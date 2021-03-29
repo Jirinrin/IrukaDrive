@@ -8,6 +8,7 @@ namespace Gameplay.Domain
     {
         private readonly float _initBpm;
 
+        public TrackViewState() { }
         public TrackViewState(float initBpm)
         {
             _initBpm = initBpm;
