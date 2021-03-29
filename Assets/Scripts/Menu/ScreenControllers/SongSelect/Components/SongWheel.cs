@@ -49,9 +49,9 @@ namespace Menu.ScreenControllers.SongSelect.Components
         public void GoToIndex(int index)
         {
             var i = Mathf.Clamp(index, 0, Cache.songs.Count - 1);
+            if (Cache.songs.Count > 3)
+                ScrollToIndex(i);
             EmitSelectSong(Cache.songs[i]);
-            if (Cache.songs.Count < 3) return;
-            ScrollToIndex(i);
         }
 
         private void ScrollToIndex(int index, bool instant = false)
