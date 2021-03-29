@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Menu.ScreenControllers.SongSelect.Components;
 using Shared;
 using Shared.Domain;
@@ -14,48 +13,29 @@ namespace Menu.ScreenControllers.SongSelect
         [SerializeField] private SongDataPanel songDataPanel;
         [SerializeField] private SongWheel songWheel;
 
-        private AudioSource _audioSource;
-
-        private Song _selectedSong;
+        private static Song _selectedSong;
         private SongDifficulty _selectedDiff;
-
-        private void OnEnable()
-        {
-            _audioSource = GetComponent<AudioSource>();
-            if (_selectedSong != null)
-                SelectSong(_selectedSong, true);
-            InputManager.PressBack += BackToTitle;
-            InputManager.PressConfirm += Play;
-        }
-
-        private void OnDisable()
-        {
-            if (SongManager.Instance)
-                SongManager.Instance.Stop();
-            InputManager.PressBack -= BackToTitle;
-            InputManager.PressConfirm -= Play;
-        }
 
         private void Start() => Init();
 
         private async void Init()
         {
-            // todo: already init this in title screen already
+            // todo: already init this in title screen already already
             await Cache.InitSongs();
             songWheel.InitSongWheel();
             songWheel.OnSelectSong += SelectSongSimple;
             songDataPanel.OnChooseDiff += SelectDiff;
-            SelectSong(Cache.songs.First());
+            SelectSong(_selectedSong ?? Cache.songs.First(), true, true);
         }
 
         private void SelectSongSimple(Song song) => SelectSong(song);
-        private async void SelectSong(Song song, bool selectAnyway = false)
+        private async void SelectSong(Song song, bool selectAnyway = false, bool setWheelScroll = false)
         {
             if (_selectedSong?.folderPath == song.folderPath && !selectAnyway)
                 return;
 
             _selectedSong = song;
-            songWheel.SelectSong(song);
+            songWheel.SelectSong(song, setWheelScroll);
             songDataPanel.SetSong(song);
 
             // todo: allow beatmap to specify where preview should start or something?
@@ -81,5 +61,18 @@ namespace Menu.ScreenControllers.SongSelect
         }
 
         public void BackToTitle() => MenuManager.Instance.ToScreen(MenuScreen.Title);
+
+        private void OnEnable()
+        {
+            InputManager.PressBack += BackToTitle;
+            InputManager.PressConfirm += Play;
+        }
+        private void OnDisable()
+        {
+            if (SongManager.Instance)
+                SongManager.Instance.Stop();
+            InputManager.PressBack -= BackToTitle;
+            InputManager.PressConfirm -= Play;
+        }
     }
 }

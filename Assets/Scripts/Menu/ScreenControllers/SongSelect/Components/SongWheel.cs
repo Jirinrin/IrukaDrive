@@ -18,6 +18,7 @@ namespace Menu.ScreenControllers.SongSelect.Components
         private ScrollRect _scrollRect;
         public RectTransform rectTransform;
 
+        // todo: somehow get rid of cards lookup?
         private Dictionary<string, SongCard> _cardsLookup;
 
         private Song _selectedSong;
@@ -50,10 +51,16 @@ namespace Menu.ScreenControllers.SongSelect.Components
             var i = Mathf.Clamp(index, 0, Cache.songs.Count - 1);
             EmitSelectSong(Cache.songs[i]);
             if (Cache.songs.Count < 3) return;
-            _scrollRect.DOVerticalNormalizedPos(1f - (i / (float) (Cache.songs.Count-1)), .3f);
+            ScrollToIndex(i);
         }
 
-        public void ScrollToExtreme(int direction) => GoToIndex(direction == 1 ? 0 : Cache.songs.Count);
+        private void ScrollToIndex(int index, bool instant = false)
+        {
+            var v = 1f - (index / (float) (Cache.songs.Count - 1));
+            if (instant) _scrollRect.verticalNormalizedPosition = v;
+            else _scrollRect.DOVerticalNormalizedPos(v, .3f);
+        }
+        public void ScrollToExtreme(int direction) => GoToIndex(direction == 1 ? 0 : Cache.songs.Count-1);
         private void ScrollSkip(int direction) => GoToIndex(_selectedSong.wheelIndex + direction*-1 * Mathf.FloorToInt(rectTransform.rect.height / CardHeight));
         private void Scroll1(int direction) => GoToIndex(_selectedSong.wheelIndex + direction*-1);
 
@@ -63,12 +70,14 @@ namespace Menu.ScreenControllers.SongSelect.Components
             _infiniteScroll.InitData(Cache.songs.Count);
         }
 
-        public void SelectSong(Song song)
+        public void SelectSong(Song song, bool setScroll = false)
         {
             if (_selectedSong != null)
-                _cardsLookup[_selectedSong.folderPath].SetSelected(false);
+                _cardsLookup[_selectedSong.folderPath]?.SetSelected(false);
             _selectedSong = song;
-            _cardsLookup[_selectedSong.folderPath].SetSelected(true);
+            _cardsLookup[_selectedSong.folderPath]?.SetSelected(true);
+            if (setScroll)
+                ScrollToIndex(song.wheelIndex, true);
         }
 
         private void OnEnable()
