@@ -12,8 +12,11 @@ namespace Menu.ScreenControllers
     public class ResultsScreen : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI textBlock;
+        [SerializeField] private TextMeshProUGUI gradeText;
 
         public static BeatmapScore beatmapScore; // Injected by GameManager
+
+        private BeatmapScore.ResultGrade _grade;
 
         private void Start()
         {
@@ -28,6 +31,14 @@ namespace Menu.ScreenControllers
                 //     $"[{note.Result} - {note.ResultTiming}]"
                 // ))
             );
+            _grade = beatmapScore.Grade;
+            gradeText.text = _grade.ToString();
+            gradeText.characterSpacing = _grade == BeatmapScore.ResultGrade.AAA ? -65 : 0;
+        }
+
+        private void Update()
+        {
+            gradeText.color = gradeText.color.SetAlpha(Anim.Pulsate((int) _grade, .4f));
         }
 
         public void BackToSongSelect()

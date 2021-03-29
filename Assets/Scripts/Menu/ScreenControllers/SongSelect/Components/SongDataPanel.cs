@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Menu.Components;
 using Shared;
@@ -7,7 +8,6 @@ using TMPro;
 using Tools;
 using UnityEngine;
 using UnityEngine.UI;
-using Cache = Shared.Cache;
 
 namespace Menu.ScreenControllers.SongSelect.Components
 {
@@ -29,16 +29,16 @@ namespace Menu.ScreenControllers.SongSelect.Components
 
         private int _selectedDiffIndex;
 
-        private void SetHighscores(int[] scores)
+        private void SetHighscores(IList<(int, BeatmapScore.ResultGrade)> scores)
         {
             for (var i = 0; i < highscoreTexts.Length; i++)
-                highscoreTexts[i].text = i >= scores.Length ? "" : scores[i].ToString("D8");
+                highscoreTexts[i].text = i >= scores.Count ? "" : $"{scores[i].Item1:D8} ({scores[i].Item2})";
         }
 
         private async void SetDiffDataAsync(SongDifficulty diff)
         {
-            SetHighscores(new int[0]);
-            var topScores = Local.Scores[diff.id].Reverse().Take(highscoreTexts.Length).Select(s => s.Score).ToArray();
+            SetHighscores(new (int, BeatmapScore.ResultGrade)[0]);
+            var topScores = Local.Scores[diff.id].Reverse().Take(highscoreTexts.Length).Select(s => (s.Score, s.Grade)).ToArray();
             diffCreatorText.text = diff.creator;
             SetHighscores(topScores);
             jacketImage.texture = await diff.Jacket;

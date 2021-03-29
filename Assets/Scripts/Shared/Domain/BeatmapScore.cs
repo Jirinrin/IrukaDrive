@@ -22,6 +22,7 @@ namespace Shared.Domain
         public int maxCombo;
         
         public int Score => Mathf.FloorToInt((perfects + (earlies + lates) * .5f) * _scorePerNote); // Range 0-10000000
+        public ResultGrade Grade => CalculateGrade(Score);
         
         public BeatmapScore(IReadOnlyCollection<RuntimeChar> notes)
         {
@@ -71,5 +72,23 @@ namespace Shared.Domain
         public int CompareTo(BeatmapScore other) => Score.CompareTo(other.Score);
 
         public override string ToString() => Score.ToString(CultureInfo.CurrentCulture);
+
+        public enum ResultGrade { D,C,B,A,AA,AAA,S }
+        public static ResultGrade CalculateGrade(int score)
+        {
+            if (score == MaxScore)
+                return ResultGrade.S;
+            if (score >= MaxScore*.98f)
+                return ResultGrade.AAA;
+            if (score >= MaxScore * .94f)
+                return ResultGrade.AA;
+            if (score >= MaxScore * .89f)
+                return ResultGrade.A;
+            if (score >= MaxScore * .8f)
+                return ResultGrade.B;
+            if (score >= MaxScore * .7f)
+                return ResultGrade.C;
+            return ResultGrade.D;
+        }
     }
 }
