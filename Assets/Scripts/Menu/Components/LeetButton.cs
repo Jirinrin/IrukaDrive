@@ -33,8 +33,7 @@ namespace Menu.Components
         {
             _hovering = true;
             // Cursor.SetCursor()
-
-            DoAlphaAnim(.4f, tt => Interp.BlinkDownUp(.01f, .05f, tt) * Interp.BlinkDownUp(.13f, .05f, tt) * Interp.BlinkDownUp(.35f, .01f, tt));
+            DoAlphaAnim(.2f, Anim.BigBlink);
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -43,33 +42,21 @@ namespace Menu.Components
             _text.DOColor(textColor, .3f);
         }
 
-        private void OnButtonClick() =>
-            DoAlphaAnim(.3f, tt => Interp.BlinkDownUp(.01f, .05f, tt) * Interp.BlinkDownUp(.09f, .05f, tt));
-
-        private void DoAlphaAnim(float dur, Func<float, float> fn)
-        {
-            var t = 0f;
-            void BlinkTr(float newT)
-            {
-                t = newT;
-                var tt = t * dur;
-                var a = fn(tt);
-                _text.color = _text.color.SetAlpha(a);
-            }
-
-            DOTween.To(() => t, BlinkTr, 1f, dur);
-        }
+        private void DoAlphaAnim(float dur, Func<float, float> fn) =>
+            Anim.DoAnim(dur, t => _text.color = _text.color.SetAlpha(fn(t)));
 
         private void Update()
         {
             if (ambientGlow && !_hovering && _button.interactable)
-                _text.color = _text.color.SetAlpha((Mathf.Sin(Time.time*ambientGlowSpeed)*.5f-.5f)*ambientGlowAmpl+1f);
+                _text.color = _text.color.SetAlpha(Anim.Pulsate(ambientGlowSpeed, ambientGlowAmpl));
 
             if (_hovering)
             {
-                var t = Time.time / rgbCycleTimeSeconds % 1;
-                var (r,g,b) = Color.HSVToRGB(t,1,1);
-                _text.color = _text.color.SetRGB(r, g, b);
+                Anim.PeriodicNorm(rgbCycleTimeSeconds, t =>
+                {
+                    var (r,g,b) = Color.HSVToRGB(t,1,1);
+                    _text.color = _text.color.SetRGB(r, g, b);
+                });
             }
         }
 
@@ -78,7 +65,7 @@ namespace Menu.Components
             _text = GetComponentInChildren<TextMeshProUGUI>();
             _text.color = textColor;
             _button = GetComponent<Button>();
-            _button.onClick.AddListener(OnButtonClick);
+            _button.onClick.AddListener(() => DoAlphaAnim(.3f, Anim.SmallBlink));
         }
         private void OnDisable()
         {

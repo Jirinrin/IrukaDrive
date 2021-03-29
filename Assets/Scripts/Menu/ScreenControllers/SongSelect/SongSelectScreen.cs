@@ -11,18 +11,13 @@ namespace Menu.ScreenControllers.SongSelect
 {
     public class SongSelectScreen : MonoBehaviour
     {
-
-        [SerializeField] private GameObject songWheelContainer;
         [SerializeField] private SongDataPanel songDataPanel;
-        
-        [SerializeField] private SongCard songCardPrefab;
+        [SerializeField] private SongWheel songWheel;
 
         private AudioSource _audioSource;
 
         private Song _selectedSong;
         private SongDifficulty _selectedDiff;
-        private float _cardHeight;
-        private Dictionary<string, SongCard> _cardsLookup;
 
         private void OnEnable()
         {
@@ -47,7 +42,8 @@ namespace Menu.ScreenControllers.SongSelect
         {
             // todo: already init this in title screen already
             await Cache.InitSongs();
-            InitSongWheel();
+            songWheel.InitSongWheel();
+            songWheel.OnSelectSong += SelectSongSimple;
             songDataPanel.OnChooseDiff += SelectDiff;
             SelectSong(Cache.Songs.First());
         }
@@ -57,11 +53,9 @@ namespace Menu.ScreenControllers.SongSelect
         {
             if (_selectedSong?.folderPath == song.folderPath && !selectAnyway)
                 return;
-            
-            if (_selectedSong != null)
-                _cardsLookup[_selectedSong.folderPath].SetSelected(false);
+
             _selectedSong = song;
-            _cardsLookup[_selectedSong.folderPath].SetSelected(true);
+            songWheel.SelectSong(song);
             songDataPanel.SetSong(song);
 
             // todo: allow beatmap to specify where preview should start or something?
@@ -70,31 +64,9 @@ namespace Menu.ScreenControllers.SongSelect
                 SongManager.Instance.PlaySong(clip, clip.length * .4f);
         }
 
-        private void SelectDiff(SongDifficulty diff)
-        {
+        private void SelectDiff(SongDifficulty diff) =>
             _selectedDiff = diff;
-        }
 
-        // todo: only render the relevant section of the list (with a RecyclerList etc)
-        private void InitSongWheel()
-        {
-            _cardsLookup = new Dictionary<string, SongCard>();
-            
-            foreach (var (song, i) in Cache.Songs.WithIndex())
-            {
-                var card = Instantiate(songCardPrefab, songWheelContainer.transform);
-                card.Init(song, SelectSongSimple);
-                _cardsLookup[song.folderPath] = card;
-                
-                if (i == 0)
-                    _cardHeight = card.GetComponent<RectTransform>().rect.height;
-
-                var tf = card.transform;
-                var pos = tf.localPosition;
-                tf.localPosition = new Vector3(pos.x, -_cardHeight * i, pos.z);
-            }
-        }
-        
         public async void Play() =>
             GameManager.ToGameplay(await Cache.GetBeatmapAsync(_selectedDiff.filePath));
 

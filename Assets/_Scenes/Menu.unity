@@ -406,9 +406,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 98851876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc0601f6472b445583374228e340587a, type: 3}
+  m_Script: {fileID: 11500000, guid: d407657c1d864935b9dcf675b0558277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doOnTrigger:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1898374252}
+        m_TargetAssemblyTypeName: Menu.ScreenControllers.SongSelect.Components.SongDataPanel,
+          Assembly-CSharp
+        m_MethodName: CycleDiff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  triggerCharacter: 100
 --- !u!1 &104764218
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,10 +933,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca37543a42b4314ab2c2239fa50e2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  songWheelContainer: {fileID: 1098081448}
   songDataPanel: {fileID: 1898374252}
-  songCardPrefab: {fileID: 8335184160224748401, guid: 185f4a43c101b854d8e6c02e6755d2e4,
-    type: 3}
+  songWheel: {fileID: 786856150}
 --- !u!1001 &188880737
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2869,6 +2884,8 @@ GameObject:
   - component: {fileID: 786856148}
   - component: {fileID: 786856147}
   - component: {fileID: 786856146}
+  - component: {fileID: 786856149}
+  - component: {fileID: 786856150}
   m_Layer: 5
   m_Name: SongWheel
   m_TagString: Untagged
@@ -2965,6 +2982,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 786856144}
   m_CullTransparentMesh: 0
+--- !u!114 &786856149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786856144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39710165bf2cdb44787c3845082114e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 0}
+  TopPadding: 10
+  BottomPadding: 10
+  LeftPadding: 10
+  RightPadding: 10
+  ItemSpacing: 2
+  LabelsFont: {fileID: 0}
+  TopPullLabel: Pull to refresh
+  TopReleaseLabel: Release to load
+  BottomPullLabel: Pull to refresh
+  BottomReleaseLabel: Release to load
+  LeftPullLabel: Pull to refresh
+  LeftReleaseLabel: Release to load
+  RightPullLabel: Pull to refresh
+  RightReleaseLabel: Release to load
+  IsPullTop: 1
+  IsPullBottom: 1
+  IsPullLeft: 1
+  IsPullRight: 1
+  PullValue: 1.5
+  LabelOffset: 85
+  TopLabel: {fileID: 0}
+  BottomLabel: {fileID: 0}
+  LeftLabel: {fileID: 0}
+  RightLabel: {fileID: 0}
+  Type: 0
+--- !u!114 &786856150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786856144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c87b4c3e1fb48459e6faddbef5efcde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  songCardPrefab: {fileID: 8335184160224748401, guid: 185f4a43c101b854d8e6c02e6755d2e4,
+    type: 3}
+  songWheelContainer: {fileID: 1098081448}
 --- !u!1 &814020697
 GameObject:
   m_ObjectHideFlags: 0
@@ -3381,6 +3451,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f08df64c4b749afb0f989e8dc3a7894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doOnTrigger:
+    m_PersistentCalls:
+      m_Calls: []
   triggerCharacter: 115
 --- !u!1 &963638057
 GameObject:
@@ -5056,6 +5129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f08df64c4b749afb0f989e8dc3a7894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doOnTrigger:
+    m_PersistentCalls:
+      m_Calls: []
   triggerCharacter: 101
 --- !u!114 &1382041554 stripped
 MonoBehaviour:
@@ -5602,6 +5678,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f08df64c4b749afb0f989e8dc3a7894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doOnTrigger:
+    m_PersistentCalls:
+      m_Calls: []
   triggerCharacter: 100
 --- !u!1 &1563699405
 GameObject:
