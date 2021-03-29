@@ -217,8 +217,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 357716769}
   m_HandleRect: {fileID: 357716768}
   m_Direction: 2
-  m_Value: 0.99999964
-  m_Size: 0.6667472
+  m_Value: 0.9999994
+  m_Size: 0.80095506
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -272,6 +272,7 @@ GameObject:
   - component: {fileID: 98851877}
   - component: {fileID: 98851879}
   - component: {fileID: 98851878}
+  - component: {fileID: 98851880}
   m_Layer: 5
   m_Name: Difficulties title
   m_TagString: Untagged
@@ -396,6 +397,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 98851876}
   m_CullTransparentMesh: 0
+--- !u!114 &98851880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98851876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc0601f6472b445583374228e340587a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &104764218
 GameObject:
   m_ObjectHideFlags: 0
@@ -3909,7 +3922,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 66.62639}
+  m_AnchoredPosition: {x: 0, y: -0.0001373291}
   m_SizeDelta: {x: 0, y: 500}
   m_Pivot: {x: 0, y: 1}
 --- !u!1001 &1145085205
@@ -4126,8 +4139,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Someone
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4cc450aab4cbed44ebb10495524b5f92, type: 2}
-  m_sharedMaterial: {fileID: 3398393377605773935, guid: 4cc450aab4cbed44ebb10495524b5f92,
+  m_fontAsset: {fileID: 11400000, guid: 56b16e7b90b1f264a9120a6f1d93c229, type: 2}
+  m_sharedMaterial: {fileID: -2087597299237238584, guid: 56b16e7b90b1f264a9120a6f1d93c229,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -4162,7 +4175,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 20
+  m_characterSpacing: 25
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4297,7 +4310,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 20
+  m_characterSpacing: 30
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -6724,8 +6737,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 825286658}
   m_HandleRect: {fileID: 825286657}
   m_Direction: 2
-  m_Value: 0.0000004580401
-  m_Size: 0.86674416
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

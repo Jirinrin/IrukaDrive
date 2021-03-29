@@ -10,7 +10,7 @@ namespace Menu.Components
 {
     // todo: make this directly extend Button?
     [RequireComponent(typeof(Button))]
-    public class LeetButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public class LeetButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         // todo: on change this in editor view, also change it in the underlying text child
         [SerializeField] private Color textColor = Color.green;
@@ -43,10 +43,8 @@ namespace Menu.Components
             _text.DOColor(textColor, .3f);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
-        {
+        private void OnButtonClick() =>
             DoAlphaAnim(.3f, tt => Interp.BlinkDownUp(.01f, .05f, tt) * Interp.BlinkDownUp(.09f, .05f, tt));
-        }
 
         private void DoAlphaAnim(float dur, Func<float, float> fn)
         {
@@ -75,16 +73,17 @@ namespace Menu.Components
             }
         }
 
-        private void OnDisable()
-        {
-            _text.color = textColor;
-            _hovering = false;
-        }
         private void OnEnable()
         {
             _text = GetComponentInChildren<TextMeshProUGUI>();
             _text.color = textColor;
             _button = GetComponent<Button>();
+            _button.onClick.AddListener(OnButtonClick);
+        }
+        private void OnDisable()
+        {
+            _text.color = textColor;
+            _hovering = false;
         }
 
         // private static readonly AnimationCurve BlinkCurve = new AnimationCurve(

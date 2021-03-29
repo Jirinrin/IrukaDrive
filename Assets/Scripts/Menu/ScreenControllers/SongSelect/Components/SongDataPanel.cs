@@ -61,6 +61,9 @@ namespace Menu.ScreenControllers.SongSelect.Components
             OnChooseDiff?.Invoke(_song.diffs[index]);
         }
 
+        public void CycleDiff() =>
+            diffButtons[(_selectedDiffIndex + 1) % _song.diffs.Length].OnClick.Invoke();
+
         private void OnEnable()
         {
             foreach (var (btn, i) in diffButtons.WithIndex())
