@@ -51,12 +51,13 @@ namespace BeatmapEditor.SingletonComponents
         }
 
         protected static readonly Regex FloatRegex = new Regex(@"^\d+(?:\.\d*)?$|^\.\d+$");
+        protected static readonly Regex SignedFloatRegex = new Regex(@"^-?\d+(?:\.\d*)?$|^-?\.\d+$");
         protected static readonly Regex IntRegex = new Regex(@"^\d+$");
         protected static TMP_InputField.OnValidateInput ValidateInput(int maxLength = 200, Regex mustMatch = null)
         {
             return (text, index, addedChar) =>
             {
-                var newText = text + addedChar;
+                var newText = text.Substring(0,index) + addedChar + text.Substring(index);
                 if (text.Length == 0 && char.IsWhiteSpace(addedChar)
                     || text.Length >= maxLength
                     || (!mustMatch?.IsMatch(newText) ?? false)

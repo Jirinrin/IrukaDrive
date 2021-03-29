@@ -37,11 +37,11 @@ namespace BeatmapEditor.SingletonComponents
             bpmField.onValueChanged.AddListener(IfNotEmpty(SetWithRefresh((string v) => S.bpm = float.Parse(v))));
             bpmField.onValidateInput += ValidateInput(10, FloatRegex);
             beatOffsetField.onValueChanged.AddListener(IfNotEmpty(SetWithRefresh((string v) => S.beatOffset = float.Parse(v))));
-            beatOffsetField.onValidateInput += ValidateInput(10, FloatRegex);
+            beatOffsetField.onValidateInput += ValidateInput(10, SignedFloatRegex);
             beatsPerBarField.onValueChanged.AddListener(IfNotEmpty(SetWithRefresh((string v) => S.beatsPerBar = int.Parse(v))));
-            beatsPerBarField.onValidateInput += ValidateInput(1, new Regex(@"[2-4]"));
+            beatsPerBarField.onValidateInput += ValidateInput(1, new Regex(@"^[2-4]$"));
             barOffsetField.onValueChanged.AddListener(IfNotEmpty(SetWithRefresh((string v) => S.barOffset = int.Parse(v))));
-            barOffsetField.onValidateInput += ValidateInput(1, new Regex(@"[0-3]"));
+            barOffsetField.onValidateInput += ValidateInput(1, new Regex(@"^[0-3]$"));
 
             DisableShortcutsDuringInput(titleField, artistField, bpmField, beatOffsetField, beatsPerBarField, barOffsetField);
         }
