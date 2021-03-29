@@ -4,7 +4,7 @@ using DG.Tweening;
 using Shapes;
 using Shared.Domain;
 using UnityEngine;
-using UnityEngine.Rendering;
+using Tools;
 
 namespace BeatmapEditor.SingletonComponents
 {
@@ -25,8 +25,7 @@ namespace BeatmapEditor.SingletonComponents
             OpacityTransition(0, .2f);
             var clip = await song.Audio;
 
-            // todo: something if mp3?? (Because then the samples array simply gets filled with 0s) (or we can just ignore mp3 haha, this is a bonus feature after all)
-            if (!clip || song.audioFile.EndsWith(".mp3"))
+            if (!clip)
             {
                 _active = false;
                 return;

@@ -3542,13 +3542,12 @@ MonoBehaviour:
     just right\r\n  - (And you can set more metadata of the song and chart in the
     Song Data and Chart Data menus)\r\n- Place your first word with `Tab`\r\n- See
     with `Spacebar` how it plays! And press `Escape` to go back\n\n## Misc info\r\n-
-    The fancy visualisation of the audio file in the editor isn't active for MP3
-    files. Well, OGG files are better anyway `\xAF\\\\_(\u30C4)_/\xAF`\r\n- Behind
-    the scenes, a `song` has a folder with a `song.json` for shared data, and one
-    or multiple `.drive` files, which are the difficulties. When loading a drive
-    chart, you have to pick one of these `.drive` files.\r\n- The `[Reload]` button
-    relentlessly reloads the currently opened drive chart, discarding all changes
-    made since the last time you `[Save]`d. Tread with care!\n### \u3000"
+    Behind the scenes, a `song` has a folder with a `song.json` for shared data,
+    and one or multiple `.drive` files, which are the difficulties. When loading
+    a drive chart, you have to pick one of these `.drive` files.\r\n- The `[Reload]`
+    button relentlessly reloads the currently opened drive chart, discarding all
+    changes made since the last time you `[Save]`d. Tread with care!\n- The fancy
+    visualisation of the audio file in the editor might not always work.\n### \u3000"
   RenderSettings:
     Bold:
       RenderBold: 1
@@ -3638,18 +3637,17 @@ MonoBehaviour:
     padding=\"25,25,0,0\">Tab</mark><space=0.2em>\r\n- See with <space=0.2em><mark=#FFFFFF3C
     padding=\"25,25,0,0\">Spacebar</mark><space=0.2em> how it plays! And press <space=0.2em><mark=#FFFFFF3C
     padding=\"25,25,0,0\">Escape</mark><space=0.2em> to go back\r\n\r\n<voffset=0.3em><b><size=1.4em>Misc
-    info</size></b></voffset>\r\n- The fancy visualisation of the audio file in the
-    editor isn't active for MP3 files. Well, OGG files are better anyway <space=0.2em><mark=#FFFFFF3C
-    padding=\"25,25,0,0\">\xAF\\_(\u30C4)_/\xAF</mark><space=0.2em>\r\n- Behind the
-    scenes, a <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">song</mark><space=0.2em>
-    has a folder with a <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">song.json</mark><space=0.2em>
-    for shared data, and one or multiple <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">.drive</mark><space=0.2em>
+    info</size></b></voffset>\r\n- Behind the scenes, a <space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">song</mark><space=0.2em> has a folder with a <space=0.2em><mark=#FFFFFF3C
+    padding=\"25,25,0,0\">song.json</mark><space=0.2em> for shared data, and one
+    or multiple <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">.drive</mark><space=0.2em>
     files, which are the difficulties. When loading a drive chart, you have to pick
     one of these <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">.drive</mark><space=0.2em>
     files.\r\n- The <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">[Reload]</mark><space=0.2em>
     button relentlessly reloads the currently opened drive chart, discarding all
     changes made since the last time you <space=0.2em><mark=#FFFFFF3C padding=\"25,25,0,0\">[Save]</mark><space=0.2em>d.
-    Tread with care!\r\n<voffset=0.4em><b><size=0em>\u3000</size></b></voffset>\r\n"
+    Tread with care!\r\n- The fancy visualisation of the audio file in the editor
+    might not always work.\r\n<voffset=0.4em><b><size=0em>\u3000</size></b></voffset>\r\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56b16e7b90b1f264a9120a6f1d93c229, type: 2}
   m_sharedMaterial: {fileID: -2087597299237238584, guid: 56b16e7b90b1f264a9120a6f1d93c229,

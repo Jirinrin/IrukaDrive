@@ -39,7 +39,7 @@ namespace BeatmapEditor
 
         private static async void LoadDummyBeatmapAsync()
         {
-            var dir = $"{Application.streamingAssetsPath}/DriveCharts/OfficialCharts/Yuusha no Natsuyasumi";
+            var dir = $"{Application.streamingAssetsPath}/DriveCharts/OfficialCharts/Wenrella no hyouka";
             currentSong = await SerializationHelpersAsync.LoadSong(dir);
             currentBeatmap = await SerializationHelpersAsync.LoadBeatmap($"{dir}/advanced.drive", currentSong);
             EditorTrack.Instance.LoadBeatmap(currentBeatmap);
