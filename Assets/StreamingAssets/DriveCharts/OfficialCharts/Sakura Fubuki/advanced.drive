@@ -1,8 +1,5 @@
 {
-  "difficulty": "Advanced",
-  "creator": "dreamy ouchaco",
-  "finishTimestamp": null,
-  "id": "6c0ed5c3-1e1f-4328-bb63-ae6aeb52ab5c",
+  "finishTimestamp": 40,
   "words": [
     {
       "beat": 4,
@@ -185,5 +182,10 @@
       "beatInterval": 1
     }
   ],
-  "version": 1
+  "version": 1,
+  "creator": "dreamy ouchaco",
+  "difficulty": "Advanced",
+  "difficultyNameOverride": null,
+  "jacketFileOverride": null,
+  "id": "6c0ed5c3-1e1f-4328-bb63-ae6aeb52ab5c"
 }
