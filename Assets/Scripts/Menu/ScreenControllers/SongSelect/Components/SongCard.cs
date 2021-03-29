@@ -41,12 +41,13 @@ namespace Menu.ScreenControllers.SongSelect.Components
             DOTween.To(() => line.Color, c => line.Color = c, selected ? TextColorSelected : TextColorUnselected, .5f);
         }
         
-        public void Init(Song song, Action<Song> onSelect)
+        public void Init(Song song, Action<Song> onSelect, bool selected)
         {
             _song = song;
             _onSelect = onSelect;
             titleText.text = song.title;
             artistText.text = song.artist;
+            _selected = selected;
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -100,8 +101,8 @@ namespace Menu.ScreenControllers.SongSelect.Components
 
         private void OnEnable()
         {
-            _rectTransform = GetComponent<RectTransform>();
-            line.End = new Vector3(-_rectTransform.rect.width, 0, 0);
+            line.Start = new Vector3(-10f, 0, 0);
+            line.End = new Vector3(-SongWheel.Instance.rectTransform.rect.width+20f, 0, 0);
             SetSelected(false);
         }
     }

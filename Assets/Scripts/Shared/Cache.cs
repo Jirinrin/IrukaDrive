@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -78,13 +78,16 @@ namespace Shared
             });
         }
 
-        public static readonly List<Song> Songs = new List<Song>();
+        public static List<Song> songs = new List<Song>();
         public static async Task InitSongs()
         {
-            if (Songs.Any())
+            if (songs.Any())
                 return;
 
             await LoadSongsInFolder(C.DriveChartsDirPath);
+
+            foreach (var (s, i) in songs.WithIndex())
+                s.wheelIndex = i;
         }
 
         private static async Task LoadSongsInFolder(string folderPath)
@@ -115,7 +118,7 @@ namespace Shared
                 return;
             }
 
-            Songs.Add(s);
+            songs.Add(s);
         }
     }
 }

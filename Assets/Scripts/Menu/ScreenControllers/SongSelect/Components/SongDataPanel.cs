@@ -64,14 +64,8 @@ namespace Menu.ScreenControllers.SongSelect.Components
         public void CycleDiff() =>
             diffButtons[(_selectedDiffIndex + 1) % _song.diffs.Length].OnClick.Invoke();
 
-        private void OnEnable()
-        {
-            foreach (var (btn, i) in diffButtons.WithIndex())
-            {
-                btn.OnClick.AddListener(() => ChooseDiff(i));
-                ToggleBtn(btn, false);
-            }
-        }
+        private void OnHor(int direction) =>
+            diffButtons[Mathf.Clamp(_selectedDiffIndex + direction, 0, _song.diffs.Length-1)].OnClick.Invoke();
 
         public void SetSong(Song song)
         {
@@ -93,6 +87,20 @@ namespace Menu.ScreenControllers.SongSelect.Components
             }
             
             ChooseDiff(0);
+        }
+
+        private void OnEnable()
+        {
+            foreach (var (btn, i) in diffButtons.WithIndex())
+            {
+                btn.OnClick.AddListener(() => ChooseDiff(i));
+                ToggleBtn(btn, false);
+            }
+            MenuInputManager.PressHor += OnHor;
+        }
+        private void OnDisable()
+        {
+            MenuInputManager.PressHor -= OnHor;
         }
     }
 }

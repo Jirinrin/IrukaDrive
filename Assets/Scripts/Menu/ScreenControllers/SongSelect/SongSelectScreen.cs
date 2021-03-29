@@ -45,7 +45,7 @@ namespace Menu.ScreenControllers.SongSelect
             songWheel.InitSongWheel();
             songWheel.OnSelectSong += SelectSongSimple;
             songDataPanel.OnChooseDiff += SelectDiff;
-            SelectSong(Cache.Songs.First());
+            SelectSong(Cache.songs.First());
         }
 
         private void SelectSongSimple(Song song) => SelectSong(song);
