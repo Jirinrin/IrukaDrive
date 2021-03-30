@@ -1,6 +1,9 @@
 name: Build
 on:
-  push: { branches: [master] }
+  push:
+    tags:
+      - '*'
+  workflow_dispatch: {}
 jobs:
   build:
     name: Build for ${{ matrix.targetPlatform }}
@@ -10,7 +13,7 @@ jobs:
       matrix:
         targetPlatform:
           - StandaloneWindows64
-          - StandaloneOSX
+          # - StandaloneOSX
     steps:
       - uses: actions/checkout@v2
         with:
@@ -30,5 +33,10 @@ jobs:
           buildName: IrukaDrive-${{ matrix.targetPlatform }}
       - uses: actions/upload-artifact@v2
         with:
-          name: Build-${{ matrix.targetPlatform }}
+          name: IrukaDrive-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
+      - name: Zip build
+        run: |
+          pushd build/${{ matrix.targetPlatform }}
+          zip -r ../../IrukaDrive-{{ matrix.targetPlatform }}.zip .
+          popd
