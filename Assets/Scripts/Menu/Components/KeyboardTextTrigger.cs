@@ -10,7 +10,7 @@ namespace Menu.Components
         protected override void OnEnable()
         {
             base.OnEnable();
-            UnderlineFirstLetter.FormatText(GetComponent<TextMeshProUGUI>());
+            UnderlineFirstLetter.FormatText(GetComponent<TextMeshProUGUI>(), triggerCharacter);
         }
     }
 }

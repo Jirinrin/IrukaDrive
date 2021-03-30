@@ -12,7 +12,7 @@ namespace Menu.Components
         {
             base.OnEnable();
             doOnTrigger = GetComponent<Button>().onClick;
-            UnderlineFirstLetter.FormatText(GetComponentInChildren<TextMeshProUGUI>());
+            UnderlineFirstLetter.FormatText(GetComponentInChildren<TextMeshProUGUI>(), triggerCharacter);
         }
     }
 }

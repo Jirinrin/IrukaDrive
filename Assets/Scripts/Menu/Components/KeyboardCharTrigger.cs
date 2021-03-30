@@ -7,7 +7,7 @@ namespace Menu.Components
     public abstract class KeyboardCharTrigger : MonoBehaviour
     {
         [SerializeField] protected UnityEvent doOnTrigger;
-        [SerializeField] private char triggerCharacter;
+        [SerializeField] protected char triggerCharacter;
 
         private void OnChar(char c)
         {

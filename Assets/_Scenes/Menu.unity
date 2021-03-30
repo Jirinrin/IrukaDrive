@@ -3011,6 +3011,28 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 762234294}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &762234296 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2743387031813830590, guid: f6cef0e3cf6d1054d9b98be07f3939ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 762234294}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &762234297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762234296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f08df64c4b749afb0f989e8dc3a7894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doOnTrigger:
+    m_PersistentCalls:
+      m_Calls: []
+  triggerCharacter: 120
 --- !u!1 &786856144
 GameObject:
   m_ObjectHideFlags: 0
@@ -7064,7 +7086,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 172.97998, y: -29.060059}
+  m_AnchoredPosition: {x: 172.97998, y: -29.060028}
   m_SizeDelta: {x: 345.9597, y: -58.120605}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1898374252
