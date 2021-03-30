@@ -16,7 +16,7 @@ namespace BeatmapEditor.Domain
         
         [CanBeNull] private static EditorWord _wordOnClipboard;
 
-        private float _cursorPos;
+        private float _cursorPosBeats;
         [CanBeNull] private EditorWordObject _selectedWord;
 
         private bool _initted;
@@ -40,12 +40,12 @@ namespace BeatmapEditor.Domain
         private void UpdateCursorPos()
         {
             if (!_initted) return;
-            _cursorLine.transform.localPosition = new Vector3(EditorTrack.viewState.beatSpacing * _cursorPos, 0, 0);
+            _cursorLine.transform.localPosition = new Vector3(EditorTrack.viewState.beatSpacing * _cursorPosBeats, 0, 0);
         }
         
         public void SetCursor(float screenX)
         {
-            _cursorPos = EditorTrack.ScreenXToBeat(screenX, EditorUtils.GetEditorBeatSnap());
+            _cursorPosBeats = EditorTrack.ScreenXToBeat(screenX, EditorUtils.GetEditorBeatSnap());
             UpdateCursorPos();
         }
         
@@ -77,10 +77,11 @@ namespace BeatmapEditor.Domain
         }
         public void Paste()
         {
-            if (_wordOnClipboard == null || !EditorTrack.Instance.BeatIsVisible(_cursorPos))
+            if (_wordOnClipboard == null || !EditorTrack.Instance.BeatIsVisible(_cursorPosBeats))
                 return;
 
-            EditorTrack.Instance.AddWord(_wordOnClipboard.CloneWord(_cursorPos));
+            EditorTrack.Instance.AddWord(_wordOnClipboard.CloneWord(_cursorPosBeats));
+            EditorHistory.Record(_cursorPosBeats);
         }
 
         public void Delete()
@@ -96,7 +97,7 @@ namespace BeatmapEditor.Domain
             _selectedWord.Edit();
         }
 
-        public void CreateWord() => EditorTrack.Instance.CreateWord(_cursorPos, true);
+        public void CreateWord() => EditorTrack.Instance.CreateWord(_cursorPosBeats, true);
 
         private void OnEnable()
         {
