@@ -1,12 +1,13 @@
-name: build
-on: [push]
+name: Build
+on:
+  push: { branches: [master] }
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 jobs:
   build-win64:
     name: Build Windows64
     runs-on: windows-latest
     steps:
       - uses: game-ci/unity-builder@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: StandaloneWindows64
