@@ -13,7 +13,7 @@ jobs:
       matrix:
         targetPlatform:
           - StandaloneWindows64
-          # - StandaloneOSX
+          - StandaloneOSX
     steps:
       - uses: actions/checkout@v2
         with:
